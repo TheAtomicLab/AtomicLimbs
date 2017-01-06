@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Configuration;
+using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -14,10 +16,26 @@ namespace Limbs.Web.Models
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
+
+            if (CheckIfAdmin(userIdentity.GetUserName()))
+            {
+                userIdentity.AddClaim(new Claim(ClaimTypes.Role, "Administrator"));
+            }
+            else
+            {
+                userIdentity.AddClaim(new Claim(ClaimTypes.Role, "User"));
+            }
             return userIdentity;
         }
-    }
 
+        private bool CheckIfAdmin(string email)
+        {
+            var admins = ConfigurationManager.AppSettings["AdminEmails"].Split(';').ToList();
+
+            return admins.Contains(email);
+        }
+    }
+    
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()

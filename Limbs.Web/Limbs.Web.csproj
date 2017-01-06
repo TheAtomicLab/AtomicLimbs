@@ -53,6 +53,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -183,6 +187,14 @@
     <Compile Include="Migrations\201610120028444_init.Designer.cs">
       <DependentUpon>201610120028444_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701030033407_some changes.cs" />
+    <Compile Include="Migrations\201701030033407_some changes.Designer.cs">
+      <DependentUpon>201701030033407_some changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201701061843209_cambiosuser.cs" />
+    <Compile Include="Migrations\201701061843209_cambiosuser.Designer.cs">
+      <DependentUpon>201701061843209_cambiosuser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -271,6 +283,7 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Compile Include="Services\ApiAleBanzas.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -286,6 +299,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201610120028444_init.resx">
       <DependentUpon>201610120028444_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701030033407_some changes.resx">
+      <DependentUpon>201701030033407_some changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701061843209_cambiosuser.resx">
+      <DependentUpon>201701061843209_cambiosuser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

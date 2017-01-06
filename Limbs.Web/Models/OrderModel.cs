@@ -95,26 +95,45 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Nombre", Description = "")]
+        [Required]
         public string Name { get; set; }
 
+        [Display(Name = "Apellido", Description = "")]
+        [Required]
         public string LastName { get; set; }
 
+        [Display(Name = "Email", Description = "")]
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
+        [Display(Name = "Teléfono", Description = "")]
+        [Required]
         public string Phone { get; set; }
 
+        [Display(Name = "Fecha de nacimiento", Description = "")]
+        [Required]
         public DateTime Birth { get; set; }
 
+        [Display(Name = "Genero", Description = "")]
+        [Required]
         public string Gender { get; set; }
 
+        [Display(Name = "País", Description = "")]
+        [Required]
         public string Country { get; set; }
 
+        [Display(Name = "Ciudad", Description = "")]
+        [Required]
         public string City { get; set; }
 
+        [Display(Name = "Dirección", Description = "")]
+        [Required]
         public string Address { get; set; }
 
-        public long Lat { get; set; }
+        public double Lat { get; set; }
 
-        public long Long { get; set; }
+        public double Long { get; set; }
     }
 }

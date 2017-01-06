@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -90,6 +91,7 @@ namespace Limbs.Web.Controllers
                     return View(model);
             }
         }
+
 
         //
         // GET: /Account/VerifyCode

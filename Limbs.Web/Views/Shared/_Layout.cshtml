@@ -9,6 +9,8 @@
 
 </head>
 <body>
+@if (Request.IsAuthenticated)
+{
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -17,31 +19,36 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Colores", "Index", "Colors")</li>
-                    <li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>
-                    <li>@Html.ActionLink("Ordenes", "Index", "Order")</li>
-                    <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
-                    <li>@Html.ActionLink("Archivos", "Index", "Files")</li>
-                    <li>@Html.ActionLink("Productos", "Index", "Products")</li>
-                </ul>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <li>@User.IsInRole("Administrator")</li>
+                        <li>@User.IsInRole("User")</li>
+                        <li>@Html.ActionLink("Colores", "Index", "Colors")</li>
+                        <li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>
+                        <li>@Html.ActionLink("Ordenes", "Index", "Order")</li>
+                        <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
+                        <li>@Html.ActionLink("Archivos", "Index", "Files")</li>
+                        <li>@Html.ActionLink("Productos", "Index", "Products")</li>
+                    }
+                    </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+}
+<div class="container body-content">
+    @RenderBody()
+    <hr/>
+    @*<footer>
+        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+    </footer>*@
+</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@RenderSection("scripts", required: false)
 </body>
 </html>
