@@ -17,14 +17,9 @@ namespace Limbs.Web.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
 
-            if (CheckIfAdmin(userIdentity.GetUserName()))
-            {
-                userIdentity.AddClaim(new Claim(ClaimTypes.Role, "Administrator"));
-            }
-            else
-            {
-                userIdentity.AddClaim(new Claim(ClaimTypes.Role, "User"));
-            }
+            userIdentity.AddClaim(CheckIfAdmin(userIdentity.GetUserName())
+                ? new Claim(ClaimTypes.Role, "Administrator")
+                : new Claim(ClaimTypes.Role, "User"));
             return userIdentity;
         }
 
