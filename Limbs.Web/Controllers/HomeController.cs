@@ -11,7 +11,7 @@ namespace Limbs.Web.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return RedirectToAction("Create", "Users");
+            return View("Index");
         }
     }
 }

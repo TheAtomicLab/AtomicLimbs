@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace Limbs.Web.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -60,7 +61,7 @@ namespace Limbs.Web.Controllers
 
                 db.UserModels.Add(userModel);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Create", "Order");
             }
 
             return View(userModel);

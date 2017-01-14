@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/Limbs.Web/Properties/PublishProfiles/limbs - Web Deploy.pubxml

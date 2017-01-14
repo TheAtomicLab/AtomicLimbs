@@ -11,6 +11,7 @@ using Limbs.Web.Models;
 
 namespace Limbs.Web.Controllers
 {
+    [Authorize(Roles = "Administrator")]
     public class FilesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

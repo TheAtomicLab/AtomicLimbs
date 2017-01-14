@@ -24,8 +24,6 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li>@User.IsInRole("Administrator")</li>
-                        <li>@User.IsInRole("User")</li>
                         <li>@Html.ActionLink("Colores", "Index", "Colors")</li>
                         <li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>
                         <li>@Html.ActionLink("Ordenes", "Index", "Order")</li>
