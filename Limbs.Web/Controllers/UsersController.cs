@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Models;
 using Limbs.Web.Services;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
 namespace Limbs.Web.Controllers
@@ -42,7 +43,19 @@ namespace Limbs.Web.Controllers
         // GET: Users/Create
         public ActionResult Create()
         {
-            return View();
+            ViewBag.CountryList = GetCountryList();
+
+            return View(new UserModel { Email = User.Identity.GetUserName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
+        }
+
+        private static IEnumerable<SelectListItem> GetCountryList()
+        {
+            return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                .Select(x => new SelectListItem
+                {
+                    Text = new RegionInfo(x.LCID).DisplayName,
+                    Value = new RegionInfo(x.LCID).DisplayName,
+                }).OrderBy(x => x.Value).DistinctBy(x => x.Value);
         }
 
         // POST: Users/Create
@@ -50,19 +63,21 @@ namespace Limbs.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address")] UserModel userModel)
+        public async Task<ActionResult> Create(UserModel userModel)
         {
+            userModel.Email = User.Identity.GetUserName();
+
             if (ModelState.IsValid)
             {
-                
-
                 userModel.Lat = 0;
                 userModel.Long = 0;
 
                 db.UserModels.Add(userModel);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Create", "Order");
+                return RedirectToAction("Index", "Home");
             }
+
+            ViewBag.CountryList = GetCountryList();
 
             return View(userModel);
         }

@@ -96,40 +96,41 @@ namespace Limbs.Web.Models
         public int Id { get; set; }
 
         [Display(Name = "Nombre", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Name { get; set; }
 
         [Display(Name = "Apellido", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string LastName { get; set; }
 
         [Display(Name = "Email", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
         public string Email { get; set; }
 
         [Display(Name = "Teléfono", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Phone { get; set; }
 
         [Display(Name = "Fecha de nacimiento", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
         [Display(Name = "Genero", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Gender { get; set; }
 
         [Display(Name = "País", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Country { get; set; }
 
         [Display(Name = "Ciudad", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string City { get; set; }
 
         [Display(Name = "Dirección", Description = "")]
-        [Required]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
 
         public double Lat { get; set; }
