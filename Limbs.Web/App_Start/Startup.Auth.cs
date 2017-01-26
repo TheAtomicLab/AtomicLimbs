@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -55,8 +56,8 @@ namespace Limbs.Web
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-               appId: "660676444092760",
-               appSecret: "69be22ddea6a504ad20502502a6f0d95");
+               appId: ConfigurationManager.AppSettings["Facebook.AppId"],
+               appSecret: ConfigurationManager.AppSettings["Facebook.AppSecret"]);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
