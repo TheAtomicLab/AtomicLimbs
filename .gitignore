@@ -244,3 +244,5 @@ ModelManifest.xml
 # FAKE - F# Make
 .fake/
 /Limbs.Web/Properties/PublishProfiles/limbs - Web Deploy.pubxml
+/Limbs.Web/Web.Release.config
+/Limbs.Web/Web.Debug.config
