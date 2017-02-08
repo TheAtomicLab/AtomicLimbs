@@ -345,7 +345,8 @@ namespace Limbs.Web.Controllers
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+
+                    return await ExternalLoginConfirmationAction(new ExternalLoginConfirmationViewModel { Email = loginInfo.Email }, returnUrl);
             }
         }
 
@@ -355,6 +356,11 @@ namespace Limbs.Web.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        {
+            return await ExternalLoginConfirmationAction(model, returnUrl);
+        }
+
+        private async Task<ActionResult> ExternalLoginConfirmationAction(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -369,7 +375,7 @@ namespace Limbs.Web.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

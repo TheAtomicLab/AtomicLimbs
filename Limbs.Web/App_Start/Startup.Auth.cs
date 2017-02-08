@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Net.Http;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -7,6 +8,7 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
 using Limbs.Web.Models;
+using Microsoft.Owin.Security.Facebook;
 
 namespace Limbs.Web
 {
@@ -55,15 +57,35 @@ namespace Limbs.Web
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            app.UseFacebookAuthentication(
-               appId: ConfigurationManager.AppSettings["Facebook.AppId"],
-               appSecret: ConfigurationManager.AppSettings["Facebook.AppSecret"]);
+            var facebookOptions = new FacebookAuthenticationOptions
+            {
+                AppId = ConfigurationManager.AppSettings["Facebook.AppId"],
+                AppSecret = ConfigurationManager.AppSettings["Facebook.AppSecret"],
+                BackchannelHttpHandler = new FacebookBackChannelHandler(),
+                UserInformationEndpoint = "https://graph.facebook.com/v2.4/me?fields=id,name,email,first_name,last_name",
+                Scope = { "email" },
+            };
+            app.UseFacebookAuthentication(facebookOptions);
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+        }
+    }
+
+    public class FacebookBackChannelHandler : HttpClientHandler
+    {
+        protected override async System.Threading.Tasks.Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+        {
+            // Replace the RequestUri so it's not malformed
+            if (!request.RequestUri.AbsolutePath.Contains("/oauth"))
+            {
+                request.RequestUri = new Uri(request.RequestUri.AbsoluteUri.Replace("?access_token", "&access_token"));
+            }
+
+            return await base.SendAsync(request, cancellationToken);
         }
     }
 }
