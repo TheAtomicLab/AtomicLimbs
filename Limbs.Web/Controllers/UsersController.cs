@@ -69,6 +69,7 @@ namespace Limbs.Web.Controllers
 
             if (ModelState.IsValid)
             {
+
                 userModel.Lat = 0;
                 userModel.Long = 0;
 
@@ -85,7 +86,7 @@ namespace Limbs.Web.Controllers
         public async Task<JsonResult> GetPoint(string address)
         {
             var httpClient = Api.GetHttpClient();
-            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { id = address }));
+            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { address = address }));
             var value = await result.Content.ReadAsStringAsync();
             var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
 
