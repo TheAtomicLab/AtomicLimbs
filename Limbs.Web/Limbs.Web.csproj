@@ -178,24 +178,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ColorsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201610120028444_init.cs" />
-    <Compile Include="Migrations\201610120028444_init.Designer.cs">
-      <DependentUpon>201610120028444_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701030033407_some changes.cs" />
-    <Compile Include="Migrations\201701030033407_some changes.Designer.cs">
-      <DependentUpon>201701030033407_some changes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201701061843209_cambiosuser.cs" />
-    <Compile Include="Migrations\201701061843209_cambiosuser.Designer.cs">
-      <DependentUpon>201701061843209_cambiosuser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -369,17 +356,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201610120028444_init.resx">
-      <DependentUpon>201610120028444_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701030033407_some changes.resx">
-      <DependentUpon>201701030033407_some changes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201701061843209_cambiosuser.resx">
-      <DependentUpon>201701061843209_cambiosuser.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
