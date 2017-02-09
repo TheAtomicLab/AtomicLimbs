@@ -43,14 +43,8 @@ namespace Limbs.Web.Models
             return new ApplicationDbContext();
         }
         
-        public System.Data.Entity.DbSet<Limbs.Web.Models.AccessoryModel> AccessoryModels { get; set; }
-
-        public System.Data.Entity.DbSet<Limbs.Web.Models.Color> Colors { get; set; }
-
         public System.Data.Entity.DbSet<Limbs.Web.Models.UserModel> UserModels { get; set; }
-
-        public System.Data.Entity.DbSet<Limbs.Web.Models.FileModel> FileModels { get; set; }
-
+        
         public System.Data.Entity.DbSet<Limbs.Web.Models.ProductModel> ProductModels { get; set; }
     }
 }
