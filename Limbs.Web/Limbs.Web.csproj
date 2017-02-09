@@ -180,9 +180,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702090042277_all.cs" />
+    <Compile Include="Migrations\201702090042277_all.Designer.cs">
+      <DependentUpon>201702090042277_all.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -326,21 +331,11 @@
     <Content Include="Views\Colors\Details.cshtml" />
     <Content Include="Views\Colors\Edit.cshtml" />
     <Content Include="Views\Colors\Index.cshtml" />
-    <Content Include="Views\Accessory\Create.cshtml" />
-    <Content Include="Views\Accessory\Delete.cshtml" />
-    <Content Include="Views\Accessory\Details.cshtml" />
-    <Content Include="Views\Accessory\Edit.cshtml" />
-    <Content Include="Views\Accessory\Index.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
-    <Content Include="Views\Files\Create.cshtml" />
-    <Content Include="Views\Files\Delete.cshtml" />
-    <Content Include="Views\Files\Details.cshtml" />
-    <Content Include="Views\Files\Edit.cshtml" />
-    <Content Include="Views\Files\Index.cshtml" />
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
@@ -356,6 +351,11 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201702090042277_all.resx">
+      <DependentUpon>201702090042277_all.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
