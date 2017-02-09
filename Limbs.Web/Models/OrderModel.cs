@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Limbs.Web.Models
 {
-    /*public class OrderModel
+    public class OrderModel
     {
         [Key]
         public int Id { get; set; }
@@ -21,11 +21,10 @@ namespace Limbs.Web.Models
         /// </summary>
         public UserModel OrderUser { get; set; }
 
-        public virtual ICollection<AccessoryModel> Type { get; set; }
+        //public virtual ICollection<AccessoryModel> Type { get; set; }
 
         public ProductModel Product { get; set; }
     }
-    */
 
     public class ProductModel
     {
@@ -36,16 +35,17 @@ namespace Limbs.Web.Models
 
         public string Type { get; set; }
 
-        public string Thumbnail { get; set; }
+        //public string Thumbnail { get; set; }
 
-        public int Version { get; set; }
+        //public int Version { get; set; }
 
-        public virtual ICollection<FileModel> Files { get; set; }
+        //public virtual ICollection<FileModel> Files { get; set; }
 
         public bool IsRightHand { get; set; }
 
     }
 
+    /*
     public class FileModel
     {
         [Key]
@@ -89,6 +89,7 @@ namespace Limbs.Web.Models
 
         public virtual AccessoryModel Accessory { get; set; }
     }
+    */
 
     public class UserModel
     {
