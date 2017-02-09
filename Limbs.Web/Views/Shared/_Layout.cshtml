@@ -25,25 +25,25 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Administrator"))
                     {
-                        <li>@Html.ActionLink("Colores", "Index", "Colors")</li>
-                        <li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>
-                        <li>@Html.ActionLink("Ordenes", "Index", "Order")</li>
+                        @*<li>@Html.ActionLink("Colores", "Index", "Colors")</li>*@
+                        @*<li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>*@
+                        <li>@Html.ActionLink("Ordenes", "Index", "Orders")</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
-                        <li>@Html.ActionLink("Archivos", "Index", "Files")</li>
+                        @*<li>@Html.ActionLink("Archivos", "Index", "Files")</li>*@
                         <li>@Html.ActionLink("Productos", "Index", "Products")</li>
-                    }
-                    </ul>
-                @Html.Partial("_LoginPartial")
+                        }
+                        </ul>
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
         </div>
-    </div>
-}
-<div class="container body-content">
-    @RenderBody()
-    <hr/>
-    @*<footer>
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>*@
+    }
+    <div class="container body-content">
+        @RenderBody()
+        <hr/>
+        @*<footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>*@
 </div>
 
 @Scripts.Render("~/bundles/jquery")

@@ -46,5 +46,7 @@ namespace Limbs.Web.Models
         public System.Data.Entity.DbSet<Limbs.Web.Models.UserModel> UserModels { get; set; }
         
         public System.Data.Entity.DbSet<Limbs.Web.Models.ProductModel> ProductModels { get; set; }
+
+        public System.Data.Entity.DbSet<Limbs.Web.Models.OrderModel> OrderModels { get; set; }
     }
 }

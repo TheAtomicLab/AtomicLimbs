@@ -1,4 +1,4 @@
-﻿@model Limbs.Web.Models.ProductModel
+﻿@model Limbs.Web.Models.OrderModel
 
 @{
     ViewBag.Title = "Delete";
@@ -9,31 +9,23 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>ProductModel</h4>
+    <h4>OrderModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Comments)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Comments)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Status)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Type)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Thumbnail)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Thumbnail)
+            @Html.DisplayFor(model => model.Status)
         </dd>
 
     </dl>

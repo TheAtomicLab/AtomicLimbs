@@ -180,6 +180,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
@@ -188,6 +189,14 @@
     <Compile Include="Migrations\201702090042277_all.cs" />
     <Compile Include="Migrations\201702090042277_all.Designer.cs">
       <DependentUpon>201702090042277_all.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702090054550_product.cs" />
+    <Compile Include="Migrations\201702090054550_product.Designer.cs">
+      <DependentUpon>201702090054550_product.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702090121283_orders.cs" />
+    <Compile Include="Migrations\201702090121283_orders.Designer.cs">
+      <DependentUpon>201702090121283_orders.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -336,14 +345,19 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Compile Include="Services\ApiAleBanzas.cs" />
+    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
+    <Content Include="Scripts\jquery-3.1.1.min.map" />
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Compile Include="Services\ApiAleBanzas.cs" />
-    <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
-    <Content Include="Scripts\jquery-3.1.1.min.map" />
+    <Content Include="Views\Orders\Create.cshtml" />
+    <Content Include="Views\Orders\Delete.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -355,6 +369,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201702090042277_all.resx">
       <DependentUpon>201702090042277_all.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702090054550_product.resx">
+      <DependentUpon>201702090054550_product.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702090121283_orders.resx">
+      <DependentUpon>201702090121283_orders.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

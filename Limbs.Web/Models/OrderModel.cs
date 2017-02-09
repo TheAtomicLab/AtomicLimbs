@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -24,6 +25,10 @@ namespace Limbs.Web.Models
         //public virtual ICollection<AccessoryModel> Type { get; set; }
 
         public ProductModel Product { get; set; }
+
+        public string Comments { get; set; }
+
+        public string Status { get; set; }
     }
 
     public class ProductModel
@@ -31,18 +36,40 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Nombre", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Name { get; set; }
 
+        [Display(Name = "Tipo", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
         public string Type { get; set; }
 
-        //public string Thumbnail { get; set; }
+        [Display(Name = "Thumbnail", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Thumbnail { get; set; }
 
         //public int Version { get; set; }
 
         //public virtual ICollection<FileModel> Files { get; set; }
+    }
 
-        public bool IsRightHand { get; set; }
+    public enum ProductType
+    {
+        [Description("Derecha")]
+        Right,
+        [Description("Izquierda")]
+        Left,
+        [Description("Ambas")]
+        Both,
+    }
 
+    public static class AttributesHelperExtension
+    {
+        public static string ToDescription(this Enum value)
+        {
+            var da = (DescriptionAttribute[])(value.GetType().GetField(value.ToString())).GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return da.Length > 0 ? da[0].Description : value.ToString();
+        }
     }
 
     /*
