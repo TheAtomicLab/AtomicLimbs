@@ -102,7 +102,7 @@
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
             $(document).ready(function () {
-                $(".datefield").datepicker({ changeMonth: true, changeYear: true, yearRange: "@DateTime.Now.AddYears(-100).Year:@DateTime.Now.Year", maxDate: "0D" });
+                $(".datefield").datepicker({ format: 'dd-mm-yyyy', changeMonth: true, changeYear: true, yearRange: "@DateTime.Now.AddYears(-100).Year:@DateTime.Now.Year", maxDate: "0D" });
             });
     </script>
 }

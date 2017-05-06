@@ -140,6 +140,7 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Phone { get; set; }
 
+        [DataType("datetime2")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

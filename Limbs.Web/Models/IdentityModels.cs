@@ -34,7 +34,7 @@ namespace Limbs.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("name=Limbs", throwIfV1Schema: false)
         {
         }
 
@@ -42,11 +42,16 @@ namespace Limbs.Web.Models
         {
             return new ApplicationDbContext();
         }
-        
-        public System.Data.Entity.DbSet<Limbs.Web.Models.UserModel> UserModels { get; set; }
-        
-        public System.Data.Entity.DbSet<Limbs.Web.Models.ProductModel> ProductModels { get; set; }
 
-        public System.Data.Entity.DbSet<Limbs.Web.Models.OrderModel> OrderModels { get; set; }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+        }
+
+        public DbSet<UserModel> UserModels { get; set; }
+
+        public DbSet<ProductModel> ProductModels { get; set; }
+
+        public DbSet<OrderModel> OrderModels { get; set; }
     }
 }
