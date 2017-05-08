@@ -1,0 +1,13 @@
+﻿@model Limbs.Web.Models.ProductType
+
+
+@foreach (var value in Enum.GetValues(typeof(Limbs.Web.Models.ProductType)))
+{
+    @Html.RadioButtonFor(m => m, value)
+    @Html.Label(value.ToString())
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
