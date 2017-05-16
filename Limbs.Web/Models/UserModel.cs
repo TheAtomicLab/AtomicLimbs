@@ -13,14 +13,10 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Nombre del Responsable", Description = "")]
+        [Display(Name = "Nombre completo del Responsable", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableName { get; set; }
-
-        [Display(Name = "Apellido del Responsable", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string ResponsableLastName { get; set; }
-
+        
         [Display(Name = "Email", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
@@ -38,7 +34,7 @@ namespace Limbs.Web.Models
 
         [Display(Name = "Genero", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        public string Gender { get; set; }
+        public Gender Gender { get; set; }
 
         [Display(Name = "País", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
@@ -52,17 +48,13 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
 
-        [Display(Name = "DNI o Pasaporte", Description = "")]
+        [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
 
-        [Display(Name = "Nombre del usuario", Description = "")]
+        [Display(Name = "Nombre completo del usuario", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string UserName { get; set; }
-
-        [Display(Name = "Apellido del usuario", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string UserLastName { get; set; }
 
         [Display(Name = "Tipo de prótesis", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
@@ -72,6 +64,10 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public ProductType ProductType { get; set; }
 
+        [Display(Name = "Amputación", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string AmputationType { get; set; }
+        
         public double Lat { get; set; }
 
         public double Long { get; set; }
@@ -83,5 +79,15 @@ namespace Limbs.Web.Models
         Hand,
         [Description("Brazo")]
         Arm
+    }
+
+    public enum Gender
+    {
+        [Description("Femenino")]
+        F,
+        [Description("Masculino")]
+        M,
+        [Description("No Declara")]
+        ND
     }
 }

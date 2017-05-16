@@ -51,6 +51,7 @@ namespace Limbs.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                orderModel.Status = OrderStatus.Pending;
                 db.OrderModels.Add(orderModel);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

@@ -197,6 +197,10 @@
     <Compile Include="Migrations\201702090121283_orders.Designer.cs">
       <DependentUpon>201702090121283_orders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705092226210_test.cs" />
+    <Compile Include="Migrations\201705092226210_test.Designer.cs">
+      <DependentUpon>201705092226210_test.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -360,7 +364,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-    <Content Include="Views\Products\ProductType.cshtml" />
+    <Content Include="Views\Users\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -378,6 +382,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201702090121283_orders.resx">
       <DependentUpon>201702090121283_orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705092226210_test.resx">
+      <DependentUpon>201705092226210_test.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

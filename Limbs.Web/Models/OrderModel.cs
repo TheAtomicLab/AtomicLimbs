@@ -30,7 +30,17 @@ namespace Limbs.Web.Models
 
         public string Comments { get; set; }
 
-        public string Status { get; set; }
+        public OrderStatus Status { get; set; }
+    }
+
+    public enum OrderStatus
+    {
+        [Description("Pendiente")]
+        Pending,
+        [Description("Lista para retirar")]
+        Ready,
+        [Description("Entregada")]
+        Delivered,
     }
 
     //public class ProductModel
@@ -55,15 +65,7 @@ namespace Limbs.Web.Models
     //    //public virtual ICollection<FileModel> Files { get; set; }
     //}
 
-    //public enum ProductType
-    //{
-    //    [Description("Derecha")]
-    //    Right,
-    //    [Description("Izquierda")]
-    //    Left,
-    //    [Description("Ambas")]
-    //    Both,
-    //}
+
 
     public static class AttributesHelperExtension
     {

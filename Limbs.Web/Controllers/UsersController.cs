@@ -44,8 +44,8 @@ namespace Limbs.Web.Controllers
         public ActionResult Create()
         {
             ViewBag.CountryList = GetCountryList();
-
-            return View(new UserModel { Email = User.Identity.GetUserName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
+            return View("View");
+           // return View(new UserModel { Email = User.Identity.GetUserName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
 
         private static IEnumerable<SelectListItem> GetCountryList()
