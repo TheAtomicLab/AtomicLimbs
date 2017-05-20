@@ -62,7 +62,6 @@ namespace Limbs.Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(UserModel userModel)
         {
             userModel.Email = User.Identity.GetUserName();
@@ -80,7 +79,7 @@ namespace Limbs.Web.Controllers
 
             ViewBag.CountryList = GetCountryList();
 
-            return View(userModel);
+            return View("View", userModel);
         }
 
         public async Task<JsonResult> GetPoint(string address)

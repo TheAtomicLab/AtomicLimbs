@@ -314,7 +314,7 @@
     <Content Include="Scripts\solicitud.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
-    <Content Include="Views\Home\index.html" />
+    <None Include="Views\Home\index2.cshtml" />
     <Content Include="Views\Orders\elegir_tipo.html" />
     <Content Include="Views\Orders\pedir_mano_inicio.html" />
     <Content Include="Views\Orders\pedir_mano_medidas.html" />

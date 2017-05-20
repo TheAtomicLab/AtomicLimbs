@@ -6,18 +6,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Nuevo usuario</h2>
-
+<title>Limbs | Atomic Lab</title>
+<meta charset="utf-8">
+<link rel="stylesheet" type="text/css" href="css/estilo01.css">
+<link rel="stylesheet" type="text/css" href="css/estilo02.css">
+<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+<script src="js/jquery-3.2.1.js"></script>
+<link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Completá los siguientes datos</h4>
+        <div class="form-title-row">
+            <h1>¡Registrate a la plataforma Limbs como usuario!</h1>
+        </div>
+
+        <div class="header_registro">
+            Datos Personales
+        </div><hr color="#f2f2f2">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.ResponsableName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "form-control" } })
@@ -25,7 +37,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
@@ -33,7 +45,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.TextBox("displayemail", Model.Email, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
@@ -42,7 +54,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
@@ -50,7 +62,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Birth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "form-control datefield" } })
@@ -58,7 +70,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.Gender, "- Sexo -", new { @class = "form-control" })
@@ -66,7 +78,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Country, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.Country, selectList: (IEnumerable<SelectListItem>)ViewBag.CountryList, htmlAttributes: new { @class = "form-control" })
@@ -74,7 +86,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "form-control" } })
@@ -82,7 +94,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
@@ -90,7 +102,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.Dni, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "form-control" } })
@@ -98,7 +110,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
@@ -106,7 +118,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.ProthesisType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.ProthesisType, "- Tipo de prótesis -", new { @class = "form-control" })
@@ -114,7 +126,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EnumDropDownListFor(model => model.ProductType, "- ¿Cuál? -", new { @class = "form-control" })
@@ -122,7 +134,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             @Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AmputationType, new { htmlAttributes = new { @class = "form-control" } })
@@ -130,7 +142,7 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-row">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

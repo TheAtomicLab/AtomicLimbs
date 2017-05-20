@@ -1,10 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@model Limbs.Web.Models.UserModel
+
+<!DOCTYPE html>
 <html>
 <head>
     <title>Limbs | Atomic Lab</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="css/estilo01.css">
-    <link rel="stylesheet" type="text/css" href="css/estilo02.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/estilo01.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
     <script src="js/jquery-3.2.1.js"></script>
     <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
@@ -45,6 +48,7 @@
                 <div class="form-row">
                     <label>
                         <span>Nombre completo del adulto responsable:</span>
+                        @Html.EditorFor(model => model.ResponsableName)
                         <input type="text" name="nombre del adulto" placeholder="Adulto responsable">
                     </label>
                 </div>
@@ -54,6 +58,7 @@
                 <div class="form-row">
                     <label>
                         <span>Nombre completo del usuario de la protesis:</span>
+                        @Html.EditorFor(model => model.UserName)
                         <input type="text" name="nombre del usuario" placeholder="¡Nombre del usuario super heroe!">
                     </label>
                 </div>
@@ -63,6 +68,7 @@
                 <div class="form-row">
                     <label>
                         <span>Correo electrónico:</span>
+                        @Html.EditorFor(model => model.Email)
                         <input type="email" name="correo" placeholder="correo@ejemplo.com">
                     </label>
                 </div>
@@ -72,6 +78,7 @@
                 <div class="form-row">
                     <label>
                         <span>Fecha de nacimiento del usuario de la prótesis:</span>
+                        @Html.EditorFor(model => model.Birth)
                         <input type="date" name="fecha" step="1" min="1990-01-01" max="2017-12-31" value="2017-05-11"
                     </label>
                 </div>
@@ -82,6 +89,7 @@
                     <label>
                         <span>Sexo del usuario de la prótesis:</span>
                         <select name="dropdown">
+                            @Html.EditorFor(model => model.Gender)
                             <option>Masculino</option>
                             <option>Femenino</option>
                         </select>
@@ -93,6 +101,7 @@
                 <div class="form-row">
                     <label>
                         <span>¿Donde vives?</span>
+                        @Html.EditorFor(model => model.Address)
                         <input type="text" name="lugar actual" placeholder="¿Donde vive el usuario?">
                     </label>
                 </div>
@@ -102,6 +111,7 @@
                 <div class="form-row">
                     <label>
                         <span>Documento de identidad o pasaporte del usuario de la prótesis:</span>
+                        @Html.EditorFor(model => model.Dni)
                         <input type="text" name="dni" placeholder="D.N.I. del usuario">
                     </label>
                 </div>
@@ -111,6 +121,7 @@
                 <div class="form-row">
                     <label class="form-checkbox">
                         <span>El pequeño super heroe necesita:</span>
+                        @Html.EditorFor(model => model.ProthesisType)
                         Mano:<input type="radio" name="tipo_de_mano" value="mano" unchecked>
                         Brazo:<input type="radio" name="tipo_de_mano" value="brazo" unchecked>
                     </label>
@@ -118,6 +129,7 @@
                 <div class="form-row">
                     <label class="form-checkbox">
                         <span>¿Cual?</span>
+                        @Html.EditorFor(model => model.ProductType)
                         Derecha:<input type="radio" name="mano_necesaria" value="derecha" unchecked>
                         Izquierda:<input type="radio" name="mano_necesaria" value="izquierda" unchecked>
                         Ambas:<input type="radio" name="mano_necesaria" value="ambas" unchecked>
@@ -134,7 +146,7 @@
                     <label>
                         <p>¿Que impresión 3D necesitarías? A continuación le presentamos distintos tipos de amputaciones, por favor, seleccione al final de las imágenes, la letra que identifica a la más parecida de su amputación.</p>
                         <br><hr color="#f2f2f2">
-
+                        @Html.EditorFor(model => model.AmputationType)
                         <span>(A) Perdí UNA falange de cualquier dedo.</span>
                         <p><img src="img/registro/falange1.png" class="img-responsive" width="300"></p>
                         <span>(B) Perdí DOS falanges de cualquier dedo.</span>
