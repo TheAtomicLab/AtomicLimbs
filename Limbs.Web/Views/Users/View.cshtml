@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.UserModel
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -88,10 +87,10 @@
                 <div class="form-row">
                     <label>
                         <span>Sexo del usuario de la prótesis:</span>
-                        <select name="dropdown">
-                            @Html.EditorFor(model => model.Gender)
-                            <option>Masculino</option>
-                            <option>Femenino</option>
+
+                            @Html.DropDownList("MyType",
+                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
+
                         </select>
                     </label>
                 </div>
@@ -101,9 +100,8 @@
                 <div class="form-row">
                     <label>
                         <span>¿Donde vives?</span>
-                        @Html.EditorFor(model => model.Address)
-                        <input type="text" name="lugar actual" placeholder="¿Donde vive el usuario?">
-                    </label>
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "¿Dónde vive el usuario?" } })
+                      </label>
                 </div>
 
                 <br><hr color="#f2f2f2">
@@ -111,8 +109,7 @@
                 <div class="form-row">
                     <label>
                         <span>Documento de identidad o pasaporte del usuario de la prótesis:</span>
-                        @Html.EditorFor(model => model.Dni)
-                        <input type="text" name="dni" placeholder="D.N.I. del usuario">
+                        @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { placeholder = "D.N.I. del usuario" } })
                     </label>
                 </div>
 
@@ -121,18 +118,17 @@
                 <div class="form-row">
                     <label class="form-checkbox">
                         <span>El pequeño super heroe necesita:</span>
-                        @Html.EditorFor(model => model.ProthesisType)
-                        Mano:<input type="radio" name="tipo_de_mano" value="mano" unchecked>
-                        Brazo:<input type="radio" name="tipo_de_mano" value="brazo" unchecked>
+                        Mano: @Html.RadioButtonFor(model => model.ProthesisType, "Mano")
+                        Brazo: @Html.RadioButtonFor(model => model.ProductType, "Brazo")
+
                     </label>
                 </div>
                 <div class="form-row">
                     <label class="form-checkbox">
                         <span>¿Cual?</span>
-                        @Html.EditorFor(model => model.ProductType)
-                        Derecha:<input type="radio" name="mano_necesaria" value="derecha" unchecked>
-                        Izquierda:<input type="radio" name="mano_necesaria" value="izquierda" unchecked>
-                        Ambas:<input type="radio" name="mano_necesaria" value="ambas" unchecked>
+                        Derecha: @Html.RadioButtonFor(model => model.ProductType, "Derecha")
+                        Izquierda: @Html.RadioButtonFor(model => model.ProductType, "Izquierda")
+                        Ambas: @Html.RadioButtonFor(model => model.ProductType, "Ambas")
                     </label>
                 </div>
 
