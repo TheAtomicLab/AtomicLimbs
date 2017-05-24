@@ -1,12 +1,13 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
 	<title>Limbs | Atomic Lab</title>
 	<meta charset="utf-8">
-	<link rel="stylesheet" type="text/css" href="css/estilo01.css">
-	<link rel="stylesheet" type="text/css" href="css/estilo02.css">
+	<link rel="stylesheet" type="text/css" href="~/Content/estilo01.css">
+	<link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
 	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-	<script src="js/jquery-3.2.1.js"></script>
+	<script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/solicitud.js"></script>
 	<link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -37,7 +38,7 @@
 </article>
 
 <article id="categoria_mano">
-	<div class="categoria cat_mano" onclick="ajax_form('mano')">
+	<div class="categoria cat_mano"  onclick="window.location.href='@Url.Action("pedir_mano_inicio.cshtml", "Orders")'">
 		<div class="preview_cat"></div>
 		<p>Mano</p>
 	</div>
@@ -46,9 +47,9 @@
 		<p>Brazo</p>
 	</div>
 </article>
-<script src="js/solicitud.js"></script>
+
 
 </div>
-<script src="js/menu.js"></script>
+<script src="~/Scripts/menu.js"></script>
 </body>
 </html>

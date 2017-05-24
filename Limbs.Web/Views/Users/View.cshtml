@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" href="~/Content/estilo01.css">
     <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-    <script src="js/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
     <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
@@ -47,8 +47,7 @@
                 <div class="form-row">
                     <label>
                         <span>Nombre completo del adulto responsable:</span>
-                        @Html.EditorFor(model => model.ResponsableName)
-                        <input type="text" name="nombre del adulto" placeholder="Adulto responsable">
+                        @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { placeholder = "Adulto Responsable" } })
                     </label>
                 </div>
 
@@ -57,8 +56,7 @@
                 <div class="form-row">
                     <label>
                         <span>Nombre completo del usuario de la protesis:</span>
-                        @Html.EditorFor(model => model.UserName)
-                        <input type="text" name="nombre del usuario" placeholder="¡Nombre del usuario super heroe!">
+                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { placeholder = "¡Nombre del usuario super heroe!" } })
                     </label>
                 </div>
 
@@ -67,8 +65,8 @@
                 <div class="form-row">
                     <label>
                         <span>Correo electrónico:</span>
-                        @Html.EditorFor(model => model.Email)
-                        <input type="email" name="correo" placeholder="correo@ejemplo.com">
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "correo@ejemplo.com" } })
+  
                     </label>
                 </div>
 
@@ -189,6 +187,6 @@
         </article>
 
     </div>
-    <script src="js/menu.js"></script>
+    <script src="~/Scripts/menu.js"></script>
 </body>
 </html>

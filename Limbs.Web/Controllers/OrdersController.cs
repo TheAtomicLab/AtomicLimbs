@@ -39,15 +39,19 @@ namespace Limbs.Web.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
-            return View();
+            return View("Create1");
         }
 
+        public ActionResult CreateHand()
+        {
+            return View("pedir_mano_inicio");
+        }
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Comments,Status")] OrderModel orderModel)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Design,Sizes,Comments")] OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {

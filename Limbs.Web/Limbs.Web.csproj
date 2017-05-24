@@ -206,6 +206,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
+    <Compile Include="Models\OrderSizesModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -315,8 +316,8 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <None Include="Views\Home\index2.cshtml" />
-    <Content Include="Views\Orders\elegir_tipo.html" />
-    <Content Include="Views\Orders\pedir_mano_inicio.html" />
+    <None Include="Views\Orders\Create1.cshtml" />
+    <None Include="Views\Orders\pedir_mano_inicio.cshtml" />
     <Content Include="Views\Orders\pedir_mano_medidas.html" />
     <Content Include="Views\Users\iniciologin.html" />
     <Content Include="Web.config" />
