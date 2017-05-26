@@ -11,7 +11,7 @@ namespace Limbs.Web.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            return View("index2");
+            return View("Index");
         }
     }
 }

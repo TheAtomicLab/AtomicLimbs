@@ -33,7 +33,7 @@ body {
 	height: 100vh;
 	background-color: #4772B2;
 	color: white;
-	background-image: url(../img/fondo_ini_max.jpg);
+	background-image: url(../Content/img/fondo_ini_max.jpg);
 	background-position: center;
 	background-size: cover;
 }
@@ -163,7 +163,7 @@ nav li:hover a:before {
 	background-position: center;
 	background-size: cover;
 	background-color: white;
-	background-image: url(../img/default_profile.svg);
+	background-image: url(../Content/img/default_profile.svg);
 	margin-right: 15px;
 	border-radius: 50%;
 }
@@ -350,10 +350,10 @@ nav li:hover a:before {
 	background: black;
 }
 .cat_mano .preview_cat {
-	background-image: url(../img/mano_preview.jpg);
+    background-image: url(../Content/img/mano_preview.jpg);
 }
 .cat_brazo .preview_cat {
-	background-image: url(../img/brazo.jpg);
+    background-image: url(../Content/img/brazo.jpg);
 }
 .categoria p {
 	font-size: 1.2em;
@@ -467,23 +467,23 @@ nav li:hover a:before {
 	background-repeat: no-repeat;
 	cursor: pointer;
 }
-#color_mano input[value=a] {
-	background-image: url(../img/gal/mano_a.jpg);
-}
-#color_mano input[value=b] {
-	background-image: url(../img/gal/mano_b.jpg);
-}
+    #color_mano input[value=a] {
+        background-image: url(../Content/img/mano_a.jpg);
+    }
+    #color_mano input[value=b] {
+        background-image: url(../Content/img/mano_b.jpg);
+    }
 #color_mano input[value=c] {
-	background-image: url(../img/gal/mano_c.jpg);
+	background-image: url(../Content/img/mano_c.jpg);
 }
 #color_mano input[value=d] {
-	background-image: url(../img/gal/mano_d.jpg);
+	background-image: url(../Content/img/mano_d.jpg);
 }
 #color_mano input[value=e] {
-	background-image: url(../img/gal/mano_e.jpg);
+	background-image: url(../Content/img/mano_e.jpg);
 }
 #color_mano input[value=f] {
-	background-image: url(../img/gal/mano_f.jpg);
+	background-image: url(../Content/img/mano_f.jpg);
 }
 #color_mano input:checked {
 	border: solid 5px #4772B2;

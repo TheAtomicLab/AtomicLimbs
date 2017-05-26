@@ -32,25 +32,26 @@
         </div>
     </header>
     <div id="cont" class="min_full">
-        <form class="form_solicitud" method="post" action="process.php">
+        <form class="form_solicitud" method="post" action="@Url.Action("Create", "Orders")">
             <ul id="medidas">
                 <h2>Medidas:</h2>
                 <li>
                     <p>A</p>
-                    @Html.EditorFor(model => model.Sizes)
+                    @Html.EditorFor(model => model.Sizes.A)
                 </li>
                 <li>
                     <p>B</p>
-                    <input required="" type="number" max="100" min="0" name="b">
+                    @Html.EditorFor(model => model.Sizes.B)
                 </li>
                 <li>
                     <p>C</p>
-                    <input required="" type="number" max="100" min="0" name="c">
+                    @Html.EditorFor(model => model.Sizes.C)
                 </li>
                 <li>
                     <p>D</p>
-                    <input required="" type="number" max="100" min="0" name="d">
+                    @Html.EditorFor(model => model.Sizes.D)
                 </li>
+
             </ul>
             <div id="medidas_mano"></div>
             <div id="color_mano">
@@ -61,6 +62,12 @@
                 <input type="radio" name="color" required="true" value="d">
                 <input type="radio" name="color" required="true" value="e">
                 <input type="radio" name="color" required="true" value="f">
+            </div>
+            <div class="form-row">
+                <h2>Comentarios:</h2>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comments)
+                </div>
             </div>
             <input id="enviar" type="submit" name="enviar" value="Enviar" class="blue_button">
         </form>

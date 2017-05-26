@@ -80,7 +80,8 @@ namespace Limbs.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    // return RedirectToLocal(returnUrl);
+                    return View("LoginIndex");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

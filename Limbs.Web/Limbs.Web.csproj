@@ -237,6 +237,14 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estilo01.css" />
     <Content Include="Content\estilo02.css" />
+    <Content Include="Content\img\fondo_ini_max.jpg" />
+    <Content Include="Content\img\mano_a.jpg" />
+    <Content Include="Content\img\mano_b.jpg" />
+    <Content Include="Content\img\mano_c.jpg" />
+    <Content Include="Content\img\mano_d.jpg" />
+    <Content Include="Content\img\mano_e.jpg" />
+    <Content Include="Content\img\mano_f.jpg" />
+    <Content Include="Content\img\mano_preview.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -315,11 +323,11 @@
     <Content Include="Scripts\solicitud.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
-    <None Include="Views\Home\index2.cshtml" />
+    <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Orders\Create1.cshtml" />
     <None Include="Views\Orders\pedir_mano_inicio.cshtml" />
     <Content Include="Views\Orders\pedir_mano_medidas.html" />
-    <Content Include="Views\Users\iniciologin.html" />
+    <None Include="Views\Account\LoginIndex.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -331,7 +339,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
