@@ -13,14 +13,15 @@ namespace Limbs.Web.Models
         public int Id { get; set; }
 
         /// <summary>
-        /// Person who request the order
+        /// Usuario que solicita la orden de protesis
         /// </summary>
-        public UserModel OrderRequestor { get; set; }
+        public ApplicationUser OrderRequestor { get; set; }
 
         /// <summary>
-        /// Person who will use the order
+        /// Usuario (embajador) que procesara la orden
         /// </summary>
-        public virtual UserModel OrderUser { get; set; }
+        public virtual ApplicationUser OrderUser { get; set; }
+
 
         public int Design { get; set; }
 
@@ -35,7 +36,9 @@ namespace Limbs.Web.Models
 
     public enum OrderStatus
     {
-        [Description("Pendiente")]
+        [Description("Sin confirmacion por parte del embajador")]
+        NotAssigned,
+        [Description("Aignado al embajador. Orden pendiente.")]
         Pending,
         [Description("Lista para retirar")]
         Ready,
