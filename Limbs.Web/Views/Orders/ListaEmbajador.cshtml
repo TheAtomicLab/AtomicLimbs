@@ -1,0 +1,84 @@
+﻿@model Limbs.Web.ViewModels.EmbajadorOrderListViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@{
+    if (Model.PendingToAssignOrders.Count() > 0)
+    {
+        <h3>Pedidos pendientes de asignacion</h3>
+
+        <table class="table">
+            <tr>
+                <th>Id</th>
+                <th>Nombre solicitante</th>
+                <th>Comentarios</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.PendingToAssignOrders)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.Id.ToString(), "Details", "Orders", new { Id = item.Id }, null)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OrderRequestor.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Aceptar", "Accept", "Orders", new { id = item.Id }, null) |
+                        @Html.ActionLink("Rechazar", "Reject", "Orders", new { id = item.Id }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+
+<h3>Mis pedidos</h3>
+
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Nombre solicitante</th>
+        <th>Comentarios</th>
+        <th>Estado</th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.AssignedOrders)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Id.ToString(), "Details", "Orders", new { Id = item.Id }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderRequestor.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
