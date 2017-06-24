@@ -1,5 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
-@model Limbs.Web.Models.UserModel
+@model Limbs.Web.Models.AmbassadorModel
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +26,7 @@
         <div id="menu_perfil">
             <div id="icono_perfil"></div>
             <ul id="opciones_perfil">
-                <li class="perfil_name">Test User</li>
+                <li class="perfil_name">Test Ambassador</li>
                 <li class="cerrar_sesion">Cerrar sesión</li>
             </ul>
         </div>
@@ -37,7 +37,7 @@
             <form class="form" method="post" action="#">
 
                 <div class="form-title-row">
-                    <h1>¡Registrate a la plataforma Limbs como usuario!</h1>
+                    <h1>¡Registrate a la plataforma Limbs como embajador!</h1>
                 </div>
 
                 <div class="header_registro">
@@ -46,17 +46,8 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Nombre completo del adulto responsable:</span>
-                        @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { placeholder = "Adulto Responsable" } })
-                    </label>
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>Nombre completo del usuario de la protesis:</span>
-                        @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { placeholder = "¡Nombre del usuario super heroe!" } })
+                        <span>Nombre completo: </span>
+                        @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { placeholder = "Embajador Heroe" } })
                     </label>
                 </div>
 
@@ -66,7 +57,7 @@
                     <label>
                         <span>Correo electrónico:</span>
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "correo@ejemplo.com" } })
-  
+
                     </label>
                 </div>
 
@@ -74,9 +65,9 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Fecha de nacimiento del usuario de la prótesis:</span>
+                        <span>Fecha de nacimiento del embajador:</span>
                         @Html.EditorFor(model => model.Birth)
-                        <input type="date" name="fecha" step="1" min="1990-01-01" max="2017-12-31" value="2017-05-11"
+                        <input type="date" name="fecha" step="1" min="1990-01-01" max="2017-12-31" value="2017-05-11" />
                     </label>
                 </div>
 
@@ -84,9 +75,9 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Sexo del usuario de la prótesis:</span>
+                        <span>Sexo del embajador:</span>
 
-                            @Html.DropDownList("MyType",
+                        @Html.DropDownList("MyType",
                             EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
 
                         </select>
@@ -98,88 +89,23 @@
                 <div class="form-row">
                     <label>
                         <span>¿Donde vives?</span>
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "¿Dónde vive el usuario?" } })
-                      </label>
+                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
+                    </label>
                 </div>
 
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
                     <label>
-                        <span>Documento de identidad o pasaporte del usuario de la prótesis:</span>
-                        @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { placeholder = "D.N.I. del usuario" } })
+                        <span>Documento de identidad o pasaporte del embajador:</span>
+                        @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { placeholder = "D.N.I. del embajador" } })
                     </label>
                 </div>
 
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
-                    <label class="form-checkbox">
-                        <span>El pequeño super heroe necesita:</span>
-                        Mano: @Html.RadioButtonFor(model => model.ProthesisType, "Mano")
-                        Brazo: @Html.RadioButtonFor(model => model.ProductType, "Brazo")
-
-                    </label>
-                </div>
-                <div class="form-row">
-                    <label class="form-checkbox">
-                        <span>¿Cual?</span>
-                        Derecha: @Html.RadioButtonFor(model => model.ProductType, "Derecha")
-                        Izquierda: @Html.RadioButtonFor(model => model.ProductType, "Izquierda")
-                        Ambas: @Html.RadioButtonFor(model => model.ProductType, "Ambas")
-                    </label>
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="header_registro">
-                    ¡Sobre la Prótesis!
-                </div><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <p>¿Que impresión 3D necesitarías? A continuación le presentamos distintos tipos de amputaciones, por favor, seleccione al final de las imágenes, la letra que identifica a la más parecida de su amputación.</p>
-                        <br><hr color="#f2f2f2">
-                        @Html.EditorFor(model => model.AmputationType)
-                        <span>(A) Perdí UNA falange de cualquier dedo.</span>
-                        <p><img src="img/registro/falange1.png" class="img-responsive" width="300"></p>
-                        <span>(B) Perdí DOS falanges de cualquier dedo.</span>
-                        <p><img src="img/registro/falanges2.png" class="img-responsive" width="300"></p>
-                        <span>(C) Perdí mis cuatro dedos y tengo un pulgar.</span>
-                        <p><img src="img/registro/cuatrodedos.png" class="img-responsive" width="300"></p>
-                        <span>(D) Perdí el pulgar y no tengo los dedos (Poseo hueso Carpal).</span>
-                        <p><img src="img/registro/sindedos.png" class="img-responsive" width="300"></p>
-                        <span>(E) Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal).</span>
-                        <p><img src="img/registro/sinmano.png" class="img-responsive" width="300"></p>
-                        <span>(F) Tengo un muñón a partir del codo y tengo un antebrazo desarrollado (Huesos Cúbito y Radio presente).</span>
-                        <p><img src="img/registro/antebrazo.png" class="img-responsive" width="300"></p>
-                        <span>(G) Perdí el codo y tengo el húmero.</span>
-                        <p><img src="img/registro/sincodo.png" class="img-responsive" width="300"></p>
-                        <span>(H) Tengo el húmero pero muy poco desarrollado.</span>
-                        <p><img src="img/registro/hombro.png" class="img-responsive" width="300"></p>
-
-                        <div class="form-row">
-                            <label>
-                                <span>¿Cual es tu amputación?</span>
-                                <select name="dropdown">
-                                    <option>A</option>
-                                    <option>B</option>
-                                    <option>C</option>
-                                    <option>D</option>
-                                    <option>E</option>
-                                    <option>F</option>
-                                    <option>G</option>
-                                    <option>H</option>
-                                </select>
-                            </label>
-                        </div>
-                    </label>
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <button type="submit" class="blue_button">Registrarse como usuario</button>
+                    <button type="submit" class="blue_button">Registrarse como embajador</button>
                 </div>
 
             </form>

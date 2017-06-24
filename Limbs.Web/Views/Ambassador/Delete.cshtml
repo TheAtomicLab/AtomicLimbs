@@ -1,4 +1,4 @@
-﻿@model Limbs.Web.Models.UserModel
+﻿@model Limbs.Web.Models.AmbassadorModel
 
 @{
     ViewBag.Title = "Delete";
@@ -9,7 +9,7 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>UserModel</h4>
+    <h4>AmbassadorModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -102,7 +102,8 @@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
