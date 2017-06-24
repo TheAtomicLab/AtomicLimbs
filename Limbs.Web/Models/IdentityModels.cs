@@ -30,7 +30,7 @@ namespace Limbs.Web.Models
             return admins.Contains(email);
         }
     }
-    
+
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
@@ -49,6 +49,8 @@ namespace Limbs.Web.Models
         }
 
         public DbSet<UserModel> UserModels { get; set; }
+
+        public DbSet<AmbassadorModel> AmbassadorModels { get; set; }
 
         public DbSet<ProductModel> ProductModels { get; set; }
 
