@@ -13,7 +13,7 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Nombre completo del Responsable", Description = "")]
+        [Display(Name = "Nombre completo del Embajador", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableName { get; set; }
 
@@ -21,10 +21,6 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
         public string Email { get; set; }
-
-        [Display(Name = "Teléfono", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string Phone { get; set; }
 
         [DataType("datetime2")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
@@ -36,14 +32,6 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "País", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string Country { get; set; }
-
-        [Display(Name = "Ciudad", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string City { get; set; }
-
         [Display(Name = "Dirección", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
@@ -52,24 +40,21 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
 
-        [Display(Name = "Nombre completo del embajador", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string AmbassadorName { get; set; }
-
-        [Display(Name = "Tipo de prótesis", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public ProthesisType ProthesisType { get; set; }
-
-        [Display(Name = "Cuál", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public ProductType ProductType { get; set; }
-
-        [Display(Name = "Amputación", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string AmputationType { get; set; }
-
         public double Lat { get; set; }
 
         public double Long { get; set; }
+
+        [Display(Name = "Teléfono", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Phone { get; set; }
+
+        [Display(Name = "País", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Country { get; set; }
+
+        [Display(Name = "Ciudad", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string City { get; set; }
+
     }
 }

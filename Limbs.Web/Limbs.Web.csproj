@@ -181,6 +181,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -208,6 +209,7 @@
     <Compile Include="Models\AccesoryModel.cs" />
     <Compile Include="Models\OrderSizesModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\AmbassadorModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -383,6 +385,12 @@
     <Content Include="Views\Orders\Edit.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Users\View.cshtml" />
+    <Content Include="Views\Ambassador\Create.cshtml" />
+    <Content Include="Views\Ambassador\Delete.cshtml" />
+    <Content Include="Views\Ambassador\Details.cshtml" />
+    <Content Include="Views\Ambassador\Edit.cshtml" />
+    <Content Include="Views\Ambassador\Index.cshtml" />
+    <Content Include="Views\Ambassador\View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
