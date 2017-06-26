@@ -15,7 +15,7 @@ namespace Limbs.Web.Models
 
         [Display(Name = "Nombre completo del Embajador", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        public string ResponsableName { get; set; }
+        public string AmbassadorName { get; set; }
 
         [Display(Name = "Email", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]

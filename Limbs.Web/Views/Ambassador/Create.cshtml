@@ -30,10 +30,10 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-row">
-            @Html.LabelFor(model => model.ResponsableName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AmbassadorName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ResponsableName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AmbassadorName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -115,30 +115,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.AmbassadorName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.ProthesisType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ProthesisType, "- Tipo de prótesis -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProthesisType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.ProductType, "- ¿Cuál? -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AmputationType, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AmputationType, "", new { @class = "text-danger" })
             </div>
         </div>
 
