@@ -46,7 +46,7 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Nombre completo: </span>
+                        <span>Nombre completo </span>
                         @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { placeholder = "Embajador Heroe" } })
                     </label>
                 </div>
@@ -55,7 +55,7 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Correo electrónico:</span>
+                        <span>Correo electrónico</span>
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "correo@ejemplo.com" } })
                     </label>
                 </div>
@@ -64,7 +64,7 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Fecha de nacimiento del embajador:</span>
+                        <span>Fecha de nacimiento</span>
                         @Html.EditorFor(model => model.Birth)
                         <input type="date" name="fecha" step="1" min="1990-01-01" max="2017-12-31" value="2017-05-11" />
                     </label>
@@ -74,7 +74,7 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Sexo del embajador:</span>
+                        <span>Sexo</span>
 
                         @Html.DropDownList("MyType",
                             EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
@@ -96,7 +96,7 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Documento de identidad o pasaporte del embajador:</span>
+                        <span>Documento de identidad o pasaporte</span>
                         @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { placeholder = "D.N.I. del embajador" } })
                     </label>
                 </div>

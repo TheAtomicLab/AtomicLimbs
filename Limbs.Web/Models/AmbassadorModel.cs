@@ -17,18 +17,18 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string AmbassadorName { get; set; }
 
-        [Display(Name = "Correo electrónico:", Description = "")]
+        [Display(Name = "Correo electrónico", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
         public string Email { get; set; }
 
         [DataType("datetime2")]
-        [Display(Name = "Fecha de nacimiento del embajador:", Description = "")]
+        [Display(Name = "Fecha de nacimiento", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Sexo del embajador:", Description = "")]
+        [Display(Name = "Sexo", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
@@ -36,7 +36,7 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
 
-        [Display(Name = "Documento de identidad o pasaporte del embajador:", Description = "")]
+        [Display(Name = "Documento de identidad o pasaporte", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
 
