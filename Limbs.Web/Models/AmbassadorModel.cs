@@ -13,22 +13,22 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name = "Nombre completo del Embajador", Description = "")]
+        [Display(Name = "Nombre completo", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string AmbassadorName { get; set; }
 
-        [Display(Name = "Email", Description = "")]
+        [Display(Name = "Correo electrónico:", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
         public string Email { get; set; }
 
         [DataType("datetime2")]
-        [Display(Name = "Fecha de nacimiento", Description = "")]
+        [Display(Name = "Fecha de nacimiento del embajador:", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Genero", Description = "")]
+        [Display(Name = "Sexo del embajador:", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
@@ -36,10 +36,11 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
 
-        [Display(Name = "DNI o Pasaporte del embajador", Description = "")]
+        [Display(Name = "Documento de identidad o pasaporte del embajador:", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
 
+        /*
         public double Lat { get; set; }
 
         public double Long { get; set; }
@@ -55,6 +56,6 @@ namespace Limbs.Web.Models
         [Display(Name = "Ciudad", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string City { get; set; }
-
+        */
     }
 }

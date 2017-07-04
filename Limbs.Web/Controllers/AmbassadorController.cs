@@ -69,8 +69,8 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
 
-                ambassadorModel.Lat = 0;
-                ambassadorModel.Long = 0;
+            //    ambassadorModel.Lat = 0;
+            //    ambassadorModel.Long = 0;
 
                 db.AmbassadorModels.Add(ambassadorModel);
                 await db.SaveChangesAsync();
