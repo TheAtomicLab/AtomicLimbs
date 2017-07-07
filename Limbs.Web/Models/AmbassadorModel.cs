@@ -41,6 +41,24 @@ namespace Limbs.Web.Models
         public string Dni { get; set; }
 
         /*
+                --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+
+        [Display(Name = "AtributoEmbajador1", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string AtributoEmbajador1 { get; set; }
+
+        [Display(Name = "AtributoEmbajador2", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string AtributoEmbajador2 { get; set; }
+
+        [Display(Name = "AtributoEmbajador3", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string AtributoEmbajador3 { get; set; }
+
+             
+    */
+
+        /*
         public double Lat { get; set; }
 
         public double Long { get; set; }

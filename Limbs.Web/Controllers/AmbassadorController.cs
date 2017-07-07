@@ -69,8 +69,8 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
 
-            //    ambassadorModel.Lat = 0;
-            //    ambassadorModel.Long = 0;
+                //    ambassadorModel.Lat = 0;
+                //    ambassadorModel.Long = 0;
 
                 db.AmbassadorModels.Add(ambassadorModel);
                 await db.SaveChangesAsync();
@@ -113,6 +113,10 @@ namespace Limbs.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // public async Task<ActionResult> Edit([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address,Lat,Long")] AmbassadorModel ambassadorModel)
+        /*       --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+                 
+        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni,AtributoEmbajador1,AtributoEmbajador2,AtributoEmbajador3")] AmbassadorModel ambassadorModel)
+        */
         public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni")] AmbassadorModel ambassadorModel)
         {
             if (ModelState.IsValid)

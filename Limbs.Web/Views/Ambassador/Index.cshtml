@@ -30,14 +30,25 @@
     <th>
         @Html.DisplayNameFor(model => model.Address)
     </th>
-   @* <th>
-        @Html.DisplayNameFor(model => model.Lat)
-    </th>
+
     <th>
-        @Html.DisplayNameFor(model => model.Long)
+        @Html.DisplayNameFor(model => model.Dni)
     </th>
-        <th></th>
-    </tr>*@
+@*
+                    --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+         <th>
+             @Html.DisplayNameFor(model => model.AtributoEmbajador1)
+         </th>
+
+         <th>
+             @Html.DisplayNameFor(model => model.AtributoEmbajador2)
+         </th>
+
+         <th>
+             @Html.DisplayNameFor(model => model.AtributoEmbajador3)
+         </th>
+    *@
+
 
     @foreach (var item in Model)
     {
@@ -60,12 +71,27 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Address)
                 </td>
-               @* <td>
-                    @Html.DisplayFor(modelItem => item.Lat)
-                </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.Long)
-                </td>*@
+                    @Html.DisplayFor(modelItem => item.Dni)
+                </td>
+
+                                    @*
+                   --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+
+        <td>
+            @Html.DisplayFor(modelItem => item.AtributoEmbajador1)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.AtributoEmbajador2)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.AtributoEmbajador3)
+        </td>
+                                    *@
+             
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
                     @Html.ActionLink("Details", "Details", new { id=item.Id }) |
