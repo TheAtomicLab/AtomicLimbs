@@ -46,7 +46,8 @@
 
                 <div class="form-row">
                     <label>
-                        <span>Nombre completo del adulto responsable:</span>
+                        <span>Nombre completo del adulto 
+                        :</span>
                         @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { placeholder = "Adulto Responsable" } })
                     </label>
                 </div>
@@ -67,6 +68,13 @@
                         <span>Correo electrónico:</span>
                         @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "correo@ejemplo.com" } })
   
+                    </label>
+                </div>
+
+                <div class="form-row">
+                    <label>
+                        <span>Telefono:</span>
+                        @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { placeholder = "Telefono" } })
                     </label>
                 </div>
 
@@ -116,17 +124,17 @@
                 <div class="form-row">
                     <label class="form-checkbox">
                         <span>El pequeño super heroe necesita:</span>
-                        Mano: @Html.RadioButtonFor(model => model.ProthesisType, "Mano")
-                        Brazo: @Html.RadioButtonFor(model => model.ProductType, "Brazo")
+                        Mano: @Html.RadioButtonFor(model => model.ProthesisType, "Hand")
+                        Brazo: @Html.RadioButtonFor(model => model.ProductType, "Arm")
 
                     </label>
                 </div>
                 <div class="form-row">
                     <label class="form-checkbox">
                         <span>¿Cual?</span>
-                        Derecha: @Html.RadioButtonFor(model => model.ProductType, "Derecha")
-                        Izquierda: @Html.RadioButtonFor(model => model.ProductType, "Izquierda")
-                        Ambas: @Html.RadioButtonFor(model => model.ProductType, "Ambas")
+                        Derecha: @Html.RadioButtonFor(model => model.ProductType, "Right")
+                        Izquierda: @Html.RadioButtonFor(model => model.ProductType, "Left")
+                        Ambas: @Html.RadioButtonFor(model => model.ProductType, "Both")
                     </label>
                 </div>
 

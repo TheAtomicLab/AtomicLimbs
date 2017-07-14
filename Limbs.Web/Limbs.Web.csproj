@@ -186,21 +186,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702090042277_all.cs" />
-    <Compile Include="Migrations\201702090042277_all.Designer.cs">
-      <DependentUpon>201702090042277_all.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702090054550_product.cs" />
-    <Compile Include="Migrations\201702090054550_product.Designer.cs">
-      <DependentUpon>201702090054550_product.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201702090121283_orders.cs" />
-    <Compile Include="Migrations\201702090121283_orders.Designer.cs">
-      <DependentUpon>201702090121283_orders.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201705092226210_test.cs" />
-    <Compile Include="Migrations\201705092226210_test.Designer.cs">
-      <DependentUpon>201705092226210_test.cs</DependentUpon>
+    <Compile Include="Migrations\201707080128155_userssss.cs" />
+    <Compile Include="Migrations\201707080128155_userssss.Designer.cs">
+      <DependentUpon>201707080128155_userssss.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -400,17 +388,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702090042277_all.resx">
-      <DependentUpon>201702090042277_all.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702090054550_product.resx">
-      <DependentUpon>201702090054550_product.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201702090121283_orders.resx">
-      <DependentUpon>201702090121283_orders.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201705092226210_test.resx">
-      <DependentUpon>201705092226210_test.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201707080128155_userssss.resx">
+      <DependentUpon>201707080128155_userssss.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

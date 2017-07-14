@@ -36,6 +36,7 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
+        /*
         [Display(Name = "País", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Country { get; set; }
@@ -43,7 +44,7 @@ namespace Limbs.Web.Models
         [Display(Name = "Ciudad", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string City { get; set; }
-
+        */
         [Display(Name = "Dirección", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }

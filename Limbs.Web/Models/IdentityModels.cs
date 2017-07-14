@@ -48,7 +48,7 @@ namespace Limbs.Web.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<UserModel> UserModels { get; set; }
+        public DbSet<UserModel> UserModelsT { get; set; }
 
         public DbSet<AmbassadorModel> AmbassadorModels { get; set; }
 

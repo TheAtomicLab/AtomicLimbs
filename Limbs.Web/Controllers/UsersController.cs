@@ -22,7 +22,7 @@ namespace Limbs.Web.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            return View(await db.UserModels.ToListAsync());
+            return View(await db.UserModelsT.ToListAsync());
         }
 
         // GET: Users/Details/5
@@ -32,7 +32,7 @@ namespace Limbs.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserModel userModel = await db.UserModels.FindAsync(id);
+            UserModel userModel = await db.UserModelsT.FindAsync(id);
             if (userModel == null)
             {
                 return HttpNotFound();
@@ -72,7 +72,7 @@ namespace Limbs.Web.Controllers
                 userModel.Lat = 0;
                 userModel.Long = 0;
 
-                db.UserModels.Add(userModel);
+                db.UserModelsT.Add(userModel);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
             }
@@ -99,7 +99,7 @@ namespace Limbs.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserModel userModel = await db.UserModels.FindAsync(id);
+            UserModel userModel = await db.UserModelsT.FindAsync(id);
             if (userModel == null)
             {
                 return HttpNotFound();
@@ -112,7 +112,7 @@ namespace Limbs.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address,Lat,Long")] UserModel userModel)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,ResponsableName,UserName,Email,Dni,Phone,Birth,Gender,Address,ProthesisType,ProductType,AmputationType,Lat,Long")] UserModel userModel)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace Limbs.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            UserModel userModel = await db.UserModels.FindAsync(id);
+            UserModel userModel = await db.UserModelsT.FindAsync(id);
             if (userModel == null)
             {
                 return HttpNotFound();
@@ -143,8 +143,8 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            UserModel userModel = await db.UserModels.FindAsync(id);
-            db.UserModels.Remove(userModel);
+            UserModel userModel = await db.UserModelsT.FindAsync(id);
+            db.UserModelsT.Remove(userModel);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
