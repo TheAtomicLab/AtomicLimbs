@@ -8,27 +8,44 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Models;
+using Limbs.Web.Repositories;
 
 namespace Limbs.Web.Controllers
 {
     public class OrdersController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        //private ApplicationDbContext db = new ApplicationDbContext();
+        public IOrdersRepository OrdersRepository { get; set; }
+
+        private ApplicationDbContext _context;
+
+        public OrdersController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
 
         // GET: Orders
         public async Task<ActionResult> Index()
         {
-            return View(await db.OrderModels.ToListAsync());
+            return View(OrdersRepository.Get());
         }
 
         // GET: Orders/Details/5
         public async Task<ActionResult> Details(int? id)
         {
+            OrderModel orderModel;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderModel orderModel = await db.OrderModels.FindAsync(id);
+            else
+            {
+                var orderID = id.Value;
+
+                orderModel = OrdersRepository.Get(orderID);
+            }
+
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -55,8 +72,8 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
                 orderModel.Status = OrderStatus.Pending;
-                db.OrderModels.Add(orderModel);
-                await db.SaveChangesAsync();
+                OrdersRepository.Add(orderModel);
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -66,11 +83,18 @@ namespace Limbs.Web.Controllers
         // GET: Orders/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
+            OrderModel orderModel;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderModel orderModel = await db.OrderModels.FindAsync(id);
+            else
+            {
+                var orderID = id.Value;
+
+                orderModel = OrdersRepository.Get(orderID);
+            }
+
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -87,8 +111,8 @@ namespace Limbs.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(orderModel).State = EntityState.Modified;
-                await db.SaveChangesAsync();
+                _context.Entry(orderModel).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(orderModel);
@@ -97,11 +121,16 @@ namespace Limbs.Web.Controllers
         // GET: Orders/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
+            OrderModel orderModel;
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OrderModel orderModel = await db.OrderModels.FindAsync(id);
+            else
+            {
+                var orderId = id.Value;
+                orderModel = OrdersRepository.Get(orderId);
+            }
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -114,9 +143,9 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            OrderModel orderModel = await db.OrderModels.FindAsync(id);
-            db.OrderModels.Remove(orderModel);
-            await db.SaveChangesAsync();
+            OrderModel orderModel = OrdersRepository.Get(id);
+            OrdersRepository.Remove(orderModel);
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -124,7 +153,7 @@ namespace Limbs.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _context.Dispose();
             }
             base.Dispose(disposing);
         }
