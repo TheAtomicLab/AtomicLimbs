@@ -34,8 +34,8 @@ namespace Limbs.Web.Controllers
                 var orderList = await db.OrderModels.Include(m => m.OrderRequestor).Where(m => m.OrderUser.Id == currentUserId).ToListAsync();
 
 
-                var pendingAssignationList = orderList.Where(o => o.Status == OrderStatus.NotAssigned).OrderByDescending(m => m.Id);
-                var assignedList = orderList.Where(o => o.Status != OrderStatus.NotAssigned).OrderByDescending(m => m.Id);
+                var pendingAssignationList = orderList.Where(o => o.Status == OrderStatus.PreAssigned).OrderByDescending(m => m.Id);
+                var assignedList = orderList.Where(o => o.Status != OrderStatus.PreAssigned).OrderByDescending(m => m.Id);
 
                 var viewModel = new ViewModels.EmbajadorOrderListViewModel()
                 {
@@ -60,7 +60,7 @@ namespace Limbs.Web.Controllers
             if (orderInDb == null) return HttpNotFound();
 
             // Comprobamos que el pedido esté asignado al usuario y esté pendiente de asignacion
-            if(orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.NotAssigned)
+            if(orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
             {
                 orderInDb.Status = OrderStatus.Pending;
                 db.SaveChanges();
@@ -82,12 +82,14 @@ namespace Limbs.Web.Controllers
             if (orderInDb == null) return HttpNotFound();
 
             // Comprobamos que el pedido esté asignado al usuario y esté pendiente de asignacion
-            if (orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.NotAssigned)
+            if (orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
             {
-
+                orderInDb.Status = OrderStatus.NotAssigned;
                 orderInDb.OrderUser = null;
                 db.SaveChanges();
-                // Seleccionar nuevo embajador
+
+
+                // (Seleccionar nuevo embajador)
 
                 return RedirectToAction("Index");
             }
@@ -129,7 +131,7 @@ namespace Limbs.Web.Controllers
                     };
 
 
-                    if (orderModel.Status == OrderStatus.NotAssigned)
+                    if (orderModel.Status == OrderStatus.PreAssigned || orderModel.Status == OrderStatus.Delivered)
                         viewModel.CanChangeOrderStatus = false;
                     else
                         viewModel.CanChangeOrderStatus = true;
@@ -201,11 +203,10 @@ namespace Limbs.Web.Controllers
                 var userId = User.Identity.GetUserId();
                 orderModel.OrderRequestor = db.Users.SingleOrDefault(m => m.Id == userId);
 
-                // ---- TEMPORAL --- Asignar al user embajador@limbs.com el manejo de la orden
-                orderModel.OrderUser = db.Users.SingleOrDefault(m => m.Email == "embajador@limbs.com");
-                
+                // ---- TEMPORAL --- Asignar al user agusfn20@gmail.com el manejo de la orden
+                orderModel.OrderUser = db.Users.SingleOrDefault(m => m.Email == "agusfn20@gmail.com");
+                orderModel.Status = OrderStatus.PreAssigned;
 
-                orderModel.Status = OrderStatus.NotAssigned;
                 db.OrderModels.Add(orderModel);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");

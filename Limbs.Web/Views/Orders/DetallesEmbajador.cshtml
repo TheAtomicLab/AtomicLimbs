@@ -33,7 +33,7 @@
 </div>
 <p>
     @{ 
-        if(Model.CanChangeOrderStatus && Model.Order.Status != Limbs.Web.Models.OrderStatus.Delivered)
+        if(Model.CanChangeOrderStatus)
         {
             using (Html.BeginForm("ChangeStatus", "Orders"))
             {

@@ -36,9 +36,11 @@ namespace Limbs.Web.Models
 
     public enum OrderStatus
     {
-        [Description("Sin confirmacion por parte del embajador")]
+        [Description("No asignado")]
         NotAssigned,
-        [Description("Aignado al embajador. Orden pendiente.")]
+        [Description("Pre-asignado")]
+        PreAssigned,
+        [Description("Pendiente")]
         Pending,
         [Description("Lista para retirar")]
         Ready,
