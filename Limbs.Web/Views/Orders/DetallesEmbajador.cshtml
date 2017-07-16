@@ -1,0 +1,57 @@
+﻿@model Limbs.Web.ViewModels.OrderDetailsEmbajadorViewModel
+
+@{
+    ViewBag.Title = "Detalles";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div>
+    <h4>OrderModel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>Usuario solicitante</dt>
+        <dd>@Model.Order.OrderRequestor.UserName</dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.Comments)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.Comments)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order.Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order.Status)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @{ 
+        if(Model.CanChangeOrderStatus)
+        {
+            using (Html.BeginForm("ChangeStatus", "Orders"))
+            {
+                string msg = "";
+                if (Model.Order.Status == Limbs.Web.Models.OrderStatus.Pending)
+                {
+                    msg = "Ya imprimí la prótesis";
+                }
+                else if (Model.Order.Status == Limbs.Web.Models.OrderStatus.Ready)
+                {
+                    msg = "Ya envié la prótesis";
+                }
+                @Html.HiddenFor(m => m.Order.Id)
+                @Html.AntiForgeryToken()
+                <input type="submit" value="@msg" class="btn btn-primary"/>
+            }
+        }
+    }
+    <br />
+    @Html.ActionLink("Volver a la lista", "Index")
+</p>

@@ -202,6 +202,26 @@
     <Compile Include="Migrations\201707080128155_userssss.Designer.cs">
       <DependentUpon>201707080128155_userssss.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706210309352_SeedEmbajadorAndUsuarioRoles.cs" />
+    <Compile Include="Migrations\201706210309352_SeedEmbajadorAndUsuarioRoles.Designer.cs">
+      <DependentUpon>201706210309352_SeedEmbajadorAndUsuarioRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706210313557_SeedUsuarioAndEmbajadorUsersWithRoles.cs" />
+    <Compile Include="Migrations\201706210313557_SeedUsuarioAndEmbajadorUsersWithRoles.Designer.cs">
+      <DependentUpon>201706210313557_SeedUsuarioAndEmbajadorUsersWithRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706210322498_AddedMissingPropsToOrderModel.cs" />
+    <Compile Include="Migrations\201706210322498_AddedMissingPropsToOrderModel.Designer.cs">
+      <DependentUpon>201706210322498_AddedMissingPropsToOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706211351197_TempRemovedUserPropsFromOrderModel.cs" />
+    <Compile Include="Migrations\201706211351197_TempRemovedUserPropsFromOrderModel.Designer.cs">
+      <DependentUpon>201706211351197_TempRemovedUserPropsFromOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201706211352461_ReAddedUserPropsWithCorrectTypesToOrderModel.cs" />
+    <Compile Include="Migrations\201706211352461_ReAddedUserPropsWithCorrectTypesToOrderModel.Designer.cs">
+      <DependentUpon>201706211352461_ReAddedUserPropsWithCorrectTypesToOrderModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -224,6 +244,8 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EmbajadorOrderListViewModel.cs" />
+    <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\packages\Microsoft.SqlServer.Types.11.0.2\nativeBinaries\x64\msvcr100.dll">
@@ -336,6 +358,9 @@
     <Content Include="SqlServerTypes\readme.htm" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Orders\Create1.cshtml" />
+    <Content Include="Views\Orders\ListaEmbajador.cshtml" />
+    <Content Include="Views\Orders\ListaUsuario.cshtml" />
+    <Content Include="Views\Orders\DetallesEmbajador.cshtml" />
     <None Include="Views\Orders\pedir_mano_inicio.cshtml" />
     <Content Include="Views\Orders\pedir_mano_medidas.html" />
     <None Include="Views\Account\LoginIndex.cshtml" />
@@ -390,9 +415,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Views\Users\View.cshtml" />
     <Content Include="Views\Ambassador\Create.cshtml" />
     <Content Include="Views\Ambassador\Delete.cshtml" />
@@ -411,6 +434,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201707080128155_userssss.resx">
       <DependentUpon>201707080128155_userssss.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210309352_SeedEmbajadorAndUsuarioRoles.resx">
+      <DependentUpon>201706210309352_SeedEmbajadorAndUsuarioRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210313557_SeedUsuarioAndEmbajadorUsersWithRoles.resx">
+      <DependentUpon>201706210313557_SeedUsuarioAndEmbajadorUsersWithRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706210322498_AddedMissingPropsToOrderModel.resx">
+      <DependentUpon>201706210322498_AddedMissingPropsToOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706211351197_TempRemovedUserPropsFromOrderModel.resx">
+      <DependentUpon>201706211351197_TempRemovedUserPropsFromOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706211352461_ReAddedUserPropsWithCorrectTypesToOrderModel.resx">
+      <DependentUpon>201706211352461_ReAddedUserPropsWithCorrectTypesToOrderModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
