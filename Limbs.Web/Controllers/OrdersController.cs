@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Models;
 using Limbs.Web.Repositories;
+using Microsoft.AspNet.Identity;
 
 
 namespace Limbs.Web.Controllers
@@ -29,7 +30,7 @@ namespace Limbs.Web.Controllers
 
         // GET: Orders/Index
         [Authorize]
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
 
 
@@ -41,7 +42,7 @@ namespace Limbs.Web.Controllers
             {
 
                 var currentUserId = User.Identity.GetUserId();
-                var orderList = await db.OrderModels.Include(m => m.OrderRequestor).Where(m => m.OrderUser.Id == currentUserId).ToListAsync();
+                var orderList = OrdersRepository.GetByAssignedAmbassadorId(currentUserId);
 
 
                 var pendingAssignationList = orderList.Where(o => o.Status == OrderStatus.PreAssigned).OrderByDescending(m => m.Id);
@@ -64,17 +65,18 @@ namespace Limbs.Web.Controllers
 
         // GET: Orders/Accept/5
         [Authorize(Roles = "Embajador")]
-        public ActionResult Accept(int? Id)
+        public ActionResult Accept(int Id)
         {
-            var orderInDb = db.OrderModels.SingleOrDefault(m => m.Id == Id);
+
+
+            var orderInDb = OrdersRepository.Get(Id);
             if (orderInDb == null) return HttpNotFound();
 
             // Comprobamos que el pedido esté asignado al usuario y esté pendiente de asignacion
             if(orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
             {
                 orderInDb.Status = OrderStatus.Pending;
-                db.SaveChanges();
-
+                OrdersRepository.Update(orderInDb);
                 return RedirectToAction("Index");
             }
             else
@@ -86,9 +88,9 @@ namespace Limbs.Web.Controllers
 
         // GET: Orders/Reject/5
         [Authorize(Roles = "Embajador")]
-        public ActionResult Reject(int? Id)
+        public ActionResult Reject(int Id)
         {
-            var orderInDb = db.OrderModels.SingleOrDefault(m => m.Id == Id);
+            var orderInDb = OrdersRepository.Get(Id);
             if (orderInDb == null) return HttpNotFound();
 
             // Comprobamos que el pedido esté asignado al usuario y esté pendiente de asignacion
@@ -96,8 +98,7 @@ namespace Limbs.Web.Controllers
             {
                 orderInDb.Status = OrderStatus.NotAssigned;
                 orderInDb.OrderUser = null;
-                db.SaveChanges();
-
+                OrdersRepository.Update(orderInDb);
 
                 // (Seleccionar nuevo embajador)
 
@@ -170,7 +171,8 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ChangeStatus(OrderModel Order)
         {
-            var order = db.OrderModels.SingleOrDefault(m => m.Id == Order.Id);
+            // "Order" solo tiene la ID consigo.
+            OrderModel order = OrdersRepository.Get(Order.Id);
 
             if (order == null) return HttpNotFound();
 
@@ -183,7 +185,7 @@ namespace Limbs.Web.Controllers
             else if (order.Status == OrderStatus.Ready)
                 order.Status = OrderStatus.Delivered;
 
-            db.SaveChanges();
+            // (actualizar DB)
 
 
             return RedirectToAction("Details", new { id = Order.Id });
@@ -224,7 +226,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Orders/Edit/5
-        public async Task<ActionResult> Edit(int? id)
+        public ActionResult Edit(int? id)
         {
             OrderModel orderModel;
             if (id == null)
@@ -262,7 +264,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Orders/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        public ActionResult Delete(int? id)
         {
             OrderModel orderModel;
             if (id == null)
