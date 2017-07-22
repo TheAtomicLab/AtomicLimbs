@@ -11,6 +11,16 @@
     <script src="~/Scripts/jquery-3.2.1.js"></script>
     <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+         /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+         #map {
+             position: absolute;
+             height: 25%;
+             width: 35%;
+         }
+       
+    </style>
 </head>
 <body>
     <header>
@@ -93,6 +103,13 @@
                     </label>
                 </div>
 
+                <div class="form-row">
+                    <label>
+                        <span>Mapita</span>
+                        <div id="map"></div>
+                    </label>
+                </div>
+
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
@@ -138,6 +155,20 @@
         </article>
 
     </div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: {lat: 40.731, lng: -73.997}
+        });
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+      }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q&callback=initMap">
+    </script>
     <script src="~/Scripts/menu.js"></script>
 </body>
 </html>

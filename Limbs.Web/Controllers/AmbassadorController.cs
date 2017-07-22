@@ -11,6 +11,8 @@ using Limbs.Web.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+
 
 namespace Limbs.Web.Controllers
 {
@@ -71,6 +73,14 @@ namespace Limbs.Web.Controllers
 
                 //    ambassadorModel.Lat = 0;
                 //    ambassadorModel.Long = 0;
+             var lat = GetLatGoogle(ambassadorModel.Address);
+                ambassadorModel.Lat = lat;
+                //ambassadorModel.Lat = 40.731;
+                var lng = GetLongGoogle(ambassadorModel.Address);
+                ambassadorModel.Long = lng;
+
+                //ambassadorModel.Long = 40.731;
+
 
                 db.AmbassadorModels.Add(ambassadorModel);
                 await db.SaveChangesAsync();
@@ -82,6 +92,63 @@ namespace Limbs.Web.Controllers
             return View("View", ambassadorModel);
         }
 
+        public double GetLatGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+
+            return Convert.ToDouble(lat);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        public double GetLongGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+            return Convert.ToDouble(lng);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        public static dynamic GetPointGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+            return lat + lng;
+           // return jss.Deserialize<dynamic>(result);
+        }
+
+     /*   public string GetPointGoogle(string address)
+        {
+          var apiGoogle = "https://maps.googleapis.com/maps/api/geocode/json?address=" + Server.UrlEncode(address) + "&key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q";
+
+            StreamReader sr = new StreamReader(apiGoogle);
+
+
+            var jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(apiGoogle);
+
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+            return lat + lng;
+            string sContentsa = sr.ReadToEnd();
+            sr.Close();
+        }
+        */
         public async Task<JsonResult> GetPoint(string address)
         {
             var httpClient = Api.GetHttpClient();
