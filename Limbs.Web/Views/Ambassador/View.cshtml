@@ -80,11 +80,9 @@
                 <div class="form-row">
                     <label>
                         <span>Sexo</span>
-
-                        @Html.DropDownList("MyType",
-                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
-
                     </label>
+                    @Html.DropDownList("MyType",
+                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
                 </div>
 
                 <br><hr color="#f2f2f2">
