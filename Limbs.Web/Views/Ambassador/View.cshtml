@@ -9,12 +9,12 @@
     <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
     <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/geo.js"></script>
     <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-         /* Always set the map height explicitly to define the size of the div
+        /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
-       
     </style>
 </head>
 <body>
@@ -95,6 +95,7 @@
                 </div>
 
                 <div id="map"></div>
+                <button type="submit" id="checkAddress">Consultar</button>
 
                 <br><hr color="#f2f2f2">
 
@@ -105,31 +106,31 @@
                     </label>
                 </div>
 
-                                @*
-        --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+                @*
+                    --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador1</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador1</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador2</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador2</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador3</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador3</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-                                *@
+                *@
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
