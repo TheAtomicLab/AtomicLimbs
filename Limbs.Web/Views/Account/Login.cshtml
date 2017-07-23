@@ -3,53 +3,62 @@
 @{
     ViewBag.Title = "Ingresar";
 }
-
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
-        </section>
+<head>
+    <title>Limbs | Atomic Lab</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../Content/estilo01.css">
+    <link rel="stylesheet" type="text/css" href="../Content/estilo02.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel='shortcut icon' type='image/x-icon' href='Content/img/favicon.ico' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../Scripts/menu-login.js"></script>
+</head>
+<body id="body_inicio">
+    <div id="inicio">
+        <div id="cont_inicio">
+            <img src="../Content/img/proyecto.svg" id="proyecto_inicio">
+            <img src="../Content/img/limbs_white.svg" id="logo_inicio">
+            <p class="blue_button" onclick="abrir_login()">Iniciar sesión</p>
+            <a href="/Account/Register" id="registrarse_button">Registrarse</a>
+        </div>
+        <div id="login_f">
+            <div id="cont_login">
+                <div>
+                    <section id="socialLoginForm">
+                        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+                    </section>
+                </div>
+                <div>
+                    <section id="loginForm">
+                        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
+                {
+                            @Html.AntiForgeryToken()
+                            <h4>¿No tenes Facebook?</h4>
+                            @Html.ValidationSummary(true, "", new { })
+                            <div class="campos_l">
+                                @Html.LabelFor(m => m.Email, new { })
+                                    @Html.TextBoxFor(m => m.Email, new { })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { })
+                            </div>
+                            <div class="campos_l">
+                                @Html.LabelFor(m => m.Password, new { })
+                                @Html.PasswordFor(m => m.Password, new { })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { })
+                            </div>
+                                    <input type="submit" value="Ingresar"/>
+                            <p id="cerrar-login" onclick="cerrar_login()">
+                                Atrás
+                            </p>
+                            @* Enable this once you have account confirmation enabled for password reset functionality
+                                <p>
+                                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                                </p>*@
+                        }
+                    </section>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>¿No tenes Facebook?.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Ingresar" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Registrate si no tenes Facebook", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
-                    <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
-            }
-        </section>
-    </div>
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+</body>
