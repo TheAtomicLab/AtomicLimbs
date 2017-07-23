@@ -47,7 +47,7 @@
     </header>
     <div id="cont" class="min_full">
         <article id="home">
-            <h1>@Html.ActionLink("Hola " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</h1>
+            <h1>Hola @User.Identity.GetUserName()</h1>
             <a href="/Orders/Create"><button id="home_pedir" class="blue_button">Pedir una mano</button></a>
             <article id="tus_pedidos">
                 <h2>Tus pedidos:</h2>
