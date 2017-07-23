@@ -85,10 +85,10 @@ namespace Limbs.Web.Models
     public enum Gender
     {
         [Description("Femenino")]
-        F,
+        Mujer,
         [Description("Masculino")]
-        M,
+        Hombre,
         [Description("No Declara")]
-        ND
+        Otro
     }
 }

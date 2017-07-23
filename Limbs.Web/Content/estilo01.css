@@ -270,6 +270,13 @@ nav li:hover a:before {
 .form .img-responsive {
 	margin-bottom: 20px;
 }
+#map {
+    position: relative;
+    height: 500px;
+    width: 100%;
+    margin-top: 40px;
+    max-height: calc(100vw - 110px);
+}
 
 /*inicio form*/
 #realiza_pedido {
