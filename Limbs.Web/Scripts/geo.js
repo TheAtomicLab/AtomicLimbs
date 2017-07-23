@@ -1,5 +1,9 @@
 $(document).ready(function () {
-    $('#checkAddress').click(function () { putPointInMap($('#Address').val()); });
+    $('#checkAddress').click(function () {
+        putPointInMap($('#Address').val());
+        return false;
+    });
+   // $('#map').hide();
 });
 
 function putPointInMap(address) {
@@ -15,20 +19,21 @@ function putPointInMap(address) {
           //  alert('Me viene por aqui');
         },
         success: function (response) {
-            alert('Me viene por aca');
+          //  alert('Me viene por aca');
            // var response = JSON.stringiFy(response.Predictions[0].Tag);
             //  alert(response);
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 20,
                 center: {
-                    lat: -34.686387, lng: -58.338313
+                  lat: -34.631915, lng: -58.410862
                 }
             });
             var geocoder = new google.maps.Geocoder;
             var infowindow = new google.maps.InfoWindow;
 
             geocodeLatLng(geocoder, map, infowindow, response);
-            return false;
+          //  $('#map').show(3000);
+          //  $('#map').show("slow"); -> Efecto de mierda
 
         },
         failure: function () {

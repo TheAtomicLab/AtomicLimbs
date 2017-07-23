@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.AmbassadorModel
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,16 +13,9 @@
     <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-         /* Always set the map height explicitly to define the size of the div
+        /* Always set the map height explicitly to define the size of the div
         * element that contains the map. */
-         #map {
-             position: absolute;
-             height: 25%;
-             width: 35%;
-         }
-       
     </style>
-   
 </head>
 <body>
     <header>
@@ -102,13 +94,9 @@
                     @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
                 </div>
 
-                <div class="form-row">
-                    <label>
-                        <span>Mapita</span>
-                        <div id="map"></div>
-                    </label>
-                </div>
+                <div id="map"></div>
                 <button type="submit" id="checkAddress">Consultar</button>
+
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
@@ -118,31 +106,31 @@
                     </label>
                 </div>
 
-                                @*
-        --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+                @*
+                    --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador1</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador1</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador2</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador2</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador3</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador3</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-                                *@
+                *@
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
@@ -162,31 +150,6 @@
         });
         var geocoder = new google.maps.Geocoder;
         var infowindow = new google.maps.InfoWindow;
-      }
-
-      function geocodeLatLng(geocoder, map, infowindow, latlong) {
-         // var input = latlong;
-          //var input = document.getElementById('latlng').value;
-          var latlngStr = latlong.result.split(',', 2);
-          var latlng = { lat: parseFloat(latlngStr[0]), lng: parseFloat(latlngStr[1]) };
-          //var latlng = latlong;
-          geocoder.geocode({ 'location': latlng }, function (results, status) {
-              if (status === 'OK') {
-                  if (results[1]) {
-                      map.setZoom(11);
-                      var marker = new google.maps.Marker({
-                          position: latlng,
-                          map: map
-                      });
-                      infowindow.setContent(results[1].formatted_address);
-                      infowindow.open(map, marker);
-                  } else {
-                      window.alert('No results found');
-                  }
-              } else {
-                  window.alert('Geocoder failed due to: ' + status);
-              }
-          });
       }
 
     </script>
