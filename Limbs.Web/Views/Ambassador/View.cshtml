@@ -85,7 +85,6 @@
                         @Html.DropDownList("MyType",
                             EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
 
-                        </select>
                     </label>
                 </div>
 
@@ -94,8 +93,8 @@
                 <div class="form-row">
                     <label>
                         <span>¿Donde vives?</span>
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
                     </label>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
                 </div>
 
                 <div id="map"></div>
