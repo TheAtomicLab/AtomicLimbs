@@ -11,6 +11,7 @@ using Limbs.Web.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
 
 namespace Limbs.Web.Controllers
 {
@@ -69,8 +70,11 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
 
-                userModel.Lat = 0;
-                userModel.Long = 0;
+                var lat = GetLatGoogle(userModel.Address);
+                userModel.Lat = lat;
+                //ambassadorModel.Lat = 40.731;
+                var lng = GetLongGoogle(userModel.Address);
+                userModel.Long = lng;
 
                 db.UserModelsT.Add(userModel);
                 await db.SaveChangesAsync();
@@ -80,6 +84,32 @@ namespace Limbs.Web.Controllers
             ViewBag.CountryList = GetCountryList();
 
             return View("View", userModel);
+        }
+
+        public double GetLatGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+
+            return Convert.ToDouble(lat);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        public double GetLongGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+            return Convert.ToDouble(lng);
+            // return jss.Deserialize<dynamic>(result);
         }
 
         public async Task<JsonResult> GetPoint(string address)
