@@ -12,6 +12,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    @using Microsoft.AspNet.Identity
+    @if (Request.IsAuthenticated)
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+        }
+    }
+    else
+    {
+        <ul class="nav navbar-nav navbar-right">
+            <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Ingresar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        </ul>
+    }
     <header>
         <div id="main_head">
             <a href="index.php"><img id="logo_head" src="img/limbs_white.svg"></a>
@@ -25,14 +40,14 @@
         <div id="menu_perfil">
             <div id="icono_perfil"></div>
             <ul id="opciones_perfil">
-                <li class="perfil_name">Test User</li>
-                <li class="cerrar_sesion">Cerrar sesión</li>
+                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                <li class="cerrar_sesion"><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
             </ul>
         </div>
     </header>
     <div id="cont" class="min_full">
         <article id="home">
-            <h1>Hola @Html.DisplayFor(model => model.UserName)</h1>
+            <h1>@Html.ActionLink("Hola " + User.Identity.GetUserName(), "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</h1>
             <a href="/Orders/Create"><button id="home_pedir" class="blue_button">Pedir una mano</button></a>
             <article id="tus_pedidos">
                 <h2>Tus pedidos:</h2>
