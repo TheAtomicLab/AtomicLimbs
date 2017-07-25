@@ -224,6 +224,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estilo01.css" />
     <Content Include="Content\estilo02.css" />
+    <Content Include="Content\img\Account\reg2-emb.jpg" />
+    <Content Include="Content\img\Account\reg2-usr.jpg" />
     <Content Include="Content\img\fondo_ini_max.jpg" />
     <Content Include="Content\img\mano_a.jpg" />
     <Content Include="Content\img\mano_b.jpg" />
@@ -304,6 +306,8 @@
     <Content Include="Scripts\menu-login.js" />
     <Content Include="Scripts\menu.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pages\ambassador.js" />
+    <Content Include="Scripts\pages\users.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -311,6 +315,7 @@
     <Content Include="Scripts\solicitud.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="Views\Account\selectUserOrAmbassador.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Orders\Create1.cshtml" />
     <None Include="Views\Orders\pedir_mano_inicio.cshtml" />
