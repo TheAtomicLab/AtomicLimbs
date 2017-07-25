@@ -738,3 +738,117 @@ nav li:hover a:before {
 	transition: font-size 0.5s ease;
 	color: white;
 }
+
+/*panel embajadores*/
+#panel_embajadores {
+	width: 100%;
+	max-width: 1200px;
+	padding: 20px;
+	box-sizing: border-box;
+	position: relative;
+	margin: 0px auto;
+	text-align: center;
+}
+#panel_embajadores h1 {
+	font-size: 3em;
+	font-weight: 200;
+	color: #4772B2;
+	padding: 10vh 0px 30px 0px;
+}
+#estadistica_emb {
+	overflow: auto;
+}
+#estadistica_emb div {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    padding-top: 17px;
+    border: solid 1px #4772b2;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0px 20px;
+}
+#estadistica_emb h2 {
+	font-weight: 300;
+	color: #4772B2;
+	font-size: 50px;
+	padding-bottom: 0px;
+}
+#paneles_embajador {
+	margin-top: 50px;
+}
+#paneles_embajador table tr:first-child {
+	cursor: inherit !important;
+	background-color: inherit !important;
+	color: inherit !important;
+}
+#paneles_embajador table tr:hover {
+	cursor: pointer;
+	background-color: #4772B2;
+	color: white;
+}
+.panel_emb {
+	width: calc(48% - 2px);
+	margin: 20px 1%;
+	margin-top: 0px;
+	padding: 20px;
+	min-width: 460px;
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+    background: white;
+    border: solid 1px #dadada;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.panel_emb h2 {
+	text-align: left;
+}
+.tabla_emb {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+.tabla_emb th {
+	display: none;
+}
+.tabla_emb td, .tabla_emb th {
+	padding: 11px 0px;
+	padding-left: 5px;
+	box-sizing: border-box;
+}
+.tabla_emb tr th:first-of-type, .tabla_emb tr td:first-of-type {
+	border-left: solid 0px;
+}
+
+
+/*info solicitud*/
+#info_solicitud {
+	max-width: 900px;
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	position: relative;
+	margin: 0px auto;
+	text-align: center;
+}
+#info_solicitud h1 {
+	font-size: 3em;
+	font-weight: 200;
+	color: #4772B2;
+	padding: 10vh 0px 10px 0px;
+}
+#accion_solicitud {
+	padding: 20px 0px;
+}
+.tabla_datos {
+	padding: 3px;
+	text-align: left;
+	border-collapse: collapse;
+	position: relative;
+	margin: 0px auto;
+}
+.tabla_datos tr td {
+	padding: 11px 18px;
+	border-bottom: solid 1px #dadada;
+}

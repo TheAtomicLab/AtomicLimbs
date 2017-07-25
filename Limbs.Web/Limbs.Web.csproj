@@ -316,6 +316,7 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Views\Account\selectUserOrAmbassador.cshtml" />
+    <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Orders\Create1.cshtml" />
     <None Include="Views\Orders\pedir_mano_inicio.cshtml" />

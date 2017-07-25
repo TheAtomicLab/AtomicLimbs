@@ -85,7 +85,7 @@ namespace Limbs.Web.Controllers
 
                 db.AmbassadorModels.Add(ambassadorModel);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AmbassadorPanel", "Ambassador");
             }
 
             ViewBag.CountryList = GetCountryList();
@@ -162,6 +162,11 @@ namespace Limbs.Web.Controllers
             var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
 
             return Json(r, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AmbassadorPanel()
+        {
+            return View();
         }
 
         // GET: Ambassador/Edit/5
