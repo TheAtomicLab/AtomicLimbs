@@ -11,6 +11,9 @@ using Limbs.Web.Services;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+using System.Web.Http;
+
 
 namespace Limbs.Web.Controllers
 {
@@ -71,17 +74,86 @@ namespace Limbs.Web.Controllers
 
                 //    ambassadorModel.Lat = 0;
                 //    ambassadorModel.Long = 0;
+             var lat = GetLatGoogle(ambassadorModel.Address);
+                ambassadorModel.Lat = lat;
+                //ambassadorModel.Lat = 40.731;
+                var lng = GetLongGoogle(ambassadorModel.Address);
+                ambassadorModel.Long = lng;
+
+                //ambassadorModel.Long = 40.731;
+
 
                 db.AmbassadorModels.Add(ambassadorModel);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("AmbassadorPanel", "Ambassador");
             }
 
             ViewBag.CountryList = GetCountryList();
 
             return View("View", ambassadorModel);
         }
+        
+        public ActionResult GetPointGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
 
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+            var latlng = Convert.ToString(lat).Replace(',','.') + ',' + Convert.ToString(lng).Replace(',', '.');
+            return Json(new { result = latlng }, JsonRequestBehavior.AllowGet);
+            //return Convert.ToDouble(latlng);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        // POST: Ambassador/GetLatGoogle
+        [HttpPost]
+      public double GetLatGoogle(String Address)
+      {
+          var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+          var result = new System.Net.WebClient().DownloadString(address);
+          JavaScriptSerializer jss = new JavaScriptSerializer();
+          var dict = jss.Deserialize<dynamic>(result);
+
+          var lat = dict["results"][0]["geometry"]["location"]["lat"];
+
+          return Convert.ToDouble(lat);
+          // return jss.Deserialize<dynamic>(result);
+      }
+
+      public double GetLongGoogle(String Address)
+      {
+          var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+          var result = new System.Net.WebClient().DownloadString(address);
+          JavaScriptSerializer jss = new JavaScriptSerializer();
+          var dict = jss.Deserialize<dynamic>(result);
+
+          var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+          return Convert.ToDouble(lng);
+          // return jss.Deserialize<dynamic>(result);
+      }
+
+   /*   public string GetPointGoogle(string address)
+      {
+        var apiGoogle = "https://maps.googleapis.com/maps/api/geocode/json?address=" + Server.UrlEncode(address) + "&key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q";
+
+          StreamReader sr = new StreamReader(apiGoogle);
+
+
+          var jss = new JavaScriptSerializer();
+          var dict = jss.Deserialize<dynamic>(apiGoogle);
+
+          var lat = dict["results"][0]["geometry"]["location"]["lat"];
+          var lng = dict["results"][0]["geometry"]["location"]["lng"];
+          return lat + lng;
+          string sContentsa = sr.ReadToEnd();
+          sr.Close();
+      }
+      */
         public async Task<JsonResult> GetPoint(string address)
         {
             var httpClient = Api.GetHttpClient();
@@ -90,6 +162,11 @@ namespace Limbs.Web.Controllers
             var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
 
             return Json(r, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AmbassadorPanel()
+        {
+            return View();
         }
 
         // GET: Ambassador/Edit/5

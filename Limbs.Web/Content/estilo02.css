@@ -1,0 +1,166 @@
+@media only screen and (max-width: 760px) {
+
+    header {
+        height: 55px;
+    }
+
+    body {
+        padding-top: 55px;
+    }
+
+    .min_full {
+        min-height: calc(100vh - 55px);
+    }
+
+    #main_head {
+        top: 0px;
+        height: 55px;
+        overflow: inherit;
+    }
+
+    #menu_perfil {
+        display: none;
+    }
+
+    #logo_head {
+        z-index: 100;
+        float: none;
+    }
+
+    nav {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background-color: #4772b2;
+        top: 0px;
+        left: -100%;
+        padding-top: 70px;
+        z-index: 98;
+        transition: left 0.3s ease;
+    }
+
+        nav li {
+            display: block;
+            padding: 20px 0px;
+            margin: 0px;
+        }
+
+    .nav_mobile_act {
+        left: 0px;
+    }
+
+    #menu_mobil {
+        display: block;
+        position: absolute;
+        right: 14px;
+        top: 15px;
+        height: 25px;
+        z-index: 100;
+    }
+
+    /*inicio*/
+    #cont_inicio {
+        width: 100%;
+        left: 0px;
+        transform: translateY(-50%);
+        height: 220px;
+    }
+
+    #proyecto_inicio {
+        animation: none;
+        top: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #logo_inicio {
+        right: inherit;
+        animation: none;
+        top: 50px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    #cont_inicio a {
+        left: 50% !important;
+    }
+
+    /*realizar pedido*/
+    #realiza_pedido {
+        position: relative;
+        transform: inherit;
+        left: 0px;
+        top: 0px;
+        padding-top: 30px;
+    }
+
+        #realiza_pedido h1 {
+            font-size: 1.2em;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+    #categoria_mano {
+        position: relative;
+        transform: inherit;
+        top: inherit;
+    }
+
+    .categoria {
+        margin-bottom: 20px;
+    }
+
+    .preview_cat {
+        height: calc(100vh / 2 - 130px);
+        max-height: 200px;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        background-color: #b3b3b3;
+    }
+
+    #color_mano input {
+        width: 130px;
+        height: 130px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+    }
+
+    /*home*/
+    #tus_pedidos td, #tus_pedidos th {
+        padding: 11px 5px !important;
+        font-size: 0.8em;
+    }
+
+    #reg2 {
+        flex-direction: column;
+        height: calc(100vh - 55px);
+        position: relative;
+    }
+
+        #reg2 a {
+            height: 50%;
+        }
+
+    .selec {
+        height: 100%;
+    }
+    
+/*registro parte 2*/
+#reg2 {
+	flex-direction: column;
+	height: calc(100vh - 55px);
+	position: relative;
+}
+#reg2 a {
+	height: 50%;
+}
+.selec {
+	height: 100%;
+}
+
+
+}
+
+
+/*termina media*/

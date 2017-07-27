@@ -198,12 +198,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201707080128155_userssss.cs" />
-    <Compile Include="Migrations\201707080128155_userssss.Designer.cs">
-      <DependentUpon>201707080128155_userssss.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\GoogleGeoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
@@ -248,6 +245,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estilo01.css" />
     <Content Include="Content\estilo02.css" />
+    <Content Include="Content\img\Account\reg2-emb.jpg" />
+    <Content Include="Content\img\Account\reg2-usr.jpg" />
     <Content Include="Content\img\fondo_ini_max.jpg" />
     <Content Include="Content\img\mano_a.jpg" />
     <Content Include="Content\img\mano_b.jpg" />
@@ -325,8 +324,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\menu-login.js" />
     <Content Include="Scripts\menu.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\pages\ambassador.js" />
+    <Content Include="Scripts\pages\users.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -334,6 +336,8 @@
     <Content Include="Scripts\solicitud.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
+    <Content Include="Views\Account\selectUserOrAmbassador.cshtml" />
+    <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Orders\Create1.cshtml" />
     <None Include="Views\Orders\pedir_mano_inicio.cshtml" />
@@ -407,11 +411,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707080128155_userssss.resx">
-      <DependentUpon>201707080128155_userssss.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

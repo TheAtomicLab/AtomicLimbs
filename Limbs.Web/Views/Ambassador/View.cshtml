@@ -9,8 +9,14 @@
     <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
     <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/geo.js"></script>
+    <script src="~/Scripts/pages/ambassador.js"></script>
     <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+    </style>
 </head>
 <body>
     <header>
@@ -47,9 +53,8 @@
                 <div class="form-row">
                     <label>
                         <span>Nombre completo </span>
-                        @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { placeholder = "Embajador Heroe" } })
-
                     </label>
+                    @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { placeholder = "Embajador Heroe" } })
                 </div>
 
                 <br><hr color="#f2f2f2">
@@ -57,8 +62,8 @@
                 <div class="form-row">
                     <label>
                         <span>Correo electrónico</span>
-                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { placeholder = "correo@ejemplo.com" } })
                     </label>
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @Value = User.Identity.GetUserName() } })
                 </div>
 
                 <br><hr color="#f2f2f2">
@@ -76,12 +81,9 @@
                 <div class="form-row">
                     <label>
                         <span>Sexo</span>
-
-                        @Html.DropDownList("MyType",
-                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
-
-                        </select>
                     </label>
+                    @Html.DropDownList("MyType",
+                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
                 </div>
 
                 <br><hr color="#f2f2f2">
@@ -89,9 +91,12 @@
                 <div class="form-row">
                     <label>
                         <span>¿Donde vives?</span>
-                        @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
                     </label>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
                 </div>
+
+                <div id="map"></div>
+                <button type="submit" id="checkAddress">Consultar</button>
 
                 <br><hr color="#f2f2f2">
 
@@ -102,31 +107,31 @@
                     </label>
                 </div>
 
-                                @*
-        --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+                @*
+                    --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador1</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador1</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador2</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador2</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-           <div class="form-row">
-               <label>
-                   <span>AtributoEmbajador3</span>
-                   @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-               </label>
-           </div>
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador3</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
 
-                                *@
+                *@
                 <br><hr color="#f2f2f2">
 
                 <div class="form-row">
@@ -138,6 +143,20 @@
         </article>
 
     </div>
+    <script>
+      function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 16,
+          center: {lat: 40.731, lng: -73.997}
+        });
+        var geocoder = new google.maps.Geocoder;
+        var infowindow = new google.maps.InfoWindow;
+      }
+
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q&callback=initMap">
+    </script>
     <script src="~/Scripts/menu.js"></script>
 </body>
 </html>
