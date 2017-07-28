@@ -1,0 +1,104 @@
+﻿@using Microsoft.AspNet.Identity
+@model Limbs.Web.Models.AmbassadorModel
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Limbs | Atomic Lab</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="~/Content/estilo01.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/geo.js"></script>
+    <script src="~/Scripts/pages/ambassador.js"></script>
+    <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+    </style>
+</head>
+<body>
+    <header>
+        <div id="main_head">
+            <a href="index.php"><img id="logo_head" src="img/limbs_white.svg"></a>
+            <nav>
+                <li><a onclick='cerrarmenu()' href="home.php">Inicio</a></li>
+                <li><a onclick='cerrarmenu()' href="pedir_una_mano.php">Pedir una mano</a></li>
+                <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
+            </nav>
+            <img src="img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
+        </div>
+        <div id="menu_perfil">
+            <div id="icono_perfil"></div>
+            <ul id="opciones_perfil">
+                <li class="perfil_name">Test Ambassador</li>
+                <li class="cerrar_sesion">Cerrar sesión</li>
+            </ul>
+        </div>
+    </header>
+    <article id="panel_embajadores">
+        <h1>Panel de control</h1>
+        <div id="estadistica_emb">
+            <div>
+                <p>Entregaste</p>
+                <h2>10</h2>
+                <p>Manos</p>
+            </div>
+            <div>
+                <p>Tenés</p>
+                <h2>5</h2>
+                <p>Pedidos</p>
+            </div>
+        </div>
+        <div id="paneles_embajador">
+            <article class="panel_emb">
+                <h2>Tus pedidos:</h2>
+                <table class="tabla_emb">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha de solicitud</th>
+                        <th>Número de pedido</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                        <td>Lorem Ipsum</td>
+                        <td>10/05/2017</td>
+                        <td>125623</td>
+                        <td>Pendiente</td>
+                    </tr>
+                    <tr>
+                        <td>Ipsum Lorem</td>
+                        <td>05/02/2017</td>
+                        <td>125210</td>
+                        <td>Pendiente</td>
+                    </tr>
+                </table>
+            </article>
+            <article id="terminadas" class="panel_emb">
+                <h2>Terminadas:</h2>
+                <table class="tabla_emb">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Fecha de solicitud</th>
+                        <th>Número de pedido</th>
+                        <th>Estado</th>
+                    </tr>
+                    <tr>
+                        <td>Lorem Ipsum</td>
+                        <td>10/05/2017</td>
+                        <td>125623</td>
+                        <td>Cancelada</td>
+                    </tr>
+                    <tr>
+                        <td>Ipsum Lorem</td>
+                        <td>05/02/2017</td>
+                        <td>125210</td>
+                        <td>Entregada</td>
+                    </tr>
+                </table>
+            </article>
+        </div>
+    </article>
+</body>
+</html>

@@ -42,6 +42,10 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
 
+        public double Lat { get; set; }
+
+        public double Long { get; set; }
+
         /*
                 --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
 

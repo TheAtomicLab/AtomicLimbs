@@ -1,4 +1,9 @@
-﻿<head>
+﻿@using Limbs.Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Ingresar";
+}
+<head>
 	<title>Limbs | Atomic Lab</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="Content/estilo01.css">
@@ -11,12 +16,11 @@
 <body id="body_inicio">
 <div id="inicio">
 	<div id="cont_inicio">
-		<img src="img/proyecto.svg" id="proyecto_inicio">
-		<img src="img/limbs_white.svg" id="logo_inicio">
+		<img src="Content/img/proyecto.svg" id="proyecto_inicio">
+		<img src="Content/img/limbs_white.svg" id="logo_inicio">
 		<a href="/Account/Login" class="blue_button">Iniciar sesión</a>
 		<a href="/Account/Register" id="registrarse_button">Registrarse</a>
 	</div>
-
 </div>
 
 </body>

@@ -81,6 +81,14 @@ namespace Limbs.Web.Models
         public string ConfirmPassword { get; set; }
     }
 
+    public class SelectUserOrAmbassador
+    {
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+    }
+
     public class ResetPasswordViewModel
     {
         [Required]

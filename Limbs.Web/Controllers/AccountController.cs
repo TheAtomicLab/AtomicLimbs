@@ -166,7 +166,7 @@ namespace Limbs.Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("selectUserOrAmbassador", "Account");
                 }
                 AddErrors(result);
             }
@@ -175,6 +175,16 @@ namespace Limbs.Web.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult selectUserOrAmbassador()
+        {
+         //   if (User.Identity.IsAuthenticated)
+           // {
+                return View();
+            //}
+        }
+        
+       
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]

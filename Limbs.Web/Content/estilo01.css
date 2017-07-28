@@ -222,6 +222,9 @@ nav li:hover a:before {
 .form hr {
 	margin: 20px 0px 30px 0px;
 }
+.form label {
+    width: 100%;
+}
 
 .form .form-row > label span{
 	display: block;
@@ -269,6 +272,13 @@ nav li:hover a:before {
 }
 .form .img-responsive {
 	margin-bottom: 20px;
+}
+#map {
+    position: relative;
+    height: 500px;
+    width: 100%;
+    margin-top: 40px;
+    max-height: calc(100vw - 110px);
 }
 
 /*inicio form*/
@@ -368,15 +378,91 @@ nav li:hover a:before {
 	width: 100%;
 }
 
+#login_f {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,0.5);
+    display: block;
+    display: none;
+}
+#cont_login {
+    position: relative;
+    background-color: white;
+    float: left;
+    padding: 20px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    text-align: center;
+}
+#cont_login #Facebook {
+    background-color: #4772b2;
+    border: 0px;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 100%;
+    color: white;
+    margin-bottom: 7px;
+    cursor: pointer;
+}
+#cont_login h4 {
+    font-size: 12px;
+    text-align: center;
+    color: rgb(100,100,100);
+    font-weight: 400;
+    margin-bottom:20px;
+}
+#cont_login span {
+    display: block;
+}
+#cont_login .field-validation-error {
+    color: red;
+    font-size: 12px;
+}
+#cont_login input {
+    margin-bottom: 5px;
+    background: white;
+    border: 0px;
+    border-bottom: solid 1px #4772b2;
+    outline: none;
+    box-shadow: none;
+    display:block;
+    width: 100%;
+}
+#cont_login input[type = submit] {
+    border: 0px;
+    background:#4772b2;
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 15px;
+}
+#cont_login .campos_l {
+    margin-bottom: 20px;
+}
+#cerrar-login {
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    color: rgb(100,100,100);
+    display:inline-block;
+}
+.login_visible {
+    display:block !important;
+}
 /*forms*/
 .form_solicitud {
-	width: calc(100% - 40px);
-	padding: 60px 20px 20px 20px;
-	max-width: 600px;
-	display: block;
-	position: relative;
-	text-align: left;
-	margin: 0px auto;
+    width: calc(100% - 40px);
+    padding: 60px 20px 20px 20px;
+    max-width: 600px;
+    display: block;
+    position: relative;
+    text-align: left;
+    margin: 0px auto;
 }
 .form_solicitud h2 {
 	text-align: left;
@@ -578,4 +664,191 @@ nav li:hover a:before {
 }
 #tus_pedidos tr:last-of-type td {
 	/*padding-bottom: 20px;*/
+}
+
+/*registro parte 2*/
+#reg2 {
+	display: flex;
+	flex-direction: row;
+}
+#reg2 a {
+	width: 100%;
+}
+.selec {
+	width: 100%;
+	height: calc(100vh - 70px);
+	position: relative;
+	cursor: pointer;
+	background-position: center;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+#reg2 a:nth-of-type(1) .selec {
+	background-image: url(img/Account/reg2-usr.jpg);
+}
+#reg2 a:nth-of-type(2) .selec {
+	background-image: url(img/Account/reg2-emb.jpg);
+}
+.selec:before {
+	position: absolute;
+	content: '';
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	box-shadow: inset 0px 0px 140px rgba(0,0,0,0.2)
+}
+.selec .fondo {
+	position: absolute;
+	content: '';
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	background: rgba(255,255,255,0);
+	z-index: 2;
+	background-image: none !important;
+}
+.fondo:before {
+	position: absolute;
+	content: '';
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+	background: rgba(71, 114, 178, 0.5);
+}
+.selec:hover .fondo {
+	/*background: rgba(255,255,255,0.3);*/
+}
+.selec:hover h2 {
+	font-size: 25px;
+}
+.selec h2 {
+	text-align: center;
+	position: relative;
+	width: 80%;
+	left: 10%;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 2;
+	font-size: 22px;
+	transition: font-size 0.5s ease;
+	color: white;
+}
+
+/*panel embajadores*/
+#panel_embajadores {
+	width: 100%;
+	max-width: 1200px;
+	padding: 20px;
+	box-sizing: border-box;
+	position: relative;
+	margin: 0px auto;
+	text-align: center;
+}
+#panel_embajadores h1 {
+	font-size: 3em;
+	font-weight: 200;
+	color: #4772B2;
+	padding: 10vh 0px 30px 0px;
+}
+#estadistica_emb {
+	overflow: auto;
+}
+#estadistica_emb div {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    padding-top: 17px;
+    border: solid 1px #4772b2;
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0px 20px;
+}
+#estadistica_emb h2 {
+	font-weight: 300;
+	color: #4772B2;
+	font-size: 50px;
+	padding-bottom: 0px;
+}
+#paneles_embajador {
+	margin-top: 50px;
+}
+#paneles_embajador table tr:first-child {
+	cursor: inherit !important;
+	background-color: inherit !important;
+	color: inherit !important;
+}
+#paneles_embajador table tr:hover {
+	cursor: pointer;
+	background-color: #4772B2;
+	color: white;
+}
+.panel_emb {
+	width: calc(48% - 2px);
+	margin: 20px 1%;
+	margin-top: 0px;
+	padding: 20px;
+	min-width: 460px;
+	box-sizing: border-box;
+	display: inline-block;
+	position: relative;
+    background: white;
+    border: solid 1px #dadada;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+}
+.panel_emb h2 {
+	text-align: left;
+}
+.tabla_emb {
+	width: 100%;
+	border-collapse: collapse;
+	text-align: left;
+}
+.tabla_emb th {
+	display: none;
+}
+.tabla_emb td, .tabla_emb th {
+	padding: 11px 0px;
+	padding-left: 5px;
+	box-sizing: border-box;
+}
+.tabla_emb tr th:first-of-type, .tabla_emb tr td:first-of-type {
+	border-left: solid 0px;
+}
+
+
+/*info solicitud*/
+#info_solicitud {
+	max-width: 900px;
+	width: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+	position: relative;
+	margin: 0px auto;
+	text-align: center;
+}
+#info_solicitud h1 {
+	font-size: 3em;
+	font-weight: 200;
+	color: #4772B2;
+	padding: 10vh 0px 10px 0px;
+}
+#accion_solicitud {
+	padding: 20px 0px;
+}
+.tabla_datos {
+	padding: 3px;
+	text-align: left;
+	border-collapse: collapse;
+	position: relative;
+	margin: 0px auto;
+}
+.tabla_datos tr td {
+	padding: 11px 18px;
+	border-bottom: solid 1px #dadada;
 }
