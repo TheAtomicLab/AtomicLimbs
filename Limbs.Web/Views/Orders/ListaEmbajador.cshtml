@@ -20,24 +20,24 @@
                 <th></th>
             </tr>
 
-            @foreach (var item in Model.PendingToAssignOrders)
+            @foreach (var order in Model.PendingToAssignOrders)
             {
                 <tr>
                     <td>
-                        <a href="@Url.Action("Details", "Orders", new { Id = item.Id }, null)" class="btn btn-primary btn-sm">Ver detalles</a>
+                        <a href="@Url.Action("Details", "Orders", new { Id = order.Id }, null)" class="btn btn-primary btn-sm">Ver detalles</a>
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.OrderRequestor.UserName)
+                        @Html.DisplayFor(modelItem => order.OrderRequestor.UserName)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Comments)
+                        @Html.DisplayFor(modelItem => order.Comments)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Status)
+                        @Html.DisplayFor(modelItem => order.Status)
                     </td>
                     <td>
-                        @Html.ActionLink("Aceptar", "Accept", "Orders", new { id = item.Id }, null) |
-                        @Html.ActionLink("Rechazar", "Reject", "Orders", new { id = item.Id }, null)
+                        @Html.ActionLink("Aceptar", "Assignation", "Orders", new { id = order.Id, accion = "aceptar" }, null) |
+                        @Html.ActionLink("Rechazar", "Assignation", "Orders", new { id = order.Id, accion = "rechazar" }, null)
                     </td>
                 </tr>
             }

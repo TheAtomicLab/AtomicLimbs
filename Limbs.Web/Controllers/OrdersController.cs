@@ -43,7 +43,7 @@ namespace Limbs.Web.Controllers
 
                 // Consulta DB. Cambiar con repos
                 var currentUserId = User.Identity.GetUserId();
-                IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId);
+                IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor);
 
 
                 var pendingAssignationList = orderList.Where(o => o.Status == OrderStatus.PreAssigned).OrderByDescending(m => m.Id);
@@ -64,7 +64,7 @@ namespace Limbs.Web.Controllers
 
         // GET: Orders/Assignation/?id=5&action=accept
         [Authorize(Roles = "Embajador")]
-        public ActionResult Assignation(int Id, string action)
+        public ActionResult Assignation(int Id, string accion)
         {
 
             // Consulta DB. Cambiar con repos
@@ -76,7 +76,7 @@ namespace Limbs.Web.Controllers
             if (orderInDb.OrderAmbassador.UserId == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
             {
 
-                if(action == "reject")
+                if(accion == "rechazar")
                 {
                     orderInDb.Status = OrderStatus.NotAssigned;
                     orderInDb.OrderAmbassador = null;
@@ -112,7 +112,7 @@ namespace Limbs.Web.Controllers
             var orderID = id.Value;
 
             // Consulta DB. Cambiar con repos
-            var order = db.OrderModels.Find(orderID);
+            var order = db.OrderModels.Include(c => c.OrderRequestor).Where(c => c.Id == orderID).SingleOrDefault();
 
             if (order == null)
             {
@@ -142,10 +142,10 @@ namespace Limbs.Web.Controllers
             }
             else
             {
-                // Mostrar contenido usuario
+                return Content("NO EMBAJADOR");
             }
      
-            return Content("");
+            //return Content("");
         }
 
 
@@ -154,7 +154,7 @@ namespace Limbs.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "Embajador")]
         [ValidateAntiForgeryToken]
-        public ActionResult Process(OrderModel Order, string Estado)
+        public ActionResult Process(OrderModel Order, OrderStatus Estado)
         {
             // "Order" solo tiene la ID consigo.
             // Consulta DB. Cambiar con repos
@@ -166,17 +166,21 @@ namespace Limbs.Web.Controllers
                 return HttpNotFound();
 
 
-            if(Estado == "protesis_impresa" && orderInDB.Status == OrderStatus.Pending)
+            if(Estado == OrderStatus.Ready && orderInDB.Status == OrderStatus.Pending)
             {
                 orderInDB.Status = OrderStatus.Ready;
+                // Consulta DB. Cambiar con repos
+                db.SaveChanges();
                 
             }
-            else if(Estado == "protesis_entregada" && orderInDB.Status == OrderStatus.Ready)
+            else if(Estado == OrderStatus.Delivered && orderInDB.Status == OrderStatus.Ready)
             {
                 orderInDB.Status = OrderStatus.Delivered;
+                // Consulta DB. Cambiar con repos
+                db.SaveChanges();
             }
             else
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
 
             return RedirectToAction("Details", new { id = Order.Id });
