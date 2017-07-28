@@ -16,16 +16,17 @@ namespace Limbs.Web.Controllers
 {
     public class OrdersController : Controller
     {
-        //private ApplicationDbContext db = new ApplicationDbContext();
-        public IOrdersRepository OrdersRepository { get; set; }
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+
+        /*public IOrdersRepository OrdersRepository { get; set; }
 
         private ApplicationDbContext _context;
 
         public OrdersController(ApplicationDbContext context)
         {
             _context = context;
-        }
-
+        }*/
 
 
         // GET: Orders/Index
@@ -33,16 +34,16 @@ namespace Limbs.Web.Controllers
         public ActionResult Index()
         {
 
-
             if(User.IsInRole("Usuario"))
             {
                 return View("ListaUsuario");
             }
-            else if(User.IsInRole("Embajador"))
+            else // Embajador
             {
 
+                // Consulta DB. Cambiar con repos
                 var currentUserId = User.Identity.GetUserId();
-                var orderList = OrdersRepository.GetByAssignedAmbassadorId(currentUserId);
+                IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId);
 
 
                 var pendingAssignationList = orderList.Where(o => o.Status == OrderStatus.PreAssigned).OrderByDescending(m => m.Id);
@@ -56,60 +57,46 @@ namespace Limbs.Web.Controllers
 
                 return View("ListaEmbajador", viewModel);
             }
-            else // Admin?
-            {
-                return RedirectToAction("Index", "Home");
-            }
 
         }
 
-        // GET: Orders/Accept/5
+
+
+        // GET: Orders/Assignation/?id=5&action=accept
         [Authorize(Roles = "Embajador")]
-        public ActionResult Accept(int Id)
+        public ActionResult Assignation(int Id, string action)
         {
 
+            // Consulta DB. Cambiar con repos
+            var orderInDb = db.OrderModels.Find(Id);
 
-            var orderInDb = OrdersRepository.Get(Id);
             if (orderInDb == null) return HttpNotFound();
 
-            // Comprobamos que el pedido esté asignado al usuario y esté pendiente de asignacion
-            if(orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
+            // Comprobamos que el pedido esté asignado al embajador y esté pendiente de asignacion
+            if (orderInDb.OrderAmbassador.UserId == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
             {
-                orderInDb.Status = OrderStatus.Pending;
-                OrdersRepository.Update(orderInDb);
-                return RedirectToAction("Index");
-            }
-            else
-            {
-                return HttpNotFound();
-            }
-            
-        }
 
-        // GET: Orders/Reject/5
-        [Authorize(Roles = "Embajador")]
-        public ActionResult Reject(int Id)
-        {
-            var orderInDb = OrdersRepository.Get(Id);
-            if (orderInDb == null) return HttpNotFound();
+                if(action == "reject")
+                {
+                    orderInDb.Status = OrderStatus.NotAssigned;
+                    orderInDb.OrderAmbassador = null;
+                }
+                else
+                {
+                    orderInDb.Status = OrderStatus.Pending;
+                }
 
-            // Comprobamos que el pedido esté asignado al usuario y esté pendiente de asignacion
-            if (orderInDb.OrderUser.Id == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
-            {
-                orderInDb.Status = OrderStatus.NotAssigned;
-                orderInDb.OrderUser = null;
-                OrdersRepository.Update(orderInDb);
-
-                // (Seleccionar nuevo embajador)
+                // Consulta DB. Cambiar con repos
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
+
             }
             else
-            {
                 return HttpNotFound();
-            }
 
         }
+
 
 
         // GET: Orders/Details/5
@@ -123,35 +110,30 @@ namespace Limbs.Web.Controllers
             }
 
             var orderID = id.Value;
-            OrderModel orderModel = OrdersRepository.Get(orderID);
 
+            // Consulta DB. Cambiar con repos
+            var order = db.OrderModels.Find(orderID);
 
-            if (orderModel == null)
+            if (order == null)
             {
                 return HttpNotFound();
             }
 
-            if (User.IsInRole("Usuario"))
-            {
-                // mostrar contenido usuario
-            }
-            else if (User.IsInRole("Embajador"))
+            if (User.IsInRole("Embajador"))
             {
 
-                if (orderModel.OrderUser != null && orderModel.OrderUser.Id == User.Identity.GetUserId())
+                if (order.OrderAmbassador != null && order.OrderAmbassador.UserId == User.Identity.GetUserId())
                 {
 
                     var viewModel = new ViewModels.OrderDetailsEmbajadorViewModel()
                     {
-                        Order = orderModel
+                        Order = order
                     };
 
-
-                    if (orderModel.Status == OrderStatus.PreAssigned || orderModel.Status == OrderStatus.Delivered)
+                    if (order.Status == OrderStatus.PreAssigned || order.Status == OrderStatus.Delivered)
                         viewModel.CanChangeOrderStatus = false;
                     else
                         viewModel.CanChangeOrderStatus = true;
-
 
                     return View("DetallesEmbajador", viewModel);
                 }
@@ -159,33 +141,42 @@ namespace Limbs.Web.Controllers
 
             }
             else
-                return HttpNotFound();
-
-
+            {
+                // Mostrar contenido usuario
+            }
+     
             return Content("");
         }
 
-        // POST: Orders/ChangeStatus
+
+
+        // POST: Orders/Process
         [HttpPost]
         [Authorize(Roles = "Embajador")]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangeStatus(OrderModel Order)
+        public ActionResult Process(OrderModel Order, string Estado)
         {
             // "Order" solo tiene la ID consigo.
-            OrderModel order = OrdersRepository.Get(Order.Id);
+            // Consulta DB. Cambiar con repos
+            var orderInDB = db.OrderModels.Find(Order.Id);
 
-            if (order == null) return HttpNotFound();
+            if (orderInDB == null) return HttpNotFound();
 
-            if (order.OrderUser.Id != User.Identity.GetUserId() || order.Status == OrderStatus.NotAssigned)
-                return Content("AAs");
+            if (orderInDB.OrderAmbassador.UserId != User.Identity.GetUserId() || orderInDB.Status == OrderStatus.NotAssigned)
+                return HttpNotFound();
 
 
-            if (order.Status == OrderStatus.Pending)
-                order.Status = OrderStatus.Ready;
-            else if (order.Status == OrderStatus.Ready)
-                order.Status = OrderStatus.Delivered;
-
-            // (actualizar DB)
+            if(Estado == "protesis_impresa" && orderInDB.Status == OrderStatus.Pending)
+            {
+                orderInDB.Status = OrderStatus.Ready;
+                
+            }
+            else if(Estado == "protesis_entregada" && orderInDB.Status == OrderStatus.Ready)
+            {
+                orderInDB.Status = OrderStatus.Delivered;
+            }
+            else
+                return HttpNotFound();
 
 
             return RedirectToAction("Details", new { id = Order.Id });
@@ -205,6 +196,7 @@ namespace Limbs.Web.Controllers
             return View("pedir_mano_inicio");
         }
 
+
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -215,15 +207,23 @@ namespace Limbs.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var currentUserId = User.Identity.GetUserId();
+                // Consulta DB. Cambiar con repos
+                var userModel = await db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
+
+                orderModel.OrderRequestor = userModel;
                 orderModel.Status = OrderStatus.Pending;
-                OrdersRepository.Add(orderModel);
-                await _context.SaveChangesAsync();
+
+                // Consulta DB. Cambiar con repos
+                db.OrderModels.Add(orderModel);
+                await db.SaveChangesAsync();
 
                 return RedirectToAction("Index");
             }
 
             return View(orderModel);
         }
+
 
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)
@@ -236,8 +236,8 @@ namespace Limbs.Web.Controllers
             else
             {
                 var orderID = id.Value;
-
-                orderModel = OrdersRepository.Get(orderID);
+                // Consulta DB. Cambiar con repos
+                orderModel = db.OrderModels.Find(orderID);
             }
 
             if (orderModel == null)
@@ -256,9 +256,9 @@ namespace Limbs.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Entry(orderModel).State = EntityState.Modified;
+                /*_context.Entry(orderModel).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index");*/
             }
             return View(orderModel);
         }
@@ -274,7 +274,8 @@ namespace Limbs.Web.Controllers
             else
             {
                 var orderId = id.Value;
-                orderModel = OrdersRepository.Get(orderId);
+                // Consulta DB. Cambiar con repos
+                orderModel = db.OrderModels.Find(orderId);
             }
             if (orderModel == null)
             {
@@ -284,21 +285,21 @@ namespace Limbs.Web.Controllers
         }
 
         // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
+        /*[HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            OrderModel orderModel = OrdersRepository.Get(id);
+           OrderModel orderModel = OrdersRepository.Get(id);
             OrdersRepository.Remove(orderModel);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
-        }
+        }*/
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                _context.Dispose();
+                db.Dispose();
             }
             base.Dispose(disposing);
         }

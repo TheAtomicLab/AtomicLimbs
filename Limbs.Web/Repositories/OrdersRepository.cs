@@ -29,7 +29,7 @@ namespace Limbs.Web.Repositories
 
         public IEnumerable<OrderModel> GetByAssignedAmbassadorId(string id)
         {
-            return _context.OrderModels.Where(m => m.OrderUser.Id == id).ToList();
+            return _context.OrderModels.Where(m => m.OrderAmbassador.UserId == id).ToList();
         }
 
         public OrderModel Get(int id)

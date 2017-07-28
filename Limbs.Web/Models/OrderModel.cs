@@ -15,12 +15,12 @@ namespace Limbs.Web.Models
         /// <summary>
         /// Usuario que solicita la orden de protesis
         /// </summary>
-        public ApplicationUser OrderRequestor { get; set; }
+        public UserModel OrderRequestor { get; set; }
 
         /// <summary>
-        /// Usuario (embajador) que procesara la orden
+        /// Embajador que procesara la orden
         /// </summary>
-        public virtual ApplicationUser OrderUser { get; set; }
+        public virtual AmbassadorModel OrderAmbassador { get; set; }
 
 
         public int Design { get; set; }

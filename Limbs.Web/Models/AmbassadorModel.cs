@@ -13,6 +13,8 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
+        public string UserId { get; set; }
+
         [Display(Name = "Nombre completo", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string AmbassadorName { get; set; }
