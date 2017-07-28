@@ -12,23 +12,25 @@ using Limbs.Web.Repositories;
 
 namespace Limbs.Web.Controllers
 {
+       ///se comentan los repository para el funcionamiento del front
     public class OrdersController : Controller
     {
-        //private ApplicationDbContext db = new ApplicationDbContext();
-        public IOrdersRepository OrdersRepository { get; set; }
+        private ApplicationDbContext db = new ApplicationDbContext();
+      //  public IOrdersRepository OrdersRepository { get; set; }
 
-        private ApplicationDbContext _context;
+       // private ApplicationDbContext _context;
 
-        public OrdersController(ApplicationDbContext context)
+   /*     public OrdersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
+    */
 
         // GET: Orders
         public async Task<ActionResult> Index()
         {
-            return View(OrdersRepository.Get());
+            return View(await db.OrderModels.ToListAsync());
         }
 
         // GET: Orders/Details/5
@@ -43,7 +45,8 @@ namespace Limbs.Web.Controllers
             {
                 var orderID = id.Value;
 
-                orderModel = OrdersRepository.Get(orderID);
+              //  orderModel = OrdersRepository.Get(orderID);
+              orderModel = await db.OrderModels.FindAsync(id);
             }
 
             if (orderModel == null)
@@ -56,12 +59,12 @@ namespace Limbs.Web.Controllers
         // GET: Orders/Create
         public ActionResult Create()
         {
-            return View("Create1");
+            return View("Create");
         }
 
         public ActionResult CreateHand()
         {
-            return View("pedir_mano_inicio");
+            return View("pedir_mano_index");
         }
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -72,8 +75,10 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
                 orderModel.Status = OrderStatus.Pending;
-                OrdersRepository.Add(orderModel);
-                await _context.SaveChangesAsync();
+                //OrdersRepository.Add(orderModel);
+                db.OrderModels.Add(orderModel);
+                await db.SaveChangesAsync();
+                //  await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
 
@@ -92,7 +97,8 @@ namespace Limbs.Web.Controllers
             {
                 var orderID = id.Value;
 
-                orderModel = OrdersRepository.Get(orderID);
+               // orderModel = OrdersRepository.Get(orderID);
+               orderModel = await db.OrderModels.FindAsync(id);
             }
 
             if (orderModel == null)
@@ -111,8 +117,9 @@ namespace Limbs.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Entry(orderModel).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                //    _context.Entry(orderModel).State = EntityState.Modified;
+                //    await _context.SaveChangesAsync();
+                await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
             return View(orderModel);
@@ -129,7 +136,8 @@ namespace Limbs.Web.Controllers
             else
             {
                 var orderId = id.Value;
-                orderModel = OrdersRepository.Get(orderId);
+              //  orderModel = OrdersRepository.Get(orderId);
+              orderModel = await db.OrderModels.FindAsync(id);
             }
             if (orderModel == null)
             {
@@ -138,14 +146,32 @@ namespace Limbs.Web.Controllers
             return View(orderModel);
         }
 
+        public ActionResult pedir_mano_index()
+        {
+            return View();
+        }
+
+        public ActionResult pedir_brazo_medidas()
+        {
+            return View();
+        }
+
+        public ActionResult pedir_mano_medidas()
+        {
+            return View();
+        }
+
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            OrderModel orderModel = OrdersRepository.Get(id);
-            OrdersRepository.Remove(orderModel);
-            await _context.SaveChangesAsync();
+            //  OrderModel orderModel = OrdersRepository.Get(id);
+            OrderModel ordelModel = await db.OrderModels.FindAsync(id);
+            db.OrderModels.Remove(ordelModel);
+            //OrdersRepository.Remove(orderModel);
+            //    await _context.SaveChangesAsync();
+            await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -153,7 +179,8 @@ namespace Limbs.Web.Controllers
         {
             if (disposing)
             {
-                _context.Dispose();
+                db.Dispose();
+                //       _context.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNet.Identity
+@model Limbs.Web.Models.OrderModel
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Limbs | Atomic Lab</title>
+	<meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="~/Content/estilo01.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <script src="~/Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/pages/pedir_mano.js"></script>
+	<link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <div id="main_head">
+            <a href="index.php"><img id="logo_head" src="img/limbs_white.svg"></a>
+            <nav>
+                <li><a onclick='cerrarmenu()' href="home.php">Inicio</a></li>
+                <li><a onclick='cerrarmenu()' href="pedir_una_mano.php">Pedir una mano</a></li>
+                <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
+            </nav>
+            <img src="img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
+        </div>
+        <div id="menu_perfil">
+            <div id="icono_perfil"></div>
+            <ul id="opciones_perfil">
+                <li class="perfil_name">Test User</li>
+                <li class="cerrar_sesion">Cerrar sesión</li>
+            </ul>
+        </div>
+    </header>
+        <article id="realiza_pedido">
+            <h1>Realizar pedido:</h1>
+            <p>¡Hola!<br>Estamos encarando nuestro proyecto #Limbs y nos llena de alegría, el objetivo es entregar la mayor cantidad de prótesis impresas en 3D alrededor del mundo, gratis, para todos los que las necesiten. Por el momento tenemos disponibles prótesis de manos y brazos.</p>
+            <button class="blue_button" id="button_encarando_proyecto">Empezar</button>
+        </article>
+
+        <!--Falta hacerlo con ajax (por eso la villereada de las anchorText),
+             pero esto es un jueves a las 2 de la mañana, 
+            despues te lo hago bien Mati. 
+               Lucas.
+            -->
+        <article id="categoria_mano">
+            <a href="/Orders/pedir_mano_medidas">
+                <div class="categoria cat_mano" id="cat_mano_div">
+                    <div class="preview_cat"></div>
+                    <p>Mano</p>
+                </div>
+            </a>
+            <a href="/Orders/pedir_brazo_medidas">
+                <div class="categoria cat_brazo" id="cat_brazo_div">
+                    <div class="preview_cat"></div>
+                    <p>Brazo</p>
+                </div>
+            </a>
+    </article>
+    <script src="js/solicitud.js"></script>
+    <script src="js/menu.js"></script>
+</body>
+</html>
