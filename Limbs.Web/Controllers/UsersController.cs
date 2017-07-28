@@ -66,6 +66,7 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> Create(UserModel userModel)
         {
             userModel.Email = User.Identity.GetUserName();
+            userModel.UserId = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {

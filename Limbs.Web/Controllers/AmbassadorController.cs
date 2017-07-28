@@ -22,11 +22,124 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+
         // GET: Ambassador
         public async Task<ActionResult> Index()
         {
-            return View(await db.AmbassadorModels.ToListAsync());
+            return View();
         }
+
+
+        // GET: /AmbassadorPanel/
+        public ActionResult AmbassadorPanel()
+        {
+
+            var currentUserId = User.Identity.GetUserId();
+  
+
+            // Consulta DB. Cambiar con repos
+            IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
+
+            var DeliveredOrdersCount = orderList.Where(c => c.Status == OrderStatus.Delivered).Count();
+            var PendingOrdersCount = db.OrderModels.Where(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready).Count();
+
+            var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
+            var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready).ToList();
+            var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
+
+            var viewModel = new ViewModels.AmbassadorPanelViewModel()
+            {
+                PendingToAssignOrders = pendingAssignationOrders,
+                PendingOrders = pendingOrders,
+                DeliveredOrders = deliveredOrders,
+
+                Stats = new ViewModels.OrderStats()
+                {
+                    HandledOrders = DeliveredOrdersCount,
+                    PendingOrders = PendingOrdersCount
+                }
+            };
+
+
+            return View(viewModel);
+        }
+        
+
+        // GET: Orders/Assignation/?id=5&action=accept
+        // Aceptar o rechazar como embajador, pedidos pre-asignados.
+        public ActionResult AssignOrder(int Id, string accion)
+        {
+
+            // Consulta DB. Cambiar con repos
+            var orderInDb = db.OrderModels.Find(Id);
+
+            if (orderInDb == null) return HttpNotFound();
+
+            // Comprobamos que el pedido esté asignado al embajador y esté pendiente de asignacion
+            if (orderInDb.OrderAmbassador.UserId == User.Identity.GetUserId() && orderInDb.Status == OrderStatus.PreAssigned)
+            {
+
+                if (accion == "rechazar")
+                {
+                    orderInDb.Status = OrderStatus.NotAssigned;
+                    orderInDb.OrderAmbassador = null;
+                }
+                else
+                {
+                    orderInDb.Status = OrderStatus.Pending;
+                }
+                orderInDb.StatusLastUpdated = DateTime.Now;
+
+                // Consulta DB. Cambiar con repos
+                db.SaveChanges();
+
+                return RedirectToAction("AmbassadorPanel");
+
+            }
+            else
+                return HttpNotFound();
+
+        }
+
+
+
+        // GET: Orders/UpdateOrder
+        // Cambiar de estado un pedido, marcar como "listo", o "entregado".
+        public ActionResult UpdateOrder(int orderid, OrderStatus status)
+        {
+            // "Order" solo tiene la ID consigo.
+            // Consulta DB. Cambiar con repos
+            var orderInDB = db.OrderModels.Find(orderid);
+
+            if (orderInDB == null) return HttpNotFound();
+
+            if (orderInDB.OrderAmbassador.UserId != User.Identity.GetUserId() || orderInDB.Status == OrderStatus.NotAssigned)
+                return HttpNotFound();
+
+
+            if (status == OrderStatus.Ready && orderInDB.Status == OrderStatus.Pending)
+            {
+                orderInDB.Status = status;
+                // Consulta DB. Cambiar con repos
+                db.SaveChanges();
+
+            }
+            else if (status == OrderStatus.Delivered && orderInDB.Status == OrderStatus.Ready)
+            {
+                orderInDB.Status = status;
+                orderInDB.StatusLastUpdated = DateTime.Now;
+                // Consulta DB. Cambiar con repos
+                db.SaveChanges();
+            }
+            else
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return RedirectToAction("AmbassadorPanel");
+        }
+
+
+
+
 
         // GET: Ambassador/Details/5
         public async Task<ActionResult> Details(int? id)
@@ -68,6 +181,7 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> Create(AmbassadorModel ambassadorModel)
         {
             ambassadorModel.Email = User.Identity.GetUserName();
+            ambassadorModel.UserId = User.Identity.GetUserId();
 
             if (ModelState.IsValid)
             {
@@ -162,11 +276,6 @@ namespace Limbs.Web.Controllers
             var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
 
             return Json(r, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult AmbassadorPanel()
-        {
-            return View();
         }
 
         // GET: Ambassador/Edit/5

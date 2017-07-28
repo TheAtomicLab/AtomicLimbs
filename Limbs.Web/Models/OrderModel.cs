@@ -12,6 +12,8 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
+        public DateTime Date { get; set; }
+
         /// <summary>
         /// Usuario que solicita la orden de protesis
         /// </summary>
@@ -32,6 +34,9 @@ namespace Limbs.Web.Models
         public string Comments { get; set; }
 
         public OrderStatus Status { get; set; }
+
+        public DateTime StatusLastUpdated { get; set; }
+
     }
 
     public enum OrderStatus

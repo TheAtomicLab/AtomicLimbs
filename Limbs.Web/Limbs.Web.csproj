@@ -198,6 +198,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Enumerations.cs" />
     <Compile Include="Migrations\201707080128155_userssss.cs" />
     <Compile Include="Migrations\201707080128155_userssss.Designer.cs">
       <DependentUpon>201707080128155_userssss.cs</DependentUpon>
@@ -213,6 +214,18 @@
     <Compile Include="Migrations\201707281758221_SeedEmbajadorAndUserRoles.cs" />
     <Compile Include="Migrations\201707281758221_SeedEmbajadorAndUserRoles.Designer.cs">
       <DependentUpon>201707281758221_SeedEmbajadorAndUserRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707282209428_AddedDatePropIntoOrderModel.cs" />
+    <Compile Include="Migrations\201707282209428_AddedDatePropIntoOrderModel.Designer.cs">
+      <DependentUpon>201707282209428_AddedDatePropIntoOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707282308314_AddedUpdateDatePropToOrderModel.cs" />
+    <Compile Include="Migrations\201707282308314_AddedUpdateDatePropToOrderModel.Designer.cs">
+      <DependentUpon>201707282308314_AddedUpdateDatePropToOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201707282311234_changedpropname.cs" />
+    <Compile Include="Migrations\201707282311234_changedpropname.Designer.cs">
+      <DependentUpon>201707282311234_changedpropname.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -237,7 +250,7 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\EmbajadorOrderListViewModel.cs" />
+    <Compile Include="ViewModels\AmbassadorPanelViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -358,12 +371,10 @@
     <Content Include="Views\Account\selectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Orders\ListaEmbajador.cshtml" />
-    <Content Include="Views\Orders\ListaUsuario.cshtml" />
-    <Content Include="Views\Orders\DetallesEmbajador.cshtml" />
     <Content Include="Views\Orders\CreateBackup.cshtml" />
     <None Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\pedir_mano_medidas.cshtml" />
+    <Content Include="Views\Orders\Index.cshtml" />
     <None Include="Views\Orders\pedir_mano_index.cshtml" />
     <None Include="Views\Account\LoginIndex.cshtml" />
     <Content Include="Web.config" />
@@ -445,6 +456,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201707281758221_SeedEmbajadorAndUserRoles.resx">
       <DependentUpon>201707281758221_SeedEmbajadorAndUserRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707282209428_AddedDatePropIntoOrderModel.resx">
+      <DependentUpon>201707282209428_AddedDatePropIntoOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707282308314_AddedUpdateDatePropToOrderModel.resx">
+      <DependentUpon>201707282308314_AddedUpdateDatePropToOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201707282311234_changedpropname.resx">
+      <DependentUpon>201707282311234_changedpropname.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
