@@ -25,8 +25,12 @@
         <div id="menu_perfil">
             <div id="icono_perfil"></div>
             <ul id="opciones_perfil">
-                @Html.ActionLink( User.Identity.Name, "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }
+         
+    @*@Html.ActionLink( "Test User", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }
                )
+                    *@
+                @User.Identity.Name
+                
                 <li class="cerrar_sesion"><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
             </ul>
         </div>
