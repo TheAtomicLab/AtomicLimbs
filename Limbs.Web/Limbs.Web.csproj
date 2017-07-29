@@ -199,34 +199,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201707080128155_userssss.cs" />
-    <Compile Include="Migrations\201707080128155_userssss.Designer.cs">
-      <DependentUpon>201707080128155_userssss.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707281347399_Test.cs" />
-    <Compile Include="Migrations\201707281347399_Test.Designer.cs">
-      <DependentUpon>201707281347399_Test.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707281544366_CambiadosTiposDeUsuariosEnOrderModelYAgregadaColumna.cs" />
-    <Compile Include="Migrations\201707281544366_CambiadosTiposDeUsuariosEnOrderModelYAgregadaColumna.Designer.cs">
-      <DependentUpon>201707281544366_CambiadosTiposDeUsuariosEnOrderModelYAgregadaColumna.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707281758221_SeedEmbajadorAndUserRoles.cs" />
-    <Compile Include="Migrations\201707281758221_SeedEmbajadorAndUserRoles.Designer.cs">
-      <DependentUpon>201707281758221_SeedEmbajadorAndUserRoles.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707282209428_AddedDatePropIntoOrderModel.cs" />
-    <Compile Include="Migrations\201707282209428_AddedDatePropIntoOrderModel.Designer.cs">
-      <DependentUpon>201707282209428_AddedDatePropIntoOrderModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707282308314_AddedUpdateDatePropToOrderModel.cs" />
-    <Compile Include="Migrations\201707282308314_AddedUpdateDatePropToOrderModel.Designer.cs">
-      <DependentUpon>201707282308314_AddedUpdateDatePropToOrderModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201707282311234_changedpropname.cs" />
-    <Compile Include="Migrations\201707282311234_changedpropname.Designer.cs">
-      <DependentUpon>201707282311234_changedpropname.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -443,29 +415,6 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201707080128155_userssss.resx">
-      <DependentUpon>201707080128155_userssss.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707281347399_Test.resx">
-      <DependentUpon>201707281347399_Test.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707281544366_CambiadosTiposDeUsuariosEnOrderModelYAgregadaColumna.resx">
-      <DependentUpon>201707281544366_CambiadosTiposDeUsuariosEnOrderModelYAgregadaColumna.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707281758221_SeedEmbajadorAndUserRoles.resx">
-      <DependentUpon>201707281758221_SeedEmbajadorAndUserRoles.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707282209428_AddedDatePropIntoOrderModel.resx">
-      <DependentUpon>201707282209428_AddedDatePropIntoOrderModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707282308314_AddedUpdateDatePropToOrderModel.resx">
-      <DependentUpon>201707282308314_AddedUpdateDatePropToOrderModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201707282311234_changedpropname.resx">
-      <DependentUpon>201707282311234_changedpropname.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
