@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.ViewModels.AmbassadorPanelViewModel
+@using Limbs.Web.Models
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +34,8 @@
         <div id="menu_perfil">
             <div id="icono_perfil"></div>
             <ul id="opciones_perfil">
-                <li class="perfil_name">Test Ambassador</li>
-                <li class="cerrar_sesion">Cerrar sesión</li>
+                <li class="perfil_name">Hola @User.Identity.Name</li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
             </ul>
         </div>
     </header>

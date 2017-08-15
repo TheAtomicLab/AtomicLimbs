@@ -4,13 +4,40 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Limbs - Atomic Lab</title>
+    <title>Limbs | Atomic Lab</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../../Content/estilo01.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/estilo02.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <script src="../../Scripts/jquery-3.2.1.js"></script>
+    <script src="~/Scripts/menu.js"></script>
+    <link rel='shortcut icon' type='image/x-icon' href='../../Content/img/favicon.ico' />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
 <body>
-@if (Request.IsAuthenticated)
+    <header>
+        <div id="main_head">
+            <a href="index.php"><img id="logo_head" src="/Content/img/limbs_white.svg"></a>
+            <nav>
+                <li><a onclick='cerrarmenu()' href="/">Inicio</a></li>
+                <li><a onclick='cerrarmenu()' href="/">Pedir una mano</a></li>
+                <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
+            </nav>
+            <img src="/Content/img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
+        </div>
+        <div id="menu_perfil">
+            <div id="icono_perfil"></div>
+            <ul id="opciones_perfil">
+                <li class="perfil_name">Hola @User.Identity.Name</li>
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+            </ul>
+        </div>
+    </header>
+@*@if (Request.IsAuthenticated)
 {
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -25,12 +52,12 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Administrator"))
                     {
-                        @*<li>@Html.ActionLink("Colores", "Index", "Colors")</li>*@
-                        @*<li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>*@
+                        @*<li>@Html.ActionLink("Colores", "Index", "Colors")</li>
+                        @*<li>@Html.ActionLink("Accesorios", "Index", "Accessory")</li>
                         <li>@Html.ActionLink("Ordenes", "Index", "Orders")</li>
                         <li>@Html.ActionLink("Usuarios", "Index", "Users")</li>
                         <li>@Html.ActionLink("Embajadores", "Index", "Ambassador")</li>
-                        @*<li>@Html.ActionLink("Archivos", "Index", "Files")</li>*@
+                        @*<li>@Html.ActionLink("Archivos", "Index", "Files")</li>
                         <li>@Html.ActionLink("Productos", "Index", "Products")</li>
                     }
                         </ul>
@@ -38,7 +65,7 @@
                 </div>
             </div>
         </div>
-    }
+    }*@
     <div class="container body-content">
         @RenderBody()
         <hr/>

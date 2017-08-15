@@ -74,7 +74,7 @@ body {
 #inicio .blue_button {
 	position: absolute;
 	bottom: 25px;
-	left: calc(50% - 32px);
+	left: 50%;
 	transform: translateX(-50%);
 	background-color: white;
 	color: #4772B2;
@@ -176,10 +176,12 @@ nav li:hover a:before {
 	list-style-type: none;
 }
 .perfil_name {
-	font-size: 1.2em;
+	font-size: 15px;
 }
 .cerrar_sesion {
+    font-size: 13px;
 	font-weight: 300;
+    color: white;
 }
 #menu_mobil {
 	display: none;
