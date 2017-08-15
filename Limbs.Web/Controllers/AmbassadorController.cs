@@ -26,7 +26,7 @@ namespace Limbs.Web.Controllers
         // GET: Ambassador
         public async Task<ActionResult> Index()
         {
-            return View();
+            return View(await db.AmbassadorModels.ToListAsync());
         }
 
 
