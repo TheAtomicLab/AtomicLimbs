@@ -47,7 +47,7 @@ namespace Limbs.Web.Models
         public double Long { get; set; }
 
         /*
-                --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+                --Leave comments for possible evolution-#idEvolution = 1#----##
 
         [Display(Name = "AtributoEmbajador1", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]

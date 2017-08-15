@@ -19,7 +19,11 @@
                 *@
                 @User.Identity.Name
 
-                <li class="cerrar_sesion"><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+                }
             </ul>
         </div>
     </header>

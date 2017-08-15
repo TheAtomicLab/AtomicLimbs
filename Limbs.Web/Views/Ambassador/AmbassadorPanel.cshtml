@@ -35,7 +35,12 @@
             <div id="icono_perfil"></div>
             <ul id="opciones_perfil">
                 <li class="perfil_name">Hola @User.Identity.Name</li>
+                
+                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                @Html.AntiForgeryToken()
                 <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+                    }
             </ul>
         </div>
     </header>

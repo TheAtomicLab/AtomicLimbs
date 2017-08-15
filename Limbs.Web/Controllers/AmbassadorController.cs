@@ -299,7 +299,7 @@ namespace Limbs.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         // public async Task<ActionResult> Edit([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address,Lat,Long")] AmbassadorModel ambassadorModel)
-        /*       --Leave comments for possible evolution-#idEvolution = 1#--lucaslopezf--##
+        /*       --Leave comments for possible evolution-#idEvolution = 1#----##
                  
         public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni,AtributoEmbajador1,AtributoEmbajador2,AtributoEmbajador3")] AmbassadorModel ambassadorModel)
         */

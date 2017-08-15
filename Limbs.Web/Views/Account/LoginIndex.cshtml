@@ -1,4 +1,5 @@
-﻿@model Limbs.Web.Models.UserModel
+﻿@using Microsoft.AspNet.Identity
+@model Limbs.Web.Models.UserModel
 <body>
     <header>
         <div id="main_head">
@@ -19,7 +20,14 @@
                     *@
                 @User.Identity.Name
                 
-                <li class="cerrar_sesion"><a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a></li>
+                @*
+                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+                }
+                *@
+                <li class="cerrar_sesion">Cerrar sesión</></li>
             </ul>
         </div>
     </header>
