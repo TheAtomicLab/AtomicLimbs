@@ -52,7 +52,7 @@ namespace Limbs.Web.Models
         [Description("Entregada")]
         Delivered,
     }
-    
+
     public static class AttributesHelperExtension
     {
         public static string ToDescription(this Enum value)
