@@ -111,7 +111,7 @@ namespace Limbs.Web.Controllers
 
             var distance1 = MatcheoWithAmbassador(user, ambassador);
             AmbassadorModel ambassadorSelect = null;
-            if (distance1 < 500000)
+            if (distance1 < 500000 && ambassadors.Contains(ambassador))
             {
                  ambassadorSelect = ambassador;
             }            
