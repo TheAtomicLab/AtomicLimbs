@@ -75,31 +75,9 @@ namespace Limbs.Web.Controllers
                 orderModel.StatusLastUpdated = DateTime.Now;
                 orderModel.Date = DateTime.Now;
 
-                
-
-               
                 db.OrderModels.Add(orderModel);
                 await db.SaveChangesAsync();
-/*
-                if (orderModel.OrderAmbassador != null)
-                {
-                    // AssignOrder(orderModel.OrderAmbassador, userModel, orderModel);
-                    //  userModel.OrderModel = new List<OrderModel>();
-                    //  userModel.OrderModelId = new List<int>();
-                    //  userModel.OrderModelId.Add(orderModel.Id);
-                    //   userModel.OrderModel.Add(orderModel);
-                    //   orderModel.OrderAmbassador.OrderModel = new List<OrderModel>();
-                    //   orderModel.OrderAmbassador.OrderModelId = new List<int>();
-                    //   orderModel.OrderAmbassador.OrderModelId.Add(orderModel.Id);
-                    //   orderModel.OrderAmbassador.OrderModel.Add(orderModel);
 
-                    //    orderModel.OrderAmbassador.OrderModelId = orderModel.Id;
-                    //    userModel.OrderModelId = orderModel.Id;
-                 //   orderModel.OrderAmbassador.OrderModelId.Add(orderModel.Id);
-                   // userModel.AddOrder(userModel, orderModel);
-                    //orderModel.OrderAmbassador.AddOrder(orderModel.OrderAmbassador,orderModel);
-                }
-*/
                 AmbassadorModel em = orderModel.OrderAmbassador;
                 UserModel us = userModel;
 
@@ -128,9 +106,9 @@ namespace Limbs.Web.Controllers
             // var cant = QuantityOrders(ambassador);
             //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
            
-            var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
+            //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
             //descomentar la linea de abajo y comentar la de arriba desp de testeos
-            //var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
+            var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
 
             //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();
 

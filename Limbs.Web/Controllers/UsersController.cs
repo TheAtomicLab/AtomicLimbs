@@ -146,12 +146,6 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public void AddOrder(UserModel userModel, OrderModel order)
-        {
-            userModel.OrderModelId.Add(order.Id);
-            db.SaveChanges();
-        }
-
         public ActionResult GetPointGoogle(String Address)
         {
             var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));

@@ -220,6 +220,10 @@
     <Compile Include="Migrations\201708210417045_addOrderModel23.Designer.cs">
       <DependentUpon>201708210417045_addOrderModel23.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201708210515338_addOrderModel24.cs" />
+    <Compile Include="Migrations\201708210515338_addOrderModel24.Designer.cs">
+      <DependentUpon>201708210515338_addOrderModel24.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -453,6 +457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708210417045_addOrderModel23.resx">
       <DependentUpon>201708210417045_addOrderModel23.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708210515338_addOrderModel24.resx">
+      <DependentUpon>201708210515338_addOrderModel24.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

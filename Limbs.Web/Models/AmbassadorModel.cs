@@ -48,7 +48,7 @@ namespace Limbs.Web.Models
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
 
-        public virtual ICollection<int> OrderModelId { get; set; }
+     //   public virtual ICollection<int> OrderModelId { get; set; }
         //public int OrderModelId { get; set; }
 
         /*

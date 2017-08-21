@@ -267,11 +267,6 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("AmbassadorPanel");
         }
 
-        public void AddOrder(AmbassadorModel ambassadorModel,OrderModel order) {
-            ambassadorModel.OrderModelId.Add(order.Id);
-            db.SaveChanges();
-        }
-
         public ActionResult GetPointGoogle(String Address)
         {
             var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
