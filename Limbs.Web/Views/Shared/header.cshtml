@@ -1,0 +1,25 @@
+﻿<header>
+    <div id="main_head">
+        <a href="index.php"><img id="logo_head" src="/Content/img/limbs_white.svg"></a>
+        <nav>
+            <li><a onclick='cerrarmenu()' href="/">Inicio</a></li>
+            <li><a onclick='cerrarmenu()' href="/">Pedir una mano</a></li>
+            <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
+        </nav>
+        <img src="/Content/img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
+    </div>
+    @if (User.Identity.Name != "")
+    {
+        <div id="menu_perfil">
+            <div id="icono_perfil"></div>
+            <ul id="opciones_perfil">
+                <li class="perfil_name">Hola @User.Identity.Name</li>
+                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                    @Html.AntiForgeryToken()
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+                }
+            </ul>
+        </div>
+    }   
+</header>

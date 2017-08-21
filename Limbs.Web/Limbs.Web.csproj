@@ -368,13 +368,12 @@
     <Content Include="SqlServerTypes\readme.htm" />
     <Content Include="Views\Account\selectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
-    <None Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Orders\CreateBackup.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\pedir_mano_medidas.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <None Include="Views\Orders\pedir_mano_index.cshtml" />
-    <None Include="Views\Account\LoginIndex.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -435,6 +434,8 @@
     <Content Include="Views\Ambassador\View.cshtml" />
     <Content Include="Views\Orders\pedir_brazo_medidas.cshtml" />
     <Content Include="Views\Users\UserPanel.cshtml" />
+    <Content Include="Views\Shared\footer.cshtml" />
+    <Content Include="Views\Shared\header.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

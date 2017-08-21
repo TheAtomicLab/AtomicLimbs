@@ -2,48 +2,11 @@
 @model Limbs.Web.ViewModels.AmbassadorPanelViewModel
 @using Limbs.Web.Models
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Limbs | Atomic Lab</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="~/Content/estilo01.css">
-    <link rel="stylesheet" type="text/css" href="~/Content/estilo02.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-    <script src="~/Scripts/jquery-3.2.1.js"></script>
-    <script src="~/Scripts/geo.js"></script>
-    <script src="~/Scripts/pages/ambassador.js"></script>
-    <link rel='shortcut icon' type='image/x-icon' href='img/favicon.ico' />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        /* Always set the map height explicitly to define the size of the div
-        * element that contains the map. */
-    </style>
-</head>
-<body>
-    <header>
-        <div id="main_head">
-            <a href="index.php"><img id="logo_head" src="img/limbs_white.svg"></a>
-            <nav>
-                <li><a onclick='cerrarmenu()' href="home.php">Inicio</a></li>
-                <li><a onclick='cerrarmenu()' href="pedir_una_mano.php">Pedir una mano</a></li>
-                <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
-            </nav>
-            <img src="img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
-        </div>
-        <div id="menu_perfil">
-            <div id="icono_perfil"></div>
-            <ul id="opciones_perfil">
-                <li class="perfil_name">Hola @User.Identity.Name</li>
-                
-                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                    {
-                @Html.AntiForgeryToken()
-                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
-                    }
-            </ul>
-        </div>
-    </header>
+@{
+    ViewBag.Title = "Ambassador Panel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
     <article id="panel_embajadores">
         <h1>Panel de control</h1>
         <div id="estadistica_emb">
@@ -65,10 +28,10 @@
                     <h2>Pedidos entrantes:</h2>
                     <table class="tabla_emb">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Fecha de solicitud</th>
-                            <th>Número de pedido</th>
-                            <th>Acciones</th>
+                            <td>Nombre</td>
+                            <td>Fecha de solicitud</td>
+                            <td>Número de pedido</td>
+                            <td>Acciones</td>
                         </tr>
                         @foreach (var order in Model.PendingToAssignOrders)
                         {
@@ -89,11 +52,11 @@
                 <h2>Tus pedidos:</h2>
                 <table class="tabla_emb">
                     <tr>
-                        <th>Nombre</th>
-                        <th>Fecha de solicitud</th>
-                        <th>Número de pedido</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
+                        <td>Nombre</td>
+                        <td>Fecha de solicitud</td>
+                        <td>Número de pedido</td>
+                        <td>Estado</td>
+                        <td>Acciones</td>
                     </tr>
                     @foreach (var order in Model.PendingOrders)
                     {
@@ -124,10 +87,10 @@
                     <h2>Terminadas:</h2>
                     <table class="tabla_emb">
                         <tr>
-                            <th>Nombre</th>
-                            <th>Fecha de solicitud</th>
-                            <th>Número de pedido</th>
-                            <th>Estado</th>
+                            <td>Nombre</td>
+                            <td>Fecha de solicitud</td>
+                            <td>Número de pedido</td>
+                            <td>Estado</td>
                         </tr>
                         @foreach (var order in Model.DeliveredOrders)
                         {
@@ -144,5 +107,3 @@
 
         </div>
     </article>
-</body>
-</html>

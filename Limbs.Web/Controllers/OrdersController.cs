@@ -78,10 +78,10 @@ namespace Limbs.Web.Controllers
                 db.OrderModels.Add(orderModel);
                 await db.SaveChangesAsync();
 
-                AmbassadorModel em = orderModel.OrderAmbassador;
-                UserModel us = userModel;
+               // AmbassadorModel em = orderModel.OrderAmbassador;
+               // UserModel us = userModel;
 
-                return RedirectToAction("Index");
+                return RedirectToAction("UserPanel","Users");
             }
 
             return View(orderModel);
