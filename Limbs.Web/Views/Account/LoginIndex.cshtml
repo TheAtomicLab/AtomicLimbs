@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNet.Identity
+
 @model Limbs.Web.Models.UserModel
+
 <body>
     <header>
         <div id="main_head">
@@ -14,18 +16,18 @@
         <div id="menu_perfil">
             <div id="icono_perfil"></div>
             <ul id="opciones_perfil">
-         
-    @*@Html.ActionLink( "Test User", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }
-               )
-                    *@
+
+                @*@Html.ActionLink( "Test User", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }
+                    )
+                *@
                 @User.Identity.Name
-                
+
                 @*
-                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
-                }
+                    @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+                    }
                 *@
                 <li class="cerrar_sesion">Cerrar sesión</></li>
             </ul>
@@ -34,34 +36,18 @@
     <div id="cont" class="min_full">
         <article id="home">
             <h1>Hola @User.Identity.Name</h1>
-            <a href="/Orders/pedir_mano_index"><button id="home_pedir" class="blue_button">Pedir una mano</button></a>
-            <article id="tus_pedidos">
-                <h2>Tus pedidos:</h2>
-                <table>
-                    <tr>
-                        <th>Fecha de solicitud</th>
-                        <th>Número de pedido</th>
-                        <th>Estado</th>
-                    </tr>
-                    @foreach (var order in Model.OrderModel)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelOrder => order.Id)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelOrder => order.Date)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelOrder => order.OrderAmbassador)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelOrder => order.StatusLastUpdated)
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </article>
+            @**//Aca va si es usuario va a tal vista, si no va a otra*@
+            @if (1 == 1)
+            {
+                @*     @{Response.Redirect("../Users/Create",false); }
+                *@
+                <p>Redireccion user </p>
+            }
+            else
+            {
+                <p> No tienes pedidos asignados </p>
+            }
+
         </article>
 
     </div>

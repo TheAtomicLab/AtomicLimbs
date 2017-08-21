@@ -10,6 +10,14 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Limbs.Web.Models;
+using System.Data.Entity;
+using System.Collections.Generic;
+using System.Net;
+using Limbs.Web.Services;
+using Microsoft.Ajax.Utilities;
+using Newtonsoft.Json;
+using System.Web.Script.Serialization;
+
 
 namespace Limbs.Web.Controllers
 {
@@ -18,6 +26,8 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -81,7 +91,24 @@ namespace Limbs.Web.Controllers
             {
                 case SignInStatus.Success:
                     // return RedirectToLocal(returnUrl);
-                    return View("LoginIndex");
+                    //model.Email
+                    bool existUser = db.UserModelsT.Any(u => u.Email == model.Email);
+
+                    if (existUser)
+                    {
+                        //return View("../Users/Create");
+                        //return View("~/Views/Users/Create.cshtml",new { model.Email });
+                        //return View("~/Views/Users/UserPanel.cshtml/2");
+                        //Lo mando al controller del usuario con el mail, ahi a traves del mail me machea el id y me devuelve el panel
+                        return RedirectToAction("LoginUser","Users",new { model.Email});
+                    }
+                    else
+                    {
+                        //Lo mando al controller del embajador con el mail, ahi a traves del mail me machea el id y me devuelve el panel
+                        return RedirectToAction("AmbassadorPanel", "Ambassador");
+                    }
+                // UserOrAmbassador(model);
+                //return View("LoginIndex");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -127,7 +154,8 @@ namespace Limbs.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
+                    RedirectToLocal(model.ReturnUrl);
+                    return null; //CAmbiar este return null
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.Failure:
@@ -182,6 +210,20 @@ namespace Limbs.Web.Controllers
            // {
                 return View();
             //}
+        }
+
+        public ActionResult UserOrAmbassador(LoginViewModel model)
+        {
+            bool existUser = db.UserModelsT.Any(u => u.Email == model.Email);
+
+            if (existUser)
+            {
+                return View("Users/Create");
+            }
+            else
+            {
+                return View("Ambassador/Create");
+            }
         }
         
        

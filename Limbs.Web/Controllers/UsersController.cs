@@ -79,6 +79,7 @@ namespace Limbs.Web.Controllers
                 var lng = GetLongGoogle(userModel.Address);
                 userModel.Long = lng;
 
+
                 db.UserModelsT.Add(userModel);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index", "Home");
@@ -213,7 +214,14 @@ namespace Limbs.Web.Controllers
             // return View();
         }
 
-   
+        public ActionResult LoginUser(string email)
+        {
+            UserModel userModel = db.UserModelsT.First(u => u.Email == email) ;
+
+            //return View("UserPanel" + "/" + userModel.Id);
+            return RedirectToAction("UserPanel",new { userModel.Id });
+        }
+
 
         protected override void Dispose(bool disposing)
         {
