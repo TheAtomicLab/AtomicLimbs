@@ -1,0 +1,49 @@
+﻿@model Limbs.Web.Models.UserModel
+
+@{
+    ViewBag.Title = "Panel usuario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="cont" class="min_full">
+            <article id="home">
+                <h1>Hola @User.Identity.Name</h1>
+                <a href="/Orders/pedir_mano_index"><button id="home_pedir" class="blue_button">Pedir una mano</button></a>
+            @if (Model.OrderModel != null){
+                <article id="tus_pedidos">
+                    <h2>Tus pedidos:</h2>
+                    <table>
+                        <tr>
+                            <th>Id</th>
+                            <th>Fecha de solicitud</th>
+                            <th>Embajador</th>
+                            <th>Estado</th>
+                        </tr>
+                        @foreach (var order in Model.OrderModel)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelOrder => order.Id)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelOrder => order.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelOrder => order.Status)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </article>
+                 }
+               else{
+    <p>No tienes pedidos asignados</p>
+                }
+            </article>
+
+</div>
+<script src="../../Scripts/menu.js"></script>
+

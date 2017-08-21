@@ -46,6 +46,11 @@ namespace Limbs.Web.Models
 
         public double Long { get; set; }
 
+        public virtual ICollection<OrderModel> OrderModel { get; set; }
+
+        public virtual ICollection<int> OrderModelId { get; set; }
+        //public int OrderModelId { get; set; }
+
         /*
                 --Leave comments for possible evolution-#idEvolution = 1#----##
 

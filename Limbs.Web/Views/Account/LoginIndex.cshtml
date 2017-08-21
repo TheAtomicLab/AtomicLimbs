@@ -43,16 +43,23 @@
                         <th>Número de pedido</th>
                         <th>Estado</th>
                     </tr>
-                    <tr>
-                        <td>10/05/2017</td>
-                        <td>125623</td>
-                        <td>Pendiente</td>
-                    </tr>
-                    <tr>
-                        <td>05/02/2017</td>
-                        <td>125210</td>
-                        <td>Entregada</td>
-                    </tr>
+                    @foreach (var order in Model.OrderModel)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelOrder => order.Id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelOrder => order.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelOrder => order.OrderAmbassador)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelOrder => order.StatusLastUpdated)
+                            </td>
+                        </tr>
+                    }
                 </table>
             </article>
         </article>

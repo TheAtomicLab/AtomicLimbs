@@ -67,10 +67,12 @@ namespace Limbs.Web.Controllers
         {
             userModel.Email = User.Identity.GetUserName();
             userModel.UserId = User.Identity.GetUserId();
-
+            // userModel.OrderModelId = 0;
+            
             if (ModelState.IsValid)
             {
-
+             //   userModel.OrderModelId = new List<int>();
+             //   userModel.OrderModel = new List<OrderModel>();
                 var lat = GetLatGoogle(userModel.Address);
                 userModel.Lat = lat;
                 //ambassadorModel.Lat = 40.731;
@@ -85,58 +87,6 @@ namespace Limbs.Web.Controllers
             ViewBag.CountryList = GetCountryList();
 
             return View("View", userModel);
-        }
-
-        public ActionResult GetPointGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lat = dict["results"][0]["geometry"]["location"]["lat"];
-            var lng = dict["results"][0]["geometry"]["location"]["lng"];
-
-            var latlng = Convert.ToString(lat).Replace(',', '.') + ',' + Convert.ToString(lng).Replace(',', '.');
-            return Json(new { result = latlng }, JsonRequestBehavior.AllowGet);
-            //return Convert.ToDouble(latlng);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        public double GetLatGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lat = dict["results"][0]["geometry"]["location"]["lat"];
-
-            return Convert.ToDouble(lat);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        public double GetLongGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lng = dict["results"][0]["geometry"]["location"]["lng"];
-
-            return Convert.ToDouble(lng);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        public async Task<JsonResult> GetPoint(string address)
-        {
-            var httpClient = Api.GetHttpClient();
-            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { address = address }));
-            var value = await result.Content.ReadAsStringAsync();
-            var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
-
-            return Json(r, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Users/Edit/5
@@ -195,6 +145,81 @@ namespace Limbs.Web.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        public void AddOrder(UserModel userModel, OrderModel order)
+        {
+            userModel.OrderModelId.Add(order.Id);
+            db.SaveChanges();
+        }
+
+        public ActionResult GetPointGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+            var latlng = Convert.ToString(lat).Replace(',', '.') + ',' + Convert.ToString(lng).Replace(',', '.');
+            return Json(new { result = latlng }, JsonRequestBehavior.AllowGet);
+            //return Convert.ToDouble(latlng);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        public double GetLatGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lat = dict["results"][0]["geometry"]["location"]["lat"];
+
+            return Convert.ToDouble(lat);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        public double GetLongGoogle(String Address)
+        {
+            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
+            var result = new System.Net.WebClient().DownloadString(address);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var dict = jss.Deserialize<dynamic>(result);
+
+            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+
+            return Convert.ToDouble(lng);
+            // return jss.Deserialize<dynamic>(result);
+        }
+
+        public async Task<JsonResult> GetPoint(string address)
+        {
+            var httpClient = Api.GetHttpClient();
+            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { address = address }));
+            var value = await result.Content.ReadAsStringAsync();
+            var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
+
+            return Json(r, JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<ActionResult> UserPanel(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            UserModel userModel = await db.UserModelsT.FindAsync(id);
+            if (userModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(userModel);
+            // return View();
+        }
+
+   
 
         protected override void Dispose(bool disposing)
         {

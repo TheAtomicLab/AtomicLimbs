@@ -74,6 +74,12 @@ namespace Limbs.Web.Models
         public double Lat { get; set; }
 
         public double Long { get; set; }
+
+        public virtual ICollection<OrderModel> OrderModel { get; set; }
+
+        public virtual ICollection<int> OrderModelId { get; set; }
+
+        //public int OrderModelId { get; set; }
     }
 
     public enum ProthesisType

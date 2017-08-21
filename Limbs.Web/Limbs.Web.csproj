@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -199,6 +200,26 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
+    <Compile Include="Migrations\201708210215362_addOrderModel.cs" />
+    <Compile Include="Migrations\201708210215362_addOrderModel.Designer.cs">
+      <DependentUpon>201708210215362_addOrderModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708210235436_addOrderModel2.cs" />
+    <Compile Include="Migrations\201708210235436_addOrderModel2.Designer.cs">
+      <DependentUpon>201708210235436_addOrderModel2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708210310551_addOrderModel21.cs" />
+    <Compile Include="Migrations\201708210310551_addOrderModel21.Designer.cs">
+      <DependentUpon>201708210310551_addOrderModel21.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708210325393_addOrderModel22.cs" />
+    <Compile Include="Migrations\201708210325393_addOrderModel22.Designer.cs">
+      <DependentUpon>201708210325393_addOrderModel22.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201708210417045_addOrderModel23.cs" />
+    <Compile Include="Migrations\201708210417045_addOrderModel23.Designer.cs">
+      <DependentUpon>201708210417045_addOrderModel23.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -408,6 +429,7 @@
     <Content Include="Views\Ambassador\Index.cshtml" />
     <Content Include="Views\Ambassador\View.cshtml" />
     <Content Include="Views\Orders\pedir_brazo_medidas.cshtml" />
+    <Content Include="Views\Users\UserPanel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -415,6 +437,23 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201708210215362_addOrderModel.resx">
+      <DependentUpon>201708210215362_addOrderModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708210235436_addOrderModel2.resx">
+      <DependentUpon>201708210235436_addOrderModel2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708210310551_addOrderModel21.resx">
+      <DependentUpon>201708210310551_addOrderModel21.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708210325393_addOrderModel22.resx">
+      <DependentUpon>201708210325393_addOrderModel22.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708210417045_addOrderModel23.resx">
+      <DependentUpon>201708210417045_addOrderModel23.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

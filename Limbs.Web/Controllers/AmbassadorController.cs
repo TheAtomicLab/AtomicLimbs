@@ -29,6 +29,136 @@ namespace Limbs.Web.Controllers
             return View(await db.AmbassadorModels.ToListAsync());
         }
 
+        // GET: Ambassador/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
+            if (ambassadorModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ambassadorModel);
+        }
+
+        // GET: Ambassador/Create
+        public ActionResult Create()
+        {
+            ViewBag.CountryList = GetCountryList();
+            return View("View");
+            // return View(new AmbassadorModel { Email = Ambassador.Identity.GetAmbassadorName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
+        }
+
+        private static IEnumerable<SelectListItem> GetCountryList()
+        {
+            return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
+                .Select(x => new SelectListItem
+                {
+                    Text = new RegionInfo(x.LCID).DisplayName,
+                    Value = new RegionInfo(x.LCID).DisplayName,
+                }).OrderBy(x => x.Value).DistinctBy(x => x.Value);
+        }
+
+        // POST: Ambassador/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        public async Task<ActionResult> Create(AmbassadorModel ambassadorModel)
+        {
+            ambassadorModel.Email = User.Identity.GetUserName();
+            ambassadorModel.UserId = User.Identity.GetUserId();
+
+            //ambassadorModel.OrderModelId = 0;
+            if (ModelState.IsValid)
+            {
+                //   ambassadorModel.OrderModelId = new List<int>();
+                //   ambassadorModel.OrderModel = new List<OrderModel>();
+                //    ambassadorModel.Lat = 0;
+                //    ambassadorModel.Long = 0;
+                var lat = GetLatGoogle(ambassadorModel.Address);
+                ambassadorModel.Lat = lat;
+                //ambassadorModel.Lat = 40.731;
+                var lng = GetLongGoogle(ambassadorModel.Address);
+                ambassadorModel.Long = lng;
+
+                //ambassadorModel.Long = 40.731;
+
+
+                db.AmbassadorModels.Add(ambassadorModel);
+                await db.SaveChangesAsync();
+                return RedirectToAction("AmbassadorPanel", "Ambassador");
+            }
+
+            ViewBag.CountryList = GetCountryList();
+
+            return View("View", ambassadorModel);
+        }
+
+        // GET: Ambassador/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
+            if (ambassadorModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ambassadorModel);
+        }
+
+        // POST: Ambassador/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        // public async Task<ActionResult> Edit([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address,Lat,Long")] AmbassadorModel ambassadorModel)
+        /*       --Leave comments for possible evolution-#idEvolution = 1#----##
+                 
+        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni,AtributoEmbajador1,AtributoEmbajador2,AtributoEmbajador3")] AmbassadorModel ambassadorModel)
+        */
+        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni")] AmbassadorModel ambassadorModel)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(ambassadorModel).State = EntityState.Modified;
+                await db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            return View(ambassadorModel);
+        }
+
+        // GET: Ambassador/Delete/5
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
+            if (ambassadorModel == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ambassadorModel);
+        }
+
+        // POST: Ambassador/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
+            db.AmbassadorModels.Remove(ambassadorModel);
+            await db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
 
         // GET: /AmbassadorPanel/
         public ActionResult AmbassadorPanel()
@@ -137,76 +267,11 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("AmbassadorPanel");
         }
 
-
-
-
-
-        // GET: Ambassador/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ambassadorModel);
+        public void AddOrder(AmbassadorModel ambassadorModel,OrderModel order) {
+            ambassadorModel.OrderModelId.Add(order.Id);
+            db.SaveChanges();
         }
 
-        // GET: Ambassador/Create
-        public ActionResult Create()
-        {
-            ViewBag.CountryList = GetCountryList();
-            return View("View");
-            // return View(new AmbassadorModel { Email = Ambassador.Identity.GetAmbassadorName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
-        }
-
-        private static IEnumerable<SelectListItem> GetCountryList()
-        {
-            return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                .Select(x => new SelectListItem
-                {
-                    Text = new RegionInfo(x.LCID).DisplayName,
-                    Value = new RegionInfo(x.LCID).DisplayName,
-                }).OrderBy(x => x.Value).DistinctBy(x => x.Value);
-        }
-
-        // POST: Ambassador/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        public async Task<ActionResult> Create(AmbassadorModel ambassadorModel)
-        {
-            ambassadorModel.Email = User.Identity.GetUserName();
-            ambassadorModel.UserId = User.Identity.GetUserId();
-
-            if (ModelState.IsValid)
-            {
-
-                //    ambassadorModel.Lat = 0;
-                //    ambassadorModel.Long = 0;
-             var lat = GetLatGoogle(ambassadorModel.Address);
-                ambassadorModel.Lat = lat;
-                //ambassadorModel.Lat = 40.731;
-                var lng = GetLongGoogle(ambassadorModel.Address);
-                ambassadorModel.Long = lng;
-
-                //ambassadorModel.Long = 40.731;
-
-
-                db.AmbassadorModels.Add(ambassadorModel);
-                await db.SaveChangesAsync();
-                return RedirectToAction("AmbassadorPanel", "Ambassador");
-            }
-
-            ViewBag.CountryList = GetCountryList();
-
-            return View("View", ambassadorModel);
-        }
-        
         public ActionResult GetPointGoogle(String Address)
         {
             var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
@@ -278,68 +343,7 @@ namespace Limbs.Web.Controllers
             return Json(r, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Ambassador/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ambassadorModel);
-        }
-
-        // POST: Ambassador/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        // public async Task<ActionResult> Edit([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address,Lat,Long")] AmbassadorModel ambassadorModel)
-        /*       --Leave comments for possible evolution-#idEvolution = 1#----##
-                 
-        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni,AtributoEmbajador1,AtributoEmbajador2,AtributoEmbajador3")] AmbassadorModel ambassadorModel)
-        */
-        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni")] AmbassadorModel ambassadorModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(ambassadorModel).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(ambassadorModel);
-        }
-
-        // GET: Ambassador/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ambassadorModel);
-        }
-
-        // POST: Ambassador/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            db.AmbassadorModels.Remove(ambassadorModel);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
-        }
-
+       
         protected override void Dispose(bool disposing)
         {
             if (disposing)
