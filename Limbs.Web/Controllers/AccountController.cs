@@ -96,11 +96,9 @@ namespace Limbs.Web.Controllers
 
                     if (existUser)
                     {
-                        //return View("../Users/Create");
-                        //return View("~/Views/Users/Create.cshtml",new { model.Email });
-                        //return View("~/Views/Users/UserPanel.cshtml/2");
                         //Lo mando al controller del usuario con el mail, ahi a traves del mail me machea el id y me devuelve el panel
-                        return RedirectToAction("LoginUser","Users",new { model.Email});
+                        //return RedirectToAction("LoginUser","Users",new { model.Email});
+                        return RedirectToAction("UserPanel", "Users");
                     }
                     else
                     {

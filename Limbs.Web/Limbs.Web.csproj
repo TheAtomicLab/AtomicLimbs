@@ -247,6 +247,7 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\UserPanelViewModel.cs" />
     <Compile Include="ViewModels\AmbassadorPanelViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />
   </ItemGroup>

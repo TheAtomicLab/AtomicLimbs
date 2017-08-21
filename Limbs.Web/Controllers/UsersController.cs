@@ -82,7 +82,7 @@ namespace Limbs.Web.Controllers
 
                 db.UserModelsT.Add(userModel);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("UserPanel");
             }
 
             ViewBag.CountryList = GetCountryList();
@@ -199,6 +199,7 @@ namespace Limbs.Web.Controllers
             return Json(r, JsonRequestBehavior.AllowGet);
         }
 
+        /*
         public async Task<ActionResult> UserPanel(int? id)
         {
             if (id == null)
@@ -211,6 +212,22 @@ namespace Limbs.Web.Controllers
                 return HttpNotFound();
             }
             return View(userModel);
+            // return View();
+        }
+        */
+
+        public ActionResult UserPanel()
+        {
+            var userId = User.Identity.GetUserId();
+
+            IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
+
+            var viewModel = new ViewModels.UserPanelViewModel()
+            {
+                Order = orderList.ToList()
+            };
+
+            return View(viewModel);
             // return View();
         }
 
