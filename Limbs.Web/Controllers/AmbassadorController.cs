@@ -195,6 +195,18 @@ namespace Limbs.Web.Controllers
         }
         
 
+        // GET: /OrderDetails/1
+        public ActionResult OrderDetails(int? id)
+        {
+            var userId = User.Identity.GetUserId();
+            OrderModel Order = db.OrderModels.Include(c => c.OrderRequestor).SingleOrDefault(c => c.Id == id && c.OrderAmbassador.UserId == userId);
+
+            if (Order == null) return HttpNotFound();
+
+            return View(Order);
+        }
+
+
         // GET: Orders/Assignation/?id=5&action=accept
         // Aceptar o rechazar como embajador, pedidos pre-asignados.
         public ActionResult AssignOrder(int Id, string accion)

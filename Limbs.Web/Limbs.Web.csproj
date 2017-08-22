@@ -370,6 +370,7 @@
     <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
     <Content Include="Views\Orders\CreateBackup.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Ambassador\OrderDetails.cshtml" />
     <None Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\pedir_mano_medidas.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />

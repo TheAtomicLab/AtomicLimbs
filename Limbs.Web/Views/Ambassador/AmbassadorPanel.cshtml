@@ -7,6 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
     <article id="panel_embajadores">
         <h1>Panel de control</h1>
         <div id="estadistica_emb">
@@ -28,19 +29,16 @@
                     <h2>Pedidos entrantes:</h2>
                     <table class="tabla_emb">
                         <tr>
-                            <td>Nombre</td>
+                            <td>Nro. de pedido</td>
+                            <td>Nombre solicitante</td>
                             <td>Fecha de solicitud</td>
-                            <td>Número de pedido</td>
-                            <td>Acciones</td>
                         </tr>
                         @foreach (var order in Model.PendingToAssignOrders)
                         {
-                            <tr>
+                            <tr onclick="location.href = '@(Url.Action("OrderDetails", "Ambassador", new { id = order.Id }))'">
+                                <td>#@order.Id</td>
                                 <td>@order.OrderRequestor.ResponsableName</td>
                                 <td>@order.Date.ToString("dd/MM/yyyy")</td>
-                                <td>#@order.Id</td>
-                                <td>@Html.ActionLink("Aceptar", "AssignOrder", "Ambassador", new { id = order.Id, accion = "aceptar" }, null) | 
-                                @Html.ActionLink("Rechazar", "AssignOrder", "Ambassador", new { id = order.Id, accion = "rechazar" }, null)</td>
                             </tr>
                         }
                     </table>
@@ -52,29 +50,18 @@
                 <h2>Tus pedidos:</h2>
                 <table class="tabla_emb">
                     <tr>
-                        <td>Nombre</td>
+                        <td>Nro. de pedido</td>
+                        <td>Nombre solicitante</td>
                         <td>Fecha de solicitud</td>
-                        <td>Número de pedido</td>
                         <td>Estado</td>
-                        <td>Acciones</td>
                     </tr>
                     @foreach (var order in Model.PendingOrders)
                     {
-                        <tr>
+                        <tr onclick="location.href = '@(Url.Action("OrderDetails", "Ambassador", new { id = order.Id }))'">
+                            <td>#@order.Id</td>
                             <td>@order.OrderRequestor.ResponsableName</td>
                             <td>@order.Date.ToString("dd/MM/yyyy")</td>
-                            <td>#@order.Id</td>
                             <td>@Limbs.Web.Helpers.Enumerations.GetEnumDescription(order.Status)</td>
-                            <td>
-                                @if (order.Status == Limbs.Web.Models.OrderStatus.Pending)
-                                {
-                                    @Html.ActionLink("Ya lo imprimí", "UpdateOrder", "Ambassador", new { orderid = order.Id, status = Limbs.Web.Models.OrderStatus.Ready }, null)
-                                }
-                                else if (order.Status == Limbs.Web.Models.OrderStatus.Ready)
-                                {
-                                    @Html.ActionLink("Ya lo entregué", "UpdateOrder", "Ambassador", new { orderid = order.Id, status = Limbs.Web.Models.OrderStatus.Delivered }, null)
-                                }
-                            </td>
                         </tr>
                     }
                 </table>
@@ -87,17 +74,17 @@
                     <h2>Terminadas:</h2>
                     <table class="tabla_emb">
                         <tr>
-                            <td>Nombre</td>
+                            <td>Nro. de pedido</td>
+                            <td>Nombre solicitante</td>
                             <td>Fecha de solicitud</td>
-                            <td>Número de pedido</td>
                             <td>Estado</td>
                         </tr>
                         @foreach (var order in Model.DeliveredOrders)
                         {
-                            <tr>
+                            <tr onclick="location.href = '@(Url.Action("OrderDetails", "Ambassador", new { id = order.Id }))'">
+                                <td>#@order.Id</td>
                                 <td>@order.OrderRequestor.ResponsableName</td>
                                 <td>@order.Date.ToString("dd/MM/yyyy")</td>
-                                <td>#@order.Id</td>
                                 <td>@Limbs.Web.Helpers.Enumerations.GetEnumDescription(order.Status)</td>
                             </tr>
                         }
