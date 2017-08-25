@@ -171,7 +171,7 @@ namespace Limbs.Web.Controllers
             IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
 
             var DeliveredOrdersCount = orderList.Where(c => c.Status == OrderStatus.Delivered).Count();
-            var PendingOrdersCount = db.OrderModels.Where(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready).Count();
+            var PendingOrdersCount = orderList.Where(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready).Count();
 
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
             var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready).ToList();
