@@ -68,6 +68,13 @@ namespace Limbs.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectUser();
+            }
+            
+
             ViewBag.ReturnUrl = returnUrl;
             return View();
         }
@@ -79,6 +86,12 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectUser();
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -168,6 +181,12 @@ namespace Limbs.Web.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectUser();
+            }
+
             return View();
         }
 
@@ -178,12 +197,21 @@ namespace Limbs.Web.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
+
+
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectUser();
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, "Unassigned");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -201,15 +229,18 @@ namespace Limbs.Web.Controllers
             return View(model);
         }
 
-        [AllowAnonymous]
         public ActionResult selectUserOrAmbassador()
         {
-         //   if (User.Identity.IsAuthenticated)
-           // {
-                return View();
-            //}
+            if(!User.IsInRole("Unassigned"))
+            {
+                return RedirectUser();
+            }
+
+            return View();
+
         }
 
+        /*
         public ActionResult UserOrAmbassador(LoginViewModel model)
         {
             bool existUser = db.UserModelsT.Any(u => u.Email == model.Email);
@@ -222,7 +253,7 @@ namespace Limbs.Web.Controllers
             {
                 return View("Ambassador/Create");
             }
-        }
+        }*/
         
        
         //
@@ -461,6 +492,28 @@ namespace Limbs.Web.Controllers
         {
             return View();
         }
+
+
+        private ActionResult RedirectUser()
+        {
+            if (User.IsInRole("Requester"))
+            {
+                return RedirectToAction("UserPanel", "Users");
+            }
+            else if (User.IsInRole("Ambassador"))
+            {
+                return RedirectToAction("AmbassadorPanel", "Ambassador");
+            }
+            else if(User.IsInRole("Admin"))
+            {
+                return RedirectToAction("AdminPanel", "Admin");
+            }
+            else // No se terminó de registrar (Role="Unassigned")
+            {
+                return RedirectToAction("selectUserOrAmbassador");
+            }
+        }
+
 
         protected override void Dispose(bool disposing)
         {

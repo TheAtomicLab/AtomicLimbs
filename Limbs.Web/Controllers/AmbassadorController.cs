@@ -13,6 +13,8 @@ using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using System.Web.Http;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Web.Security;
 
 
 namespace Limbs.Web.Controllers
@@ -22,13 +24,14 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
+        // Lista embajadores (Admin)
         // GET: Ambassador
         public async Task<ActionResult> Index()
         {
             return View(await db.AmbassadorModels.ToListAsync());
         }
 
+        // Para editar embajadores (Admin)
         // GET: Ambassador/Details/5
         public async Task<ActionResult> Details(int? id)
         {
@@ -44,13 +47,16 @@ namespace Limbs.Web.Controllers
             return View(ambassadorModel);
         }
 
+
         // GET: Ambassador/Create
+        [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
             ViewBag.CountryList = GetCountryList();
             return View("View");
             // return View(new AmbassadorModel { Email = Ambassador.Identity.GetAmbassadorName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
+
 
         private static IEnumerable<SelectListItem> GetCountryList()
         {
@@ -66,6 +72,7 @@ namespace Limbs.Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Unassigned")]
         public async Task<ActionResult> Create(AmbassadorModel ambassadorModel)
         {
             ambassadorModel.Email = User.Identity.GetUserName();
@@ -86,6 +93,9 @@ namespace Limbs.Web.Controllers
 
                 //ambassadorModel.Long = 40.731;
 
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, "Unassigned");
+                await userManager.AddToRoleAsync(ambassadorModel.UserId, "Ambassador");
 
                 db.AmbassadorModels.Add(ambassadorModel);
                 await db.SaveChangesAsync();
@@ -161,6 +171,7 @@ namespace Limbs.Web.Controllers
 
 
         // GET: /AmbassadorPanel/
+        [Authorize(Roles = "Ambassador")]
         public ActionResult AmbassadorPanel()
         {
 
@@ -196,6 +207,7 @@ namespace Limbs.Web.Controllers
         
 
         // GET: /OrderDetails/1
+        [Authorize(Roles = "Ambassador")]
         public ActionResult OrderDetails(int? id)
         {
             var userId = User.Identity.GetUserId();
@@ -209,6 +221,7 @@ namespace Limbs.Web.Controllers
 
         // GET: Orders/Assignation/?id=5&action=accept
         // Aceptar o rechazar como embajador, pedidos pre-asignados.
+        [Authorize(Roles = "Ambassador")]
         public ActionResult AssignOrder(int Id, string accion)
         {
 
@@ -247,6 +260,7 @@ namespace Limbs.Web.Controllers
 
         // GET: Orders/UpdateOrder
         // Cambiar de estado un pedido, marcar como "listo", o "entregado".
+        [Authorize(Roles = "Ambassador")]
         public ActionResult UpdateOrder(int orderid, OrderStatus status)
         {
             // "Order" solo tiene la ID consigo.

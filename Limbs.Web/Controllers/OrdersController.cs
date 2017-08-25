@@ -32,7 +32,6 @@ namespace Limbs.Web.Controllers
         // GET: Orders/Index
         public ActionResult Index()
         {
-
             return View();
 
         }
@@ -40,11 +39,13 @@ namespace Limbs.Web.Controllers
 
 
         // GET: Orders/Create
+        [Authorize(Roles = "Requester")]
         public ActionResult Create()
         {
             return View("Create");
         }
 
+        [Authorize(Roles = "Requester")]
         public ActionResult CreateHand()
         {
             return View("pedir_mano_index");
@@ -54,7 +55,7 @@ namespace Limbs.Web.Controllers
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-
+        [Authorize(Roles = "Requester")]
         [HttpPost]
         public async Task<ActionResult> Create([Bind(Include = "Id,Design,Sizes,Comments")] OrderModel orderModel)
         {
@@ -222,16 +223,19 @@ namespace Limbs.Web.Controllers
             return View(orderModel);
         }
 
+        [Authorize(Roles = "Requester")]
         public ActionResult pedir_mano_index()
         {
             return View();
         }
 
+        [Authorize(Roles = "Requester")]
         public ActionResult pedir_brazo_medidas()
         {
             return View();
         }
 
+        [Authorize(Roles = "Requester")]
         public ActionResult pedir_mano_medidas()
         {
             return View();

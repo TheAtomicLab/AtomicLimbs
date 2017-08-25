@@ -12,6 +12,13 @@ using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Host.SystemWeb;
+using Microsoft.AspNet.Identity.Owin;
+using System.Web.Security;
+
+
 
 namespace Limbs.Web.Controllers
 {
@@ -42,6 +49,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Users/Create
+        [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
             ViewBag.CountryList = GetCountryList();
@@ -63,6 +71,7 @@ namespace Limbs.Web.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "Unassigned")]
         public async Task<ActionResult> Create(UserModel userModel)
         {
             userModel.Email = User.Identity.GetUserName();
@@ -78,6 +87,10 @@ namespace Limbs.Web.Controllers
                 //ambassadorModel.Lat = 40.731;
                 var lng = GetLongGoogle(userModel.Address);
                 userModel.Long = lng;
+
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+                await userManager.RemoveFromRoleAsync(userModel.UserId, "Unassigned");
+                await userManager.AddToRoleAsync(userModel.UserId, "Requester");
 
 
                 db.UserModelsT.Add(userModel);
@@ -216,6 +229,7 @@ namespace Limbs.Web.Controllers
         }
         */
 
+        [Authorize(Roles = "Requester")]
         public ActionResult UserPanel()
         {
             var userId = User.Identity.GetUserId();
