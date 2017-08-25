@@ -200,29 +200,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201708210215362_addOrderModel.cs" />
-    <Compile Include="Migrations\201708210215362_addOrderModel.Designer.cs">
-      <DependentUpon>201708210215362_addOrderModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708210235436_addOrderModel2.cs" />
-    <Compile Include="Migrations\201708210235436_addOrderModel2.Designer.cs">
-      <DependentUpon>201708210235436_addOrderModel2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708210310551_addOrderModel21.cs" />
-    <Compile Include="Migrations\201708210310551_addOrderModel21.Designer.cs">
-      <DependentUpon>201708210310551_addOrderModel21.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708210325393_addOrderModel22.cs" />
-    <Compile Include="Migrations\201708210325393_addOrderModel22.Designer.cs">
-      <DependentUpon>201708210325393_addOrderModel22.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708210417045_addOrderModel23.cs" />
-    <Compile Include="Migrations\201708210417045_addOrderModel23.Designer.cs">
-      <DependentUpon>201708210417045_addOrderModel23.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201708210515338_addOrderModel24.cs" />
-    <Compile Include="Migrations\201708210515338_addOrderModel24.Designer.cs">
-      <DependentUpon>201708210515338_addOrderModel24.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -446,23 +423,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708210215362_addOrderModel.resx">
-      <DependentUpon>201708210215362_addOrderModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708210235436_addOrderModel2.resx">
-      <DependentUpon>201708210235436_addOrderModel2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708210310551_addOrderModel21.resx">
-      <DependentUpon>201708210310551_addOrderModel21.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708210325393_addOrderModel22.resx">
-      <DependentUpon>201708210325393_addOrderModel22.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708210417045_addOrderModel23.resx">
-      <DependentUpon>201708210417045_addOrderModel23.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201708210515338_addOrderModel24.resx">
-      <DependentUpon>201708210515338_addOrderModel24.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
