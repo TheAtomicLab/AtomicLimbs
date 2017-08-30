@@ -9,6 +9,7 @@ namespace Limbs.Web.Models
 {
     public class OrderModel
     {
+
         [Key]
         public int Id { get; set; }
 
@@ -33,6 +34,7 @@ namespace Limbs.Web.Models
 
         public string Comments { get; set; }
 
+        [Display(Name = "Estado", Description = "")]
         public OrderStatus Status { get; set; }
 
         public DateTime StatusLastUpdated { get; set; }

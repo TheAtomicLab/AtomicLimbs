@@ -506,7 +506,7 @@ namespace Limbs.Web.Controllers
             }
             else if(User.IsInRole("Admin"))
             {
-                return RedirectToAction("AdminPanel", "Admin");
+                return RedirectToAction("Index", "Admin");
             }
             else // No se terminó de registrar (Role="Unassigned")
             {
