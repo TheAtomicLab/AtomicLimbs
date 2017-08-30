@@ -19,7 +19,7 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableName { get; set; }
         
-        [Display(Name = "Email", Description = "")]
+        [Display(Name = "Correo electrónico", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
         public string Email { get; set; }

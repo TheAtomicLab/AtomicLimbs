@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Limbs.Web.Models.OrderModel>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+@Html.ActionLink("Volver", "Index", "Admin")
+
+<h2>Orders</h2>
+
+
+
+<table class="table" style="width:700px">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                E-mail solicitante
+            </th>
+            <th>
+                E-mail embajador
+            </th>
+        </tr>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="@Url.Action("OrderDetails", "Admin", new { id = item.Id })">@Html.DisplayFor(modelItem => item.Id)</a>
+        </td>
+        <td>
+            @Limbs.Web.Helpers.Enumerations.GetEnumDescription(item.Status)
+        </td>
+        <td>
+            @item.Date.ToString("dd/MM/yy")
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OrderRequestor.Email)
+        </td>
+        <td>
+            @if (item.OrderAmbassador != null)
+            {
+                @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
+            }
+            else
+            {
+                <span>No asignado</span>
+            }
+
+        </td>
+    </tr>
+}
+
+</table>
