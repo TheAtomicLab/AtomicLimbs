@@ -201,17 +201,16 @@ namespace Limbs.Web.Controllers
             // List files.
             IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
                 .Files;
-            Console.WriteLine("Files:");
             if (files != null && files.Count > 0)
             {
                 foreach (var file in files)
                 {
-                    //Console.WriteLine("{0} ({1})", file.Name, file.Id);
+                    //muestro atributos
                 }
             }
             else
             {
-                //Console.WriteLine("No files found.");
+                //no hay archivos
             }
         }
 
@@ -238,7 +237,8 @@ namespace Limbs.Web.Controllers
         {
             string[] Scopes = { DriveService.Scope.DriveFile };
 
-            var client_json = "C:/Users/Lucas/Desktop/plataformaLimbs/Limbs.Web/Scripts/client_secret.json";
+            //var client_json = Server.MapPath("/Scripts/client_secret.json"); --se usa con el choclo de abajo porque GetUserCredential es static--
+            var client_json = System.Web.HttpContext.Current.Server.MapPath("/Scripts/client_secret.json");
 
             using (var stream =
                 new FileStream(client_json, FileMode.Open, FileAccess.Read))
@@ -258,7 +258,7 @@ namespace Limbs.Web.Controllers
 
         private static DriveService GetDriveService(UserCredential credential)
         {
-            var applicationName = "Drive API .NET Quickstart";
+            var applicationName = "Limbs";
             // Create Drive API service.
             return new DriveService(new BaseClientService.Initializer()
             {
