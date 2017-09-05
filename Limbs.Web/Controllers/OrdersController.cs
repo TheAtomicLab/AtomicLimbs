@@ -11,23 +11,25 @@ using Limbs.Web.Models;
 using Limbs.Web.Repositories;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Controllers;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
+using Google.Apis.Services;
+using Google.Apis.Util.Store;
+using System.IO;
+using System.Threading;
+
 
 namespace Limbs.Web.Controllers
 {
-       ///se comentan los repository para el funcionamiento del front
+
+
+    ///se comentan los repository para el funcionamiento del front
     public class OrdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
-      //  public IOrdersRepository OrdersRepository { get; set; }
-
-       // private ApplicationDbContext _context;
-
-   /*     public OrdersController(ApplicationDbContext context)
-        {
-            _context = context;
-        }*/
-
+      
+        //  public IOrdersRepository OrdersRepository { get; set; }
 
         // GET: Orders/Index
         public ActionResult Index()
@@ -35,8 +37,6 @@ namespace Limbs.Web.Controllers
             return View();
 
         }
-
-
 
         // GET: Orders/Create
         [Authorize(Roles = "Requester")]
@@ -51,13 +51,12 @@ namespace Limbs.Web.Controllers
             return View("pedir_mano_index");
         }
 
-
         // POST: Orders/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize(Roles = "Requester")]
         [HttpPost]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Design,Sizes,Comments")] OrderModel orderModel)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Design,Sizes,Comments")] OrderModel orderModel, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
@@ -67,22 +66,23 @@ namespace Limbs.Web.Controllers
                 orderModel.OrderRequestor = userModel;
 
                 //Asigno ambassador
-                //orderModel.OrderAmbassador = await db.AmbassadorModels.FindAsync(3);
-                AmbassadorModel ambassador1 = await db.AmbassadorModels.FirstAsync();
-                orderModel.OrderAmbassador = MatchWithAmbassador(userModel,ambassador1);
-                //var distance = MatcheoWithAmbassador(userModel, orderModel.OrderAmbassador);
-                //orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
+                orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
                 orderModel.Status = OrderStatus.PreAssigned;
                 orderModel.StatusLastUpdated = DateTime.Now;
-                orderModel.Date = DateTime.Now;
+                orderModel.Date = DateTime.Now; 
+                //asocio idImage a order
+                var idLastOrder = db.OrderModels.Max(a => a.Id);
+                idLastOrder ++;
+                var nameFile = orderModel.OrderRequestor.Email + "-" + idLastOrder;
+                
+                //Proceso foto
+                Upload_file(file,nameFile);
+                orderModel.IdImage = nameFile;
 
                 db.OrderModels.Add(orderModel);
                 await db.SaveChangesAsync();
 
-               // AmbassadorModel em = orderModel.OrderAmbassador;
-               // UserModel us = userModel;
-
-                return RedirectToAction("UserPanel","Users");
+                return RedirectToAction("UserPanel", "Users");
             }
 
             return View(orderModel);
@@ -101,12 +101,13 @@ namespace Limbs.Web.Controllers
             return cant;
         }
 
-        public AmbassadorModel MatchWithAmbassador(UserModel user,AmbassadorModel ambassador)
+        public AmbassadorModel MatchWithAmbassador(UserModel user)
         {
+            AmbassadorModel ambassador = db.AmbassadorModels.First();
             //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
             // var cant = QuantityOrders(ambassador);
             //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
-           
+
             //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
             //descomentar la linea de abajo y comentar la de arriba desp de testeos
             var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
@@ -117,20 +118,20 @@ namespace Limbs.Web.Controllers
             AmbassadorModel ambassadorSelect = null;
             if (distance1 < 500000 && ambassadors.Contains(ambassador))
             {
-                 ambassadorSelect = ambassador;
-            }            
+                ambassadorSelect = ambassador;
+            }
 
             foreach (var ambassador2 in ambassadors)
             {
                 var distance2 = MatcheoWithAmbassador(user, ambassador2);
-                 
-                    if(distance1 > distance2)
+
+                if (distance1 > distance2)
+                {
+                    if (distance2 < 500000)
                     {
-                        if(distance2 < 500000)
-                        {
-                            ambassadorSelect = ambassador2;
-                        }
+                        ambassadorSelect = ambassador2;
                     }
+                }
             }
 
             if (ambassadorSelect != null)
@@ -143,7 +144,7 @@ namespace Limbs.Web.Controllers
                 //alerta para el usuario de que no matcheo con ningun embajador
                 return null;
             }
-            
+
         }
 
         private static double GetDistance(double long1InDegrees, double lat1InDegrees, double long2InDegrees, double lat2InDegrees)
@@ -157,6 +158,115 @@ namespace Limbs.Web.Controllers
             double distInMeters = Math.Sqrt(Math.Pow(latm, 2) + Math.Pow(lngm, 2));
             return distInMeters;
         }
+
+        public void Upload_file(HttpPostedFileBase file,string name)
+        {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    //string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), Path.GetFileName(file.FileName));
+                    string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name+Path.GetExtension(file.FileName));
+                    //define credential
+                    UserCredential credential = GetUserCredential();
+
+                    //define service 
+                    DriveService service = GetDriveService(credential);
+
+                    //ListFiles
+                    //ListFiles(service);   
+
+                    //saveFile
+                    file.SaveAs(path);
+                    //uploadFile
+                    UploadFileDrive(path, service,name);
+                
+                }
+                catch (Exception ex)
+                {
+                }
+            else
+            {
+            }
+        }
+
+        //-----------------------------Google drive api------------------------//
+
+        private static void ListFiles(DriveService service)
+        {
+            //define files
+            FilesResource.ListRequest listRequest = service.Files.List();
+            listRequest.PageSize = 10;
+            listRequest.Fields = "nextPageToken, files(id, name)";
+
+            // List files.
+            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
+                .Files;
+            Console.WriteLine("Files:");
+            if (files != null && files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+                    //Console.WriteLine("{0} ({1})", file.Name, file.Id);
+                }
+            }
+            else
+            {
+                //Console.WriteLine("No files found.");
+            }
+        }
+
+
+        private static void UploadFileDrive(string path, DriveService service,string name)
+        {
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = name
+            };
+            FilesResource.CreateMediaUpload request;
+            using (var stream = new System.IO.FileStream(path,
+                            System.IO.FileMode.Open))
+            {
+                request = service.Files.Create(
+                fileMetadata, stream, "image/jpeg");
+                request.Fields = "id";
+                request.Upload();
+            }
+            var file = request.ResponseBody;
+        }
+
+        private static UserCredential GetUserCredential()
+        {
+            string[] Scopes = { DriveService.Scope.DriveFile };
+
+            var client_json = "C:/Users/Lucas/Desktop/plataformaLimbs/Limbs.Web/Scripts/client_secret.json";
+
+            using (var stream =
+                new FileStream(client_json, FileMode.Open, FileAccess.Read))
+            {
+                string credPath = System.Environment.GetFolderPath(
+                    System.Environment.SpecialFolder.Personal);
+                credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart.json");
+
+                return GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+            }
+        }
+
+        private static DriveService GetDriveService(UserCredential credential)
+        {
+            var applicationName = "Drive API .NET Quickstart";
+            // Create Drive API service.
+            return new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = applicationName,
+            });
+        }
+        //--------------------------------------------------------------------//
 
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)

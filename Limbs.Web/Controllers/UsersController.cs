@@ -98,7 +98,7 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("UserPanel");
             }
 
-            ViewBag.CountryList = GetCountryList();
+           // ViewBag.CountryList = GetCountryList();
 
             return View("View", userModel);
         }

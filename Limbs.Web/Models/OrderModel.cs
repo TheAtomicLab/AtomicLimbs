@@ -34,6 +34,8 @@ namespace Limbs.Web.Models
 
         public string Comments { get; set; }
 
+        public string IdImage { get; set; }
+
         [Display(Name = "Estado", Description = "")]
         public OrderStatus Status { get; set; }
 

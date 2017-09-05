@@ -2,7 +2,8 @@
 @model Limbs.Web.Models.OrderModel
 
     <div id="cont" class="min_full">
-        <form class="form_solicitud" method="post" action="@Url.Action("Create", "Orders")">
+        @using (Html.BeginForm("Create", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        { 
             <ul id="medidas">
                 <h2>Medidas:</h2>
                 <li>
@@ -27,9 +28,6 @@
 
             <div id="medidas_mano"></div>
 
-
-
-
             <div id="color_mano">
                 <h2>Color:</h2>
                 <input type="radio" name="color" required="true" value="a">
@@ -45,7 +43,8 @@
                     @Html.EditorFor(model => model.Comments)
                 </div>
             </div>
+            <input type="file" name="file" accept="image/jpeg" />
             <input id="enviar" type="submit" name="enviar" value="Enviar" class="blue_button">
-        </form>
+        }
     </div>
     <script src="~/Scripts/menu.js"></script>

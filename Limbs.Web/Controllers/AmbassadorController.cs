@@ -52,7 +52,7 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
-            ViewBag.CountryList = GetCountryList();
+            //ViewBag.CountryList = GetCountryList();
             return View("View");
             // return View(new AmbassadorModel { Email = Ambassador.Identity.GetAmbassadorName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
@@ -81,10 +81,6 @@ namespace Limbs.Web.Controllers
             //ambassadorModel.OrderModelId = 0;
             if (ModelState.IsValid)
             {
-                //   ambassadorModel.OrderModelId = new List<int>();
-                //   ambassadorModel.OrderModel = new List<OrderModel>();
-                //    ambassadorModel.Lat = 0;
-                //    ambassadorModel.Long = 0;
                 var lat = GetLatGoogle(ambassadorModel.Address);
                 ambassadorModel.Lat = lat;
                 //ambassadorModel.Lat = 40.731;
