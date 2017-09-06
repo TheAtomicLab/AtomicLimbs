@@ -59,9 +59,8 @@
                         <span>¿Donde vives?</span>
                     </label>
                     @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
-                    <button type="submit" id="checkAddress" class="blue_button" style="margin-top: 20px;">Corroborar dirección</button>
                 </div>
-
+                <button type="submit" class="blue_button" style="margin-top:10px;" id="checkAddress">Actualizar mapa</button>
                 <div id="map"></div>
                 
 

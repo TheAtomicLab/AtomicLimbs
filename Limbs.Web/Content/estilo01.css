@@ -83,7 +83,7 @@ body {
 	color: white;
 	position: absolute;
 	bottom: 0px;
-	left: calc(50% - 32px);
+	left: 50%;
 	transform: translateX(-50%);
 	text-shadow: rgba(0,0,0,0.7) 1px 1px 2px;
 }
@@ -282,6 +282,10 @@ nav li:hover a:before {
     margin-top: 40px;
     max-height: calc(100vw - 110px);
 }
+.form_regis_radio li {
+    list-style-type: none;
+    margin: 16px 0px;
+}
 
 /*inicio form*/
 #realiza_pedido {
@@ -421,9 +425,10 @@ nav li:hover a:before {
 #cont_login span {
     display: block;
 }
-#cont_login .field-validation-error {
+.field-validation-error, .validation-summary-errors ul li {
     color: red;
     font-size: 12px;
+    list-style-type: none;
 }
 #cont_login input {
     margin-bottom: 5px;
@@ -1021,4 +1026,16 @@ nav li:hover a:before {
             .footer-distributed .footer-center i {
                 margin-left: 0;
             }
+}
+
+#cont_regis {
+    padding: 30px;
+    box-sizing: border-box;
+    color: #1f1f1f;
+}
+#cont_regis h2 {
+    color: #4772b2;
+}
+#cont_regis .form-group {
+    margin-top: 10px;
 }
