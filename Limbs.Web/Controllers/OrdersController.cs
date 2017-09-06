@@ -109,6 +109,7 @@ namespace Limbs.Web.Controllers
 
         public AmbassadorModel MatchWithAmbassador(UserModel user)
         {
+<<<<<<< HEAD
             if (db.AmbassadorModels.Count() > 0)
             {
                 AmbassadorModel ambassador = db.AmbassadorModels.First();
@@ -119,6 +120,17 @@ namespace Limbs.Web.Controllers
                 //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
                 //descomentar la linea de abajo y comentar la de arriba desp de testeos
                 var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
+=======
+
+            //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
+            // var cant = QuantityOrders(ambassador);
+            //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
+
+            //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
+            //descomentar la linea de abajo y comentar la de arriba desp de testeos
+            AmbassadorModel ambassador = db.AmbassadorModels.First();
+            var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
+>>>>>>> 586a82618188f9fc4f7d0e2f244c1cef54536c09
 
                 //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();
 

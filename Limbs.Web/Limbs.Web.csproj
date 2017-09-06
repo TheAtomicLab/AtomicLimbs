@@ -218,9 +218,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201709052241304_limbs.cs" />
-    <Compile Include="Migrations\201709052241304_limbs.Designer.cs">
-      <DependentUpon>201709052241304_limbs.cs</DependentUpon>
+    <Compile Include="Migrations\201709060059120_limbss.cs" />
+    <Compile Include="Migrations\201709060059120_limbss.Designer.cs">
+      <DependentUpon>201709060059120_limbss.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\201709060156015_rolesNew.cs" />
     <Compile Include="Migrations\201709060156015_rolesNew.Designer.cs">
@@ -458,8 +458,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709052241304_limbs.resx">
-      <DependentUpon>201709052241304_limbs.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709060059120_limbss.resx">
+      <DependentUpon>201709060059120_limbss.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709060156015_rolesNew.resx">
       <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
