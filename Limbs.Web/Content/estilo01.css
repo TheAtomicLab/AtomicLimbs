@@ -156,6 +156,7 @@ nav li:hover a:before {
 	overflow: auto;
 }
 #icono_perfil {
+    display: none;
 	position: relative;
 	float: left;
 	width: 45px;

@@ -103,13 +103,14 @@ namespace Limbs.Web.Controllers
 
         public AmbassadorModel MatchWithAmbassador(UserModel user)
         {
-            AmbassadorModel ambassador = db.AmbassadorModels.First();
+
             //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
             // var cant = QuantityOrders(ambassador);
             //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
 
             //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
             //descomentar la linea de abajo y comentar la de arriba desp de testeos
+            AmbassadorModel ambassador = db.AmbassadorModels.First();
             var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
 
             //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();

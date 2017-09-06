@@ -18,3 +18,7 @@ function cerrarmenu() {
 		b.style.overflow = "auto";
 	}
 }
+
+function menu_mobil_activo() {
+    $('#menu_perfil').toggleClass('menu_mobil_activo');
+}
