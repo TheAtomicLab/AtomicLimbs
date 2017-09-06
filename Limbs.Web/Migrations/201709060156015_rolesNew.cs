@@ -3,7 +3,7 @@ namespace Limbs.Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class limbs : DbMigration
+    public partial class rolesNew : DbMigration
     {
         public override void Up()
         {

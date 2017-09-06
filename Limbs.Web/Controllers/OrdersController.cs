@@ -69,10 +69,16 @@ namespace Limbs.Web.Controllers
                 orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
                 orderModel.Status = OrderStatus.PreAssigned;
                 orderModel.StatusLastUpdated = DateTime.Now;
-                orderModel.Date = DateTime.Now; 
+                orderModel.Date = DateTime.Now;
+
                 //asocio idImage a order
-                var idLastOrder = db.OrderModels.Max(a => a.Id);
+                int idLastOrder = 0;
+
+                if (db.OrderModels.Count() > 0) { 
+                idLastOrder = db.OrderModels.Max(a => a.Id);
                 idLastOrder ++;
+                }
+                
                 var nameFile = orderModel.OrderRequestor.Email + "-" + idLastOrder;
                 
                 //Proceso foto
@@ -103,48 +109,54 @@ namespace Limbs.Web.Controllers
 
         public AmbassadorModel MatchWithAmbassador(UserModel user)
         {
-            AmbassadorModel ambassador = db.AmbassadorModels.First();
-            //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
-            // var cant = QuantityOrders(ambassador);
-            //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
-
-            //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
-            //descomentar la linea de abajo y comentar la de arriba desp de testeos
-            var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
-
-            //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();
-
-            var distance1 = MatcheoWithAmbassador(user, ambassador);
-            AmbassadorModel ambassadorSelect = null;
-            if (distance1 < 500000 && ambassadors.Contains(ambassador))
+            if (db.AmbassadorModels.Count() > 0)
             {
-                ambassadorSelect = ambassador;
-            }
+                AmbassadorModel ambassador = db.AmbassadorModels.First();
+                //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
+                // var cant = QuantityOrders(ambassador);
+                //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
 
-            foreach (var ambassador2 in ambassadors)
-            {
-                var distance2 = MatcheoWithAmbassador(user, ambassador2);
+                //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
+                //descomentar la linea de abajo y comentar la de arriba desp de testeos
+                var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
 
-                if (distance1 > distance2)
+                //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();
+
+                var distance1 = MatcheoWithAmbassador(user, ambassador);
+                AmbassadorModel ambassadorSelect = null;
+                if (distance1 < 500000 && ambassadors.Contains(ambassador))
                 {
-                    if (distance2 < 500000)
+                    ambassadorSelect = ambassador;
+                }
+
+                foreach (var ambassador2 in ambassadors)
+                {
+                    var distance2 = MatcheoWithAmbassador(user, ambassador2);
+
+                    if (distance1 > distance2)
                     {
-                        ambassadorSelect = ambassador2;
+                        if (distance2 < 500000)
+                        {
+                            ambassadorSelect = ambassador2;
+                        }
                     }
                 }
-            }
 
-            if (ambassadorSelect != null)
-            {
-                //alerta para el usuario de que matcheo
-                return ambassadorSelect;
+                if (ambassadorSelect != null)
+                {
+                    //alerta para el usuario de que matcheo
+                    return ambassadorSelect;
+                }
+                else
+                {
+                    //alerta para el usuario de que no matcheo con ningun embajador
+                    return null;
+                }
             }
-            else
-            {
-                //alerta para el usuario de que no matcheo con ningun embajador
+            else {
+                //si entro aca no hay embajadores
                 return null;
             }
-
         }
 
         private static double GetDistance(double long1InDegrees, double lat1InDegrees, double long2InDegrees, double lat2InDegrees)

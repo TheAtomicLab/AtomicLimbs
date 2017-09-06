@@ -222,6 +222,10 @@
     <Compile Include="Migrations\201709052241304_limbs.Designer.cs">
       <DependentUpon>201709052241304_limbs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709060156015_rolesNew.cs" />
+    <Compile Include="Migrations\201709060156015_rolesNew.Designer.cs">
+      <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -456,6 +460,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709052241304_limbs.resx">
       <DependentUpon>201709052241304_limbs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709060156015_rolesNew.resx">
+      <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
