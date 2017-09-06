@@ -180,6 +180,15 @@ namespace Limbs.Web.Controllers
                 {
                     //string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), Path.GetFileName(file.FileName));
                     string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name + Path.GetExtension(file.FileName));
+                    
+                    //saveFile
+                    file.SaveAs(path);
+
+
+                    /*
+                     * 
+                      comento lineas de apiDrive para que no joda 
+                     
                     //define credential
                     UserCredential credential = GetUserCredential();
 
@@ -189,11 +198,9 @@ namespace Limbs.Web.Controllers
                     //ListFiles
                     //ListFiles(service);   
 
-                    //saveFile
-                    file.SaveAs(path);
                     //uploadFile
                     UploadFileDrive(path, service, name);
-
+                    */
                 }
                 catch (Exception ex)
                 {
