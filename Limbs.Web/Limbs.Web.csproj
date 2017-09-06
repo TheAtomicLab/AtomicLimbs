@@ -201,9 +201,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201708240054420_SeedRoles.cs" />
-    <Compile Include="Migrations\201708240054420_SeedRoles.Designer.cs">
-      <DependentUpon>201708240054420_SeedRoles.cs</DependentUpon>
+    <Compile Include="Migrations\201709052241304_limbs.cs" />
+    <Compile Include="Migrations\201709052241304_limbs.Designer.cs">
+      <DependentUpon>201709052241304_limbs.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -437,8 +437,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201708240054420_SeedRoles.resx">
-      <DependentUpon>201708240054420_SeedRoles.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709052241304_limbs.resx">
+      <DependentUpon>201709052241304_limbs.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

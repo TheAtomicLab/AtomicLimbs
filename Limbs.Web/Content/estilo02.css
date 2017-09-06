@@ -19,7 +19,26 @@
     }
 
     #menu_perfil {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: initial;
+        transition: width 0.3s, height 0.3s;
+        background: #4772b2;
+    }
+    #icono_perfil {
+        top: 10px;
+        left: 10px;
+    }
+    #opciones_perfil {
         display: none;
+    }
+    .menu_mobil_activo {
+        width:100%;
+        height: 100vh;
+    }
+    .menu_mobil_activo #opciones_perfil {
+        display: block;
     }
 
     #logo_head {
