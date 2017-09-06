@@ -28,7 +28,7 @@ namespace Limbs.Web.Controllers
     public class OrdersController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-      
+
         //  public IOrdersRepository OrdersRepository { get; set; }
 
         // GET: Orders/Index
@@ -74,15 +74,16 @@ namespace Limbs.Web.Controllers
                 //asocio idImage a order
                 int idLastOrder = 0;
 
-                if (db.OrderModels.Count() > 0) { 
-                idLastOrder = db.OrderModels.Max(a => a.Id);
-                idLastOrder ++;
+                if (db.OrderModels.Count() > 0)
+                {
+                    idLastOrder = db.OrderModels.Max(a => a.Id);
+                    idLastOrder++;
                 }
-                
+
                 var nameFile = orderModel.OrderRequestor.Email + "-" + idLastOrder;
-                
+
                 //Proceso foto
-                Upload_file(file,nameFile);
+                Upload_file(file, nameFile);
                 orderModel.IdImage = nameFile;
 
                 db.OrderModels.Add(orderModel);
@@ -109,7 +110,6 @@ namespace Limbs.Web.Controllers
 
         public AmbassadorModel MatchWithAmbassador(UserModel user)
         {
-<<<<<<< HEAD
             if (db.AmbassadorModels.Count() > 0)
             {
                 AmbassadorModel ambassador = db.AmbassadorModels.First();
@@ -120,17 +120,6 @@ namespace Limbs.Web.Controllers
                 //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
                 //descomentar la linea de abajo y comentar la de arriba desp de testeos
                 var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
-=======
-
-            //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
-            // var cant = QuantityOrders(ambassador);
-            //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
-
-            //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
-            //descomentar la linea de abajo y comentar la de arriba desp de testeos
-            AmbassadorModel ambassador = db.AmbassadorModels.First();
-            var ambassadors = db.AmbassadorModels.Where(a => 3 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
->>>>>>> 586a82618188f9fc4f7d0e2f244c1cef54536c09
 
                 //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();
 
@@ -165,7 +154,8 @@ namespace Limbs.Web.Controllers
                     return null;
                 }
             }
-            else {
+            else
+            {
                 //si entro aca no hay embajadores
                 return null;
             }
@@ -183,13 +173,13 @@ namespace Limbs.Web.Controllers
             return distInMeters;
         }
 
-        public void Upload_file(HttpPostedFileBase file,string name)
+        public void Upload_file(HttpPostedFileBase file, string name)
         {
             if (file != null && file.ContentLength > 0)
                 try
                 {
                     //string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), Path.GetFileName(file.FileName));
-                    string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name+Path.GetExtension(file.FileName));
+                    string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name + Path.GetExtension(file.FileName));
                     //define credential
                     UserCredential credential = GetUserCredential();
 
@@ -202,11 +192,12 @@ namespace Limbs.Web.Controllers
                     //saveFile
                     file.SaveAs(path);
                     //uploadFile
-                    UploadFileDrive(path, service,name);
-                
+                    UploadFileDrive(path, service, name);
+
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex);
                 }
             else
             {
@@ -239,7 +230,7 @@ namespace Limbs.Web.Controllers
         }
 
 
-        private static void UploadFileDrive(string path, DriveService service,string name)
+        private static void UploadFileDrive(string path, DriveService service, string name)
         {
             var fileMetadata = new Google.Apis.Drive.v3.Data.File()
             {
