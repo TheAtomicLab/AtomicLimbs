@@ -238,6 +238,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IUsersRepository.cs" />
