@@ -278,7 +278,11 @@
     <Content Include="Content\estilo02.css" />
     <Content Include="Content\img\Account\reg2-emb.jpg" />
     <Content Include="Content\img\Account\reg2-usr.jpg" />
+    <Content Include="Content\img\default_profile.svg" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\fondo_ini.jpg" />
     <Content Include="Content\img\fondo_ini_max.jpg" />
+    <Content Include="Content\img\limbs_white.svg" />
     <Content Include="Content\img\mano_a.jpg" />
     <Content Include="Content\img\mano_b.jpg" />
     <Content Include="Content\img\mano_c.jpg" />
@@ -286,6 +290,13 @@
     <Content Include="Content\img\mano_e.jpg" />
     <Content Include="Content\img\mano_f.jpg" />
     <Content Include="Content\img\mano_preview.jpg" />
+    <Content Include="Content\img\menu.svg" />
+    <Content Include="Content\img\menu_item_form.svg" />
+    <Content Include="Content\img\menu_item_mano.svg" />
+    <Content Include="Content\img\menu_item_profile.svg" />
+    <Content Include="Content\img\proyecto.svg" />
+    <Content Include="Content\img\reg2-emb.jpg" />
+    <Content Include="Content\img\reg2-usr.jpg" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
     <Content Include="Content\themes\base\autocomplete.css" />
@@ -339,7 +350,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <None Include="Properties\PublishProfiles\limbs - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\limbstest - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -455,7 +466,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709060059120_limbss.resx">
