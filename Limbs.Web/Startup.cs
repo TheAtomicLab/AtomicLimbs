@@ -2,6 +2,8 @@
 using Microsoft.Owin;
 using Owin;
 using Microsoft.Extensions.DependencyInjection;
+using Limbs.Web.Services;
+using Limbs.Web.Repositories.Interfaces;
 
 [assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
 namespace Limbs.Web
@@ -15,6 +17,7 @@ namespace Limbs.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IUserFiles, UserFilesInAzureStorage>();
             services.AddSingleton<IOrdersRepository, OrdersRepository>();
             services.AddSingleton<IUsersRepository, UsersRepository>();
             services.AddSingleton<IAmbassadorsRepository, AmbassadorsRepository>();

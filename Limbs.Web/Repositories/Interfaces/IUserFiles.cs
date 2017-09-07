@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Limbs.Web.Repositories.Interfaces
 {
-    interface IUserFiles
+    public interface IUserFiles
     {
 
         Uri UploadOrderFile(Stream file, string name);
