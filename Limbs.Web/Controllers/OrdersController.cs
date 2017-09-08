@@ -63,6 +63,11 @@ namespace Limbs.Web.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 // Consulta DB. Cambiar con repos
                 var userModel = await db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
+                var hasPendingOrders = await db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
+                if (hasPendingOrders > 1)
+                    return RedirectToAction("UserPanel", "Users", new { message = "Cantidad de pedidos excedidos" });
+                
+
                 orderModel.OrderRequestor = userModel;
 
                 //Asigno ambassador
@@ -180,7 +185,7 @@ namespace Limbs.Web.Controllers
                 {
                     //string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), Path.GetFileName(file.FileName));
                     string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name + Path.GetExtension(file.FileName));
-                    
+
                     //saveFile
                     file.SaveAs(path);
 
