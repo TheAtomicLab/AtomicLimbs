@@ -3,7 +3,7 @@ $(document).ready(function () {
         putPointInMap($('#Address').val());
         return false;
     });
-   // $('#map').hide();
+    // $('#map').hide();
 });
 
 function putPointInMap(address) {
@@ -12,28 +12,27 @@ function putPointInMap(address) {
     };
     $.ajax({
         type: "POST",
-        url:"/Ambassador/GetPointGoogle",
+        url: "/Ambassador/GetPointGoogle",
         data: parametros,
         dataType: "json",
         beforeSend: function () {
-          //  alert('Me viene por aqui');
+            //  poner ruedita cargando
         },
         success: function (response) {
-          //  alert('Me viene por aca');
-           // var response = JSON.stringiFy(response.Predictions[0].Tag);
+            // var response = JSON.stringiFy(response.Predictions[0].Tag);
             //  alert(response);
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 20,
                 center: {
-                  lat: -34.631915, lng: -58.410862
+                    lat: -34.631915, lng: -58.410862
                 }
             });
             var geocoder = new google.maps.Geocoder;
             var infowindow = new google.maps.InfoWindow;
 
             geocodeLatLng(geocoder, map, infowindow, response);
-          //  $('#map').show(3000);
-          //  $('#map').show("slow"); -> Efecto de mierda
+            //  $('#map').show(3000);
+            //  $('#map').show("slow"); -> Efecto de mierda
 
         },
         failure: function () {

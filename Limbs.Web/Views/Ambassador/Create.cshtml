@@ -1,122 +1,141 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.AmbassadorModel
+<script src="~/Scripts/geo.js"></script>
+<script src="~/Scripts/pages/ambassador.js"></script>
+<body>
+    <div id="cont" class="min_full">
+        <article id="registro">
 
-@{
-    ViewBag.Title = "Nuevo Embajador";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+            <form class="form" method="post" action="#">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+                <div class="form-title-row">
+                    <h1>¡Registrate en la plataforma Limbs como embajador!</h1>
+                </div>
 
-    <div class="form-horizontal">
-        <div class="form-title-row">
-            <h1>¡Registrate a la plataforma Limbs como Embajador!</h1>
-        </div>
+                <div class="header_registro">
+                    Datos Personales
+                </div><hr color="#f2f2f2">
 
-        <div class="header_registro">
-            Datos Personales
-        </div><hr color="#f2f2f2">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-row">
-            @Html.LabelFor(model => model.AmbassadorName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AmbassadorName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-row">
+                    <label>
+                        <span>Nombre </span>
+                    </label>
+                    @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { placeholder = "Nombre embajador" } })
+                </div>
 
-        <div class="form-row">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-row">
+                    <label>
+                        <span>Apellido </span>
+                    </label>
+                    @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { placeholder = "Apellido embajador" } })
+                </div>
 
-        <div class="form-row">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("displayemail", Model.Email, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                @Html.HiddenFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <br><hr color="#f2f2f2">
 
-        <div class="form-row">
-            @Html.LabelFor(model => model.Birth, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "form-control datefield" } })
-                @Html.ValidationMessageFor(model => model.Birth, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-row">
+                    <label>
+                        <span>Teléfono</span>
+                    </label>
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { placeholder = "23456789" } })
+                </div>
 
-        <div class="form-row">
-            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Gender, "- Sexo -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <br><hr color="#f2f2f2">
 
-        <div class="form-row">
-            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-row">
+                    <label>
+                        <span>Fecha de nacimiento</span>
+                        @Html.EditorFor(model => model.Birth)
+                        <input type="date" name="fecha" step="1" min="1990-01-01" max="2017-12-31" value="2017-05-11" />
+                    </label>
+                </div>
 
-        <div class="form-row">
-            @Html.LabelFor(model => model.Dni, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dni, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @*
-            --Leave comments for possible evolution-#idEvolution = 1#-----##
+                <br><hr color="#f2f2f2">
 
-             <div class="form-row">
-                 @Html.LabelFor(model => model.AtributoEmbajador1, htmlAttributes: new { @class = "control-label col-md-2" })
-                 <div class="col-md-10">
-                     @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { @class = "form-control" } })
-                     @Html.ValidationMessageFor(model => model.AtributoEmbajador1, "", new { @class = "text-danger" })
-                 </div>
-             </div>
+                <div class="form-row">
+                    <label>
+                        <span>Sexo</span>
+                    </label>
+                    @Html.DropDownList("MyType",
+                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
+                </div>
 
-             <div class="form-row">
-                 @Html.LabelFor(model => model.AtributoEmbajador2, htmlAttributes: new { @class = "control-label col-md-2" })
-                 <div class="col-md-10">
-                     @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { @class = "form-control" } })
-                     @Html.ValidationMessageFor(model => model.AtributoEmbajador2, "", new { @class = "text-danger" })
-                 </div>
-             </div>
+                <br><hr color="#f2f2f2">
 
-             <div class="form-row">
-                 @Html.LabelFor(model => model.AtributoEmbajador3, htmlAttributes: new { @class = "control-label col-md-2" })
-                 <div class="col-md-10">
-                     @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { @class = "form-control" } })
-                     @Html.ValidationMessageFor(model => model.AtributoEmbajador3, "", new { @class = "text-danger" })
-                 </div>
-             </div>
-        *@
+                <div class="form-row">
+                    <label>
+                        <span>País</span>
+                    </label>
+                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { placeholder = "Argentina" } })
+                    <label>
+                        <span>Ciudad</span>
+                    </label>
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { placeholder = "Springfield" } })
+                    <label>
+                        <span>Dirección</span>
+                    </label>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
+                </div>
+                <button type="submit" class="blue_button" style="margin-top:10px;" id="checkAddress">Actualizar mapa</button>
+                <div id="map"></div>
 
-        <div class="form-row">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+
+                <br><hr color="#f2f2f2">
+
+                <div class="form-row">
+                    <label>
+                        <span>Documento de identidad o pasaporte</span>
+                        @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { placeholder = "D.N.I. del embajador" } })
+                    </label>
+                </div>
+
+                @*
+                    --Leave comments for possible evolution-#idEvolution = 1#----##
+
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador1</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
+
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador2</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
+
+                       <div class="form-row">
+                           <label>
+                               <span>AtributoEmbajador3</span>
+                               @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
+                           </label>
+                       </div>
+
+                *@
+                <br><hr color="#f2f2f2">
+
+                <div class="form-row">
+                    <button type="submit" class="blue_button">Registrarse como embajador</button>
+                </div>
+
+            </form>
+
+        </article>
+
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-            $(document).ready(function () {
-                $(".datefield").datepicker({ format: 'dd-mm-yyyy', changeMonth: true, changeYear: true, yearRange: "@DateTime.Now.AddYears(-100).Year:@DateTime.Now.Year", maxDate: "0D" });
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 16,
+                center: { lat: 40.731, lng: -73.997 }
             });
+            var geocoder = new google.maps.Geocoder;
+            var infowindow = new google.maps.InfoWindow;
+        }
+
     </script>
-}
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q&callback=initMap">
+    </script>
+</body>

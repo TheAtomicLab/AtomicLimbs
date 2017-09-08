@@ -15,14 +15,15 @@ namespace Limbs.Web.Models
 
         public string UserId { get; set; }
 
-        [Display(Name = "Nombre completo", Description = "")]
+        public string Email { get; set; }
+
+        [Display(Name = "Nombre", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string AmbassadorName { get; set; }
 
-        [Display(Name = "Correo electrónico", Description = "")]
+        [Display(Name = "Apellido", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string AmbassadorLastName { get; set; }
 
         [DataType("datetime2")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
@@ -34,9 +35,21 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
+        [Display(Name = "País", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Country { get; set; }
+
+        [Display(Name = "Ciudad", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string City { get; set; }
+
         [Display(Name = "Dirección", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
+
+        [Display(Name = "Teléfono", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Phone { get; set; }
 
         [Display(Name = "Documento de identidad o pasaporte", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
@@ -48,7 +61,7 @@ namespace Limbs.Web.Models
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
 
-     //   public virtual ICollection<int> OrderModelId { get; set; }
+        //   public virtual ICollection<int> OrderModelId { get; set; }
         //public int OrderModelId { get; set; }
 
         /*
@@ -69,22 +82,6 @@ namespace Limbs.Web.Models
              
     */
 
-        /*
-        public double Lat { get; set; }
 
-        public double Long { get; set; }
-
-        [Display(Name = "Teléfono", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string Phone { get; set; }
-
-        [Display(Name = "País", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string Country { get; set; }
-
-        [Display(Name = "Ciudad", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string City { get; set; }
-        */
     }
 }

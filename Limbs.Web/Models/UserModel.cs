@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Limbs.Web.Models
 {
-   
+
     public class UserModel
     {
         [Key]
@@ -15,14 +15,30 @@ namespace Limbs.Web.Models
 
         public string UserId { get; set; }
 
-        [Display(Name = "Nombre completo del Responsable", Description = "")]
+        public string Email { get; set; }
+
+        [Display(Name = "Nombre del usuario", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string UserName { get; set; }
+
+        [Display(Name = "Apellido del usuario", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string UserLastName { get; set; }
+
+        [Display(Name = "Nombre del Responsable", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableName { get; set; }
-        
+
+        [Display(Name = "Apellido del Responsable", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string ResponsableLastName { get; set; }
+
+        /*
         [Display(Name = "Correo electrónico", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         [EmailAddress]
         public string Email { get; set; }
+        */
 
         [Display(Name = "Teléfono", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
@@ -38,7 +54,6 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
-        /*
         [Display(Name = "País", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Country { get; set; }
@@ -46,7 +61,7 @@ namespace Limbs.Web.Models
         [Display(Name = "Ciudad", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string City { get; set; }
-        */
+
         [Display(Name = "Dirección", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
@@ -54,10 +69,6 @@ namespace Limbs.Web.Models
         [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
-
-        [Display(Name = "Nombre completo del usuario", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string UserName { get; set; }
 
         [Display(Name = "Tipo de prótesis", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
@@ -67,17 +78,19 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public ProductType ProductType { get; set; }
 
+        /*
         [Display(Name = "Amputación", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string AmputationType { get; set; }
-        
+        */
+
         public double Lat { get; set; }
 
         public double Long { get; set; }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
 
-     //   public virtual ICollection<int> OrderModelId { get; set; }
+        //   public virtual ICollection<int> OrderModelId { get; set; }
 
         //public int OrderModelId { get; set; }
     }

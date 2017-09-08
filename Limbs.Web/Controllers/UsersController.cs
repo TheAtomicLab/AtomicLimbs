@@ -53,7 +53,7 @@ namespace Limbs.Web.Controllers
         public ActionResult Create()
         {
             ViewBag.CountryList = GetCountryList();
-            return View("View");
+            return View("Create");
            // return View(new UserModel { Email = User.Identity.GetUserName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
 
@@ -100,7 +100,7 @@ namespace Limbs.Web.Controllers
 
            // ViewBag.CountryList = GetCountryList();
 
-            return View("View", userModel);
+            return View("Create", userModel);
         }
 
         // GET: Users/Edit/5

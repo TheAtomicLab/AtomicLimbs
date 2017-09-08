@@ -218,13 +218,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201709060059120_limbss.cs" />
-    <Compile Include="Migrations\201709060059120_limbss.Designer.cs">
-      <DependentUpon>201709060059120_limbss.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709060156015_rolesNew.cs" />
-    <Compile Include="Migrations\201709060156015_rolesNew.Designer.cs">
-      <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
+    <Compile Include="Migrations\201709080055438_jkh123.cs" />
+    <Compile Include="Migrations\201709080055438_jkh123.Designer.cs">
+      <DependentUpon>201709080055438_jkh123.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -376,6 +372,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\geo.js" />
     <Content Include="Scripts\solicitud.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
@@ -434,7 +431,6 @@
     <Content Include="Views\Colors\Details.cshtml" />
     <Content Include="Views\Colors\Edit.cshtml" />
     <Content Include="Views\Colors\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
@@ -449,13 +445,12 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Users\View.cshtml" />
-    <Content Include="Views\Ambassador\Create.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Ambassador\Delete.cshtml" />
     <Content Include="Views\Ambassador\Details.cshtml" />
     <Content Include="Views\Ambassador\Edit.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
-    <Content Include="Views\Ambassador\View.cshtml" />
+    <Content Include="Views\Ambassador\Create.cshtml" />
     <Content Include="Views\Orders\pedir_brazo_medidas.cshtml" />
     <Content Include="Views\Users\UserPanel.cshtml" />
     <Content Include="Views\Shared\footer.cshtml" />
@@ -471,11 +466,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709060059120_limbss.resx">
-      <DependentUpon>201709060059120_limbss.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709060156015_rolesNew.resx">
-      <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709080055438_jkh123.resx">
+      <DependentUpon>201709080055438_jkh123.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

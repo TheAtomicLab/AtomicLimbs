@@ -53,7 +53,7 @@ namespace Limbs.Web.Controllers
         public ActionResult Create()
         {
             //ViewBag.CountryList = GetCountryList();
-            return View("View");
+            return View("Create");
             // return View(new AmbassadorModel { Email = Ambassador.Identity.GetAmbassadorName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
 
@@ -100,7 +100,7 @@ namespace Limbs.Web.Controllers
 
             ViewBag.CountryList = GetCountryList();
 
-            return View("View", ambassadorModel);
+            return View("Create", ambassadorModel);
         }
 
         // GET: Ambassador/Edit/5
