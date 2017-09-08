@@ -230,7 +230,7 @@ namespace Limbs.Web.Controllers
         */
 
         [Authorize(Roles = "Requester")]
-        public ActionResult UserPanel()
+        public ActionResult UserPanel(string message)
         {
             var userId = User.Identity.GetUserId();
 
@@ -238,11 +238,13 @@ namespace Limbs.Web.Controllers
 
             var viewModel = new ViewModels.UserPanelViewModel()
             {
-                Order = orderList.ToList()
+                Order = orderList.ToList(),
+                Message = message
+
             };
 
-            return View(viewModel);
-            // return View();
+            return View(viewModel); 
+     
         }
 
         public ActionResult LoginUser(string email)
