@@ -218,9 +218,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201709080055438_jkh123.cs" />
-    <Compile Include="Migrations\201709080055438_jkh123.Designer.cs">
-      <DependentUpon>201709080055438_jkh123.cs</DependentUpon>
+    <Compile Include="Migrations\201709080351024_holitas.cs" />
+    <Compile Include="Migrations\201709080351024_holitas.Designer.cs">
+      <DependentUpon>201709080351024_holitas.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -466,8 +466,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709080055438_jkh123.resx">
-      <DependentUpon>201709080055438_jkh123.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201709080351024_holitas.resx">
+      <DependentUpon>201709080351024_holitas.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

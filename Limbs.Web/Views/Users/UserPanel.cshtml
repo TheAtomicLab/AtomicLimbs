@@ -38,10 +38,19 @@
                             <td>
                                 @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelOrder => order.Status)
-                            </td>
-                        </tr>
+                            @if ( order.OrderAmbassador != null)
+                            {
+
+                                <td>
+                                    @Html.DisplayFor(modelOrder => order.Status)
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    No asignada
+                                </td>
+                            }</tr>
                     }
                 </table>
             </article>

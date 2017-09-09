@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.AmbassadorModel
-<script src="~/Scripts/geo.js"></script>
+@*<script src="~/Scripts/geo.js"></script>*@
 <script src="~/Scripts/pages/ambassador.js"></script>
 <body>
     <div id="cont" class="min_full">
@@ -127,15 +127,32 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 16,
-                center: { lat: 40.731, lng: -73.997 }
+                zoom: 8,
+                center: { lat: -34.397, lng: 150.644 }
             });
-            var geocoder = new google.maps.Geocoder;
-            var infowindow = new google.maps.InfoWindow;
+            var geocoder = new google.maps.Geocoder();
+
+            document.getElementById('checkAddress').addEventListener('click', function () {
+                geocodeAddress(geocoder, map);
+            });
         }
 
+        function geocodeAddress(geocoder, resultsMap) {
+            var address = document.getElementById('Address').value;
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({
+                        map: resultsMap,
+                        position: results[0].geometry.location
+                    });
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
     </script>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q&callback=initMap">
+ <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
     </script>
 </body>

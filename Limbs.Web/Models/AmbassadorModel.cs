@@ -53,6 +53,7 @@ namespace Limbs.Web.Models
 
         [Display(Name = "Documento de identidad o pasaporte", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
+
         public string Dni { get; set; }
 
         public double Lat { get; set; }
@@ -81,7 +82,5 @@ namespace Limbs.Web.Models
 
              
     */
-
-
     }
 }

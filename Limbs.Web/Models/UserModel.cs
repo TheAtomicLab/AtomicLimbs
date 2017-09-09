@@ -78,11 +78,11 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public ProductType ProductType { get; set; }
 
-        /*
+        
         [Display(Name = "Amputación", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        public string AmputationType { get; set; }
-        */
+        public AmputationType AmputationType { get; set; }
+        
 
         public double Lat { get; set; }
 
@@ -111,5 +111,25 @@ namespace Limbs.Web.Models
         Hombre,
         [Description("No Declara")]
         Otro
+    }
+
+    public enum AmputationType
+    {
+        [Description("Perdí una falange de cualquier dedo")]
+        A,
+        [Description("Perdí dos falanges de cualquier dedo")]
+        B,
+        [Description("Perdí mis cuatro dedos y tengo un pulgar")]
+        C,
+        [Description("Perdí el pulgar y no tengo los dedos (Poseo hueso capital)")]
+        D,
+        [Description("Perdí dos falanges de cualquier dedo")]
+        E,
+        [Description("Perdí dos falanges de cualquier dedo")]
+        F,
+        [Description("Perdí dos falanges de cualquier dedo")]
+        G,
+        [Description("Perdí dos falanges de cualquier dedo")]
+        H
     }
 }

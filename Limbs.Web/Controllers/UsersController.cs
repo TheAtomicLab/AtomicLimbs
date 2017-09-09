@@ -52,7 +52,7 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
-            ViewBag.CountryList = GetCountryList();
+            //ViewBag.CountryList = GetCountryList();
             return View("Create");
            // return View(new UserModel { Email = User.Identity.GetUserName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
