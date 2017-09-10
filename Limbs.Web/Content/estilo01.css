@@ -42,7 +42,7 @@ body {
     height: 100vh;
     background-color: #4772B2;
     color: white;
-    background-image: url(../Content/img/fondo_ini_max.jpg);
+    background-image: url(../Content/img/fondo_ini.jpg);
     background-position: center;
     background-size: cover;
 }

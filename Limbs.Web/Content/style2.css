@@ -1,0 +1,143 @@
+@media only screen and (max-width: 600px) {
+
+    nav {
+        height: 60px;
+    }
+
+        nav ul .right {
+            display: none;
+        }
+
+    #logo {
+        top: 0px;
+        left: 0px;
+        height: 35px;
+        padding: 10px;
+    }
+
+    nav ul .left {
+        float: none !important;
+        text-align: center;
+    }
+
+    /*inicio*/
+    #inicio {
+        padding-top: 58px;
+    }
+
+    .saludo img {
+        height: initial;
+        width: 30%;
+        min-width: 180px;
+    }
+
+    .texto_inicio h1 {
+        font-size: 30px;
+        font-weight: 600;
+        color: #0172c1;
+    }
+
+    /*tres simples pasos*/
+    .cuadrado {
+        position: relative;
+        width: 100%;
+        margin-left: 0px;
+        margin-top: 0px;
+    }
+
+        .cuadrado h1 {
+            text-align: center;
+        }
+
+    #pedir {
+        margin: 0px;
+        padding-top: 20px;
+    }
+
+        #pedir .cont_pedir {
+            padding-bottom: 80px;
+        }
+
+    .text {
+        padding: 20px;
+        padding-top: 20px;
+        margin-left: 0px;
+        box-sizing: border-box;
+        font-size: 17px;
+        font-weight: 400;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .imagen_pedir {
+        display: block;
+    }
+
+        .imagen_pedir img {
+            width: 100%;
+            height: initial;
+            display: none;
+        }
+
+    /*embajadores*/
+    #embajadores:before {
+        content: '';
+        background-color: rgba(1, 114, 193, 0.5);
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    #embajadores div, #embajadores section {
+        z-index: 2;
+    }
+
+    #embajadores .container {
+        max-width: 80%;
+        margin: 0px auto;
+        display: block;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+        #embajadores .container div {
+            display: inline-block;
+        }
+
+    .texto_embajadores {
+        font-size: 12px;
+        top: initial;
+    }
+
+    .embajadores-logo {
+        height: 40px;
+    }
+
+    .body-embajadores p {
+        font-size: 16px;
+    }
+
+    /*sobre*/
+    #sobre {
+        margin-bottom: 50px;
+    }
+
+    /*manoton*/
+    #manoton:before {
+        content: '';
+        background-color: rgba(1, 114, 193, 0.5);
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+
+    #manoton div {
+        z-index: 2;
+    }
+}
