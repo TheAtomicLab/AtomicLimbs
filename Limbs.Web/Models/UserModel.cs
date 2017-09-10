@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace Limbs.Web.Models
 {
@@ -89,6 +90,13 @@ namespace Limbs.Web.Models
         public double Long { get; set; }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
+
+        public static IEnumerable<SelectListItem> GetGenderSelect()
+        {
+            yield return new SelectListItem { Text = "Masculino", Value = "Hombre" };
+            yield return new SelectListItem { Text = "Femenino", Value = "Mujer" };
+            yield return new SelectListItem { Text = "No Declara", Value = "Otro" };
+        }
 
         //   public virtual ICollection<int> OrderModelId { get; set; }
 

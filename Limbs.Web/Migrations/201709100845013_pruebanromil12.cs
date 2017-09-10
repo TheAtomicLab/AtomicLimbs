@@ -3,7 +3,7 @@ namespace Limbs.Web.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class holitas : DbMigration
+    public partial class pruebanromil12 : DbMigration
     {
         public override void Up()
         {

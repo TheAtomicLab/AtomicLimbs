@@ -1,158 +1,41 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.AmbassadorModel
-@*<script src="~/Scripts/geo.js"></script>*@
+<script src="~/Scripts/geo.js"></script>
 <script src="~/Scripts/pages/ambassador.js"></script>
+
 <body>
     <div id="cont" class="min_full">
-        <article id="registro">
+        <div id="registro">
+           @using (Html.BeginForm("Create", "Ambassador",
+             FormMethod.Post, new { @class = "form" }))
+           {
+                <h2 class="f-titulo">Tus datos</h2>
+                <div class="f-seccion">
+                    <div class="f-campo-mitad">
+                        @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" }})
+                        @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
+                    </div>
+                    @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte" } })
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
+                    <label class="f-label">Fecha de nacimiento</label>
 
-            <form class="form" method="post" action="#">
-
-                <div class="form-title-row">
-                    <h1>¡Registrate en la plataforma Limbs como embajador!</h1>
+                    @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "date", placeholder = "2017-05-11" } })
+                    <label class="f-label">Sexo</label>
+                    @Html.DropDownListFor(m => m.Gender, Limbs.Web.Models.AmbassadorModel.GetGenderSelect(), new { @class = "f-campo f-post-l" })
+                    <div class="f-campo-mitad">
+                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = "País", id = "country" } })
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ciudad", id = "city" } })
+                    </div>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección", id = "address" } })
+                    <div class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</div>
+                    <div id="map"></div>
                 </div>
-
-                <div class="header_registro">
-                    Datos Personales
-                </div><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>Nombre </span>
-                    </label>
-                    @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { placeholder = "Nombre embajador" } })
-                </div>
-
-                <div class="form-row">
-                    <label>
-                        <span>Apellido </span>
-                    </label>
-                    @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { placeholder = "Apellido embajador" } })
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>Teléfono</span>
-                    </label>
-                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { placeholder = "23456789" } })
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>Fecha de nacimiento</span>
-                        @Html.EditorFor(model => model.Birth)
-                        <input type="date" name="fecha" step="1" min="1990-01-01" max="2017-12-31" value="2017-05-11" />
-                    </label>
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>Sexo</span>
-                    </label>
-                    @Html.DropDownList("MyType",
-                            EnumHelper.GetSelectList(typeof(Limbs.Web.Models.Gender)))
-                </div>
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>País</span>
-                    </label>
-                    @Html.EditorFor(model => model.Country, new { htmlAttributes = new { placeholder = "Argentina" } })
-                    <label>
-                        <span>Ciudad</span>
-                    </label>
-                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { placeholder = "Springfield" } })
-                    <label>
-                        <span>Dirección</span>
-                    </label>
-                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { placeholder = "Avenida Siempre Viva 123" } })
-                </div>
-                <button type="submit" class="blue_button" style="margin-top:10px;" id="checkAddress">Actualizar mapa</button>
-                <div id="map"></div>
-
-
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <label>
-                        <span>Documento de identidad o pasaporte</span>
-                        @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { placeholder = "D.N.I. del embajador" } })
-                    </label>
-                </div>
-
-                @*
-                    --Leave comments for possible evolution-#idEvolution = 1#----##
-
-                       <div class="form-row">
-                           <label>
-                               <span>AtributoEmbajador1</span>
-                               @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-                           </label>
-                       </div>
-
-                       <div class="form-row">
-                           <label>
-                               <span>AtributoEmbajador2</span>
-                               @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-                           </label>
-                       </div>
-
-                       <div class="form-row">
-                           <label>
-                               <span>AtributoEmbajador3</span>
-                               @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { placeholder = "AtributoEmbajador1 del embajador" } })
-                           </label>
-                       </div>
-
-                *@
-                <br><hr color="#f2f2f2">
-
-                <div class="form-row">
-                    <button type="submit" class="blue_button">Registrarse como embajador</button>
-                </div>
-
-            </form>
-
-        </article>
+                <button type="submit" class="blue_button">Registrarse</button>
+        }
+        </div>
 
     </div>
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 8,
-                center: { lat: -34.397, lng: 150.644 }
-            });
-            var geocoder = new google.maps.Geocoder();
-
-            document.getElementById('checkAddress').addEventListener('click', function () {
-                geocodeAddress(geocoder, map);
-            });
-        }
-
-        function geocodeAddress(geocoder, resultsMap) {
-            var address = document.getElementById('Address').value;
-            geocoder.geocode({ 'address': address }, function (results, status) {
-                if (status === 'OK') {
-                    resultsMap.setCenter(results[0].geometry.location);
-                    var marker = new google.maps.Marker({
-                        map: resultsMap,
-                        position: results[0].geometry.location
-                    });
-                } else {
-                    alert('Geocode was not successful for the following reason: ' + status);
-                }
-            });
-        }
-    </script>
- <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
     </script>
 </body>

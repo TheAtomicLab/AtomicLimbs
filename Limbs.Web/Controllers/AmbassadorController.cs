@@ -52,9 +52,7 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
-            //ViewBag.CountryList = GetCountryList();
             return View("Create");
-            // return View(new AmbassadorModel { Email = Ambassador.Identity.GetAmbassadorName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
 
 
@@ -81,13 +79,14 @@ namespace Limbs.Web.Controllers
             //ambassadorModel.OrderModelId = 0;
             if (ModelState.IsValid)
             {
-                var lat = GetLatGoogle(ambassadorModel.Address);
-                ambassadorModel.Lat = lat;
-                //ambassadorModel.Lat = 40.731;
-                var lng = GetLongGoogle(ambassadorModel.Address);
-                ambassadorModel.Long = lng;
+                var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
 
-                //ambassadorModel.Long = 40.731;
+                var point = Helpers.Geolocalization.GetPointGoogle(pointAddress).Split(',');
+                var lat = Convert.ToDouble(point[0].Replace('.', ','));
+                var lng = Convert.ToDouble(point[1].Replace('.', ','));
+
+                ambassadorModel.Lat = lat;
+                ambassadorModel.Long = lng;
 
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
                 await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, "Unassigned");
@@ -97,8 +96,6 @@ namespace Limbs.Web.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("AmbassadorPanel", "Ambassador");
             }
-
-            ViewBag.CountryList = GetCountryList();
 
             return View("Create", ambassadorModel);
         }
@@ -289,78 +286,6 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("AmbassadorPanel");
         }
 
-        public ActionResult GetPointGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lat = dict["results"][0]["geometry"]["location"]["lat"];
-            var lng = dict["results"][0]["geometry"]["location"]["lng"];
-
-            var latlng = Convert.ToString(lat).Replace(',','.') + ',' + Convert.ToString(lng).Replace(',', '.');
-            return Json(new { result = latlng }, JsonRequestBehavior.AllowGet);
-            //return Convert.ToDouble(latlng);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        // POST: Ambassador/GetLatGoogle
-        [HttpPost]
-      public double GetLatGoogle(String Address)
-      {
-          var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-          var result = new System.Net.WebClient().DownloadString(address);
-          JavaScriptSerializer jss = new JavaScriptSerializer();
-          var dict = jss.Deserialize<dynamic>(result);
-
-          var lat = dict["results"][0]["geometry"]["location"]["lat"];
-
-          return Convert.ToDouble(lat);
-          // return jss.Deserialize<dynamic>(result);
-      }
-
-      public double GetLongGoogle(String Address)
-      {
-          var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-          var result = new System.Net.WebClient().DownloadString(address);
-          JavaScriptSerializer jss = new JavaScriptSerializer();
-          var dict = jss.Deserialize<dynamic>(result);
-
-          var lng = dict["results"][0]["geometry"]["location"]["lng"];
-
-          return Convert.ToDouble(lng);
-          // return jss.Deserialize<dynamic>(result);
-      }
-
-   /*   public string GetPointGoogle(string address)
-      {
-        var apiGoogle = "https://maps.googleapis.com/maps/api/geocode/json?address=" + Server.UrlEncode(address) + "&key=AIzaSyBwDPOhcUy7GhHc4RhteO1vVxpgo7ynl6Q";
-
-          StreamReader sr = new StreamReader(apiGoogle);
-
-
-          var jss = new JavaScriptSerializer();
-          var dict = jss.Deserialize<dynamic>(apiGoogle);
-
-          var lat = dict["results"][0]["geometry"]["location"]["lat"];
-          var lng = dict["results"][0]["geometry"]["location"]["lng"];
-          return lat + lng;
-          string sContentsa = sr.ReadToEnd();
-          sr.Close();
-      }
-      */
-        public async Task<JsonResult> GetPoint(string address)
-        {
-            var httpClient = Api.GetHttpClient();
-            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { address = address }));
-            var value = await result.Content.ReadAsStringAsync();
-            var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
-
-            return Json(r, JsonRequestBehavior.AllowGet);
-        }
-
-       
         protected override void Dispose(bool disposing)
         {
             if (disposing)

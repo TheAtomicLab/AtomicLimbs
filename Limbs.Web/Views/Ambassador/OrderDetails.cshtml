@@ -39,7 +39,11 @@
         </tr>
         <tr>
             <td>Apellido:</td>
-            <td>######</td>
+            <td>@Model.OrderRequestor.ResponsableLastName</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>@Model.OrderRequestor.Email</td>
         </tr>
         <tr>
             <td>Nacimiento:</td>
@@ -47,27 +51,19 @@
         </tr>
         <tr>
             <td>País:</td>
-            <td>######</td>
+            <td>@Model.OrderRequestor.Country</td>
         </tr>
         <tr>
-            <td>Provincia:</td>
-            <td>######</td>
+            <td>Ciudad:</td>
+            <td>@Model.OrderRequestor.City</td>
         </tr>
         <tr>
             <td>Dirección:</td>
             <td>@Model.OrderRequestor.Address</td>
         </tr>
         <tr>
-            <td>Código postal:</td>
-            <td>#####</td>
-        </tr>
-        <tr>
             <td>Teléfono:</td>
             <td>@Model.OrderRequestor.Phone</td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td>@Model.OrderRequestor.Email</td>
         </tr>
     </table>
 </article>
