@@ -418,7 +418,9 @@
     <Content Include="Views\Orders\pedir_mano_medidas.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <None Include="Views\Orders\pedir_mano_index.cshtml" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
