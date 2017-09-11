@@ -7,33 +7,34 @@ using Google.Apis.Services;
 using System.Threading;
 using Google.Apis.Util.Store;
 using System.Collections.Generic;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Limbs.Web.Services
 {
     public class UserFilesInAzureStorage : IUserFiles
     {
+        private readonly CloudBlobContainer UserFilesContainer;
+
         public UserFilesInAzureStorage()
         {
-            
+            var storageAccount = AzureStorageAccount.DefaultAccount;
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            UserFilesContainer = blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString());
         }
 
         public Uri UploadOrderFile(Stream file, string name)
         {
-            throw new NotImplementedException();
+            var blockBlob = UserFilesContainer.GetBlockBlobReference(name);
 
-            //TODO: implement Azure Storage upload, return path to image
+            blockBlob.UploadFromStream(file);
+            
+            return blockBlob.StorageUri.PrimaryUri;
 
             /*
             if (file != null && file.Length > 0)
             {
                 try
-                {
-                    //string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), Path.GetFileName(file.FileName));
-                    string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name + Path.GetExtension(file.FileName));
-
-                    //saveFile
-                    file.SaveAs(path);
-                                         
+                {                   
                     //define credential
                     UserCredential credential = GetUserCredential();
 

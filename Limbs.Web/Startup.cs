@@ -4,6 +4,9 @@ using Owin;
 using Microsoft.Extensions.DependencyInjection;
 using Limbs.Web.Services;
 using Limbs.Web.Repositories.Interfaces;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.Azure;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 [assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
 namespace Limbs.Web
@@ -22,6 +25,18 @@ namespace Limbs.Web
             services.AddSingleton<IUsersRepository, UsersRepository>();
             services.AddSingleton<IAmbassadorsRepository, AmbassadorsRepository>();
             services.AddSingleton<IProductsRepository, ProductsRepository>();
+
+            ConfigureStorage();
+        }
+
+
+        public void ConfigureStorage()
+        {
+            CloudStorageAccount storageAccount = AzureStorageAccount.DefaultAccount;
+            CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
+
+            //Container creation
+            blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString()).CreateIfNotExists();
         }
     }
 
