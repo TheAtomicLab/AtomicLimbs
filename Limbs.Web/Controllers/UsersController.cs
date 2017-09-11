@@ -13,10 +13,6 @@ using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.Owin.Security;
-using Microsoft.Owin.Host.SystemWeb;
-using Microsoft.AspNet.Identity.Owin;
-using System.Web.Security;
 
 
 
@@ -52,8 +48,8 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
-            ViewBag.CountryList = GetCountryList();
-            return View("View");
+            //ViewBag.CountryList = GetCountryList();
+            return View("Create");
            // return View(new UserModel { Email = User.Identity.GetUserName(), Birth = DateTime.UtcNow.Date, Country = "Argentina"});
         }
 
@@ -77,15 +73,17 @@ namespace Limbs.Web.Controllers
             userModel.Email = User.Identity.GetUserName();
             userModel.UserId = User.Identity.GetUserId();
             // userModel.OrderModelId = 0;
-            
+
             if (ModelState.IsValid)
             {
-             //   userModel.OrderModelId = new List<int>();
-             //   userModel.OrderModel = new List<OrderModel>();
-                var lat = GetLatGoogle(userModel.Address);
+                //   userModel.OrderModelId = new List<int>();
+                //   userModel.OrderModel = new List<OrderModel>();
+                var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
+                
+                var point = Helpers.Geolocalization.GetPointGoogle(pointAddress).Split(',');
+                var lat = Convert.ToDouble(point[0].Replace('.',','));
+                var lng = Convert.ToDouble(point[1].Replace('.', ','));
                 userModel.Lat = lat;
-                //ambassadorModel.Lat = 40.731;
-                var lng = GetLongGoogle(userModel.Address);
                 userModel.Long = lng;
 
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
@@ -100,7 +98,7 @@ namespace Limbs.Web.Controllers
 
            // ViewBag.CountryList = GetCountryList();
 
-            return View("View", userModel);
+            return View("Create", userModel);
         }
 
         // GET: Users/Edit/5
@@ -159,59 +157,7 @@ namespace Limbs.Web.Controllers
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
-
-        public ActionResult GetPointGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lat = dict["results"][0]["geometry"]["location"]["lat"];
-            var lng = dict["results"][0]["geometry"]["location"]["lng"];
-
-            var latlng = Convert.ToString(lat).Replace(',', '.') + ',' + Convert.ToString(lng).Replace(',', '.');
-            return Json(new { result = latlng }, JsonRequestBehavior.AllowGet);
-            //return Convert.ToDouble(latlng);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        public double GetLatGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lat = dict["results"][0]["geometry"]["location"]["lat"];
-
-            return Convert.ToDouble(lat);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        public double GetLongGoogle(String Address)
-        {
-            var address = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", Address.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(address);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
-
-            var lng = dict["results"][0]["geometry"]["location"]["lng"];
-
-            return Convert.ToDouble(lng);
-            // return jss.Deserialize<dynamic>(result);
-        }
-
-        public async Task<JsonResult> GetPoint(string address)
-        {
-            var httpClient = Api.GetHttpClient();
-            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { address = address }));
-            var value = await result.Content.ReadAsStringAsync();
-            var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
-
-            return Json(r, JsonRequestBehavior.AllowGet);
-        }
-
+      
         /*
         public async Task<ActionResult> UserPanel(int? id)
         {
@@ -230,7 +176,7 @@ namespace Limbs.Web.Controllers
         */
 
         [Authorize(Roles = "Requester")]
-        public ActionResult UserPanel()
+        public ActionResult UserPanel(string message)
         {
             var userId = User.Identity.GetUserId();
 
@@ -238,11 +184,13 @@ namespace Limbs.Web.Controllers
 
             var viewModel = new ViewModels.UserPanelViewModel()
             {
-                Order = orderList.ToList()
+                Order = orderList.ToList(),
+                Message = message
+
             };
 
-            return View(viewModel);
-            // return View();
+            return View(viewModel); 
+     
         }
 
         public ActionResult LoginUser(string email)
@@ -264,10 +212,4 @@ namespace Limbs.Web.Controllers
         }
     }
 
-    public class GeocoderResult
-    {
-        public double X { get; set; }
-        public double Y { get; set; }
-        public string Nombre { get; set; }
-    }
 }

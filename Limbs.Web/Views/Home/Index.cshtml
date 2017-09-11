@@ -1,58 +1,141 @@
-﻿@model Limbs.Web.Models.UserModel
-<body>
-    <header>
-        <div id="main_head">
-            <a href="index.php"><img id="logo_head" src="img/limbs_white.svg"></a>
-            <nav>
-                <li><a onclick='cerrarmenu()' href="home.php">Inicio</a></li>
-                <li><a onclick='cerrarmenu()' href="pedir_una_mano.php">Pedir una mano</a></li>
-                <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
-            </nav>
-            <img src="img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
-        </div>
-        <div id="menu_perfil">
-            <div id="icono_perfil"></div>
-            <ul id="opciones_perfil">
-
-                @*@Html.ActionLink( "Test User", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" }
-                    )
-                *@
-                @User.Identity.Name
-
-                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
-                }
-            </ul>
-        </div>
-    </header>
-    <div id="cont" class="min_full">
-        <article id="home">
-            <h1>Hola @User.Identity.Name</h1>
-            <a href="/Users/Create"><button id="home_pedir" class="blue_button">Pedir una mano</button></a>
-            <article id="tus_pedidos">
-                <h2>Tus pedidos:</h2>
-                <table>
-                    <tr>
-                        <th>Fecha de solicitud</th>
-                        <th>Número de pedido</th>
-                        <th>Estado</th>
-                    </tr>
-                    <tr>
-                        <td>10/05/2017</td>
-                        <td>125623</td>
-                        <td>Pendiente</td>
-                    </tr>
-                    <tr>
-                        <td>05/02/2017</td>
-                        <td>125210</td>
-                        <td>Entregada</td>
-                    </tr>
-                </table>
-            </article>
-        </article>
+﻿@using Limbs.Web.Models
+@model LoginViewModel
+    <head>
+        <title>Limbs - Atomic Lab</title>
+        <link rel="stylesheet" href="~/Content/style.css">
+        <link rel="stylesheet" href="~/Content/style2.css">
+        <script src="../Scripts/menu-login.js"></script>
+        <meta property="og:title" content="Limbs - Atomic Lab">
+        <meta property="og:type" content="Website">
+        <meta property="og:image" content="~/Content/img/fondo_ini.jpg">
+        <meta property="og:site_name" content="Limbs">
+        <meta property="og:description" content="Desde Limbs, una plataforma de Atomic Lab, creemos que todos deben tener su mano impresa en 3D.">
+        <!--end social meta-->
+        <meta name="description" content="Desde Limbs, una plataforma de Atomic Lab, creemos que todos deben tener su mano impresa en 3D.">
+    </head>
+    
+<div id="inicio">
+    <div class="saludo">
+        <img src="~/Content/img/limbs_white.svg" alt="logo atomic lab">
     </div>
-    <script src="../../Scripts/menu.js"></script>
-</body>
-</html>
+    <div id="cont_inicio">
+        <p class="blue_button" onclick="abrir_login()">Iniciar sesión</p>
+        <a href="/Account/Register" id="registrarse_button">Registrarse</a>
+    </div>
+
+    @*---------------Por favor cambiar este metodo de logueo totalmente asqueroso------------ *@
+
+    <div id="login_f">
+        <div id="cont_login">
+            <div>
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <h4>¿No tenes Facebook?</h4>
+                        @Html.ValidationSummary(true, "", new { })
+                        <div class="campos_l">
+                            @Html.LabelFor(m => m.Email, new { })
+                            @Html.TextBoxFor(m => m.Email, new { })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { })
+                        </div>
+                        <div class="campos_l">
+                            @Html.LabelFor(m => m.Password, new { })
+                            @Html.PasswordFor(m => m.Password, new { })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { })
+                        </div>
+                            <input type="submit" value="Ingresar" />
+                            <p id="cerrar-login" onclick="cerrar_login()">
+                                Atrás
+                            </p>
+                            @* Enable this once you have account confirmation enabled for password reset functionality
+                                <p>
+                                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                                </p>*@
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+
+    @*---------------Por favor cambiar este metodo de logueo totalmente asqueroso------------ *@
+
+    <div class="texto_inicio">
+        <h1>¡Bienvenido a Limbs!</h1>
+        <p>Desde Limbs, una plataforma de Atomic Lab, creemos que todos deben tener su mano impresa en 3D y que el dinero no debe ser una interrupción. Por eso,<br><span class="azulAtomicTx"> todas son GRATUITAS.</span></p>
+    </div>
+</div>
+<div id="pedir">
+    <div class="cont_pedir">
+        <div class="imagen_pedir">
+            <div class="cuadrado azulAtomicBG">
+                <h1>TRES SIMPLES PASOS</h1>
+            </div>
+            <img src="img/foto01.jpg" height="400" width="300" />
+        </div>
+
+        <center>
+
+            <p class="text">Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D.</p>
+            <div class="link">
+                <a class="boton">Pedir una mano</a>
+            </div>
+            <div class="link">
+                <a class="azulAtomicTx">Más Información</a>
+            </div>
+        </center>
+    </div>
+</div>
+<div id="embajadores">
+    <section class="container">
+        <div class="half-left">
+            <img src="~/Content/img/icon_embajador.svg" class="embajadores-logo" />
+        </div>
+        <div class="half-right">
+            <div class="texto_embajadores">
+                <h1>
+                    EMBAJADORES<br>
+                    ATÓMICOS
+                </h1>
+            </div>
+        </div>
+    </section>
+    <div class="body-embajadores">
+        <p>
+            ¿Tenés una impresora 3D y querés ayudar? ¡Inscribite!<br>
+            Un "Embajador Atomico" puede ser cualquier persona mayor de 18 años con una impresora 3D y que quiera ayudar. Nosotros enviamos los planos, instrucciones y la posibilidad de tener un trabajo extra remunerado.
+        </p>
+    </div>
+    <div class="footer-embajadores">
+        <div class="link">
+            <a class="boton-embajadores">Ser embajador</a>
+        </div>
+    </div>
+</div>
+<div id="sobre">
+    <section class="cont_pedir">
+        <div class="texto_inicio">
+            <h1>¿Cómo está compuesta?</h1>
+            <center>
+                Las manos mecánicas están impresas con PLA, un derivado del maíz que no generará picazón. Podes bajarte los diseños gratis acá: <br>
+                www.AtomicLab.org/limbs/libre.
+            </center><br>
+        </div>
+    </section>
+</div>
+<div id="manoton">
+    <div class="texto_manoton">
+        <h1>Manot&oacute;n</h1>
+        <div class="body-embajadores">
+            <center>
+                <p>El #MANOTON es un evento en la que se convocan chicos que hayan solicitado un prótesis mediante la plataforma LIMBS. Durante el día se ensamblan y entregan las manos mecánicas, ¡Convirtiendo chicos en super héroes!</p>
+            </center>
+        </div>
+        <div class="footer-embajadores">
+            <div class="link">
+                <a class="boton-embajadores">Saber m&aacute;s</a>
+            </div>
+        </div>
+    </div>
+</div>
+

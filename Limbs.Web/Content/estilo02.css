@@ -26,31 +26,37 @@
         transition: width 0.3s, height 0.3s;
         padding: 5px;
     }
+
     #icono_perfil {
         margin: 0px;
         display: block;
     }
+
     #opciones_perfil {
         display: none;
     }
+
     .menu_mobil_activo {
         width: 100%;
         height: 100vh;
         background: #4772b2;
         animation: abrir_perfil_m 0.3s;
     }
+
     @keyframes abrir_perfil_m {
         0% {
             height: 70px;
             width: 70px;
             border-radius: 0px 0px 100% 0px;
         }
+
         100% {
             height: 100vh;
             width: 100%;
             border-radius: 0px;
         }
     }
+
     .menu_mobil_activo #opciones_perfil {
         display: block;
         top: 50%;
@@ -133,11 +139,11 @@
         padding-top: 30px;
     }
 
-    #realiza_pedido h1 {
-        font-size: 1.2em;
-        font-weight: 800;
-        letter-spacing: 1px;
-    }
+        #realiza_pedido h1 {
+            font-size: 1.2em;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
 
     #categoria_mano {
         position: relative;
@@ -184,21 +190,21 @@
     .selec {
         height: 100%;
     }
-    
-/*registro parte 2*/
-#reg2 {
-	flex-direction: column;
-	height: calc(100vh - 55px);
-	position: relative;
-}
-#reg2 a {
-	height: 50%;
-}
-.selec {
-	height: 100%;
-}
 
+    /*registro parte 2*/
+    #reg2 {
+        flex-direction: column;
+        height: calc(100vh - 55px);
+        position: relative;
+    }
 
+        #reg2 a {
+            height: 50%;
+        }
+
+    .selec {
+        height: 100%;
+    }
 }
 
 

@@ -68,6 +68,11 @@ namespace Limbs.Web.Controllers
                 var currentUserId = User.Identity.GetUserId();
                 // Consulta DB. Cambiar con repos
                 var userModel = await db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
+                var hasPendingOrders = await db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
+                if (hasPendingOrders > 1)
+                    return RedirectToAction("UserPanel", "Users", new { message = "Cantidad de pedidos excedidos" });
+                
+
                 orderModel.OrderRequestor = userModel;
 
                 //Asigno ambassador
@@ -181,7 +186,124 @@ namespace Limbs.Web.Controllers
             double distInMeters = Math.Sqrt(Math.Pow(latm, 2) + Math.Pow(lngm, 2));
             return distInMeters;
         }
-        
+
+        public void Upload_file(HttpPostedFileBase file, string name)
+        {
+            if (file != null && file.ContentLength > 0)
+                try
+                {
+                    //string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), Path.GetFileName(file.FileName));
+                    string path = Path.Combine(Server.MapPath("~/Content/img/Upload"), name + Path.GetExtension(file.FileName));
+
+                    //saveFile
+                    file.SaveAs(path);
+
+
+                    /*
+                     * 
+                      comento lineas de apiDrive para que no joda 
+                     
+                    //define credential
+                    UserCredential credential = GetUserCredential();
+
+                    //define service 
+                    DriveService service = GetDriveService(credential);
+
+                    //ListFiles
+                    //ListFiles(service);   
+
+                    //uploadFile
+                    UploadFileDrive(path, service, name);
+                    */
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            else
+            {
+            }
+        }
+
+        //-----------------------------Google drive api------------------------//
+
+        private static void ListFiles(DriveService service)
+        {
+            //define files
+            FilesResource.ListRequest listRequest = service.Files.List();
+            listRequest.PageSize = 10;
+            listRequest.Fields = "nextPageToken, files(id, name)";
+
+            // List files.
+            IList<Google.Apis.Drive.v3.Data.File> files = listRequest.Execute()
+                .Files;
+            if (files != null && files.Count > 0)
+            {
+                foreach (var file in files)
+                {
+                    //muestro atributos
+                }
+            }
+            else
+            {
+                //no hay archivos
+            }
+        }
+
+
+        private static void UploadFileDrive(string path, DriveService service, string name)
+        {
+            var fileMetadata = new Google.Apis.Drive.v3.Data.File()
+            {
+                Name = name
+            };
+            FilesResource.CreateMediaUpload request;
+            using (var stream = new System.IO.FileStream(path,
+                            System.IO.FileMode.Open))
+            {
+                request = service.Files.Create(
+                fileMetadata, stream, "image/jpeg");
+                request.Fields = "id";
+                request.Upload();
+            }
+            var file = request.ResponseBody;
+        }
+
+        private static UserCredential GetUserCredential()
+        {
+            string[] Scopes = { DriveService.Scope.DriveFile };
+
+            //var client_json = Server.MapPath("/Scripts/client_secret.json"); --se usa con el choclo de abajo porque GetUserCredential es static--
+            var client_json = System.Web.HttpContext.Current.Server.MapPath("/Scripts/client_secret.json");
+
+            using (var stream =
+                new FileStream(client_json, FileMode.Open, FileAccess.Read))
+            {
+                string credPath = System.Environment.GetFolderPath(
+                    System.Environment.SpecialFolder.Personal);
+                credPath = Path.Combine(credPath, ".credentials/drive-dotnet-quickstart.json");
+
+                return GoogleWebAuthorizationBroker.AuthorizeAsync(
+                    GoogleClientSecrets.Load(stream).Secrets,
+                    Scopes,
+                    "user",
+                    CancellationToken.None,
+                    new FileDataStore(credPath, true)).Result;
+            }
+        }
+
+        private static DriveService GetDriveService(UserCredential credential)
+        {
+            var applicationName = "Limbs";
+            // Create Drive API service.
+            return new DriveService(new BaseClientService.Initializer()
+            {
+                HttpClientInitializer = credential,
+                ApplicationName = applicationName,
+            });
+        }
+        //--------------------------------------------------------------------//
+
         // GET: Orders/Edit/5
         public ActionResult Edit(int? id)
         {

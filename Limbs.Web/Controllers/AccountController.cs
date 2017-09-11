@@ -220,7 +220,7 @@ namespace Limbs.Web.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("selectUserOrAmbassador", "Account");
+                    return RedirectToAction("SelectUserOrAmbassador", "Account");
                 }
                 AddErrors(result);
             }
@@ -229,7 +229,7 @@ namespace Limbs.Web.Controllers
             return View(model);
         }
 
-        public ActionResult selectUserOrAmbassador()
+        public ActionResult SelectUserOrAmbassador()
         {
             if(!User.IsInRole("Unassigned"))
             {
@@ -510,7 +510,7 @@ namespace Limbs.Web.Controllers
             }
             else // No se terminó de registrar (Role="Unassigned")
             {
-                return RedirectToAction("selectUserOrAmbassador");
+                return RedirectToAction("SelectUserOrAmbassador");
             }
         }
 

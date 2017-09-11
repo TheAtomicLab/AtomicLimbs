@@ -8,7 +8,7 @@ namespace Limbs.Web.Controllers
 {
     public class HomeController : Controller
     {
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View("Index");

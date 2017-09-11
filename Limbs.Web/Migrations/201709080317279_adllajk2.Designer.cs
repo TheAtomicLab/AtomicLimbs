@@ -7,13 +7,13 @@ namespace Limbs.Web.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class rolesNew : IMigrationMetadata
+    public sealed partial class adllajk2 : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(rolesNew));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(adllajk2));
         
         string IMigrationMetadata.Id
         {
-            get { return "201709060156015_rolesNew"; }
+            get { return "201709080317279_adllajk2"; }
         }
         
         string IMigrationMetadata.Source

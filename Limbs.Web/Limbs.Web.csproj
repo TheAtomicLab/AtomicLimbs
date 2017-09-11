@@ -227,9 +227,9 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -238,15 +238,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\geolocalization.cs" />
     <Compile Include="Helpers\Enumerations.cs" />
-    <Compile Include="Migrations\201709060059120_limbss.cs" />
-    <Compile Include="Migrations\201709060059120_limbss.Designer.cs">
-      <DependentUpon>201709060059120_limbss.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201709060156015_rolesNew.cs" />
-    <Compile Include="Migrations\201709060156015_rolesNew.Designer.cs">
-      <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -298,6 +291,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\style2.css" />
     <Content Include="Content\estilo01.css" />
     <Content Include="Content\estilo02.css" />
     <Content Include="Content\img\Account\reg2-emb.jpg" />
@@ -400,6 +395,7 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\geo.js" />
     <Content Include="Scripts\solicitud.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="SqlServerTypes\readme.htm" />
@@ -458,7 +454,6 @@
     <Content Include="Views\Colors\Details.cshtml" />
     <Content Include="Views\Colors\Edit.cshtml" />
     <Content Include="Views\Colors\Index.cshtml" />
-    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Users\Delete.cshtml" />
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
@@ -473,13 +468,12 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Orders\Delete.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Users\View.cshtml" />
-    <Content Include="Views\Ambassador\Create.cshtml" />
+    <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Views\Ambassador\Delete.cshtml" />
     <Content Include="Views\Ambassador\Details.cshtml" />
     <Content Include="Views\Ambassador\Edit.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
-    <Content Include="Views\Ambassador\View.cshtml" />
+    <Content Include="Views\Ambassador\Create.cshtml" />
     <Content Include="Views\Orders\pedir_brazo_medidas.cshtml" />
     <Content Include="Views\Users\UserPanel.cshtml" />
     <Content Include="Views\Shared\footer.cshtml" />
@@ -493,14 +487,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201709060059120_limbss.resx">
-      <DependentUpon>201709060059120_limbss.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201709060156015_rolesNew.resx">
-      <DependentUpon>201709060156015_rolesNew.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

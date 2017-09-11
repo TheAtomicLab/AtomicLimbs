@@ -1,122 +1,41 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.AmbassadorModel
+<script src="~/Scripts/geo.js"></script>
+<script src="~/Scripts/pages/ambassador.js"></script>
 
-@{
-    ViewBag.Title = "Nuevo Embajador";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
+<body>
+    <div id="cont" class="min_full">
+        <div id="registro">
+           @using (Html.BeginForm("Create", "Ambassador",
+             FormMethod.Post, new { @class = "form" }))
+           {
+                <h2 class="f-titulo">Tus datos</h2>
+                <div class="f-seccion">
+                    <div class="f-campo-mitad">
+                        @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" }})
+                        @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
+                    </div>
+                    @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte" } })
+                    @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
+                    <label class="f-label">Fecha de nacimiento</label>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <div class="form-title-row">
-            <h1>¡Registrate a la plataforma Limbs como Embajador!</h1>
+                    @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "date", placeholder = "2017-05-11" } })
+                    <label class="f-label">Sexo</label>
+                    @Html.DropDownListFor(m => m.Gender, Limbs.Web.Models.AmbassadorModel.GetGenderSelect(), new { @class = "f-campo f-post-l" })
+                    <div class="f-campo-mitad">
+                        @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = "País", id = "country" } })
+                        @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ciudad", id = "city" } })
+                    </div>
+                    @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección", id = "address" } })
+                    <div class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</div>
+                    <div id="map"></div>
+                </div>
+                <button type="submit" class="blue_button">Registrarse</button>
+        }
         </div>
 
-        <div class="header_registro">
-            Datos Personales
-        </div><hr color="#f2f2f2">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-row">
-            @Html.LabelFor(model => model.AmbassadorName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AmbassadorName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBox("displayemail", Model.Email, htmlAttributes: new { @class = "form-control", disabled = "disabled" })
-                @Html.HiddenFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.Birth, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "form-control datefield" } })
-                @Html.ValidationMessageFor(model => model.Birth, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Gender, "- Sexo -", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-row">
-            @Html.LabelFor(model => model.Dni, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dni, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        @*
-            --Leave comments for possible evolution-#idEvolution = 1#-----##
-
-             <div class="form-row">
-                 @Html.LabelFor(model => model.AtributoEmbajador1, htmlAttributes: new { @class = "control-label col-md-2" })
-                 <div class="col-md-10">
-                     @Html.EditorFor(model => model.AtributoEmbajador1, new { htmlAttributes = new { @class = "form-control" } })
-                     @Html.ValidationMessageFor(model => model.AtributoEmbajador1, "", new { @class = "text-danger" })
-                 </div>
-             </div>
-
-             <div class="form-row">
-                 @Html.LabelFor(model => model.AtributoEmbajador2, htmlAttributes: new { @class = "control-label col-md-2" })
-                 <div class="col-md-10">
-                     @Html.EditorFor(model => model.AtributoEmbajador2, new { htmlAttributes = new { @class = "form-control" } })
-                     @Html.ValidationMessageFor(model => model.AtributoEmbajador2, "", new { @class = "text-danger" })
-                 </div>
-             </div>
-
-             <div class="form-row">
-                 @Html.LabelFor(model => model.AtributoEmbajador3, htmlAttributes: new { @class = "control-label col-md-2" })
-                 <div class="col-md-10">
-                     @Html.EditorFor(model => model.AtributoEmbajador3, new { htmlAttributes = new { @class = "form-control" } })
-                     @Html.ValidationMessageFor(model => model.AtributoEmbajador3, "", new { @class = "text-danger" })
-                 </div>
-             </div>
-        *@
-
-        <div class="form-row">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-    <script type="text/javascript">
-            $(document).ready(function () {
-                $(".datefield").datepicker({ format: 'dd-mm-yyyy', changeMonth: true, changeYear: true, yearRange: "@DateTime.Now.AddYears(-100).Year:@DateTime.Now.Year", maxDate: "0D" });
-            });
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
     </script>
-}
+</body>
