@@ -462,8 +462,11 @@ namespace Limbs.Web.Controllers
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
+
                     if (result.Succeeded)
                     {
+                        await UserManager.AddToRoleAsync(user.Id, "Unassigned");
+
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
@@ -472,7 +475,7 @@ namespace Limbs.Web.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View(model);
+            return View("ExternalLoginFailure", model);
         }
 
         //

@@ -34,7 +34,7 @@ namespace Limbs.Web.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("name=Limbs", throwIfV1Schema: false)
+            : base("name=Limbs", false)
         {
         }
 
