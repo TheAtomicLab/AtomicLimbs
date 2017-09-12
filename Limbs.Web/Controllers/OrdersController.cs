@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,16 +6,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Models;
-using Limbs.Web.Repositories;
 using Microsoft.AspNet.Identity;
-using Limbs.Web.Controllers;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v3;
-using Google.Apis.Drive.v3.Data;
-using Google.Apis.Services;
-using Google.Apis.Util.Store;
-using System.IO;
-using System.Threading;
 using Limbs.Web.Repositories.Interfaces;
 
 namespace Limbs.Web.Controllers

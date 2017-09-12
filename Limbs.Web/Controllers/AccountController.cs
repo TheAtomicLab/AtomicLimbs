@@ -494,7 +494,7 @@ namespace Limbs.Web.Controllers
         }
 
 
-        private ActionResult RedirectUser()
+        public ActionResult RedirectUser()
         {
             if (User.IsInRole("Requester"))
             {
