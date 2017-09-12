@@ -1,4 +1,5 @@
-﻿﻿@model Limbs.Web.Models.RegisterViewModel
+﻿@using Limbs.Web.Models
+﻿@model Limbs.Web.Models.RegisterViewModel
 @{
     ViewBag.Title = "Registrarse";
 }
@@ -10,9 +11,13 @@
         </div>
         <div class="cont_regis">
             <div class="social-log">
-                <div class="ing-sg">Ingresar con Google</div>
-                <div class="ing-sf">Ingresar con Facebook</div>
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
             </div>
+            
+
+            <p id="post-form-ini">
+                ¿No tenés una cuenta en Facebook?, registrate acá:<br />
+
             @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
@@ -41,7 +46,7 @@
             }
         </div>
         <div class="cont_regis">
-            <p id="post-form-ini">¿Ya tenés una cuenta?<br /><a href="">Iniciar Sesión</a></p>
+            <p id="post-form-ini">¿Ya tenés una cuenta?<br /><a href="@Url.Action("Login", "Account")">Iniciar Sesión</a></p>
         </div>
     </div>
 </div>

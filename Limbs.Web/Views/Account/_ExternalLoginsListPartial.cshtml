@@ -2,7 +2,8 @@
 @using Microsoft.Owin.Security
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
-    if (loginProviders.Count() == 0) {
+    var authenticationDescriptions = loginProviders as AuthenticationDescription[] ?? loginProviders.ToArray();
+    if (!authenticationDescriptions.Any()) {
         <div>
             <p>
                 Error.
@@ -12,13 +13,10 @@
     else {
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Ingresa con tu cuenta de @p.Caption">Ingresá con Facebook</button>
-                    }
-                </p>
-            </div>
+            
+            foreach (AuthenticationDescription p in authenticationDescriptions) {
+                <button class="ing-btn ing-@p.Caption.ToLowerInvariant()" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Ingresa con tu cuenta de @p.Caption">Ingresar con @p.Caption</button>
+            }
         }
     }
 }

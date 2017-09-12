@@ -19,8 +19,8 @@
         <img src="~/Content/img/limbs_white.svg" alt="logo atomic lab">
     </div>
     <div id="cont_inicio">
-        <p class="blue_button" onclick="abrir_login()">Iniciar sesión</p>
-        <a href="/Account/Register" id="registrarse_button">Registrarse</a>
+        <a href="@Url.Action("Login", "Account")" class="blue_button">Iniciar sesión</a>
+        <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>
     </div>
 
     @*---------------Por favor cambiar este metodo de logueo totalmente asqueroso------------ *@

@@ -624,10 +624,10 @@ nav {
         width: 140px;
         height: 140px;
         display: inline-block;
-        float: left;
+        /*float: left;*/
         margin-right: 10px;
         margin-bottom: 10px;
-        appearance: inherit;
+        /*appearance: inherit;*/
         -moz-appearance: inherit;
         -webkit-appearance: inherit;
         border: solid 0px #4772B2;
@@ -764,13 +764,15 @@ nav {
         border-left: solid 0px;
     }
 
+/*
     #tus_pedidos tr:first-of-type th {
-        /*padding-top: 20px;*/
+        padding-top: 20px;
     }
 
     #tus_pedidos tr:last-of-type td {
-        /*padding-bottom: 20px;*/
+        padding-bottom: 20px;
     }
+*/
 
 /*registro parte 2*/
 #reg2 {
@@ -834,9 +836,11 @@ nav {
     background: rgba(71, 114, 178, 0.5);
 }
 
+/*
 .selec:hover .fondo {
-    /*background: rgba(255,255,255,0.3);*/
+    background: rgba(255,255,255,0.3);
 }
+*/
 
 .selec:hover h2 {
     font-size: 25px;
@@ -993,7 +997,8 @@ nav {
         border-bottom: solid 1px #dadada;
     }
 
-**FOOOOOTEEEERRRR**/ .footer-distributed {
+/**FOOOOOTEEEERRRR**/ 
+.footer-distributed {
     background-color: #292c2f;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
     box-sizing: border-box;
@@ -1223,7 +1228,7 @@ nav {
         text-decoration: underline;
     }
 
-.ing-sg, .ing-sf {
+.ing-btn {
     display: block;
     text-align: center;
     padding: 5px;
@@ -1232,13 +1237,14 @@ nav {
     cursor: pointer;
     border-radius: 2px;
     font-size: 14px;
+    border: none;
 }
 
-.ing-sg {
+.ing-google {
     background-color: #e0492f;
 }
 
-.ing-sf {
+.ing-facebook {
     background-color: #395697;
     margin-bottom: 25px;
 }

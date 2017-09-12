@@ -4,40 +4,43 @@
     ViewBag.Title = "Ingresar";
 }
 
-<div>
-    <div>
-        <div>
-            <section id="socialLoginForm">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-            </section>
+<div id="cont" class="min_full">
+    <div id="cont-form">
+        <div class="inicio-form-r">
+            <h2>@ViewBag.Title</h2>
+            <h4>Creá una cuenta nueva en solo un minuto.</h4>
         </div>
-        <div>
-            <section id="loginForm">
-                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
-        {
+        <div class="cont_regis">
+            <div class="social-log">
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+            </div>
+            
+            <p id="post-form-ini">
+            ¿No tenés una cuenta en Facebook?<br />
+
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
+            {
                     @Html.AntiForgeryToken()
-                    <h4>¿No tenes Facebook?</h4>
-                    @Html.ValidationSummary(true, "", new { })
-                    <div class="campos_l">
-                        @Html.LabelFor(m => m.Email, new { })
-                            @Html.TextBoxFor(m => m.Email, new { })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { })
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "input-regis" })
+                        </div>
                     </div>
-                    <div class="campos_l">
-                        @Html.LabelFor(m => m.Password, new { })
-                        @Html.PasswordFor(m => m.Password, new { })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { })
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-10">
+                            @Html.PasswordFor(m => m.Password, new { @class = "input-regis" })
+                        </div>
                     </div>
-                            <input type="submit" value="Ingresar"/>
-                                <p id="cerrar-login" onclick="cerrar_login()">
-                        Atrás
-                    </p>
-                    @* Enable this once you have account confirmation enabled for password reset functionality
-                        <p>
-                            @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                        </p>*@
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-default blue_button" value="Ingresar" />
+                    </div>
                 }
-            </section>
+        </div>
+        <div class="cont_regis">
+            <p id="post-form-ini">¿No tenés una cuenta?<br /><a href="@Url.Action("Register", "Account")">Registrate</a></p>
         </div>
     </div>
 </div>
