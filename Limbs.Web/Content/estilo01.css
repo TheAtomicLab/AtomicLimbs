@@ -1238,6 +1238,7 @@ nav {
     border-radius: 2px;
     font-size: 14px;
     border: none;
+    width: 100%;
 }
 
 .ing-google {
