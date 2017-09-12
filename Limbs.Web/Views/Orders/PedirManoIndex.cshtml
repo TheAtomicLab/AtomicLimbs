@@ -11,19 +11,20 @@
         <button class="blue_button" id="button_encarando_proyecto">Empezar</button>
     </article>
 
-    <!--Falta hacerlo con ajax (por eso la villereada de las anchorText),
-         pero esto es un jueves a las 2 de la mañana,
-        despues te lo hago bien Mati.
-           Lucas.
-        -->
+    @*Falta hacerlo con ajax (por eso la villereada de las anchorText),
+     pero esto es un jueves a las 2 de la mañana,
+    despues te lo hago bien Mati.
+       Lucas.
+    *@
+
     <article id="categoria_mano">
-        <a href="/Orders/pedir_mano_medidas">
+        <a href="@Url.Action("PedirManoMedidas", "Orders")">
             <div class="categoria cat_mano" id="cat_mano_div">
                 <div class="preview_cat"></div>
                 <p>Mano</p>
             </div>
         </a>
-        <a href="/Orders/pedir_brazo_medidas">
+        <a href="@Url.Action("PedirBrazoMedidas", "Orders")">
             <div class="categoria cat_brazo" id="cat_brazo_div">
                 <div class="preview_cat"></div>
                 <p>Brazo</p>

@@ -20,6 +20,8 @@ namespace Limbs.Web.Controllers
 
         //  public IOrdersRepository OrdersRepository { get; set; }
         private readonly IUserFiles _userFiles;
+
+        public OrdersController() { }
         public OrdersController(IUserFiles userFiles)
         {
             _userFiles = userFiles;
@@ -42,7 +44,7 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult CreateHand()
         {
-            return View("pedir_mano_index");
+            return View("PedirManoIndex");
         }
 
         // POST: Orders/Create
@@ -242,19 +244,19 @@ namespace Limbs.Web.Controllers
         }
 
         [Authorize(Roles = "Requester")]
-        public ActionResult pedir_mano_index()
+        public ActionResult PedirManoIndex()
         {
             return View();
         }
 
         [Authorize(Roles = "Requester")]
-        public ActionResult pedir_brazo_medidas()
+        public ActionResult PedirBrazoMedidas()
         {
             return View();
         }
 
         [Authorize(Roles = "Requester")]
-        public ActionResult pedir_mano_medidas()
+        public ActionResult PedirManoMedidas()
         {
             return View();
         }

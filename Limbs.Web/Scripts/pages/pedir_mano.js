@@ -21,10 +21,10 @@ function iniciar_pedido() {
 
 function ajax_form(x) {
     var file = '';
-    if (x == 'mano') {
-        file = 'Orders/pedir_mano_medidas';
+    if (x === 'mano') {
+        file = 'Orders/PedirManoMedidas';
     } else {
-        file = 'Orders/pedir_brazo_medidas';
+        file = 'Orders/PedirBrazoMedidas';
     }
     file = 'include/' + file;
     $.ajax({
