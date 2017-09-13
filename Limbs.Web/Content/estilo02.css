@@ -126,10 +126,6 @@
         transform: translateX(-50%);
     }
 
-    #cont_inicio a {
-        left: 50% !important;
-    }
-
     /*realizar pedido*/
     #realiza_pedido {
         position: relative;

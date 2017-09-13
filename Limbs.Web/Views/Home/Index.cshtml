@@ -15,50 +15,19 @@
     </head>
     
 <div id="inicio">
-    <div class="saludo">
-        <img src="~/Content/img/limbs_white.svg" alt="logo atomic lab">
-    </div>
-    <div id="cont_inicio">
-        <a href="@Url.Action("Login", "Account")" class="blue_button">Iniciar sesión</a>
-        <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>
-    </div>
-
-    @*---------------Por favor cambiar este metodo de logueo totalmente asqueroso------------ *@
-
-    <div id="login_f">
-        <div id="cont_login">
+    <div class="primero_ini">
+        <div id="cont_inicio">
             <div>
-                <section id="loginForm">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        <h4>¿No tenes Facebook?</h4>
-                        @Html.ValidationSummary(true, "", new { })
-                        <div class="campos_l">
-                            @Html.LabelFor(m => m.Email, new { })
-                            @Html.TextBoxFor(m => m.Email, new { })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { })
-                        </div>
-                        <div class="campos_l">
-                            @Html.LabelFor(m => m.Password, new { })
-                            @Html.PasswordFor(m => m.Password, new { })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { })
-                        </div>
-                            <input type="submit" value="Ingresar" />
-                            <p id="cerrar-login" onclick="cerrar_login()">
-                                Atrás
-                            </p>
-                            @* Enable this once you have account confirmation enabled for password reset functionality
-                                <p>
-                                    @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                                </p>*@
-                    }
-                </section>
+                <img src="~/Content/img/limbs_white.svg" alt="logo atomic lab">
+            </div>
+            <div>
+                <a href="@Url.Action("Login", "Account")" class="blue_button">Iniciar sesión</a>
+            </div>
+            <div>
+                <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>
             </div>
         </div>
     </div>
-
-    @*---------------Por favor cambiar este metodo de logueo totalmente asqueroso------------ *@
 
     <div class="texto_inicio">
         <h1>¡Bienvenido a Limbs!</h1>
@@ -71,7 +40,7 @@
             <div class="cuadrado azulAtomicBG">
                 <h1>TRES SIMPLES PASOS</h1>
             </div>
-            <img src="img/foto01.jpg" height="400" width="300" />
+            <img src="/Content/img/foto01.jpg" height="400" width="300" />
         </div>
 
         <center>

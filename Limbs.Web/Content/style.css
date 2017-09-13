@@ -1,54 +1,15 @@
 /* Styles go here */
-* {
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Roboto', sans-serif;
-}
 
 .azulAtomicBG {
-    background-color: #0172c1
+    background-color: #4772b2;
 }
 
 .azulAtomicTx {
-    color: #0172c1;
+    color: #4772b2;
 }
 
 body {
 }
-
-.navbar {
-    position: fixed;
-    width: 100%;
-    z-index: 100;
-    top: 0px;
-}
-
-    .navbar ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-
-    .left, .navbar .left {
-        float: left;
-    }
-
-    .right, .navbar .right {
-        float: right;
-    }
-
-    .navbar li a {
-        display: block;
-        color: white;
-        text-align: center;
-        padding: 30px 16px;
-        text-decoration: none;
-    }
-
-        .navbar li a:hover {
-            background-color: #3591d2;
-        }
 
 #logo {
     height: 29px;
@@ -58,14 +19,9 @@ body {
 }
 /*end nav*/
 
-#inicio {
-    padding-top: 65px;
-}
-
 .texto_inicio {
-    color: #737373;
     text-align: center;
-    margin-top: 10%;
+    margin-top: 50px;
 }
 
     .texto_inicio h1 {
@@ -74,14 +30,14 @@ body {
         text-align: center;
     }
 
-.saludo {
-    padding: 20vh 0px;
-    background: url(../img/fondo_ini.jpg) center no-repeat;
+.primero_ini {
+    background: url(/Content/img/fondo_ini.jpg) center no-repeat;
     background-size: cover;
     text-align: center;
+    height: calc(100vh - 70px);
 }
 
-    .saludo img {
+    .primero_ini img {
         height: 150px;
         position: relative;
         animation: aparecer_logo 1s ease;
@@ -151,8 +107,8 @@ body {
         padding-bottom: 20px;
     }
 
-.boton {
-    background: #0172c0;
+.cont_pedir .boton {
+    background: #4772b2;
     color: #ffffff;
     width: auto;
     padding: 10px 50px 10px 50px;
@@ -184,7 +140,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: transparent url(../img/piezas.jpg) center center no-repeat fixed;
+    background: transparent url(/Content/img/piezas.jpg) center center no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -286,7 +242,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background: transparent url(../img/fondo_manoton.jpg) center center no-repeat fixed;
+    background: transparent url(/Content/img/fondo_manoton.jpg) center center no-repeat fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;

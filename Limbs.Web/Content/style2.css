@@ -22,7 +22,8 @@
 
     /*inicio*/
     #inicio {
-        padding-top: 58px;
+        background-color: white;
+        color: #737373;
     }
 
     .saludo img {
