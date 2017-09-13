@@ -312,6 +312,53 @@ nav {
     margin-top: 40px;
     max-height: calc(100vw - 110px);
 }
+#tipo_de_amp {
+    padding: 20px 0px;
+}
+.tipo_amp {
+    position: relative;
+    width: 230px;
+    height: 75px;
+    border: solid 2px #c1c1c1;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    -moz-appearance: inherit;
+    -webkit-appearance: inherit;
+    transition: border 0.3s;
+    background-position: center;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.tipo_amp:checked {
+    border: solid 5px #4772B2;
+}
+    .tipo_amp[value=a] {
+        background-image: url(/Content/img/amputaciones_tipo/a.png);
+    }
+    .tipo_amp[value=b] {
+        background-image: url(/Content/img/amputaciones_tipo/b.png);
+    }
+    .tipo_amp[value=c] {
+        background-image: url(/Content/img/amputaciones_tipo/c.png);
+    }
+    .tipo_amp[value=d] {
+        background-image: url(/Content/img/amputaciones_tipo/d.png);
+    }
+    .tipo_amp[value=e] {
+        background-image: url(/Content/img/amputaciones_tipo/e.png);
+    }
+    .tipo_amp[value=f] {
+        background-image: url(/Content/img/amputaciones_tipo/f.png);
+    }
+    .tipo_amp[value=g] {
+        background-image: url(/Content/img/amputaciones_tipo/g.png);
+    }
+    .tipo_amp[value=h] {
+        background-image: url(/Content/img/amputaciones_tipo/h.png);
+    }
 
 /*inicio form*/
 #realiza_pedido {

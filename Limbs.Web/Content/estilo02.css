@@ -187,6 +187,11 @@
         height: 100%;
     }
 
+    /*registro*/
+    .form {
+        padding: 50px 0px;
+    }
+
     /*registro parte 2*/
     #reg2 {
         flex-direction: column;
@@ -201,6 +206,28 @@
     .selec {
         height: 100%;
     }
+
+    /*Embajadores*/
+    #panel_embajadores {
+        padding: 20px 0px;
+    }
+    .panel_emb {
+        padding: 5px;
+        width: 100%;
+        min-width: initial;
+        margin: 20px 0px;
+    }
+    #paneles_embajador table tr td:nth-of-type(1), #paneles_embajador table tr td:nth-of-type(3) {
+        display: none;
+    }
+    #paneles_embajador table tr td {
+        overflow-x: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: calc(100vw - 140px);
+    }
+
+
 }
 
 
