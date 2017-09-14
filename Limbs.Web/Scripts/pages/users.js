@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
 
     //se cambia propiedades del input Email
     $('#Email').attr('readonly', true);

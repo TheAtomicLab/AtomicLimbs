@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+$(document).ready(function () {
     $('#button_encarando_proyecto').click(function () {
         iniciar_pedido();
     });
