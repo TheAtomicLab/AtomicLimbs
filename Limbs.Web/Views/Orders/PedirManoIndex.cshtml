@@ -3,37 +3,55 @@
     
 @section scripts
 {
-    <script src="~/Scripts/pages/pedir_mano.js"></script>
+    @*scripts nuevos acá :)*@
 }
-
-<div id="cont" class="min_full">
-
-    <article id="realiza_pedido">
-        <h1>Realizar pedido:</h1>
-        <p>¡Hola!<br>Estamos encarando nuestro proyecto #Limbs y nos llena de alegría, el objetivo es entregar la mayor cantidad de prótesis impresas en 3D alrededor del mundo, gratis, para todos los que las necesiten. Por el momento tenemos disponibles prótesis de manos y brazos.</p>
-        <button class="blue_button" id="button_encarando_proyecto">Empezar</button>
-    </article>
-
-    @*Falta hacerlo con ajax (por eso la villereada de las anchorText),
-     pero esto es un jueves a las 2 de la mañana,
-    despues te lo hago bien Mati.
-       Lucas.
-    *@
-
-    <article id="categoria_mano">
-        <a href="@Url.Action("PedirManoMedidas", "Orders")">
-            <div class="categoria cat_mano" id="cat_mano_div">
-                <div class="preview_cat"></div>
-                <p>Mano</p>
+<div class="min_full" id="cuerpo_pedir">
+    <article id="exp_inicial">
+        <h1>Nueva solicitud:</h1>
+        <p id="bajada_exp">Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación <b>de lo contrario, la mano no podrá ser otorgada.</b></p>
+        <div id="recomendaciones_foto">
+            <div>
+                <p>Requisitos de la foto</p>
+                <ul>
+                    <li>Hoja cuadriculada de fondo</li>
+                    <li>Buena luz</li>
+                    <li>Foto sacada desde arriba</li>
+                    <li>De ser posible, colocar una regla</li>
+                </ul>
             </div>
-        </a>
-        <a href="@Url.Action("PedirBrazoMedidas", "Orders")">
-            <div class="categoria cat_brazo" id="cat_brazo_div">
-                <div class="preview_cat"></div>
-                <p>Brazo</p>
-            </div>
-        </a>
+        </div>
+        <div id="ej_si" class="ej_exp">
+            <p class="azulAtomicTx">SI</p>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div id="ej_no" class="ej_exp">
+            <p>NO</p>
+            <ul>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        <div>
+            <button class="blue_button" onclick="subir_archivo()">Subir foto</button>
+        </div>
     </article>
-    <script src="js/solicitud.js"></script>
-    <script src="js/menu.js"></script>
+    <article id="sistema_input">
+        <h2>Pedir una mano</h2>
+        <div id="foto_input">
+            <canvas></canvas>
+        </div>
+        <!--
+        -->
+        <div id="exp_pedido_inp">
+            <div>
+                <h2>Paso 1</h2>
+                <input type="number" name="">
+                <p>Hacé click sobre tu foto como indica la animación.</p>
+                <button class="blue_button">Siguiente</button>
+            </div>
+        </div>
+    </article>
 </div>
