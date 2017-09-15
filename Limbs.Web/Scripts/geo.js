@@ -110,9 +110,9 @@ $(document).ready(function () {
 });
 
 function geocodeAddress(geocoder, resultsMap) {
-    var address = $('#country').val();
-    var address = address + ', ' + $('#city').val();
-    var address = address + ', ' + $('#address').val();
+    var country = $("#Country").val();
+    var city = $("#City").val();
+    var address = country + ', ' + city + ', ' + $("#Address").val();
     geocoder.geocode({ 'address': address }, function (results, status) {
         if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);

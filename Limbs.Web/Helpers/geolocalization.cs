@@ -16,15 +16,21 @@ namespace Limbs.Web.Helpers
             var result = new System.Net.WebClient().DownloadString(pointAddress);
             JavaScriptSerializer jss = new JavaScriptSerializer();
             var dict = jss.Deserialize<dynamic>(result);
+            var dictStatus = dict["status"];
+            if (dictStatus == "OK")
+            { 
 
             var lat = dict["results"][0]["geometry"]["location"]["lat"];
             var lng = dict["results"][0]["geometry"]["location"]["lng"];
 
             var latlng = Convert.ToString(lat).Replace(',', '.') + ',' + Convert.ToString(lng).Replace(',', '.');
             return latlng;
-            //return Json(new { result = latlng }, JsonRequestBehavior.AllowGet);
-            //return Convert.ToDouble(latlng);
-            // return jss.Deserialize<dynamic>(result);
+            }
+            else
+            {
+                //Ver como hacerlo de forma linda aca
+                return "0,0";
+            }
         }
 
        /*
