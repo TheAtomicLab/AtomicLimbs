@@ -106,7 +106,6 @@ $(document).ready(function () {
         geocodeAddress(geocoder, map2);
         return false;
     });
-    // $('#map').hide();
 });
 
 function geocodeAddress(geocoder, resultsMap) {
@@ -120,12 +119,21 @@ function geocodeAddress(geocoder, resultsMap) {
                 map: resultsMap,
                 position: results[0].geometry.location
             });
+            enableRegister();
         } else {
             if (status === 'ZERO_RESULTS') {
-                alert('No se encontró una dirección con los datos ingresados');
+                alert('Por favor ingresé una dirección valida para poder registrarse.');
             }else{
                 alert('Geocode was not successful for the following reason: ' + status);
             }
         }
     });
 }
+
+/*
+function enableRegister() {
+    $("[name=register]").addClass("blue_button");
+    $("[name=register]").removeClass("disabled_button");
+    $("[name=register]").prop('disabled', false);
+};
+*/

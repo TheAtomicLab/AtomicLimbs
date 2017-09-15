@@ -2,8 +2,13 @@
 @model Limbs.Web.Models.UserModel
 @section scripts
 {
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
+</script>
     <script src="~/Scripts/geo.js"></script>
     <script src="~/Scripts/pages/users.js"></script>    
+    <script src="~/Scripts/register.js"></script>   
+    <script src="~/Scripts/menu.js"></script>
 }
 
 <div id="cont" class="min_full">
@@ -36,34 +41,27 @@
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "date", placeholder = "2017-05-11" } })
                 <label class="f-label">Sexo</label>
                 @Html.DropDownListFor(m => m.Gender, Limbs.Web.Models.AmbassadorModel.GetGenderSelect(), new { @class = "f-campo f-post-l" })
+                <h2 class="f-titulo">Seleccioná tu amputación</h2>
+                <div id="tipo_de_amp">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="a">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="b">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="c">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="d">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="e">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="f">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="g">
+                    <input type="radio" name="tipo_amp" class="tipo_amp" value="h">
+                </div>
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = "País" } })
-                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ciudad"} })
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ciudad" } })
                 </div>
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección" } })
-                <div class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</div>
                 <div id="map"></div>
             </div>
-            <h2 class="f-titulo">Seleccioná tu amputación</h2>
-            <div id="tipo_de_amp">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="a">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="b">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="c">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="d">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="e">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="f">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="g">
-                <input type="radio" name="tipo_amp" class="tipo_amp" value="h">
-            </div>
-            <button type="submit" class="blue_button">Registrarse</button>
+            <button class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</button>
+            <button type="submit" class="blue_button" name="register">Registrarse</button>
         }
     </div>
 
 </div>
-
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
-</script>
-
-<script src="~/Scripts/menu.js"></script>
-<script src="~/Scripts/menu.js"></script>

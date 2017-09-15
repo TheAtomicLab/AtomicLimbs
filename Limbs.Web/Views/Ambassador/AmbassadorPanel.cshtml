@@ -66,7 +66,10 @@
                     }
                 </table>
             </article>
-
+            @if (!Model.PointIsValid)
+            {
+                <p>Por favor modifique su dirección ya que no es valida.</p>
+            }
 
             @if (Model.DeliveredOrders.Count > 0)
             {

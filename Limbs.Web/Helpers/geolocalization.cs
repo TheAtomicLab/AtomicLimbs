@@ -33,6 +33,19 @@ namespace Limbs.Web.Helpers
             }
         }
 
+        public static bool PointIsValid(double Lat,double Long)
+        {
+            if(Lat == 0 && Long == 0)
+            {
+                //is not valid. Because the lat and long is saved with "0,0" in the register.
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
        /*
         public async Task<JsonResult> GetPoint(string address)
         {

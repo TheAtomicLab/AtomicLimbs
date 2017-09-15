@@ -1,7 +1,14 @@
 ﻿@using Microsoft.AspNet.Identity
 @model Limbs.Web.Models.AmbassadorModel
-<script src="~/Scripts/geo.js"></script>
+    
+@section scripts{
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
+</script>
+<script  src="~/Scripts/geo.js"></script>
 <script src="~/Scripts/pages/ambassador.js"></script>
+<script src="~/Scripts/register.js"></script>
+}
 
 <body>
     <div id="cont" class="min_full">
@@ -27,15 +34,12 @@
                         @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ciudad"} })
                     </div>
                     @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección"} })
-                    <button class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</button>
                     <div id="map"></div>
                 </div>
-                <button type="submit" class="blue_button">Registrarse</button>
+                <button class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</button>
+                <button type="submit" class="blue_button" name="register">Registrarse</button>
         }
         </div>
 
     </div>
-    <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
-    </script>
 </body>

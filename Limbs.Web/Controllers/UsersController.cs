@@ -179,12 +179,19 @@ namespace Limbs.Web.Controllers
         public ActionResult UserPanel(string message)
         {
             var userId = User.Identity.GetUserId();
+            UserModel user = db.UserModelsT.Single(c => c.UserId == userId);
 
             IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
+
+            var lat = user.Lat;
+            var lng = user.Long;
+
+            var pointIsValid = Helpers.Geolocalization.PointIsValid(lat, lng);
 
             var viewModel = new ViewModels.UserPanelViewModel()
             {
                 Order = orderList.ToList(),
+                PointIsValid = pointIsValid,
                 Message = message
 
             };
