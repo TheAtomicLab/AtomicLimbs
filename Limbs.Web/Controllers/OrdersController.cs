@@ -20,8 +20,7 @@ namespace Limbs.Web.Controllers
 
         //  public IOrdersRepository OrdersRepository { get; set; }
         private readonly IUserFiles _userFiles;
-
-        public OrdersController() { }
+        
         public OrdersController(IUserFiles userFiles)
         {
             _userFiles = userFiles;
