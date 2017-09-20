@@ -1,4 +1,5 @@
-﻿using Limbs.Web.Repositories;
+﻿using LightInject;
+using Limbs.Web.Repositories;
 using Microsoft.Owin;
 using Owin;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,17 +17,22 @@ namespace Limbs.Web
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            ConfigureServices();
+            ConfigureStorage();
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices()
         {
-            services.AddSingleton<IUserFiles, UserFilesInAzureStorage>();
-            services.AddSingleton<IOrdersRepository, OrdersRepository>();
-            services.AddSingleton<IUsersRepository, UsersRepository>();
-            services.AddSingleton<IAmbassadorsRepository, AmbassadorsRepository>();
-            services.AddSingleton<IProductsRepository, ProductsRepository>();
+            var container = new ServiceContainer();
+            
+            container.Register<IOrdersRepository, OrdersRepository>();
+            container.Register<IUsersRepository, UsersRepository>();
+            container.Register<IAmbassadorsRepository, AmbassadorsRepository>();
+            container.Register<IProductsRepository, ProductsRepository>();
+            container.Register<IUserFiles, UserFilesInAzureStorage>();
 
-            ConfigureStorage();
+            container.RegisterControllers();
+            container.EnableMvc();
         }
 
 
