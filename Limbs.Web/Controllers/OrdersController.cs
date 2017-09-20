@@ -266,20 +266,14 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult UploadImageUser( HttpPostedFileBase file)
         {
+            //TODO (ale): validacion de imagen, contenido, etc...
             if (file != null && file.ContentLength > 0)
             {
-                byte[] data;
-                using (Stream inputStream = file.InputStream)
-                {
-                    MemoryStream memoryStream = inputStream as MemoryStream;
-                    if (memoryStream == null)
-                    {
-                        memoryStream = new MemoryStream();
-                        inputStream.CopyTo(memoryStream);
-                    }
-                    data = memoryStream.ToArray();
-                }
-                TempData["fileData"] = data;
+                var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+
+                var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+
+                TempData["fileUrl"] = fileUrl.AbsoluteUri;
             }
             
             return RedirectToAction("ProtesisMedidas");
@@ -289,7 +283,7 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult ProtesisMedidas()
         {
-            ViewBag.ImageBytes = TempData["fileData"];
+            ViewBag.ImageUrl = TempData["fileUrl"];
             return View("ProtesisMedidas");
         }
 

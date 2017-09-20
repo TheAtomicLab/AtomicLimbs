@@ -1,17 +1,17 @@
-﻿@model Limbs.Web.Models.OrderModel
-    
+﻿@{
+    string imageUrl = ViewBag.ImageUrl;
+}
+
+<input type="hidden" name="ImageUrl" value="@imageUrl" />
     <div class="min_full" id="cuerpo_pedir">
         <article id="sistema_input">
             <h2>Pedir una mano</h2>
             <div id="foto_input">
-                @if (@ViewBag.ImageBytes != null)
+                @if (!string.IsNullOrWhiteSpace(imageUrl))
                 {
-                    <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.ImageBytes)" alt="userImage"/>
-                    @*
-                      //TODO show image in canvas
                     <canvas>
-                      <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.ImageBytes)" alt="userImage"/>
-                    </canvas>*@
+                      <img src="@imageUrl" alt="userImage"/>
+                    </canvas>
                 }
                 else {
                     <p>Por favor cargue una foto</p>

@@ -42,7 +42,7 @@ namespace Limbs.Web
             CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
             //Container creation
-            blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString()).CreateIfNotExists();
+            blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString()).CreateIfNotExists(BlobContainerPublicAccessType.Blob);
         }
     }
 
