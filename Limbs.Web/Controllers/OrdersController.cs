@@ -9,6 +9,7 @@ using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Repositories.Interfaces;
 using System.IO;
+using System.Web.Routing;
 
 namespace Limbs.Web.Controllers
 {
@@ -273,7 +274,7 @@ namespace Limbs.Web.Controllers
 
                 var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
 
-                TempData["fileUrl"] = fileUrl.AbsoluteUri;
+                TempData["fileUrl"] = Url.Action("GetUserImage", "Users", new { url = fileUrl.AbsoluteUri });
             }
             
             return RedirectToAction("ProtesisMedidas");

@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Http;
 using System.Web.Mvc;
 using Limbs.Web.Models;
 using Limbs.Web.Services;
@@ -216,6 +217,15 @@ namespace Limbs.Web.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult GetUserImage(string url)
+        {
+            var client = new HttpClient();
+
+            var file = client.GetByteArrayAsync(url);
+
+            return new FileContentResult(file.Result, "image/jpeg");
         }
     }
 
