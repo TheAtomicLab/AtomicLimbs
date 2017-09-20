@@ -35,23 +35,11 @@
             </ul>
         </div>
         <div>
-            <button class="blue_button" onclick="subir_archivo()">Subir foto</button>
-        </div>
-    </article>
-    <article id="sistema_input">
-        <h2>Pedir una mano</h2>
-        <div id="foto_input">
-            <canvas></canvas>
-        </div>
-        <!--
-        -->
-        <div id="exp_pedido_inp">
-            <div>
-                <h2>Paso 1</h2>
-                <input type="number" name="">
-                <p>Hacé click sobre tu foto como indica la animación.</p>
-                <button class="blue_button">Siguiente</button>
-            </div>
-        </div>
+@using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+            <input type="file" name="file" accept="image/jpeg" />
+            <input id="enviar" type="submit" name="enviar" value="Subir foto" class="blue_button">
+}
+       </div>
     </article>
 </div>

@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Repositories.Interfaces;
+using System.IO;
 
 namespace Limbs.Web.Controllers
 {
@@ -20,8 +21,7 @@ namespace Limbs.Web.Controllers
 
         //  public IOrdersRepository OrdersRepository { get; set; }
         private readonly IUserFiles _userFiles;
-
-        public OrdersController() { }
+        
         public OrdersController(IUserFiles userFiles)
         {
             _userFiles = userFiles;
@@ -44,7 +44,7 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult CreateHand()
         {
-            return View("PedirManoIndex");
+            return View("PedirProtesis");
         }
 
         // POST: Orders/Create
@@ -244,23 +244,10 @@ namespace Limbs.Web.Controllers
         }
 
         [Authorize(Roles = "Requester")]
-        public ActionResult PedirManoIndex()
+        public ActionResult PedirProtesis()
         {
             return View();
         }
-
-        [Authorize(Roles = "Requester")]
-        public ActionResult PedirBrazoMedidas()
-        {
-            return View();
-        }
-
-        [Authorize(Roles = "Requester")]
-        public ActionResult PedirManoMedidas()
-        {
-            return View();
-        }
-
 
         // POST: Orders/Delete/5
         [HttpPost, ActionName("Delete")]
@@ -274,6 +261,36 @@ namespace Limbs.Web.Controllers
             //    await _context.SaveChangesAsync();
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = "Requester")]
+        public ActionResult UploadImageUser( HttpPostedFileBase file)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                byte[] data;
+                using (Stream inputStream = file.InputStream)
+                {
+                    MemoryStream memoryStream = inputStream as MemoryStream;
+                    if (memoryStream == null)
+                    {
+                        memoryStream = new MemoryStream();
+                        inputStream.CopyTo(memoryStream);
+                    }
+                    data = memoryStream.ToArray();
+                }
+                TempData["fileData"] = data;
+            }
+            
+            return RedirectToAction("ProtesisMedidas");
+
+        }
+
+        [Authorize(Roles = "Requester")]
+        public ActionResult ProtesisMedidas()
+        {
+            ViewBag.ImageBytes = TempData["fileData"];
+            return View("ProtesisMedidas");
         }
 
 

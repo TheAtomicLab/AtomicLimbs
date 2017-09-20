@@ -123,6 +123,7 @@ function geocodeAddress(geocoder, resultsMap) {
         } else {
             if (status === 'ZERO_RESULTS') {
                 alert('Por favor ingresé una dirección valida para poder registrarse.');
+                initMap();
             }else{
                 alert('Geocode was not successful for the following reason: ' + status);
             }

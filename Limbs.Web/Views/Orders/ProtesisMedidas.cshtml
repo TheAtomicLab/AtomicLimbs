@@ -1,0 +1,29 @@
+﻿@model Limbs.Web.Models.OrderModel
+    
+    <div class="min_full" id="cuerpo_pedir">
+        <article id="sistema_input">
+            <h2>Pedir una mano</h2>
+            <div id="foto_input">
+                @if (@ViewBag.ImageBytes != null)
+                {
+                    <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.ImageBytes)" alt="userImage"/>
+                    @*
+                      //TODO show image in canvas
+                    <canvas>
+                      <img src="data:image;base64,@System.Convert.ToBase64String(@ViewBag.ImageBytes)" alt="userImage"/>
+                    </canvas>*@
+                }
+                else {
+                    <p>Por favor cargue una foto</p>
+                }
+            </div>
+            <div id="exp_pedido_inp">
+                <div>
+                    <h2>Paso 1</h2>
+                    <input type="number" name=""> @* What is this input?? *@
+                    <p>Hacé click sobre tu foto como indica la animación.</p>
+                    <button class="blue_button">Siguiente</button>
+                </div>
+            </div>
+        </article>
+    </div>
