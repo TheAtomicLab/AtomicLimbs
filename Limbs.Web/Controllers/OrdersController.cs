@@ -288,6 +288,13 @@ namespace Limbs.Web.Controllers
             return View("ProtesisMedidas");
         }
 
+        [HttpPost]
+        [Authorize(Roles = "Requester")]
+        public ActionResult ManoOrden(string imageUrl, float distA, float distB, float distC)
+        {
+            return View("ManoOrden");
+        }
+
 
         protected override void Dispose(bool disposing)
         {

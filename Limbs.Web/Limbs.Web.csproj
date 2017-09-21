@@ -278,6 +278,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style2.css" />
     <Content Include="Content\estilo01.css" />
@@ -416,9 +417,7 @@
     <Content Include="Views\Admin\AmbassadorDetails.cshtml" />
     <Content Include="Views\Admin\EditAmbassador.cshtml" />
     <None Include="Views\Orders\Create.cshtml" />
-    <Content Include="Views\Orders\PedirManoMedidas.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
-    <None Include="Views\Orders\PedirManoIndex.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -477,7 +476,6 @@
     <Content Include="Views\Ambassador\Edit.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
     <Content Include="Views\Ambassador\Create.cshtml" />
-    <Content Include="Views\Orders\PedirBrazoMedidas.cshtml" />
     <Content Include="Views\Users\UserPanel.cshtml" />
     <Content Include="Views\Shared\footer.cshtml" />
     <Content Include="Views\Shared\header.cshtml" />

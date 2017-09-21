@@ -1,5 +1,6 @@
 ﻿@{
-    string imageUrl = ViewBag.ImageUrl;
+    var imageUrl = "http://limbs.azurewebsites.net/Users/GetUserImage?url=https%3A%2F%2Flimbstest.blob.core.windows.net%2Fuserfiles%2Fc84e11bc158a4694a586ccaf2b1044ef.jpg";
+    //string imageUrl = ViewBag.ImageUrl;
 }
 
 @section scripts
@@ -7,18 +8,33 @@
     <script src="/Scripts/pages/tracking-min.js"></script>
 
     <style>
+        .imagemodal {
+            background-color: white;
+            height: 70vh;
+            opacity: 0.5;
+            position: absolute;
+            width: inherit;
+            z-index: 1;
+        }
+
+        #imagecontainer {
+            display: inline-block;
+            height: 70vh;
+            max-width: calc(100% - 20px - 10px);
+            position: relative;
+            width: 100%;
+        }
 
         #image {
-            left: -1000px;
+            max-height: 100%;
             max-width: 100%;
-            position: absolute;
-            top: -1000px;
-            width: auto;
+            position: relative;
         }
 
         #cphoto {
-            margin: 150px 0 0 -8px;
-            position: absolute;
+            max-height: 100%;
+            max-width: 100%;
+            position: relative;
         }
     </style>
 
@@ -30,9 +46,12 @@
 
         window.fastThreshold = 0.1;
         window.onload = function() {
-            var img = document.getElementById('image'); //se va a crear un canvas p img
-            var width = img.clientWidth;
-            var height = img.clientHeight;
+            var image = document.getElementById('image'); //se va a crear un canvas p img
+            var width = image.clientWidth;
+            var height = image.clientHeight;
+
+            image.width = width;
+            image.height = height;
 
             var canvas = document.getElementById('cphoto'); //canvas de dibujo
             canvas.width = width;
@@ -40,11 +59,10 @@
 
             var context = canvas.getContext('2d');
 
-            var image = document.getElementById('image');
-
             var doFindFeatures = function() {
                 tracking.Fast.THRESHOLD = window.fastThreshold;
                 context.drawImage(image, 0, 0, width, height);
+                $(image).hide();
 
                 var imageData = context.getImageData(0, 0, width, height);
                 var gray = tracking.Image.grayscale(imageData.data, width, height);
@@ -94,7 +112,7 @@
             for (var Threshold = 1; Threshold <= 12; Threshold++) {
                 if (doFindFeatures() >= 14) {
                     console.log("OK");
-                    document.getElementById("resultado").innerHTML = "Todo OK!";
+                    $("#loadingmodal").hide("slow");
 
 
                 } else {
@@ -104,8 +122,6 @@
                     fallos = fallos + 1;
                     if (fallos >= 10) {
                         console.log("SAFE TRIGGER");
-                        document.getElementById("resultado").innerHTML =
-                            "La imagen no es la mejor, pruebe sacandola mas paralelo";
                         break;
                     }
                 }
@@ -259,15 +275,15 @@
                             console.log("Distancia lateral=" + medida);
                             switch (counter) {
                             case 0:
-                                document.getElementById('printmedida').innerHTML = medida.toFixed(1);
+                                document.getElementById('printmedida').value = medida.toFixed(2);
                                 counter = 1;
                                 break;
                             case 1:
-                                document.getElementById('printmedidab').innerHTML = medida.toFixed(1);
+                                document.getElementById('printmedidab').value = medida.toFixed(2);
                                 counter = 2;
                                 break;
                             case 2:
-                                document.getElementById('printmedidac').innerHTML = medida.toFixed(1);
+                                document.getElementById('printmedidac').value = medida.toFixed(2);
                                 counter = 0;
                                 break;
 
@@ -282,10 +298,10 @@
 
             function clearCanvas() {
                 var image = document.getElementById('image');
-
+                $(image).show();
                 var context = canvas.getContext('2d');
                 context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
+                $(image).hide();
             }
 
 
@@ -295,36 +311,26 @@
     </script>
 }
 
-<input type="hidden" name="ImageUrl" value="@imageUrl"/>
 <div class="min_full" id="cuerpo_pedir">
     <article id="sistema_input">
         <h2>Pedir una mano</h2>
         <div id="foto_input">
             @if (!string.IsNullOrWhiteSpace(imageUrl))
             {
-                <!-- IMAGEN ENTRANTE-->
-                <img id="image" width="100%" src="@imageUrl"/>
+                <div id="loadingmodal" class="imagemodal">
+                    <p>Analizando imagen, aguarde.</p>
+                </div>
+                <div id="errormodal" class="imagemodal" style="display: none;">
+                    <p>La imagen no es la mejor, pruebe sacandola mas paralelo</p>
+                </div>
 
-                <!-- CANVAS DONDE SE DIBUJA-->
-                <canvas id="cphoto" width="400" height="400"></canvas>
+                <div id="imagecontainer">
+                    <img id="image" src="@imageUrl"/>
+                    <canvas id="cphoto" style=""></canvas>
+                </div>
 
                 <!--ESTE BOTON OCULTA LINEAS HECHAS-->
                 <button class="btn btn-default" id="clearBtn">Volver a empezar</button>
-
-                <p>
-                    <!--ACA SE IMPRIMEN LAS MEDIDAS-->
-                    <p id="printmedida"></p>
-                    <p id="printmedidab"></p>
-                    <p id="printmedidac"></p>
-
-                </p>
-                <!-- ESTE DIV DICE SI ESTA OK PARA MEDIR-->
-                <p id="resultado"></p>
-
-
-                <canvas>
-                    <img src="@imageUrl" alt="userImage"/>
-                </canvas>
             }
             else
             {
@@ -334,9 +340,18 @@
         <div id="exp_pedido_inp">
             <div>
                 <h2>Paso 1</h2>
-                <input type="number" name=""> @* What is this input?? *@
-                <p>Hacé click sobre tu foto como indica la animación.</p>
-                <button class="blue_button">Siguiente</button>
+
+                @using (Html.BeginForm("ManoOrden", "Orders"))
+                {
+                    <input type="hidden" name="imageUrl" value="@imageUrl"/>
+
+                    <input type="number" step="0.01" name="distA" id="printmedida"/>
+                    <input type="number" step="0.01" name="distB" id="printmedidab"/>
+                    <input type="number" step="0.01" name="distC" id="printmedidac"/>
+
+                    <p>Hacé click sobre tu foto como indica la animación.</p>
+                    <input type="submit" class="blue_button" value="Siguiente" />
+                }
             </div>
         </div>
     </article>
