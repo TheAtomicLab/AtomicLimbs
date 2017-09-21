@@ -12,11 +12,11 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
-        public int A { get; set; }
+        public float A { get; set; }
 
-        public int B { get; set; }
+        public float B { get; set; }
 
-        public int C { get; set; }
+        public float C { get; set; }
 
         public int D { get; set; }
     }

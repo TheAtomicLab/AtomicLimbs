@@ -243,6 +243,10 @@
     </Compile>
     <Compile Include="Helpers\geolocalization.cs" />
     <Compile Include="Helpers\Enumerations.cs" />
+    <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
+    <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
+      <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -279,6 +283,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estiloatomchoose.css" />
+    <Content Include="Content\img\Magnify.gif" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style2.css" />
     <Content Include="Content\estilo01.css" />
@@ -403,7 +408,6 @@
     </Content>
     <Content Include="Views\Account\SelectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
-    <Content Include="Views\Orders\CreateBackup.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Ambassador\OrderDetails.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -416,7 +420,6 @@
     <Content Include="Views\Admin\Ambassadors.cshtml" />
     <Content Include="Views\Admin\AmbassadorDetails.cshtml" />
     <Content Include="Views\Admin\EditAmbassador.cshtml" />
-    <None Include="Views\Orders\Create.cshtml" />
     <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -479,8 +482,9 @@
     <Content Include="Views\Users\UserPanel.cshtml" />
     <Content Include="Views\Shared\footer.cshtml" />
     <Content Include="Views\Shared\header.cshtml" />
-    <Content Include="Views\Orders\ProtesisMedidas.cshtml" />
-    <Content Include="Views\Orders\PedirProtesis.cshtml" />
+    <Content Include="Views\Orders\ManoMedidas.cshtml" />
+    <Content Include="Views\Orders\ManoPedir.cshtml" />
+    <Content Include="Views\Orders\ManoOrden.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -490,6 +494,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201709210349189_OrderSizesAsFloat.resx">
+      <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

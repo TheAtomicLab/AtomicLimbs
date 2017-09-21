@@ -1,6 +1,5 @@
 ﻿@{
-    var imageUrl = "http://limbs.azurewebsites.net/Users/GetUserImage?url=https%3A%2F%2Flimbstest.blob.core.windows.net%2Fuserfiles%2Fc84e11bc158a4694a586ccaf2b1044ef.jpg";
-    //string imageUrl = ViewBag.ImageUrl;
+    string imageUrl = ViewBag.ImageUrl;
 }
 
 @section scripts
@@ -319,6 +318,7 @@
             {
                 <div id="loadingmodal" class="imagemodal">
                     <p>Analizando imagen, aguarde.</p>
+                    <img src="/Content/img/Magnify.gif">
                 </div>
                 <div id="errormodal" class="imagemodal" style="display: none;">
                     <p>La imagen no es la mejor, pruebe sacandola mas paralelo</p>
