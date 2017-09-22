@@ -36,7 +36,7 @@
         <div>
             @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
-                <input type="file" name="file" accept="image/jpeg" />
+                <input type="file" name="file" accept="image/*" />
                 <input id="enviar" type="submit" name="enviar" value="Subir foto" class="blue_button">
             }
        </div>

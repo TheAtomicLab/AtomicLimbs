@@ -8,9 +8,8 @@
 
     <style>
         .imagemodal {
-            background-color: white;
+            background-color: rgba(255,255,255,0.7);
             height: 70vh;
-            opacity: 0.5;
             position: absolute;
             width: inherit;
             z-index: 1;
@@ -35,6 +34,13 @@
             max-width: 100%;
             position: relative;
         }
+
+        .valign {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            /* vendor prefixes omitted due to brevity */
+        }
     </style>
 
     <script>
@@ -42,52 +48,44 @@
         var avg = 0; //AVRG VALUE
         var times = 0; //VECES HECHAS
         var fallos = 0; //FAILS, doh
+        var image = document.getElementById('image'); 
+        var canvas = document.getElementById('cphoto');
+        var ctx = canvas.getContext("2d");
 
         window.fastThreshold = 0.1;
         window.onload = function() {
-            var image = document.getElementById('image'); //se va a crear un canvas p img
+            //se va a crear un canvas p img
             var width = image.clientWidth;
             var height = image.clientHeight;
-
             image.width = width;
             image.height = height;
-
-            var canvas = document.getElementById('cphoto'); //canvas de dibujo
             canvas.width = width;
             canvas.height = height;
 
-            var context = canvas.getContext('2d');
+            var ctx = canvas.getContext('2d');
 
             var doFindFeatures = function() {
                 tracking.Fast.THRESHOLD = window.fastThreshold;
-                context.drawImage(image, 0, 0, width, height);
+                ctx.drawImage(image, 0, 0, width, height);
                 $(image).hide();
 
-                var imageData = context.getImageData(0, 0, width, height);
+                var imageData = ctx.getImageData(0, 0, width, height);
                 var gray = tracking.Image.grayscale(imageData.data, width, height);
                 var corners = tracking.Fast.findCorners(gray, width, height);
-                var ch = 1;
-                var largos = 0;
                 var sides = []; //nalg
                 var d1;
                 var d2;
-                var isSquare = false; //nalg
-                var lineas = 0;
-                context.fillStyle = "#4772B2";
+                ctx.fillStyle = "#4772B2";
 
                 //Nucleo del algoritmo, compara distancias en I y J (costados arriba y abajo)
 
                 for (var i = 0; i < corners.length; i += 2) {
-
                     d1 = (distance(corners[i], corners[i + 1], corners[i + 2], corners[i + 3]));
-
                     for (var j = 0; j < 200; j += 2) {
-
                         d2 = distance(corners[i], corners[i + 1], corners[j + 2], corners[j + 3]);
-
-                        if ((d1 == d2) && ((d2) >= 10) && ((d2) <= 90)
+                        if ((d1 === d2) && ((d2) >= 10) && ((d2) <= 90)
                         ) { //FILTRO RUIDO si las distancias son chicas, no se toman
-                            console.log(d1 + "," + d2);
+                            //console.log(d1 + "," + d2);
                             sides.push(d1);
                         }
                     }
@@ -98,24 +96,27 @@
                 var newArr = sides.slice().sort(), most = [undefined, 0], counter = 0;
 
                 newArr.reduce(function(old, chr) { //encuentro el valor mas repetido
-                    old == chr ? ++counter > most[1] && (most = [chr, counter]) : (counter = 1);
+                    old === chr ? ++counter > most[1] && (most = [chr, counter]) : (counter = 1);
                     return chr;
                 });
                 avg = most[0];
                 return most[1];
             };
             // Cordenadas X, Y corners[i], corners[i + 1]
-
-            var canvastemp = document.getElementById('cphoto');
-
-            for (var Threshold = 1; Threshold <= 12; Threshold++) {
+            
+            for (var threshold = 1; threshold <= 12; threshold++) {
                 if (doFindFeatures() >= 14) {
                     console.log("OK");
-                    $("#loadingmodal").hide("slow");
+                    $("#loadingmodal").hide();
+                    $("#formcontainer").show();
+                    $("#errormodal").hide();
 
-
+                    break;
                 } else {
                     console.log("NOT OK");
+                    $("#loadingmodal").hide();
+                    $("#errormodal").show();
+
                     window.fastThreshold = window.fastThreshold + 0.5;
                     doFindFeatures();
                     fallos = fallos + 1;
@@ -134,15 +135,10 @@
             return dist;
         }
 
-
-        var canvas = document.getElementById("cphoto");
-        var ctx = canvas.getContext("2d");
-
-
         (function() {
 
             // Get a regular interval for drawing to the screen
-            window.requestAnimFrame = (function(callback) {
+            window.requestAnimFrame = (function() {
                 return window.requestAnimationFrame ||
                     window.webkitRequestAnimationFrame ||
                     window.mozRequestAnimationFrame ||
@@ -153,19 +149,11 @@
                     };
             })();
             // Canvas
-            var canvas = document.getElementById("cphoto");
-            var ctx = canvas.getContext("2d");
             var lastmedida = 0;
             ctx.strokeStyle = "#4772B2";
             ctx.lineWith = 3;
             // UI
-            var clearBtn = document.getElementById("clearBtn");
-            clearBtn.addEventListener("click",
-                function(e) {
-                    clearCanvas();
-                    sigImage.setAttribute("src", "");
-                },
-                false);
+            document.getElementById("clearBtn").addEventListener("click", clearCanvas);
             // Dibujo o no dibujo
             var drawing = false;
 
@@ -208,7 +196,7 @@
                 },
                 false);
             canvas.addEventListener("touchend",
-                function(e) {
+                function() {
                     var mouseEvent = new MouseEvent("mouseup", {});
                     canvas.dispatchEvent(mouseEvent);
                 },
@@ -216,21 +204,21 @@
             // No deja scrollear cuando tocas
             document.body.addEventListener("touchstart",
                 function(e) {
-                    if (e.target == canvas) {
+                    if (e.target === canvas) {
                         e.preventDefault();
                     }
                 },
                 false);
             document.body.addEventListener("touchend",
                 function(e) {
-                    if (e.target == canvas) {
+                    if (e.target === canvas) {
                         e.preventDefault();
                     }
                 },
                 false);
             document.body.addEventListener("touchmove",
                 function(e) {
-                    if (e.target == canvas) {
+                    if (e.target === canvas) {
                         e.preventDefault();
                     }
                 },
@@ -268,7 +256,7 @@
                         var c = Math.sqrt(Math.abs(a + b));
                         var medida = (c * 0.5) / avg;
 
-                        if (medida == lastmedida) {
+                        if (medida === lastmedida) {
                         } else {
 
                             console.log("Distancia lateral=" + medida);
@@ -296,17 +284,14 @@
             }
 
             function clearCanvas() {
-                var image = document.getElementById('image');
+                $("#printmedida").val(0);
+                $("#printmedidab").val(0);
+                $("#printmedidac").val(0);
                 $(image).show();
-                var context = canvas.getContext('2d');
-                context.drawImage(image, 0, 0, canvas.width, canvas.height);
+                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
                 $(image).hide();
             }
-
-
         })();
-
-
     </script>
 }
 
@@ -321,16 +306,18 @@
                     <img src="/Content/img/Magnify.gif">
                 </div>
                 <div id="errormodal" class="imagemodal" style="display: none;">
-                    <p>La imagen no es la mejor, pruebe sacandola mas paralelo</p>
+                    <div class="valign">
+                        <p style="padding: 20px;">La imagen no es la mejor, pruebe sacandola mas paralelo</p>
+                        
+                        <a href="@Url.Action("ManoPedir")" class="blue_button">Subir otra imagen</a>
+                    </div>
                 </div>
 
                 <div id="imagecontainer">
                     <img id="image" src="@imageUrl"/>
                     <canvas id="cphoto" style=""></canvas>
                 </div>
-
-                <!--ESTE BOTON OCULTA LINEAS HECHAS-->
-                <button class="btn btn-default" id="clearBtn">Volver a empezar</button>
+                
             }
             else
             {
@@ -340,18 +327,37 @@
         <div id="exp_pedido_inp">
             <div>
                 <h2>Paso 1</h2>
-
-                @using (Html.BeginForm("ManoOrden", "Orders"))
-                {
-                    <input type="hidden" name="imageUrl" value="@imageUrl"/>
-
-                    <input type="number" step="0.01" name="distA" id="printmedida"/>
-                    <input type="number" step="0.01" name="distB" id="printmedidab"/>
-                    <input type="number" step="0.01" name="distC" id="printmedidac"/>
-
+                
+                <p>Ayudanos a tomar las medidas para tu mano mecanica.</p>
+                
+                <div id="formcontainer" style="display: none;">     
+                    
                     <p>Hacé click sobre tu foto como indica la animación.</p>
-                    <input type="submit" class="blue_button" value="Siguiente" />
-                }
+                    
+                    @* TODO (ale): animacion para tomar medidas *@
+
+                    @using (Html.BeginForm("ManoOrden", "Orders"))
+                    {
+                        <input type="hidden" name="imageUrl" value="@imageUrl" />
+
+                        <label>A: 
+                            <input type="number" value="0" step="0.01" name="distA" id="printmedida" />
+                        </label>
+
+                        <label>B: 
+                            <input type="number" value="0" step="0.01" name="distB" id="printmedidab" />
+                        </label>
+                        
+                        <label>C:
+                            <input type="number" value="0" step="0.01" name="distC" id="printmedidac" />
+                        </label>
+
+                        <button class="btn btn-default" id="clearBtn">Borrar medidas</button>
+
+                        <input type="submit" class="blue_button" value="Siguiente" />
+                    }
+                </div>
+
             </div>
         </div>
     </article>

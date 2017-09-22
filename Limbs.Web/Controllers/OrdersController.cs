@@ -58,6 +58,11 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult ManoMedidas()
         {
+            if (TempData["fileUrl"] == null)
+            {
+                return RedirectToAction("ManoPedir", "Orders");
+            }
+
             ViewBag.ImageUrl = TempData["fileUrl"];
             return View("ManoMedidas");
         }
