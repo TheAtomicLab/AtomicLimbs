@@ -87,7 +87,7 @@ namespace Limbs.Web.Controllers
         // POST: Orders/Create
         [Authorize(Roles = "Requester")]
         [HttpPost]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Design,Sizes,Comments")] OrderModel orderModel)
+        public async Task<ActionResult> Create(OrderModel orderModel)
         {
             if (ModelState.IsValid)
             {

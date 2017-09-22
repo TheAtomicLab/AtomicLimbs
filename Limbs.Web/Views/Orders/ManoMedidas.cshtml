@@ -283,11 +283,14 @@
                 }
             }
 
-            function clearCanvas() {
+            function clearCanvas(e) {
+                e.preventDefault();
+
                 $("#printmedida").val(0);
                 $("#printmedidab").val(0);
                 $("#printmedidac").val(0);
                 $(image).show();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
                 $(image).hide();
             }
