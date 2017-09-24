@@ -247,6 +247,10 @@
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201709232326462_OrderColor.cs" />
+    <Compile Include="Migrations\201709232326462_OrderColor.Designer.cs">
+      <DependentUpon>201709232326462_OrderColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -498,6 +502,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201709210349189_OrderSizesAsFloat.resx">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201709232326462_OrderColor.resx">
+      <DependentUpon>201709232326462_OrderColor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

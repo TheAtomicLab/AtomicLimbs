@@ -687,27 +687,27 @@ nav {
         cursor: pointer;
     }
 
-        #color_mano input[value=a] {
+        #color_mano input[value=A] {
             background-image: url(../Content/img/mano_a.jpg);
         }
 
-        #color_mano input[value=b] {
+        #color_mano input[value=B] {
             background-image: url(../Content/img/mano_b.jpg);
         }
 
-        #color_mano input[value=c] {
+        #color_mano input[value=C] {
             background-image: url(../Content/img/mano_c.jpg);
         }
 
-        #color_mano input[value=d] {
+        #color_mano input[value=D] {
             background-image: url(../Content/img/mano_d.jpg);
         }
 
-        #color_mano input[value=e] {
+        #color_mano input[value=E] {
             background-image: url(../Content/img/mano_e.jpg);
         }
 
-        #color_mano input[value=f] {
+        #color_mano input[value=F] {
             background-image: url(../Content/img/mano_f.jpg);
         }
 

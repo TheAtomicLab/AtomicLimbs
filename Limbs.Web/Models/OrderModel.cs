@@ -25,8 +25,7 @@ namespace Limbs.Web.Models
         /// </summary>
         public virtual AmbassadorModel OrderAmbassador { get; set; }
 
-
-        public int Design { get; set; }
+        public OrderColor Color { get; set; }
 
         public virtual ICollection<AccessoryModel> Extras { get; set; }
         
@@ -57,7 +56,23 @@ namespace Limbs.Web.Models
         Delivered,
     }
 
-    public static class AttributesHelperExtension
+public enum OrderColor
+{
+    [Description("Blanco y rojo")]
+    A,
+    [Description("Azul y rojo")]
+    B,
+    [Description("Rosa y blanco")]
+    C,
+    [Description("Azul y amarillo")]
+    D,
+    [Description("Azul blanco y rojo")]
+    E,
+    [Description("Rojo y amarillo")]
+    F,
+}
+
+public static class AttributesHelperExtension
     {
         public static string ToDescription(this Enum value)
         {
