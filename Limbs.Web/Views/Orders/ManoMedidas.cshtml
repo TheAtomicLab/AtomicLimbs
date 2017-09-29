@@ -341,6 +341,7 @@
 
                     @using (Html.BeginForm("ManoOrden", "Orders"))
                     {
+                        @Html.ValidationSummary()
                         <input type="hidden" name="imageUrl" value="@imageUrl" />
 
                         <label>A: 

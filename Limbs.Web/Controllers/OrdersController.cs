@@ -85,6 +85,13 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult ManoOrden(string imageUrl, float distA, float distB, float distC)
         {
+            if (string.IsNullOrWhiteSpace(imageUrl))
+                ModelState.AddModelError("noimage", "Error desconocido, vuelva a comenzar.");
+            if (distA <= 0 || distB <= 0 || distC <= 0)
+                ModelState.AddModelError("nodistance", "Seleccione las medidas.");
+            ViewBag.ImageUrl = imageUrl;
+            if (!ModelState.IsValid) return View("ManoMedidas");
+
             return View("ManoOrden", new OrderModel
             {
                 IdImage = imageUrl,
@@ -108,6 +115,7 @@ namespace Limbs.Web.Controllers
             var currentUserId = User.Identity.GetUserId();
             // Consulta DB. Cambiar con repos
             var userModel = await _db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
+            
             //TODO (ale): revisar logica, porque no lo validamos en paso 1?
             //var hasPendingOrders = await _db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
             //if (hasPendingOrders > 1)
