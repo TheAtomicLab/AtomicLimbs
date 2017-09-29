@@ -1,0 +1,34 @@
+﻿.imagemodal {
+    background-color: rgba(255,255,255,0.7);
+    height: 70vh;
+    position: absolute;
+    width: inherit;
+    z-index: 1;
+}
+
+#imagecontainer {
+    display: inline-block;
+    height: 70vh;
+    max-width: calc(100% - 20px - 10px);
+    position: relative;
+    width: 100%;
+}
+
+#image {
+    max-height: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+#cphoto {
+    max-height: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+.valign {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    /* vendor prefixes omitted due to brevity */
+}

@@ -5,296 +5,40 @@
 @section scripts
 {
     <script src="/Scripts/pages/tracking-min.js"></script>
-
-    <style>
-        .imagemodal {
-            background-color: rgba(255,255,255,0.7);
-            height: 70vh;
-            position: absolute;
-            width: inherit;
-            z-index: 1;
-        }
-
-        #imagecontainer {
-            display: inline-block;
-            height: 70vh;
-            max-width: calc(100% - 20px - 10px);
-            position: relative;
-            width: 100%;
-        }
-
-        #image {
-            max-height: 100%;
-            max-width: 100%;
-            position: relative;
-        }
-
-        #cphoto {
-            max-height: 100%;
-            max-width: 100%;
-            position: relative;
-        }
-
-        .valign {
-            position: relative;
-            top: 50%;
-            transform: translateY(-50%);
-            /* vendor prefixes omitted due to brevity */
-        }
-    </style>
+    <script src="/Scripts/pages/munonizer.js"></script>
+    
+    <link rel="stylesheet" type="text/css" href="/Content/ManoMedidas.css">
 
     <script>
 
-        var avg = 0; //AVRG VALUE
-        var times = 0; //VECES HECHAS
-        var fallos = 0; //FAILS, doh
         var image = document.getElementById('image'); 
         var canvas = document.getElementById('cphoto');
-        var ctx = canvas.getContext("2d");
 
-        window.fastThreshold = 0.1;
-        window.onload = function() {
-            //se va a crear un canvas p img
-            var width = image.clientWidth;
-            var height = image.clientHeight;
-            image.width = width;
-            image.height = height;
-            canvas.width = width;
-            canvas.height = height;
+        Munonizer(tracking, image, canvas,
+            function(index, val) {
+                document.getElementById('printmed' + index).value = val;
+            },
+            function() {
+                $("#printmed0").val(0);
+                $("#printmed1").val(0);
+                $("#printmed2").val(0);
+            },
+            function () {
 
-            var ctx = canvas.getContext('2d');
+                console.log("OK");
+                $("#loadingmodal").hide();
+                $("#formcontainer").show();
+                $("#errormodal").hide();
 
-            var doFindFeatures = function() {
-                tracking.Fast.THRESHOLD = window.fastThreshold;
-                ctx.drawImage(image, 0, 0, width, height);
-                $(image).hide();
+            },
+            function() {
 
-                var imageData = ctx.getImageData(0, 0, width, height);
-                var gray = tracking.Image.grayscale(imageData.data, width, height);
-                var corners = tracking.Fast.findCorners(gray, width, height);
-                var sides = []; //nalg
-                var d1;
-                var d2;
-                ctx.fillStyle = "#4772B2";
+                console.log("NOT OK");
+                $("#loadingmodal").hide();
+                $("#errormodal").show();
 
-                //Nucleo del algoritmo, compara distancias en I y J (costados arriba y abajo)
-
-                for (var i = 0; i < corners.length; i += 2) {
-                    d1 = (distance(corners[i], corners[i + 1], corners[i + 2], corners[i + 3]));
-                    for (var j = 0; j < 200; j += 2) {
-                        d2 = distance(corners[i], corners[i + 1], corners[j + 2], corners[j + 3]);
-                        if ((d1 === d2) && ((d2) >= 10) && ((d2) <= 90)
-                        ) { //FILTRO RUIDO si las distancias son chicas, no se toman
-                            //console.log(d1 + "," + d2);
-                            sides.push(d1);
-                        }
-                    }
-                }
-
-                console.log("Cada linea mide de 0,5 cm " + avg + " pixeles");
-
-                var newArr = sides.slice().sort(), most = [undefined, 0], counter = 0;
-
-                newArr.reduce(function(old, chr) { //encuentro el valor mas repetido
-                    old === chr ? ++counter > most[1] && (most = [chr, counter]) : (counter = 1);
-                    return chr;
-                });
-                avg = most[0];
-                return most[1];
-            };
-            // Cordenadas X, Y corners[i], corners[i + 1]
-            
-            for (var threshold = 1; threshold <= 12; threshold++) {
-                if (doFindFeatures() >= 14) {
-                    console.log("OK");
-                    $("#loadingmodal").hide();
-                    $("#formcontainer").show();
-                    $("#errormodal").hide();
-
-                    break;
-                } else {
-                    console.log("NOT OK");
-                    $("#loadingmodal").hide();
-                    $("#errormodal").show();
-
-                    window.fastThreshold = window.fastThreshold + 0.5;
-                    doFindFeatures();
-                    fallos = fallos + 1;
-                    if (fallos >= 10) {
-                        console.log("SAFE TRIGGER");
-                        break;
-                    }
-                }
-            }
-
-        };
-
-        function distance(pointx1, pointy1, pointx2, pointy2) {
-            var dist = Math.pow(pointx1 - pointx2, 2) + Math.pow(pointy1 - pointy2, 2); // raiz((a-b)^2 + (c-d)^2)
-            dist = Math.sqrt(dist); //Por temas de performance se descomenta, cuando se hacia en la misma tarda mucho
-            return dist;
-        }
-
-        (function() {
-
-            // Get a regular interval for drawing to the screen
-            window.requestAnimFrame = (function() {
-                return window.requestAnimationFrame ||
-                    window.webkitRequestAnimationFrame ||
-                    window.mozRequestAnimationFrame ||
-                    window.oRequestAnimationFrame ||
-                    window.msRequestAnimaitonFrame ||
-                    function(callback) {
-                        window.setTimeout(callback, 1000 / 60);
-                    };
-            })();
-            // Canvas
-            var lastmedida = 0;
-            ctx.strokeStyle = "#4772B2";
-            ctx.lineWith = 3;
-            // UI
-            document.getElementById("clearBtn").addEventListener("click", clearCanvas);
-            // Dibujo o no dibujo
-            var drawing = false;
-
-            var mousePos = { x: 0, y: 0 };
-            var firstPos = mousePos;
-            var lastPos = mousePos;
-            var est = 1;
-            var drw = 1;
-            canvas.addEventListener("mousedown",
-                function(e) {
-                    if (drw) {
-                        drw = 0;
-                    } else {
-                        drawing = true;
-                    } //No dibujo por primera vez.
-
-                    if (est) {
-                        firstPos = getMousePos(canvas, e);
-                        console.log(firstPos);
-                        est = 0;
-                    } else {
-                        lastPos = getMousePos(canvas, e);
-                        renderCanvas();
-
-                        est = 1;
-                    }
-                },
-                false);
-            // Eventos para touch
-            canvas.addEventListener("touchstart",
-                function(e) {
-                    mousePos = getTouchPos(canvas, e);
-                    var touch = e.touches[0];
-                    var mouseEvent = new MouseEvent("mousedown",
-                        {
-                            clientX: touch.clientX,
-                            clientY: touch.clientY
-                        });
-                    canvas.dispatchEvent(mouseEvent);
-                },
-                false);
-            canvas.addEventListener("touchend",
-                function() {
-                    var mouseEvent = new MouseEvent("mouseup", {});
-                    canvas.dispatchEvent(mouseEvent);
-                },
-                false);
-            // No deja scrollear cuando tocas
-            document.body.addEventListener("touchstart",
-                function(e) {
-                    if (e.target === canvas) {
-                        e.preventDefault();
-                    }
-                },
-                false);
-            document.body.addEventListener("touchend",
-                function(e) {
-                    if (e.target === canvas) {
-                        e.preventDefault();
-                    }
-                },
-                false);
-            document.body.addEventListener("touchmove",
-                function(e) {
-                    if (e.target === canvas) {
-                        e.preventDefault();
-                    }
-                },
-                false);
-
-            // posicion mouse
-            function getMousePos(canvasDom, mouseEvent) {
-                var rect = canvasDom.getBoundingClientRect();
-                return {
-                    x: mouseEvent.clientX - rect.left,
-                    y: mouseEvent.clientY - rect.top
-                };
-            }
-
-            // posicion de touch en canvas
-            function getTouchPos(canvasDom, touchEvent) {
-                var rect = canvasDom.getBoundingClientRect();
-                return {
-                    x: touchEvent.touches[0].clientX - rect.left,
-                    y: touchEvent.touches[0].clientY - rect.top
-                };
-            }
-
-            var counter = 0;
-
-            // dibujar en canvas
-            function renderCanvas() {
-                if (drawing) {
-                    if (!est) {
-                        ctx.moveTo(firstPos.x, firstPos.y);
-                        ctx.lineTo(lastPos.x, lastPos.y);
-                        ctx.stroke();
-                        var a = Math.pow((Math.abs(lastPos.x - firstPos.x)), 2);
-                        var b = Math.pow((Math.abs(lastPos.y - firstPos.y)), 2);
-                        var c = Math.sqrt(Math.abs(a + b));
-                        var medida = (c * 0.5) / avg;
-
-                        if (medida === lastmedida) {
-                        } else {
-
-                            console.log("Distancia lateral=" + medida);
-                            switch (counter) {
-                            case 0:
-                                document.getElementById('printmedida').value = medida.toFixed(2);
-                                counter = 1;
-                                break;
-                            case 1:
-                                document.getElementById('printmedidab').value = medida.toFixed(2);
-                                counter = 2;
-                                break;
-                            case 2:
-                                document.getElementById('printmedidac').value = medida.toFixed(2);
-                                counter = 0;
-                                break;
-
-                            default:
-
-                            }
-                            lastmedida = medida;
-                        };
-                    }
-                }
-            }
-
-            function clearCanvas(e) {
-                e.preventDefault();
-
-                $("#printmedida").val(0);
-                $("#printmedidab").val(0);
-                $("#printmedidac").val(0);
-                $(image).show();
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-                $(image).hide();
-            }
-        })();
+            });
+        
     </script>
 }
 
@@ -345,15 +89,15 @@
                         <input type="hidden" name="imageUrl" value="@imageUrl" />
 
                         <label>A: 
-                            <input type="number" value="0" step="0.01" name="distA" id="printmedida" />
+                            <input type="number" value="0" step="0.01" name="distA" id="printmed0" />
                         </label>
 
                         <label>B: 
-                            <input type="number" value="0" step="0.01" name="distB" id="printmedidab" />
+                            <input type="number" value="0" step="0.01" name="distB" id="printmed1" />
                         </label>
                         
                         <label>C:
-                            <input type="number" value="0" step="0.01" name="distC" id="printmedidac" />
+                            <input type="number" value="0" step="0.01" name="distC" id="printmed2" />
                         </label>
 
                         <button class="btn btn-default" id="clearBtn">Borrar medidas</button>

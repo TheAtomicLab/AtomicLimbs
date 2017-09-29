@@ -289,6 +289,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\img\Magnify.gif" />
+    <Content Include="Content\ManoMedidas.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style2.css" />
     <Content Include="Content\estilo01.css" />
@@ -371,6 +372,7 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\pages\munonizer.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
