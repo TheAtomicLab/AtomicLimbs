@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Limbs.Web.Extensions;
 using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Repositories.Interfaces;
@@ -40,18 +41,30 @@ namespace Limbs.Web.Controllers
         [Authorize(Roles = "Requester")]
         public ActionResult UploadImageUser(HttpPostedFileBase file)
         {
-            //TODO (ale): validacion de imagen, contenido, etc...
-            if (file != null && file.ContentLength > 0)
+            if (file == null || file.ContentLength == 0)
             {
-                var fileName = Guid.NewGuid().ToString("N") + ".jpg";
-
-                var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
-
-                TempData["fileUrl"] = Url.Action("GetUserImage", "Users", new { url = fileUrl.AbsoluteUri });
+                ModelState.AddModelError("nofile", "Seleccione una foto.");
             }
+            else
+            {
+                if (file.ContentLength > 1000000 * 5)
+                {
+                    ModelState.AddModelError("bigfile", "La foto elegida es muy grande (max = 5 MB).");
+                }
+                if (!file.IsImage())
+                {
+                    ModelState.AddModelError("noimage", "El archivo seleccionado no es una imagen.");
+                }
+            }
+            if (!ModelState.IsValid) return View("ManoPedir");
+
+
+            var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+            var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+
+            TempData["fileUrl"] = Url.Action("GetUserImage", "Users", new { url = fileUrl.AbsoluteUri });
 
             return RedirectToAction("ManoMedidas");
-
         }
 
         // GET: Orders/ManoMedidas
