@@ -31,6 +31,8 @@ namespace Limbs.Web.Models
         
         public virtual OrderSizesModel Sizes { get; set; }
 
+        [Display(Name = "Comentarios", Description = "")]
+        [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
         public string IdImage { get; set; }

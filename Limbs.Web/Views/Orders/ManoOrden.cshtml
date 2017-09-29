@@ -1,38 +1,47 @@
 ﻿@model Limbs.Web.Models.OrderModel
 
-@using (Html.BeginForm("Create", "Orders"))
+@section scripts
 {
-    @Html.AntiForgeryToken()
-
-    @Html.HiddenFor(model => model.Sizes.A);
-    @Html.HiddenFor(model => model.Sizes.B);
-    @Html.HiddenFor(model => model.Sizes.C);
-    @Html.HiddenFor(model => model.IdImage);
-
-    <div class="form-horizontal">
-        <h4>OrderModel</h4>
-        <hr />
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div id="color_mano">
-            <h2>Color:</h2>
-            @Html.RadioButtonFor(model => model.Color, "A")
-            @Html.RadioButtonFor(model => model.Color, "B")
-            @Html.RadioButtonFor(model => model.Color, "C")
-            @Html.RadioButtonFor(model => model.Color, "D")
-            @Html.RadioButtonFor(model => model.Color, "E")
-            @Html.RadioButtonFor(model => model.Color, "F")
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
+    <style>
+        textarea {
+            width: 400px;
+            height: 100px;
+        }
+    </style>
 }
+
+<div style="text-align: center; min-height: calc(100vh - 390px);">
+    @using (Html.BeginForm("Create", "Orders"))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.Sizes.A);
+        @Html.HiddenFor(model => model.Sizes.B);
+        @Html.HiddenFor(model => model.Sizes.C);
+        @Html.HiddenFor(model => model.IdImage);
+
+        <div class="form-horizontal">
+            <div id="color_mano">
+                <h2>Color</h2>
+                @Html.RadioButtonFor(model => model.Color, "A")
+                @Html.RadioButtonFor(model => model.Color, "B")
+                @Html.RadioButtonFor(model => model.Color, "C")
+                @Html.RadioButtonFor(model => model.Color, "D")
+                @Html.RadioButtonFor(model => model.Color, "E")
+                @Html.RadioButtonFor(model => model.Color, "F")
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Enviar pedido" class="blue_button" />
+                </div>
+            </div>
+        </div>
+    }
+</div>
