@@ -89,31 +89,28 @@ namespace Limbs.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(OrderModel orderModel)
         {
-            if (ModelState.IsValid)
-            {
-                var currentUserId = User.Identity.GetUserId();
-                // Consulta DB. Cambiar con repos
-                var userModel = await _db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
-                //TODO (ale): revisar logica, porque no lo validamos en paso 1?
-                var hasPendingOrders = await _db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
-                if (hasPendingOrders > 1)
-                    return RedirectToAction("UserPanel", "Users", new { message = "Cantidad de pedidos excedidos" });
-                
+            if (!ModelState.IsValid) return View("ManoOrden", orderModel);
 
-                orderModel.OrderRequestor = userModel;
-                orderModel.Status = OrderStatus.PreAssigned;
-                orderModel.StatusLastUpdated = DateTime.Now;
-                orderModel.Date = DateTime.Now;
-                //Asigno ambassador (ale: primer version, la asignacion la hacemos nosotros)
-                //orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
 
-                _db.OrderModels.Add(orderModel);
-                await _db.SaveChangesAsync();
+            var currentUserId = User.Identity.GetUserId();
+            // Consulta DB. Cambiar con repos
+            var userModel = await _db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
+            //TODO (ale): revisar logica, porque no lo validamos en paso 1?
+            //var hasPendingOrders = await _db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
+            //if (hasPendingOrders > 1)
+            //    return RedirectToAction("UserPanel", "Users", new { message = "Cantidad de pedidos excedidos" });
 
-                return RedirectToAction("UserPanel", "Users");
-            }
+            orderModel.OrderRequestor = userModel;
+            orderModel.Status = OrderStatus.PreAssigned;
+            orderModel.StatusLastUpdated = DateTime.Now;
+            orderModel.Date = DateTime.Now;
+            //Asigno ambassador (ale: primer version, la asignacion la hacemos nosotros)
+            //orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
 
-            return View("ManoOrden", orderModel);
+            _db.OrderModels.Add(orderModel);
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction("UserPanel", "Users");
         }
 
         #region Match Ambassador
