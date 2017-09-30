@@ -34,7 +34,7 @@
                 d1 = (distance(corners[i], corners[i + 1], corners[i + 2], corners[i + 3]));
                 for (var j = 0; j < 200; j += 2) {
                     d2 = distance(corners[i], corners[i + 1], corners[j + 2], corners[j + 3]);
-                    if ((d1 === d2) && ((d2) >= 10) && ((d2) <= 90)
+                    if ((d1 === d2) && ((d2) >= 8) && ((d2) <= 90)
                     ) { //FILTRO RUIDO si las distancias son chicas, no se toman
                         //console.log(d1 + "," + d2);
                         sides.push(d1);
@@ -111,21 +111,23 @@
         var drw = 1;
         canvas.addEventListener("mousedown",
             function (e) {
-                if (drw) {
-                    drw = 0;
-                } else {
-                    drawing = true;
-                } //No dibujo por primera vez.
+                if (ctx) {
+                    if (drw) {
+                        drw = 0;
+                    } else {
+                        drawing = true;
+                    } //No dibujo por primera vez.
 
-                if (est) {
-                    firstPos = getMousePos(canvas, e);
-                    console.log(firstPos);
-                    est = 0;
-                } else {
-                    lastPos = getMousePos(canvas, e);
-                    renderCanvas();
+                    if (est) {
+                        firstPos = getMousePos(canvas, e);
+                        console.log(firstPos);
+                        est = 0;
+                    } else {
+                        lastPos = getMousePos(canvas, e);
+                        renderCanvas();
 
-                    est = 1;
+                        est = 1;
+                    }
                 }
             },
             false);
@@ -195,6 +197,7 @@
         function renderCanvas() {
             if (drawing) {
                 if (!est) {
+                    ctx.beginPath();
                     ctx.moveTo(firstPos.x, firstPos.y);
                     ctx.lineTo(lastPos.x, lastPos.y);
                     ctx.stroke();
@@ -217,6 +220,7 @@
                         case 2:
                             dist(2, medida.toFixed(2));
                             counter = 0;
+                            ctx = null;
                             break;
 
                         default:
@@ -232,9 +236,11 @@
     function clearCanvas(e) {
         e.preventDefault();
 
+        ctx = canvas.getContext("2d");
         $(image).show();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
         $(image).hide();
 
         clear();

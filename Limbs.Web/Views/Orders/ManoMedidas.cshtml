@@ -15,19 +15,39 @@
         var canvas = document.getElementById('cphoto');
 
         Munonizer(tracking, image, canvas,
-            function(index, val) {
-                document.getElementById('printmed' + index).value = val;
+            function (index, val) {
+                document.getElementById("printmed" + index).value = val;
+
+                var paso = parseInt(index + 1);
+                $("#stepnumber").text(paso + 1);
+                if (paso === 1) {
+                    $(".paso1").hide();
+                    $(".paso2").show();
+                }
+                if (paso === 2) {
+                    $(".paso2").hide();
+                    $(".paso3").show();
+                }
+                if (paso === 3) {
+                    $(".paso3").hide();
+                    $(".paso4").show();
+                }
+
             },
             function() {
                 $("#printmed0").val(0);
                 $("#printmed1").val(0);
                 $("#printmed2").val(0);
+                
+                $(".paso4").hide();
+                $(".paso1").show();
+                $("#stepnumber").text(1);
             },
             function () {
 
                 console.log("OK");
                 $("#loadingmodal").hide();
-                $("#formcontainer").show();
+                $(".paso1").show();
                 $("#errormodal").hide();
 
             },
@@ -73,40 +93,74 @@
         </div>
         <div id="exp_pedido_inp">
             <div>
-                <h2>Paso 1</h2>
+                <h2 style="padding-left: 0; margin-left: 0;">Paso <span id="stepnumber">1</span></h2>
                 
-                <p>Ayudanos a tomar las medidas para tu mano mecanica.</p>
-                
-                <div id="formcontainer" style="display: none;">     
-                    
-                    <p>Hacé click sobre tu foto como indica la animación.</p>
+                <div class="paso1" style="display: none;">
+
+                    <p>Ayudanos a medir de lado a lado tu muñeca.</p>
+
+                    <p>Seguí el ejemplo de la animación.</p>
                     
                     @* TODO (ale): animacion para tomar medidas *@
+                </div>
+
+                <div class="paso2" style="display: none;">
+
+                    <p>Ahora, vas a medir el largo de tu muñon.</p>
+
+                    <p>Seguí el ejemplo de la animación.</p>
+                    
+                    @* TODO (ale): animacion para tomar medidas *@
+                </div>
+
+                <div class="paso3" style="display: none;">
+
+                    <p>Inexplicable.</p>
+
+                    <p>Seguí el ejemplo de la animación.</p>
+
+                    @* TODO (ale): animacion para tomar medidas *@
+
+
+                </div>
+
+                <div class="paso4" style="display: none;">
+
+                    <p>Listo!</p>
+
+                    <p>Estas son las medidas tomadas:</p>
 
                     @using (Html.BeginForm("ManoOrden", "Orders"))
                     {
                         @Html.ValidationSummary()
-                        <input type="hidden" name="imageUrl" value="@imageUrl" />
+                        <input type="hidden" name="imageUrl" value="@imageUrl"/>
 
-                        <label>A: 
-                            <input type="number" value="0" step="0.01" name="distA" id="printmed0" />
+                        <label>
+                            A:
+                            <input type="number" readonly value="0" step="0.01" name="distA" id="printmed0"/>
                         </label>
-
-                        <label>B: 
-                            <input type="number" value="0" step="0.01" name="distB" id="printmed1" />
+                        <br/>
+                        <label>
+                            B:
+                            <input type="number" readonly value="0" step="0.01" name="distB" id="printmed1"/>
                         </label>
-                        
-                        <label>C:
-                            <input type="number" value="0" step="0.01" name="distC" id="printmed2" />
+                        <br />
+
+                        <label>
+                            C:
+                            <input type="number" readonly value="0" step="0.01" name="distC" id="printmed2"/>
                         </label>
+                        <br />
 
-                        <button class="btn btn-default" id="clearBtn">Borrar medidas</button>
 
-                        <input type="submit" class="blue_button" value="Siguiente" />
+                        <button class="blue_button" id="clearBtn">Volver a empezar</button>
+
+                        <input type="submit" class="blue_button" value="Siguiente"/>
                     }
                 </div>
 
             </div>
+
         </div>
     </article>
 </div>
