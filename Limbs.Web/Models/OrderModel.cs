@@ -13,6 +13,7 @@ namespace Limbs.Web.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Name = "Creado", Description = "")]
         public DateTime Date { get; set; }
 
         /// <summary>
@@ -40,6 +41,7 @@ namespace Limbs.Web.Models
         [Display(Name = "Estado", Description = "")]
         public OrderStatus Status { get; set; }
 
+        [Display(Name = "Última modificación", Description = "")]
         public DateTime StatusLastUpdated { get; set; }
 
     }

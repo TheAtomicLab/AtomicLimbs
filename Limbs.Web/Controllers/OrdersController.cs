@@ -122,7 +122,7 @@ namespace Limbs.Web.Controllers
             //    return RedirectToAction("UserPanel", "Users", new { message = "Cantidad de pedidos excedidos" });
 
             orderModel.OrderRequestor = userModel;
-            orderModel.Status = OrderStatus.PreAssigned;
+            orderModel.Status = OrderStatus.NotAssigned;
             orderModel.StatusLastUpdated = DateTime.Now;
             orderModel.Date = DateTime.Now;
             //Asigno ambassador (ale: primer version, la asignacion la hacemos nosotros)

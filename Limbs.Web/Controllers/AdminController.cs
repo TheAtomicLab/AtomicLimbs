@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Models;
 using System.Data.Entity;
+using Limbs.Web.ViewModels;
 
 namespace Limbs.Web.Controllers
 {
@@ -23,8 +24,8 @@ namespace Limbs.Web.Controllers
 
         public ActionResult Orders()
         {
-            // Implementar paginación con repositorios
-            IEnumerable<OrderModel> orderList = db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).ToList();
+            //TODO (ale): implementar paginacion, export to excel, ordenamiento
+            IEnumerable<OrderModel> orderList = db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderBy(x => x.Date).ToList();
             return View(orderList);
         }
 
@@ -55,7 +56,7 @@ namespace Limbs.Web.Controllers
 
         public ActionResult Users()
         {
-            // Implementar paginación con repositorios
+            //TODO (ale): implementar paginacion, export to excel, ordenamiento
             IEnumerable<UserModel> userList = db.UserModelsT.ToList();
             return View(userList);
         }
@@ -85,7 +86,7 @@ namespace Limbs.Web.Controllers
 
         public ActionResult Ambassadors()
         {
-            // Implementar paginación con repositorios
+            //TODO (ale): implementar paginacion, export to excel, ordenamiento
             IEnumerable<AmbassadorModel> ambassadorList = db.AmbassadorModels.ToList();
             return View(ambassadorList);
         }
@@ -110,5 +111,44 @@ namespace Limbs.Web.Controllers
             return View(ambassador);
         }
 
+        public ActionResult SelectOrderAmbassador(int idOrder)
+        {
+            var order = db.OrderModels.Find(idOrder);
+
+            if (order == null)
+                return HttpNotFound();
+            
+            //TODO (ale): ordenar por distancia de la orden
+            IEnumerable<AmbassadorModel> ambassadorList = db.AmbassadorModels.ToList();
+
+            return View(new AssignOrderAmbassadorViewModel
+            {
+                Order = order,
+                AmbassadorList = ambassadorList,
+            });
+
+        }
+
+        public ActionResult AssignOrderAmbassador(int id, int idOrder)
+        {
+            var order = db.OrderModels.Find(idOrder);
+
+            if (order == null)
+                return HttpNotFound();
+            
+            var ambassador = db.AmbassadorModels.Find(id);
+
+            if(ambassador == null)
+                return HttpNotFound();
+
+            order.OrderAmbassador = ambassador;
+            order.Status = OrderStatus.PreAssigned;
+            order.StatusLastUpdated = DateTime.UtcNow;
+            db.SaveChanges();
+
+            //TODO (ale): notificar a los usuarios el cambio de estado + asignacion
+
+            return RedirectToAction("Orders");
+        }
     }
 }

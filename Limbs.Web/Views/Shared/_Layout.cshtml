@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @if (User.IsInRole("Administrator")) { <link href="/Content/admin.css" rel="stylesheet" type="text/css" /> }
     <script src="~/Scripts/menu.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">

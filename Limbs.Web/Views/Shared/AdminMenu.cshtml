@@ -1,0 +1,7 @@
+﻿@if (User.IsInRole("Administrator"))
+{
+    <li>||</li>
+    <li>@Html.ActionLink("Pedidos", "Orders", "Admin")</li>
+    <li>@Html.ActionLink("Usuarios", "Users", "Admin")</li>
+    <li>@Html.ActionLink("Embajadores", "Ambassadors", "Admin")</li>
+}

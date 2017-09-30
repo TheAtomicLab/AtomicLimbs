@@ -1,14 +1,28 @@
 ﻿<header>
     <div id="main_head">
-        <a href="/"><img id="logo_head" src="/Content/img/limbs_white.svg"></a>
+        <a href="/">
+            <img id="logo_head" src="/Content/img/limbs_white.svg">
+        </a>
         <nav>
-            <li><a onclick='cerrarmenu()' href="/">Inicio</a></li>
-            @if (User.IsInRole("Requester"))
-            {
-                <li><a onclick='cerrarmenu()' href="/">Pedir una mano</a></li>
-            }
-            <li><a onclick='cerrarmenu()' href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a></li>
-            <li><a onclick='cerrarmenu()' href="/">Donar</a></li>
+            <ul>
+                <li>
+                    <a onclick="cerrarmenu()" href="/">Inicio</a>
+                </li>
+                @if (User.IsInRole("Requester"))
+                {
+                    <li>
+                        <a onclick="cerrarmenu()" href="/">Pedir una mano</a>
+                    </li>
+                }
+                <li>
+                    <a onclick="cerrarmenu()" href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a>
+                </li>
+                <li>
+                    <a onclick="cerrarmenu()" href="/">Donar</a>
+                </li>
+                
+                @Html.Partial("AdminMenu")
+            </ul>
         </nav>
         <img src="/Content/img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
     </div>

@@ -230,6 +230,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="ViewModels\AssignOrderAmbassadorViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -238,6 +239,7 @@
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Extensions\DateExtensions.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -283,6 +285,7 @@
     <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\admin.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\img\amputaciones_tipo\a.png" />
     <Content Include="Content\img\amputaciones_tipo\b.png" />
@@ -456,6 +459,8 @@
     <Content Include="Views\Orders\ManoMedidas.cshtml" />
     <Content Include="Views\Orders\ManoPedir.cshtml" />
     <Content Include="Views\Orders\ManoOrden.cshtml" />
+    <Content Include="Views\Shared\AdminMenu.cshtml" />
+    <Content Include="Views\Admin\SelectOrderAmbassador.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

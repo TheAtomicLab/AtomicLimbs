@@ -1,0 +1,24 @@
+﻿@model Limbs.Web.ViewModels.AssignOrderAmbassadorViewModel
+
+<h2>Asignar embajador al pedido @Model.Order.Id</h2>
+
+
+<table>
+    @foreach (var item in Model.AmbassadorList) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmbassadorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                a x m del solicitante
+                @* TODO (ale): distancia de la orden *@
+            </td>
+            <td>
+                @Html.ActionLink("Asignar", "AssignOrderAmbassador", new { idOrder = Model.Order.Id, id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
