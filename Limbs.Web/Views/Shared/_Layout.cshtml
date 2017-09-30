@@ -1,39 +1,28 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Limbs - Atomic Lab</title>
     <title>Limbs | Atomic Lab</title>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="/Content/estilo01.css">
-    <link rel="stylesheet" type="text/css" href="/Content/estilo02.css">
-    <link rel="stylesheet" href="/Content/estiloatomchoose.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
-    <script src="~/Scripts/jquery-3.2.1.js"></script>
-    <script src="~/Scripts/menu.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @*
-    ------Comento esto así despues alguien lo borra. (Mati)------
     @Styles.Render("~/Content/css")
-    @Styles.Render("~/Content/themes/base/css")
-    @Scripts.Render("~/bundles/modernizr")
-    *@
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/menu.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-    @*--------Header---------*@
-    @RenderPage("header.cshtml")
-    <div class="container body-content">
-        @RenderBody()
-    @*--------Footer---------*@
-    @RenderPage("footer.cshtml")
+@RenderPage("Header.cshtml")
+<div class="container body-content">
+    @RenderBody()
+    @RenderPage("Footer.cshtml")
 </div>
 
-@Scripts.Render("~/bundles/jquery")
-@*Scripts.Render("~/bundles/bootstrap")*@
 @Scripts.Render("~/bundles/jqueryui")
-@RenderSection("scripts", required: false)
-   
+@RenderSection("scripts", false)
+
 </body>
 </html>

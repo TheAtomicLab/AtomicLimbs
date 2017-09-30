@@ -1,23 +1,16 @@
 ﻿@using Microsoft.AspNet.Identity
+
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-    {
-    @Html.AntiForgeryToken()
-        @*
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hola " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Salir</a></li>
-    </ul>
-            *@
-    }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registrarse", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Ingresar", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+    <div id="menu_perfil">
+        <div id="icono_perfil" onclick="menu_mobil_activo()"></div>
+        <ul id="opciones_perfil">
+            <li class="perfil_name">Hola @User.Identity.GetUserName()</li>
+            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            {
+                @Html.AntiForgeryToken()
+                <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
+            }
+        </ul>
+    </div>
 }

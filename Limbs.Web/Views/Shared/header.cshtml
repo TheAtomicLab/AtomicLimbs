@@ -12,18 +12,7 @@
         </nav>
         <img src="/Content/img/menu.svg" id="menu_mobil" onclick="abrirmenu()">
     </div>
-    @if (User.Identity.Name != "")
-    {
-        <div id="menu_perfil">
-            <div id="icono_perfil" onclick="menu_mobil_activo()"></div>
-            <ul id="opciones_perfil">
-                <li class="perfil_name">Hola @User.Identity.Name</li>
-                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                {
-                    @Html.AntiForgeryToken()
-                    <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>
-                }
-            </ul>
-        </div>
-    }
+    @Html.Partial("_LoginPartial")
 </header>
+
+@* TODO (ale): lis adentro de nav? *@
