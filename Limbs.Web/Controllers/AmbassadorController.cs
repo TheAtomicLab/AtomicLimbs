@@ -24,15 +24,17 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // Lista embajadores (Admin)
+        // Lista embajadores
         // GET: Ambassador
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Index()
         {
             return View(await db.AmbassadorModels.ToListAsync());
         }
 
-        // Para editar embajadores (Admin)
+        // Para editar embajadores
         // GET: Ambassador/Details/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)

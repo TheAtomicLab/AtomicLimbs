@@ -13,17 +13,14 @@ namespace Limbs.Web.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
+            if (context.Roles.Any()) return;
 
-            if (context.Roles.Count() == 0)
-            {
-                context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Unassigned"));
-                context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Requester"));
-                context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Ambassador"));
-                context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Admin"));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Unassigned"));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Requester"));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Ambassador"));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Administrator"));
 
-                context.SaveChanges();
-            }
-
+            context.SaveChanges();
         }
     }
 }

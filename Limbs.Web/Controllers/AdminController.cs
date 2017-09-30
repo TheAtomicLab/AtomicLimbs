@@ -8,7 +8,7 @@ using System.Data.Entity;
 
 namespace Limbs.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Administrator")]
     public class AdminController : Controller
     {
 

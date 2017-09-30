@@ -197,8 +197,6 @@ namespace Limbs.Web.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-
-
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectUser();
@@ -499,22 +497,10 @@ namespace Limbs.Web.Controllers
 
         public ActionResult RedirectUser()
         {
-            if (User.IsInRole("Requester"))
-            {
-                return RedirectToAction("UserPanel", "Users");
-            }
-            else if (User.IsInRole("Ambassador"))
-            {
-                return RedirectToAction("AmbassadorPanel", "Ambassador");
-            }
-            else if(User.IsInRole("Admin"))
-            {
-                return RedirectToAction("Index", "Admin");
-            }
-            else // No se terminó de registrar (Role="Unassigned")
-            {
-                return RedirectToAction("SelectUserOrAmbassador");
-            }
+            if (User.IsInRole("Administrator")) return RedirectToAction("Index", "Admin");
+            if (User.IsInRole("Requester")) return RedirectToAction("UserPanel", "Users");
+            if (User.IsInRole("Ambassador")) return RedirectToAction("AmbassadorPanel", "Ambassador");
+            return RedirectToAction("SelectUserOrAmbassador");
         }
 
 
