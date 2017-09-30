@@ -1,34 +1,12 @@
 ﻿@using Limbs.Web.Models
 @model Limbs.Web.Models.OrderModel
-
 @{
     ViewBag.Title = "Detalles de pedido";
 }
 
 <article id="info_solicitud">
-    <h1>Solicitud:</h1>
-    <div id="accion_solicitud">
+    <h1>Pedido:</h1>
 
-        @if (Model.Status != Limbs.Web.Models.OrderStatus.PreAssigned)
-        {
-            <a href="#" class="blue_button">Descargar mano</a>
-        }
-
-        @if (Model.Status == Limbs.Web.Models.OrderStatus.PreAssigned)
-        {
-            <a href="@Url.Action("AssignOrder", "Ambassador", new { id = Model.Id, accion = "aceptar" }, null)" class="blue_button">Aceptar orden</a>
-            <a href="@Url.Action("AssignOrder", "Ambassador", new { id = Model.Id, accion = "rechazar" }, null)" class="blue_button">Rechazar orden</a>
-        }
-        else if (Model.Status == Limbs.Web.Models.OrderStatus.Pending)
-        {
-            <a href="@Url.Action("UpdateOrder", "Ambassador", new { orderid = Model.Id, status = Limbs.Web.Models.OrderStatus.Ready }, null)" class="blue_button">Ya imprimí la mano</a>
-        }
-        else if (Model.Status == Limbs.Web.Models.OrderStatus.Ready)
-        {
-            <a href="@Url.Action("UpdateOrder", "Ambassador", new { orderid = Model.Id, status = Limbs.Web.Models.OrderStatus.Delivered }, null)" class="blue_button">Ya entregué la mano</a>
-        }
-
-    </div>
     <table class="tabla_datos">
         <tr>
             <td>Estado:</td>
@@ -65,6 +43,43 @@
         <tr>
             <td>Teléfono:</td>
             <td>@Model.OrderRequestor.Phone</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">Imagen:</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <img src="@Model.IdImage" style="max-width: 30vw;" />
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">Color:</td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <img src="/Content/img/mano_@(Model.Color).jpg" style="max-width: 30vw;" />
+            </td>
+        </tr>
+        
+        @if (!string.IsNullOrWhiteSpace(Model.Comments))
+        {
+            <tr>
+                <td>Comentarios:</td>
+                <td>@Model.Comments</td>
+            </tr>
+        }
+
+        <tr>
+            <td>Medidas:</td>
+            <td>
+                <p>A: @(Model.Sizes.A)cm</p>
+                <p>B: @(Model.Sizes.B)cm</p>
+                <p>C: @(Model.Sizes.C)cm</p>
+            </td>
         </tr>
     </table>
 </article>

@@ -103,6 +103,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Ambassador/Edit/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,16 +119,10 @@ namespace Limbs.Web.Controllers
         }
 
         // POST: Ambassador/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        // public async Task<ActionResult> Edit([Bind(Include = "Id,Name,LastName,Email,Phone,Birth,Gender,Country,City,Address,Lat,Long")] AmbassadorModel ambassadorModel)
-        /*       --Leave comments for possible evolution-#idEvolution = 1#----##
-                 
-        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni,AtributoEmbajador1,AtributoEmbajador2,AtributoEmbajador3")] AmbassadorModel ambassadorModel)
-        */
-        public async Task<ActionResult> Edit([Bind(Include = "Id,AmbassadorName,Email,Birth,Gender,Address,Dni")] AmbassadorModel ambassadorModel)
+        [Authorize(Roles = "Administrator")]
+        public async Task<ActionResult> Edit(AmbassadorModel ambassadorModel)
         {
             if (ModelState.IsValid)
             {
@@ -139,6 +134,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Ambassador/Delete/5
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -156,9 +152,15 @@ namespace Limbs.Web.Controllers
         // POST: Ambassador/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrator")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
+            var ambassadorModel = await db.AmbassadorModels.FindAsync(id);
+            if (ambassadorModel == null)
+            {
+                return HttpNotFound();
+            }
+
             db.AmbassadorModels.Remove(ambassadorModel);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -212,22 +214,22 @@ namespace Limbs.Web.Controllers
         public ActionResult OrderDetails(int? id)
         {
             var userId = User.Identity.GetUserId();
-            OrderModel Order = db.OrderModels.Include(c => c.OrderRequestor).SingleOrDefault(c => c.Id == id && c.OrderAmbassador.UserId == userId);
+            var order = db.OrderModels.Include(c => c.OrderRequestor).SingleOrDefault(c => c.Id == id && c.OrderAmbassador.UserId == userId);
 
-            if (Order == null) return HttpNotFound();
+            if (order == null) return HttpNotFound();
 
-            return View(Order);
+            return View(order);
         }
 
 
         // GET: Orders/Assignation/?id=5&action=accept
         // Aceptar o rechazar como embajador, pedidos pre-asignados.
         [Authorize(Roles = "Ambassador")]
-        public ActionResult AssignOrder(int Id, string accion)
+        public ActionResult AssignOrder(int id, string accion)
         {
 
             // Consulta DB. Cambiar con repos
-            var orderInDb = db.OrderModels.Find(Id);
+            var orderInDb = db.OrderModels.Find(id);
 
             if (orderInDb == null) return HttpNotFound();
 
@@ -252,9 +254,7 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("AmbassadorPanel");
 
             }
-            else
-                return HttpNotFound();
-
+            return HttpNotFound();
         }
 
 

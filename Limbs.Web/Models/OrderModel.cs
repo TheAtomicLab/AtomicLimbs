@@ -9,6 +9,10 @@ namespace Limbs.Web.Models
 {
     public class OrderModel
     {
+        public OrderModel()
+        {
+            Sizes = new OrderSizesModel();
+        }
 
         [Key]
         public int Id { get; set; }

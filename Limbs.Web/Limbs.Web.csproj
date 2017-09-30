@@ -245,7 +245,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\geolocalization.cs" />
-    <Compile Include="Helpers\Enumerations.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
@@ -461,6 +460,7 @@
     <Content Include="Views\Orders\ManoOrden.cshtml" />
     <Content Include="Views\Shared\AdminMenu.cshtml" />
     <Content Include="Views\Admin\SelectOrderAmbassador.cshtml" />
+    <Content Include="Views\Orders\Details.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

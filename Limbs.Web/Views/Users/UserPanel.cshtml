@@ -1,4 +1,6 @@
-﻿@model Limbs.Web.ViewModels.UserPanelViewModel
+﻿@using Limbs.Web.Extensions
+@using Limbs.Web.Models
+@model Limbs.Web.ViewModels.UserPanelViewModel
 
 @{
     ViewBag.Title = "Panel usuario";
@@ -7,12 +9,15 @@
 
 <div id="cont" class="min_full">
     <article id="home">
+        
         <h1>Hola @User.Identity.Name</h1>
-        <a href="@Url.Action("ManoPedir","Orders")"><button id="home_pedir" class="blue_button">Pedir una mano</button></a>
-        <br>
-        <br>
+
+        <a class="blue_button" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
+        
         @if (Model.Message != null)
-            { <p>@Html.DisplayFor(modelOrder => Model.Message)</p> }
+        {
+            <p>@Html.DisplayFor(modelOrder => Model.Message)</p>
+        }
         @if (Model.Order != null)
         {
             <article id="tus_pedidos">
@@ -28,27 +33,25 @@
                     {
                         <tr>
                             <td>
-                                @Html.DisplayFor(modelOrder => order.Id)
+                                @Html.ActionLink(order.Id.ToString(), "Details", new { controller = "Orders", id = order.Id })
                             </td>
                             <td>
-                                @Html.DisplayFor(modelOrder => order.Date)
+                                <span title="@order.Date.ToString("f")">
+                                    @order.Date.ToFriendlyDateString()
+                                </span>
                             </td>
                             <td>
-                                @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
+                                @if (OrderStatus.Pending.Equals(order.Status)
+                                    || OrderStatus.Ready.Equals(order.Status)
+                                    || OrderStatus.Delivered.Equals(order.Status))
+                                {
+                                    @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
+                                }
                             </td>
-                            @if ( order.OrderAmbassador != null)
-                            {
-
-                                <td>
-                                    @Html.DisplayFor(modelOrder => order.Status)
-                                </td>
-                            }
-                            else
-                            {
-                                <td>
-                                    No asignada
-                                </td>
-                            }</tr>
+                            <td>
+                                @order.Status.ToDescription()
+                            </td>
+                        </tr>
                     }
                 </table>
             </article>
@@ -58,11 +61,10 @@
             <p>No tienes pedidos asignados</p>
         }
         @if (!Model.PointIsValid)
-            {
+        {
             <p>Por favor modifique su dirección ya que no es valida.</p>
         }
     </article>
 
 </div>
 <script src="/Scripts/menu.js"></script>
-

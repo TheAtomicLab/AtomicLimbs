@@ -1,5 +1,6 @@
 ﻿@using Limbs.Web.Extensions
 @using Limbs.Web.Helpers
+@using Limbs.Web.Models
 @model IEnumerable<Limbs.Web.Models.OrderModel>
 
 @{
@@ -34,7 +35,7 @@
                 <a href="@Url.Action("OrderDetails", "Admin", new {id = item.Id})">@Html.DisplayFor(modelItem => item.Id)</a>
             </td>
             <td>
-                @Enumerations.GetEnumDescription(item.Status)
+                @item.Status.ToDescription()
             </td>
             <td>
                 @item.Date.ToFriendlyDateString()

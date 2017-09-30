@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Limbs.Web.Models
 {
     public class OrderSizesModel
     {
+        public OrderSizesModel()
+        {
+            A = 0;
+            B = 0;
+            C = 0;
+            D = 0;
+        }
+
         [Key]
         public int Id { get; set; }
 

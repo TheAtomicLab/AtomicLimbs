@@ -30,6 +30,25 @@ namespace Limbs.Web.Controllers
             return RedirectToActionPermanent("Index", "Home");
         }
 
+        // GET: Orders/Details/5
+        public async Task<ActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var orderModel = await _db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == id);
+            if (orderModel == null)
+            {
+                return HttpNotFound();
+            }
+            if (!orderModel.OrderRequestor.Email.Equals(User.Identity.GetUserName()))
+            {
+                return HttpNotFound();
+            }
+            return View(orderModel);
+        }
+
         // GET: Orders/ManoPedir
         [Authorize(Roles = "Requester")]
         public ActionResult ManoPedir()
@@ -123,8 +142,8 @@ namespace Limbs.Web.Controllers
 
             orderModel.OrderRequestor = userModel;
             orderModel.Status = OrderStatus.NotAssigned;
-            orderModel.StatusLastUpdated = DateTime.Now;
-            orderModel.Date = DateTime.Now;
+            orderModel.StatusLastUpdated = DateTime.UtcNow;
+            orderModel.Date = DateTime.UtcNow;
             //Asigno ambassador (ale: primer version, la asignacion la hacemos nosotros)
             //orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
 
@@ -133,73 +152,7 @@ namespace Limbs.Web.Controllers
 
             return RedirectToAction("UserPanel", "Users");
         }
-
-        #region Match Ambassador
-        public double MatcheoWithAmbassador(UserModel user, AmbassadorModel ambassador)
-        {
-            var distance = GetDistance(user.Long, user.Lat, ambassador.Long, ambassador.Lat);
-            return distance;
-        }
-
-        public int QuantityOrders(AmbassadorModel ambassador)
-        {
-            var idAmbassador = ambassador.Id;
-            var cant = _db.OrderModels.Count(o => o.OrderAmbassador.Id == idAmbassador);
-            return cant;
-        }
-
-        public AmbassadorModel MatchWithAmbassador(UserModel user)
-        {
-            if (!_db.AmbassadorModels.Any()) return null;
-
-            AmbassadorModel ambassador = _db.AmbassadorModels.First();
-            //devolver los embajadores donde su id aparezca menos de 3 veces en las ordenes
-            // var cant = QuantityOrders(ambassador);
-            //  var ambassadors2 = db.AmbassadorModels.Where(a => 3 > QuantityOrders(a)).ToList();
-
-            //var ambassadors = db.AmbassadorModels.Where(a => 10000 > db.OrderModels.Where(o => o.OrderAmbassador.Id == a.Id).Count()).ToList();
-            //descomentar la linea de abajo y comentar la de arriba desp de testeos
-            var ambassadors = _db.AmbassadorModels.Where(a => 3 > _db.OrderModels.Count(o => o.OrderAmbassador.Id == a.Id)).ToList();
-
-            //var embajadoresConPedidosMenosDe3 = db.OrderModels.Where( o => o.OrderAmbassador).ToList();
-
-            var distance1 = MatcheoWithAmbassador(user, ambassador);
-            AmbassadorModel ambassadorSelect = null;
-            if (distance1 < 500000 && ambassadors.Contains(ambassador))
-            {
-                ambassadorSelect = ambassador;
-            }
-
-            foreach (var ambassador2 in ambassadors)
-            {
-                var distance2 = MatcheoWithAmbassador(user, ambassador2);
-
-                if (!(distance1 > distance2)) continue;
-                if (distance2 < 500000)
-                {
-                    ambassadorSelect = ambassador2;
-                }
-            }
-
-            //alerta para el usuario de que matcheo
-            return ambassadorSelect;
-            //si entro aca no hay embajadores
-        }
-
-        private static double GetDistance(double long1InDegrees, double lat1InDegrees, double long2InDegrees, double lat2InDegrees)
-        {
-            var lats = lat1InDegrees - lat2InDegrees;
-            var lngs = long1InDegrees - long2InDegrees;
-
-            //Paso a metros
-            var latm = lats * 60 * 1852;
-            var lngm = (lngs * Math.Cos(lat1InDegrees * Math.PI / 180)) * 60 * 1852;
-            var distInMeters = Math.Sqrt(Math.Pow(latm, 2) + Math.Pow(lngm, 2));
-            return distInMeters;
-        }
-
-        #endregion
-
+        
         #region AdminActions
         // GET: Orders/Edit/5
         [Authorize(Roles = "Administrator")]

@@ -23,7 +23,7 @@ namespace Limbs.Web.Models
             return userIdentity;
         }
 
-        private bool CheckIfAdmin(string email)
+        private static bool CheckIfAdmin(string email)
         {
             var admins = ConfigurationManager.AppSettings["AdminEmails"].Split(';').ToList();
 
@@ -41,11 +41,6 @@ namespace Limbs.Web.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
-        }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<UserModel> UserModelsT { get; set; }
