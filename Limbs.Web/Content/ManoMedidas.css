@@ -14,13 +14,7 @@
     width: 100%;
 }
 
-#image {
-    max-height: 100%;
-    max-width: 100%;
-    position: relative;
-}
-
-#cphoto {
+#image, #cphoto {
     max-height: 100%;
     max-width: 100%;
     position: relative;
@@ -31,4 +25,12 @@
     top: 50%;
     transform: translateY(-50%);
     /* vendor prefixes omitted due to brevity */
+}
+
+#exp_pedido_inp {
+    text-align: center;
+}
+
+#exp_pedido_inp input[type=number] {
+    margin: 5px 0;
 }

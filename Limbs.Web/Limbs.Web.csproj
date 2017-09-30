@@ -289,6 +289,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\img\Magnify.gif" />
+    <Content Include="Content\img\ManoMedidas\Paso1.gif" />
+    <Content Include="Content\img\ManoMedidas\Paso2.gif" />
+    <Content Include="Content\img\ManoMedidas\Paso3.gif" />
     <Content Include="Content\ManoMedidas.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style2.css" />
