@@ -1,7 +1,7 @@
 ﻿@if (User.IsInRole("Administrator"))
 {
     <li>||</li>
-    <li>@Html.ActionLink("Pedidos", "Orders", "Admin")</li>
-    <li>@Html.ActionLink("Usuarios", "Users", "Admin")</li>
-    <li>@Html.ActionLink("Embajadores", "Ambassadors", "Admin")</li>
+    <li>@Html.ActionLink("Pedidos", "Index", new { controller = "Orders", area = "Admin" })</li>
+    <li>@Html.ActionLink("Usuarios", "Index", new { controller = "Users", area = "Admin" })</li>
+    <li>@Html.ActionLink("Embajadores", "Index", new { controller = "Ambassadors", area = "Admin" })</li>
 }

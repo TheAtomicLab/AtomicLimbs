@@ -1,8 +1,4 @@
-﻿using System;
-using System.Configuration;
-using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -10,13 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Limbs.Web.Models;
-using System.Data.Entity;
-using System.Collections.Generic;
-using System.Net;
-using Limbs.Web.Services;
-using Microsoft.Ajax.Utilities;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
 
 
 namespace Limbs.Web.Controllers
@@ -27,7 +16,7 @@ namespace Limbs.Web.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -41,26 +30,14 @@ namespace Limbs.Web.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            private set => _signInManager = value;
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
         }
 
         //
@@ -103,28 +80,14 @@ namespace Limbs.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    // return RedirectToLocal(returnUrl);
-                    //model.Email
-                    bool existUser = db.UserModelsT.Any(u => u.Email == model.Email);
+                    var existUser = _db.UserModelsT.Any(u => u.Email == model.Email);
 
-                    if (existUser)
-                    {
-                        //Lo mando al controller del usuario con el mail, ahi a traves del mail me machea el id y me devuelve el panel
-                        //return RedirectToAction("LoginUser","Users",new { model.Email});
-                        return RedirectToAction("UserPanel", "Users");
-                    }
-                    else
-                    {
-                        //Lo mando al controller del embajador con el mail, ahi a traves del mail me machea el id y me devuelve el panel
-                        return RedirectToAction("AmbassadorPanel", "Ambassador");
-                    }
-                // UserOrAmbassador(model);
-                //return View("LoginIndex");
+                    return existUser ? RedirectToAction("UserPanel", "Users") : RedirectToAction("AmbassadorPanel", "Ambassador");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
+                //case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Usuario o contraseña incorrectos");
                     return View(model);
@@ -169,7 +132,7 @@ namespace Limbs.Web.Controllers
                     return null; //CAmbiar este return null
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.Failure:
+                //case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Invalid code.");
                     return View(model);
@@ -396,7 +359,7 @@ namespace Limbs.Web.Controllers
             {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         //
@@ -420,7 +383,7 @@ namespace Limbs.Web.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
+                //case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
@@ -497,7 +460,7 @@ namespace Limbs.Web.Controllers
 
         public ActionResult RedirectUser()
         {
-            if (User.IsInRole("Administrator")) return RedirectToAction("Index", "Admin");
+            if (User.IsInRole("Administrator")) return RedirectToAction("Index", "Panel", new { area = "Admin" });
             if (User.IsInRole("Requester")) return RedirectToAction("UserPanel", "Users");
             if (User.IsInRole("Ambassador")) return RedirectToAction("AmbassadorPanel", "Ambassador");
             return RedirectToAction("SelectUserOrAmbassador");
@@ -528,13 +491,7 @@ namespace Limbs.Web.Controllers
         // Used for XSRF protection when adding external logins
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
         private void AddErrors(IdentityResult result)
         {

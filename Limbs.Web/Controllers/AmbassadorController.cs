@@ -1,20 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using System.Web.Mvc;
 using Limbs.Web.Models;
-using Limbs.Web.Services;
-using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
-using Newtonsoft.Json;
-using System.Web.Script.Serialization;
-using System.Web.Http;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Web.Security;
+using Limbs.Web.Helpers;
 
 
 namespace Limbs.Web.Controllers
@@ -24,149 +18,42 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // Lista embajadores
-        // GET: Ambassador
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Index()
-        {
-            return View(await db.AmbassadorModels.ToListAsync());
-        }
-
-        // Para editar embajadores
-        // GET: Ambassador/Details/5
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ambassadorModel);
-        }
-
-
         // GET: Ambassador/Create
         [Authorize(Roles = "Unassigned")]
         public ActionResult Create()
         {
-            return View("Create");
-        }
-
-
-        private static IEnumerable<SelectListItem> GetCountryList()
-        {
-            return CultureInfo.GetCultures(CultureTypes.SpecificCultures)
-                .Select(x => new SelectListItem
-                {
-                    Text = new RegionInfo(x.LCID).DisplayName,
-                    Value = new RegionInfo(x.LCID).DisplayName,
-                }).OrderBy(x => x.Value).DistinctBy(x => x.Value);
+            return View();
         }
 
         // POST: Ambassador/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [Authorize(Roles = "Unassigned")]
         public async Task<ActionResult> Create(AmbassadorModel ambassadorModel)
         {
+            if (!ModelState.IsValid) return View("Create", ambassadorModel);
+
+            var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
+
+            //TODO (ale): refactor
+            var point = Geolocalization.GetPointGoogle(pointAddress).Split(',');
+            var lat = Convert.ToDouble(point[0].Replace('.', ','));
+            var lng = Convert.ToDouble(point[1].Replace('.', ','));
+
+            ambassadorModel.Lat = lat;
+            ambassadorModel.Long = lng;
+            
             ambassadorModel.Email = User.Identity.GetUserName();
             ambassadorModel.UserId = User.Identity.GetUserId();
 
-            //ambassadorModel.OrderModelId = 0;
-            if (ModelState.IsValid)
-            {
-                var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, "Unassigned");
+            await userManager.AddToRoleAsync(ambassadorModel.UserId, "Ambassador");
 
-                var point = Helpers.Geolocalization.GetPointGoogle(pointAddress).Split(',');
-                var lat = Convert.ToDouble(point[0].Replace('.', ','));
-                var lng = Convert.ToDouble(point[1].Replace('.', ','));
-
-                ambassadorModel.Lat = lat;
-                ambassadorModel.Long = lng;
-
-                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
-                await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, "Unassigned");
-                await userManager.AddToRoleAsync(ambassadorModel.UserId, "Ambassador");
-
-                db.AmbassadorModels.Add(ambassadorModel);
-                await db.SaveChangesAsync();
-                return RedirectToAction("AmbassadorPanel", "Ambassador");
-            }
-
-            return View("Create", ambassadorModel);
-        }
-
-        // GET: Ambassador/Edit/5
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ambassadorModel);
-        }
-
-        // POST: Ambassador/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Edit(AmbassadorModel ambassadorModel)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(ambassadorModel).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(ambassadorModel);
-        }
-
-        // GET: Ambassador/Delete/5
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AmbassadorModel ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ambassadorModel);
-        }
-
-        // POST: Ambassador/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            var ambassadorModel = await db.AmbassadorModels.FindAsync(id);
-            if (ambassadorModel == null)
-            {
-                return HttpNotFound();
-            }
-
-            db.AmbassadorModels.Remove(ambassadorModel);
+            db.AmbassadorModels.Add(ambassadorModel);
             await db.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("AmbassadorPanel", "Ambassador");
         }
-
-
+        
         // GET: /AmbassadorPanel/
         [Authorize(Roles = "Ambassador")]
         public ActionResult AmbassadorPanel()
@@ -178,8 +65,8 @@ namespace Limbs.Web.Controllers
             // Consulta DB. Cambiar con repos
             IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
 
-            var DeliveredOrdersCount = orderList.Where(c => c.Status == OrderStatus.Delivered).Count();
-            var PendingOrdersCount = orderList.Where(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready).Count();
+            var deliveredOrdersCount = orderList.Count(c => c.Status == OrderStatus.Delivered);
+            var pendingOrdersCount = orderList.Count(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready);
 
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
             var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready).ToList();
@@ -188,19 +75,19 @@ namespace Limbs.Web.Controllers
             var lat = ambassador.Lat;    
             var lng = ambassador.Long;
 
-            var pointIsValid = Helpers.Geolocalization.PointIsValid(lat,lng);
+            var pointIsValid = Geolocalization.PointIsValid(lat,lng);
 
-            var viewModel = new ViewModels.AmbassadorPanelViewModel()
+            var viewModel = new ViewModels.AmbassadorPanelViewModel
             {
                 PendingToAssignOrders = pendingAssignationOrders,
                 PendingOrders = pendingOrders,
                 DeliveredOrders = deliveredOrders,
                 PointIsValid = pointIsValid,
 
-                Stats = new ViewModels.OrderStats()
+                Stats = new ViewModels.OrderStats
                 {
-                    HandledOrders = DeliveredOrdersCount,
-                    PendingOrders = PendingOrdersCount
+                    HandledOrders = deliveredOrdersCount,
+                    PendingOrders = pendingOrdersCount
                 }
             };
 
@@ -266,25 +153,25 @@ namespace Limbs.Web.Controllers
         {
             // "Order" solo tiene la ID consigo.
             // Consulta DB. Cambiar con repos
-            var orderInDB = db.OrderModels.Find(orderid);
+            var orderInDb = db.OrderModels.Find(orderid);
 
-            if (orderInDB == null) return HttpNotFound();
+            if (orderInDb == null) return HttpNotFound();
 
-            if (orderInDB.OrderAmbassador.UserId != User.Identity.GetUserId() || orderInDB.Status == OrderStatus.NotAssigned)
+            if (orderInDb.OrderAmbassador.UserId != User.Identity.GetUserId() || orderInDb.Status == OrderStatus.NotAssigned)
                 return HttpNotFound();
 
 
-            if (status == OrderStatus.Ready && orderInDB.Status == OrderStatus.Pending)
+            if (status == OrderStatus.Ready && orderInDb.Status == OrderStatus.Pending)
             {
-                orderInDB.Status = status;
+                orderInDb.Status = status;
                 // Consulta DB. Cambiar con repos
                 db.SaveChanges();
 
             }
-            else if (status == OrderStatus.Delivered && orderInDB.Status == OrderStatus.Ready)
+            else if (status == OrderStatus.Delivered && orderInDb.Status == OrderStatus.Ready)
             {
-                orderInDB.Status = status;
-                orderInDB.StatusLastUpdated = DateTime.Now;
+                orderInDb.Status = status;
+                orderInDb.StatusLastUpdated = DateTime.Now;
                 // Consulta DB. Cambiar con repos
                 db.SaveChanges();
             }

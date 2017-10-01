@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Limbs.Web.Models
@@ -11,6 +9,11 @@ namespace Limbs.Web.Models
 
     public class UserModel
     {
+        public UserModel()
+        {
+            OrderModel = new List<OrderModel>();
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -97,10 +100,6 @@ namespace Limbs.Web.Models
             yield return new SelectListItem { Text = "Femenino", Value = "Mujer" };
             yield return new SelectListItem { Text = "No Declara", Value = "Otro" };
         }
-
-        //   public virtual ICollection<int> OrderModelId { get; set; }
-
-        //public int OrderModelId { get; set; }
     }
 
     public enum ProthesisType

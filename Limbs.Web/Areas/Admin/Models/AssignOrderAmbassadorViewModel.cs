@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Limbs.Web.Models;
 
-namespace Limbs.Web.ViewModels
+namespace Limbs.Web.Areas.Admin.Models
 {
     public class AssignOrderAmbassadorViewModel
     {

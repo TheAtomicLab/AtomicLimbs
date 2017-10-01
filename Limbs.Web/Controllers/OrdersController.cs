@@ -42,7 +42,7 @@ namespace Limbs.Web.Controllers
             {
                 return HttpNotFound();
             }
-            if (!orderModel.OrderRequestor.Email.Equals(User.Identity.GetUserName()))
+            if (!orderModel.OrderRequestor.Email.Equals(User.Identity.GetUserName()) && !User.IsInRole("Administrator"))
             {
                 return HttpNotFound();
             }
@@ -153,86 +153,6 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("UserPanel", "Users");
         }
         
-        #region AdminActions
-        // GET: Orders/Edit/5
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            // Consulta DB. Cambiar con repos
-            var orderModel = _db.OrderModels.Find(id.Value);
-
-            if (orderModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(orderModel);
-        }
-
-        // POST: Orders/Edit/5
-        [HttpPost]
-        [Authorize(Roles = "Administrator")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Comments,Status")] OrderModel orderModel)
-        {
-            if (ModelState.IsValid)
-            {
-
-                //    _context.Entry(orderModel).State = EntityState.Modified;
-                //    await _context.SaveChangesAsync();
-                await _db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            return View(orderModel);
-        }
-
-        // GET: Orders/Delete/5
-        [Authorize(Roles = "Administrator")]
-        public ActionResult Delete(int? id)
-        {
-            OrderModel orderModel;
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            else
-            {
-                var orderId = id.Value;
-
-                // Consulta DB. Cambiar con repos
-                orderModel = _db.OrderModels.Find(orderId);
-
-            }
-            if (orderModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(orderModel);
-        }
-
-        // POST: Orders/Delete/5
-        [Authorize(Roles = "Administrator")]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            //  OrderModel orderModel = OrdersRepository.Get(id);
-            var ordelModel = await _db.OrderModels.FindAsync(id);
-            if (ordelModel != null)
-            {
-                _db.OrderModels.Remove(ordelModel);
-                //OrdersRepository.Remove(orderModel);
-                //    await _context.SaveChangesAsync();
-                await _db.SaveChangesAsync();
-            }
-            return RedirectToAction("Index");
-        }
-        #endregion
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

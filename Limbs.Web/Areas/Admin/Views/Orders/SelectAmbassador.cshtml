@@ -1,4 +1,4 @@
-﻿@model Limbs.Web.ViewModels.AssignOrderAmbassadorViewModel
+﻿@model Limbs.Web.Areas.Admin.Models.AssignOrderAmbassadorViewModel
 
 <h2>Asignar embajador al pedido @Model.Order.Id</h2>
 
@@ -17,7 +17,7 @@
                 @* TODO (ale): distancia de la orden *@
             </td>
             <td>
-                @Html.ActionLink("Asignar", "AssignOrderAmbassador", new { idOrder = Model.Order.Id, id = item.Id })
+                @Html.ActionLink("Asignar", "AssignAmbassador", new { idOrder = Model.Order.Id, id = item.Id })
             </td>
         </tr>
     }

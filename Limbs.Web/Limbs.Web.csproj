@@ -230,10 +230,15 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="ViewModels\AssignOrderAmbassadorViewModel.cs" />
+    <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\AssignOrderAmbassadorViewModel.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -341,6 +346,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\Admin\Views\web.config" />
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Panel\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Ambassadors\Index.cshtml" />
     <None Include="Properties\PublishProfiles\limbstest - Web Deploy.pubxml" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -385,17 +396,6 @@
     <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Ambassador\OrderDetails.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Admin\Orders.cshtml" />
-    <Content Include="Views\Admin\OrderDetails.cshtml" />
-    <Content Include="Views\Admin\EditOrder.cshtml" />
-    <Content Include="Views\Admin\Users.cshtml" />
-    <Content Include="Views\Admin\UserDetails.cshtml" />
-    <Content Include="Views\Admin\EditUser.cshtml" />
-    <Content Include="Views\Admin\Ambassadors.cshtml" />
-    <Content Include="Views\Admin\AmbassadorDetails.cshtml" />
-    <Content Include="Views\Admin\EditAmbassador.cshtml" />
-    <Content Include="Views\Orders\Index.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -434,9 +434,9 @@
     <Content Include="Views\Colors\Details.cshtml" />
     <Content Include="Views\Colors\Edit.cshtml" />
     <Content Include="Views\Colors\Index.cshtml" />
-    <Content Include="Views\Users\Delete.cshtml" />
-    <Content Include="Views\Users\Details.cshtml" />
-    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Compile Include="Services\ApiAleBanzas.cs" />
     <Content Include="Views\Products\Create.cshtml" />
@@ -444,12 +444,12 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
-    <Content Include="Views\Orders\Delete.cshtml" />
-    <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\Edit.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
-    <Content Include="Views\Ambassador\Delete.cshtml" />
-    <Content Include="Views\Ambassador\Details.cshtml" />
-    <Content Include="Views\Ambassador\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Ambassadors\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
     <Content Include="Views\Ambassador\Create.cshtml" />
     <Content Include="Views\Users\UserPanel.cshtml" />
@@ -459,7 +459,7 @@
     <Content Include="Views\Orders\ManoPedir.cshtml" />
     <Content Include="Views\Orders\ManoOrden.cshtml" />
     <Content Include="Views\Shared\AdminMenu.cshtml" />
-    <Content Include="Views\Admin\SelectOrderAmbassador.cshtml" />
+    <Content Include="Areas\Admin\Views\Orders\SelectAmbassador.cshtml" />
     <Content Include="Views\Orders\Details.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -467,6 +467,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Admin\Views\AdminBase\" />
+    <Folder Include="Areas\Admin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

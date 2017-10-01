@@ -1,14 +1,12 @@
 ﻿@using Limbs.Web.Extensions
-@using Limbs.Web.Helpers
 @using Limbs.Web.Models
-@model IEnumerable<Limbs.Web.Models.OrderModel>
+@model IEnumerable<OrderModel>
 
 @{
-    ViewBag.Title = "Orders";
+    ViewBag.Title = "Pedidos";
 }
 
 <h2>Pedidos</h2>
-
 
 <table>
     <tr>
@@ -32,7 +30,9 @@
     {
         <tr>
             <td>
-                <a href="@Url.Action("OrderDetails", "Admin", new {id = item.Id})">@Html.DisplayFor(modelItem => item.Id)</a>
+                <a href="@Url.Action("Details", new {id = item.Id})">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </a>
             </td>
             <td>
                 @item.Status.ToDescription()
@@ -47,11 +47,11 @@
                 @if (item.OrderAmbassador != null)
                 {
                     @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
-                    <span>(@Html.ActionLink("re-asignar", "SelectOrderAmbassador", new { idOrder = item.Id }))</span>
+                    <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
                 }
                 else
                 {
-                    <span>No asignado (@Html.ActionLink("asignar", "SelectOrderAmbassador", new { idOrder = item.Id }))</span>
+                    <span>No asignado (@Html.ActionLink("asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
                 }
 
             </td>

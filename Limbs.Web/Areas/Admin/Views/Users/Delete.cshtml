@@ -1,29 +1,30 @@
 ﻿@model Limbs.Web.Models.UserModel
 
 @{
-    ViewBag.Title = "UserDetails";
+    ViewBag.Title = "Delete";
 }
 
-<h2>UserDetails</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>UserModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
         <dt>
             @Html.DisplayNameFor(model => model.ResponsableName)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.ResponsableName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
         </dd>
 
         <dt>
@@ -51,35 +52,35 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        @*
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+        *@
+        <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dni)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dni)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.AmputationType)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AmputationType)
         </dd>
 
         <dt>
@@ -99,8 +100,13 @@
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Edit", "EditUser", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Users")
-</p>
