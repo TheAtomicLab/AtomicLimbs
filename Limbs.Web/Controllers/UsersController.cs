@@ -22,7 +22,7 @@ namespace Limbs.Web.Controllers
         // GET: Users
         public async Task<ActionResult> Index()
         {
-            return View(await _db.UserModelsT.ToListAsync());
+            return null;
         }
         
         // GET: Users/Create

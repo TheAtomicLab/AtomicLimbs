@@ -437,7 +437,6 @@
     <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
     <Compile Include="Services\ApiAleBanzas.cs" />
     <Content Include="Views\Products\Create.cshtml" />
     <Content Include="Views\Products\Delete.cshtml" />
