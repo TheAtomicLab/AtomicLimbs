@@ -98,6 +98,11 @@ namespace Limbs.Web.Models
             yield return new SelectListItem { Text = "Femenino", Value = "Mujer" };
             yield return new SelectListItem { Text = "No Declara", Value = "Otro" };
         }
+
+        public string FullName()
+        {
+            return $"{UserName} {UserLastName}";
+        }
     }
 
     public enum ProthesisType

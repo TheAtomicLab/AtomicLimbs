@@ -1,0 +1,73 @@
+﻿@using Limbs.Web.Extensions
+@model Limbs.Web.Areas.Admin.Models.DelayedOrdersViewModel
+
+@{
+    ViewBag.Title = "DelayedOrders";
+}
+
+<h2>DelayedOrders</h2>
+
+<h4>Los pedidos que están asignados y que pasaron más de x días sin imprimir</h4>
+
+<div>
+    @using (Html.BeginForm("DelayedOrders", "Report", FormMethod.Get))
+    { 
+        @Html.DisplayNameFor(x => x.DaysBefore)
+        @Html.EditorFor(x => x.DaysBefore)
+        <input type="submit" value="VER"/>
+    }
+</div>
+
+<table>
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Fecha ingreso
+        </th>
+        <th>
+            Fecha último estado
+        </th>
+        <th>
+            Solicitante
+        </th>
+        <th>
+            Embajador
+        </th>
+    </tr>
+    @if (!Model.List.Any())
+    {
+        <tr>
+            <td colspan="4">
+                No hay resultados.
+            </td>
+        </tr>
+    }
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                <a href="@Url.Action("Details", "Orders", new { area = "Admin", id = item.Id })">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </a>
+            </td>
+            <td>
+                @item.Date.ToFriendlyDateString()
+            </td>
+            <td>
+                @item.StatusLastUpdated.ToFriendlyDateString()
+            </td>
+            <td>
+                @item.OrderRequestor.FullName()
+                (@Html.DisplayFor(modelItem => item.OrderRequestor.Email))
+            </td>
+            <td>
+                @item.OrderAmbassador.FullName()
+                (@Html.DisplayFor(modelItem => item.OrderAmbassador.Email))
+                <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { area = "Admin", controller = "Orders", idOrder = item.Id }))</span>
+            </td>
+        </tr>
+    }
+
+</table>
