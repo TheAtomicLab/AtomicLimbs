@@ -7,24 +7,26 @@ using Google.Apis.Services;
 using System.Threading;
 using Google.Apis.Util.Store;
 using System.Collections.Generic;
+using Limbs.Web.Storage.Azure;
+using Limbs.Web.Storage.Azure.BlobStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Limbs.Web.Services
 {
     public class UserFilesInAzureStorage : IUserFiles
     {
-        private readonly CloudBlobContainer UserFilesContainer;
+        private readonly CloudBlobContainer _userFilesContainer;
 
         public UserFilesInAzureStorage()
         {
             var storageAccount = AzureStorageAccount.DefaultAccount;
             var blobClient = storageAccount.CreateCloudBlobClient();
-            UserFilesContainer = blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString());
+            _userFilesContainer = blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString());
         }
 
         public Uri UploadOrderFile(Stream file, string name)
         {
-            var blockBlob = UserFilesContainer.GetBlockBlobReference(name);
+            var blockBlob = _userFilesContainer.GetBlockBlobReference(name);
 
             blockBlob.UploadFromStream(file);
             

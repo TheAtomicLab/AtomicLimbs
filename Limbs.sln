@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web", "Limbs.Web\Limbs.Web.csproj", "{5422F395-2043-402A-8D77-5053C0C14781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web.Storage.Azure", "Limbs.Web.Storage.Azure\Limbs.Web.Storage.Azure.csproj", "{F0C7E1E2-F99C-4398-811C-9CD2284B1DE4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{5422F395-2043-402A-8D77-5053C0C14781}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5422F395-2043-402A-8D77-5053C0C14781}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5422F395-2043-402A-8D77-5053C0C14781}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0C7E1E2-F99C-4398-811C-9CD2284B1DE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0C7E1E2-F99C-4398-811C-9CD2284B1DE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0C7E1E2-F99C-4398-811C-9CD2284B1DE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0C7E1E2-F99C-4398-811C-9CD2284B1DE4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {401178DB-921A-4091-A147-671B3AF04EC6}
 	EndGlobalSection
 EndGlobal
