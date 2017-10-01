@@ -27,10 +27,7 @@
             @Html.DisplayNameFor(model => model.Dni)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Long)
+            @Html.DisplayNameFor(model => model.Location)
         </th>
         <th></th>
     </tr>
@@ -56,10 +53,7 @@
                 @Html.DisplayFor(modelItem => item.Dni)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Lat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Long)
+                @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id, area = "Admin" }) |

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Spatial;
 using System.Web.Mvc;
 
 namespace Limbs.Web.Models
@@ -86,11 +87,8 @@ namespace Limbs.Web.Models
         [Display(Name = "Amputación", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public AmputationType AmputationType { get; set; }
-        
 
-        public double Lat { get; set; }
-
-        public double Long { get; set; }
+        public DbGeography Location { get; set; }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
 

@@ -1,9 +1,5 @@
-﻿using Limbs.Web.Services;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System;
+using System.Data.Entity.Spatial;
 using System.Web.Script.Serialization;
 
 namespace Limbs.Web.Helpers
@@ -33,17 +29,9 @@ namespace Limbs.Web.Helpers
             }
         }
 
-        public static bool PointIsValid(double Lat,double Long)
+        public static bool PointIsValid(double? lat, double? Long)
         {
-            if(Lat == 0 && Long == 0)
-            {
-                //is not valid. Because the lat and long is saved with "0,0" in the register.
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return lat != 0 && Long != 0;
         }
 
        /*
@@ -57,5 +45,9 @@ namespace Limbs.Web.Helpers
             return Json(r, JsonRequestBehavior.AllowGet);
         }
         */
+        public static DbGeography GeneratePoint(double lat, double lng)
+        {
+            return DbGeography.FromText("POINT(" + lat +" " + lng +")");
+        }
     }
 }

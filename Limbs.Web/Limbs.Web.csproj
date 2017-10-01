@@ -249,7 +249,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\geolocalization.cs" />
+    <Compile Include="Helpers\Geolocalization.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
@@ -257,6 +257,10 @@
     <Compile Include="Migrations\201709232326462_OrderColor.cs" />
     <Compile Include="Migrations\201709232326462_OrderColor.Designer.cs">
       <DependentUpon>201709232326462_OrderColor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710011643321_LocationIsDbGeography.cs" />
+    <Compile Include="Migrations\201710011643321_LocationIsDbGeography.Designer.cs">
+      <DependentUpon>201710011643321_LocationIsDbGeography.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -352,6 +356,7 @@
     <Content Include="Areas\Admin\Views\Users\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Index.cshtml" />
     <None Include="Properties\PublishProfiles\limbstest - Web Deploy.pubxml" />
+    <Content Include="Migrations\README.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\pages\munonizer.js" />
@@ -477,6 +482,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201709232326462_OrderColor.resx">
       <DependentUpon>201709232326462_OrderColor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710011643321_LocationIsDbGeography.resx">
+      <DependentUpon>201710011643321_LocationIsDbGeography.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

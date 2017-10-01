@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
@@ -45,8 +44,7 @@ namespace Limbs.Web.Controllers
             var lat = Convert.ToDouble(point[0].Replace('.',','));
             var lng = Convert.ToDouble(point[1].Replace('.', ','));
 
-            userModel.Lat = lat;
-            userModel.Long = lng;
+            userModel.Location = Geolocalization.GeneratePoint(lat, lng);
 
             userModel.Email = User.Identity.GetUserName();
             userModel.UserId = User.Identity.GetUserId();
@@ -69,8 +67,8 @@ namespace Limbs.Web.Controllers
 
             var orderList = _db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
 
-            var lat = user.Lat;
-            var lng = user.Long;
+            var lat = user.Location.Latitude;
+            var lng = user.Location.Longitude;
             //TODO (ale): porque se valida esto aca?
             var pointIsValid = Geolocalization.PointIsValid(lat, lng);
 

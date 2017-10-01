@@ -39,8 +39,7 @@ namespace Limbs.Web.Controllers
             var lat = Convert.ToDouble(point[0].Replace('.', ','));
             var lng = Convert.ToDouble(point[1].Replace('.', ','));
 
-            ambassadorModel.Lat = lat;
-            ambassadorModel.Long = lng;
+            ambassadorModel.Location = Geolocalization.GeneratePoint(lat, lng);
             
             ambassadorModel.Email = User.Identity.GetUserName();
             ambassadorModel.UserId = User.Identity.GetUserId();
@@ -72,8 +71,8 @@ namespace Limbs.Web.Controllers
             var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready).ToList();
             var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
             
-            var lat = ambassador.Lat;    
-            var lng = ambassador.Long;
+            var lat = ambassador.Location.Latitude;    
+            var lng = ambassador.Location.Longitude;
 
             var pointIsValid = Geolocalization.PointIsValid(lat,lng);
 
