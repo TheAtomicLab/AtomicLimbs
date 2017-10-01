@@ -5,8 +5,6 @@ using Owin;
 using Limbs.Web.Services;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Storage.Azure;
-using Limbs.Web.Storage.Azure.BlobStorage;
-using Microsoft.WindowsAzure.Storage.Blob;
 
 [assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
 namespace Limbs.Web
@@ -17,7 +15,8 @@ namespace Limbs.Web
         {
             ConfigureAuth(app);
             ConfigureServices();
-            ConfigureStorage();
+
+            FullStorageInitializer.Initialize();
         }
 
         public void ConfigureServices()
@@ -33,17 +32,5 @@ namespace Limbs.Web
             container.RegisterControllers();
             container.EnableMvc();
         }
-
-
-        public void ConfigureStorage()
-        {
-            var storageAccount = AzureStorageAccount.DefaultAccount;
-            var blobClient = storageAccount.CreateCloudBlobClient();
-
-            //Container creation
-            blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString()).CreateIfNotExists(BlobContainerPublicAccessType.Blob);
-        }
     }
-
-
 }

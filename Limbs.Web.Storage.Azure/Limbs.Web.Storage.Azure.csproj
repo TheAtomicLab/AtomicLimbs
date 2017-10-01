@@ -64,8 +64,13 @@
   <ItemGroup>
     <Compile Include="AzureStorage.cs" />
     <Compile Include="BlobStorage\AzureStorageContainer.cs" />
+    <Compile Include="BlobStorage\DocumentStorageInitializer.cs" />
+    <Compile Include="FullStorageInitializer.cs" />
+    <Compile Include="IStorageInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueStorage\QueueStorageInitializer.cs" />
     <Compile Include="QueueStorage\MessageQueue.cs" />
+    <Compile Include="QueueStorage\Messages\MailMessage.cs" />
     <Compile Include="QueueStorage\QueueMessage.cs" />
   </ItemGroup>
   <ItemGroup />

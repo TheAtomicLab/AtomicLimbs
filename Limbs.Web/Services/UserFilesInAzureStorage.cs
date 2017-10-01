@@ -21,7 +21,7 @@ namespace Limbs.Web.Services
         {
             var storageAccount = AzureStorageAccount.DefaultAccount;
             var blobClient = storageAccount.CreateCloudBlobClient();
-            _userFilesContainer = blobClient.GetContainerReference(AzureStorageContainer.UserFiles.ToString());
+            _userFilesContainer = blobClient.GetContainerReference(AzureStorageContainer.UserFiles);
         }
 
         public Uri UploadOrderFile(Stream file, string name)
