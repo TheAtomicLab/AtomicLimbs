@@ -1,4 +1,5 @@
-﻿@model Limbs.Web.Areas.Admin.Models.AssignOrderAmbassadorViewModel
+﻿@using Limbs.Web.Extensions
+@model Limbs.Web.Areas.Admin.Models.AssignOrderAmbassadorViewModel
 
 <h2>Asignar embajador al pedido @Model.Order.Id</h2>
 
@@ -7,17 +8,16 @@
     @foreach (var item in Model.AmbassadorList) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AmbassadorName)
+                @Html.DisplayFor(modelItem => item.Item1.AmbassadorName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.DisplayFor(modelItem => item.Item1.Email)
             </td>
             <td>
-                a x m del solicitante
-                @* TODO (ale): distancia de la orden *@
+                a @(item.Item2.ToFriendlyDistanceString()) m del solicitante
             </td>
             <td>
-                @Html.ActionLink("Asignar", "AssignAmbassador", new { idOrder = Model.Order.Id, id = item.Id })
+                @Html.ActionLink("Asignar", "AssignAmbassador", new { idOrder = Model.Order.Id, id = item.Item1.Id })
             </td>
         </tr>
     }

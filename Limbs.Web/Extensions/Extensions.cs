@@ -2,7 +2,7 @@
 
 namespace Limbs.Web.Extensions
 {
-    public static class DateExtensions
+    public static class Extensions
     {
         public static string ToFriendlyDateString(this DateTime date)
         {
@@ -45,7 +45,7 @@ namespace Limbs.Web.Extensions
                 // Less than one hour ago.
                 if (secDiff < 3600)
                 {
-                    return $"hace {Math.Floor((double) secDiff / 60)} minutos";
+                    return $"hace {Math.Floor((double)secDiff / 60)} minutos";
                 }
                 // D.
                 // Less than 2 hours ago.
@@ -57,7 +57,7 @@ namespace Limbs.Web.Extensions
                 // Less than one day ago.
                 if (secDiff < 86400)
                 {
-                    return $"hace {Math.Floor((double) secDiff / 3600)} horas";
+                    return $"hace {Math.Floor((double)secDiff / 3600)} horas";
                 }
             }
             else if (dayDiff == 1)
@@ -70,7 +70,15 @@ namespace Limbs.Web.Extensions
             {
                 return $"hace {dayDiff} dias";
             }
-            return dayDiff < 31 ? $"hace {Math.Ceiling((double) dayDiff / 7)} semanas" : null;
+            return dayDiff < 31 ? $"hace {Math.Ceiling((double)dayDiff / 7)} semanas" : null;
         }
+
+        public static string ToFriendlyDistanceString(this double distance)
+        {
+            //distance in meters
+            return distance > 1000 ? $"{(distance / 1000):F}km" : $"{distance:F}m";
+        }
+
+
     }
 }

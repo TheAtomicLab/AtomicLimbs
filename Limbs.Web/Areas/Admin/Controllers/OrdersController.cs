@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -16,7 +15,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         public ActionResult Index()
         {
             //TODO (ale): implementar paginacion, export to excel, ordenamiento
-            var orderList = Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderBy(x => x.Date).ToList();
+            var orderList = Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToList();
             return View(orderList);
         }
 
@@ -96,13 +95,19 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Orders/SelectAmbassador/5
         public ActionResult SelectAmbassador(int idOrder)
         {
-            var order = Db.OrderModels.Find(idOrder);
+            var order = Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefault(x => x.Id == idOrder);
 
             if (order == null)
                 return HttpNotFound();
 
-            //TODO (ale): ordenar por distancia de la orden
-            IEnumerable<AmbassadorModel> ambassadorList = Db.AmbassadorModels.ToList();
+            var orderRequestorLocation = order.OrderRequestor.Location;
+            var ambassadorList = Db.AmbassadorModels
+                .OrderBy(x => x.Location.Distance(orderRequestorLocation))
+                .ToList()
+                .Select(ambassadorModel => new Tuple<AmbassadorModel, double>(
+                    ambassadorModel, 
+                    ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
+                    .ToList();
 
             return View(new AssignOrderAmbassadorViewModel
             {

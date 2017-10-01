@@ -38,14 +38,9 @@ namespace Limbs.Web.Controllers
         {
             if (!ModelState.IsValid) return View("Create", userModel);
             
-            //TODO (ale): refactor llamada al servicio
             var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
-            var point = Geolocalization.GetPointGoogle(pointAddress).Split(',');
-            var lat = Convert.ToDouble(point[0].Replace('.',','));
-            var lng = Convert.ToDouble(point[1].Replace('.', ','));
 
-            userModel.Location = Geolocalization.GeneratePoint(lat, lng);
-
+            userModel.Location = Geolocalization.GetPoint(pointAddress);
             userModel.Email = User.Identity.GetUserName();
             userModel.UserId = User.Identity.GetUserId();
 
@@ -63,19 +58,11 @@ namespace Limbs.Web.Controllers
         public ActionResult UserPanel(string message)
         {
             var userId = User.Identity.GetUserId();
-            var user = _db.UserModelsT.Single(c => c.UserId == userId);
-
             var orderList = _db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
-
-            var lat = user.Location.Latitude;
-            var lng = user.Location.Longitude;
-            //TODO (ale): porque se valida esto aca?
-            var pointIsValid = Geolocalization.PointIsValid(lat, lng);
-
+            
             var viewModel = new UserPanelViewModel
             {
                 Order = orderList.ToList(),
-                PointIsValid = pointIsValid,
                 Message = message
 
             };

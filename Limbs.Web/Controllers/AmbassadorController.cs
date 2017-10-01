@@ -33,14 +33,8 @@ namespace Limbs.Web.Controllers
             if (!ModelState.IsValid) return View("Create", ambassadorModel);
 
             var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
-
-            //TODO (ale): refactor
-            var point = Geolocalization.GetPointGoogle(pointAddress).Split(',');
-            var lat = Convert.ToDouble(point[0].Replace('.', ','));
-            var lng = Convert.ToDouble(point[1].Replace('.', ','));
-
-            ambassadorModel.Location = Geolocalization.GeneratePoint(lat, lng);
             
+            ambassadorModel.Location = Geolocalization.GetPoint(pointAddress);
             ambassadorModel.Email = User.Identity.GetUserName();
             ambassadorModel.UserId = User.Identity.GetUserId();
 

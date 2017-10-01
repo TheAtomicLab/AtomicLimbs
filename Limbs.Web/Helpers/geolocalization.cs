@@ -1,32 +1,25 @@
 ﻿using System;
 using System.Data.Entity.Spatial;
+using System.Net;
 using System.Web.Script.Serialization;
 
 namespace Limbs.Web.Helpers
 {
     public class Geolocalization
     {
-        public static string GetPointGoogle(String PointAddress)
+        public static DbGeography GetPoint(string pointAddress)
         {
-            var pointAddress = String.Format("http://maps.google.com/maps/api/geocode/json?address={0}&sensor=false", PointAddress.Replace(" ", "+"));
-            var result = new System.Net.WebClient().DownloadString(pointAddress);
-            JavaScriptSerializer jss = new JavaScriptSerializer();
-            var dict = jss.Deserialize<dynamic>(result);
+            var url = $"http://maps.google.com/maps/api/geocode/json?address={pointAddress.Replace(" ", "+")}&sensor=false";
+            var result = new WebClient().DownloadString(url);
+            var dict = new JavaScriptSerializer().Deserialize<dynamic>(result);
             var dictStatus = dict["status"];
-            if (dictStatus == "OK")
-            { 
 
-            var lat = dict["results"][0]["geometry"]["location"]["lat"];
-            var lng = dict["results"][0]["geometry"]["location"]["lng"];
+            if (dictStatus != "OK") return GeneratePoint(0,0);
 
-            var latlng = Convert.ToString(lat).Replace(',', '.') + ',' + Convert.ToString(lng).Replace(',', '.');
-            return latlng;
-            }
-            else
-            {
-                //Ver como hacerlo de forma linda aca
-                return "0,0";
-            }
+            var lat = double.Parse(dict["results"][0]["geometry"]["location"]["lat"].ToString());
+            var lng = double.Parse(dict["results"][0]["geometry"]["location"]["lng"].ToString());
+
+            return GeneratePoint(lat, lng);
         }
 
         public static bool PointIsValid(double? lat, double? Long)
@@ -47,7 +40,7 @@ namespace Limbs.Web.Helpers
         */
         public static DbGeography GeneratePoint(double lat, double lng)
         {
-            return DbGeography.FromText("POINT(" + lat +" " + lng +")");
+            return DbGeography.FromText("POINT(" + lng +" " + lat +")");
         }
     }
 }
