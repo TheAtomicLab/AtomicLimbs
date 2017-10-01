@@ -264,6 +264,10 @@
     <Compile Include="Migrations\201710011643321_LocationIsDbGeography.Designer.cs">
       <DependentUpon>201710011643321_LocationIsDbGeography.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710011858475_Delivery.cs" />
+    <Compile Include="Migrations\201710011858475_Delivery.Designer.cs">
+      <DependentUpon>201710011858475_Delivery.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -488,6 +492,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710011643321_LocationIsDbGeography.resx">
       <DependentUpon>201710011643321_LocationIsDbGeography.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710011858475_Delivery.resx">
+      <DependentUpon>201710011858475_Delivery.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

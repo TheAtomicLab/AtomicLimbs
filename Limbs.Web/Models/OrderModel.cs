@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Limbs.Web.Models
 {
@@ -48,6 +46,15 @@ namespace Limbs.Web.Models
         [Display(Name = "Última modificación", Description = "")]
         public DateTime StatusLastUpdated { get; set; }
 
+        [Display(Name = "Prueba de entrega", Description = "")]
+        public string ProofOfDelivery { get; set; }
+
+        [Display(Name = "Courier", Description = "")]
+        public Courier DeliveryCourier { get; set; }
+
+        [Display(Name = "Tracking", Description = "")]
+        public string DeliveryTrackingCode { get; set; }
+
     }
 
     public enum OrderStatus
@@ -63,8 +70,15 @@ namespace Limbs.Web.Models
         [Description("Entregada")]
         Delivered,
     }
+    public enum Courier
+    {
+        [Description("Andreani")]
+        Andreani,
+        [Description("Sin envio")]
+        NoCourier,
+    }
 
-public enum OrderColor
+    public enum OrderColor
 {
     [Description("Blanco y rojo")]
     A,

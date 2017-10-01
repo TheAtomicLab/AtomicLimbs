@@ -81,5 +81,20 @@
                 <p>C: @(Model.Sizes.C)cm</p>
             </td>
         </tr>
+        
+        @if (Model.Status == OrderStatus.Delivered)
+        {
+            <tr>
+                <td colspan="2">Delivery:</td>
+            </tr>
+            <tr>
+                <td>Courier:</td>
+                <td>@Model.DeliveryCourier</td>
+            </tr>
+            <tr>
+                <td>Tracking:</td>
+                <td>@Model.DeliveryTrackingCode</td>
+            </tr>
+        }
     </table>
 </article>
