@@ -64,7 +64,7 @@ namespace Limbs.Web.Models
         NotAssigned,
         [Description("Pre-asignado")]
         PreAssigned,
-        [Description("Pendiente")]
+        [Description("Imprimiendo")]
         Pending,
         [Description("Lista")]
         Ready,
