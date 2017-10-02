@@ -134,10 +134,8 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> Create(OrderModel orderModel)
         {
             if (!ModelState.IsValid) return View("ManoOrden", orderModel);
-
-
+            
             var currentUserId = User.Identity.GetUserId();
-            // Consulta DB. Cambiar con repos
             var userModel = await Db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
             
             orderModel.OrderRequestor = userModel;
