@@ -44,7 +44,7 @@ namespace Limbs.Web.Controllers
             }
             if (!CanViewOrder(orderModel))
             {
-                return HttpNotFound();
+                return RedirectToAction("RedirectUser", "Account");
             }
             return View(orderModel);
         }
@@ -54,8 +54,9 @@ namespace Limbs.Web.Controllers
             if (User.IsInRole(AppRoles.Administrator)) return true;
 
             //check ownership
-            return order.OrderAmbassador.UserId == User.Identity.GetUserId() ||
-                   order.OrderRequestor.UserId == User.Identity.GetUserId();
+            if (order.OrderAmbassador != null)
+                return order.OrderAmbassador.UserId == User.Identity.GetUserId();
+            return order.OrderRequestor.UserId == User.Identity.GetUserId();
         }
 
         // GET: Orders/ManoPedir

@@ -64,14 +64,19 @@ namespace Limbs.Web.Areas.Admin.Controllers
         [OverrideAuthorize(Roles = AppRoles.Ambassador)]
         public async Task<ActionResult> EditStatus(int orderId, OrderStatus newStatus, string returnUrl)
         {
+            if (newStatus == OrderStatus.PreAssigned) return new HttpUnauthorizedResult("use admin panel to assign ambassador");
+
             var order = Db.OrderModels.Find(orderId);
 
             if (order == null) return HttpNotFound();
 
             if (!CanEditOrder(order, newStatus)) return HttpNotFound();
-
+            
+            if (newStatus == OrderStatus.NotAssigned)
+                order.OrderAmbassador = null;
             order.Status = newStatus;
             order.StatusLastUpdated = DateTime.UtcNow;
+
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
@@ -80,7 +85,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (string.IsNullOrWhiteSpace(returnUrl) && Request.UrlReferrer != null && Url.IsLocalUrl(Request.UrlReferrer.OriginalString))
+            if (string.IsNullOrWhiteSpace(returnUrl) && Request.UrlReferrer != null && Url.IsLocalUrl(Request.UrlReferrer.PathAndQuery))
             {
                 return Redirect(Request.UrlReferrer.PathAndQuery);
             }
@@ -89,7 +94,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return User.IsInRole(AppRoles.Administrator) ? 
+                RedirectToAction("Index", "Home") : 
+                RedirectToAction("RedirectUser", "Account");
         }
 
         private bool CanEditOrder(OrderModel order, OrderStatus newStatus)
@@ -97,13 +104,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             if (User.IsInRole(AppRoles.Administrator)) return true;
 
             //check ownership
-            if (order.OrderAmbassador.UserId == User.Identity.GetUserId() ||
-                order.OrderRequestor.UserId == User.Identity.GetUserId())
-            {
-                //TODO (ale): check integrity with newStatus
-                return true;
-            }
-            return false;
+            if (order.OrderAmbassador != null)
+                return order.OrderAmbassador.UserId == User.Identity.GetUserId();
+            return order.OrderRequestor.UserId == User.Identity.GetUserId();
         }
 
         // GET: Admin/Orders/Delete/5
