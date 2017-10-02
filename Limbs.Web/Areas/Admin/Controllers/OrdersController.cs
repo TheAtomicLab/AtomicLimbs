@@ -59,10 +59,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        // POST: Admin/Orders/Edit/5
+        // POST: Admin/Orders/EditStatus/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(int orderId, OrderStatus newStatus)
+        [OverrideAuthorize(Roles = AppRoles.Ambassador)]
+        public async Task<ActionResult> EditStatus(int orderId, OrderStatus newStatus, string returnUrl)
         {
             var order = Db.OrderModels.Find(orderId);
 
@@ -75,12 +75,26 @@ namespace Limbs.Web.Areas.Admin.Controllers
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
-            return RedirectToAction("Index");
+            return RedirectToLocal(returnUrl);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (string.IsNullOrWhiteSpace(returnUrl) && Request.UrlReferrer != null && Url.IsLocalUrl(Request.UrlReferrer.OriginalString))
+            {
+                return Redirect(Request.UrlReferrer.PathAndQuery);
+            }
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         private bool CanEditOrder(OrderModel order, OrderStatus newStatus)
         {
-            if (User.IsInRole("Administrator")) return true;
+            if (User.IsInRole(AppRoles.Administrator)) return true;
 
             //check ownership
             if (order.OrderAmbassador.UserId == User.Identity.GetUserId() ||

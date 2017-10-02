@@ -12,10 +12,9 @@ using Limbs.Web.Repositories.Interfaces;
 
 namespace Limbs.Web.Controllers
 {
-    public class OrdersController : Controller
+    [DefaultAuthorize(Roles = AppRoles.Requester)]
+    public class OrdersController : BaseController
     {
-        private readonly ApplicationDbContext _db = new ApplicationDbContext();
-
         //  public IOrdersRepository OrdersRepository { get; set; }
         private readonly IUserFiles _userFiles;
         
@@ -31,13 +30,14 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Orders/Details/5
+        [OverrideAuthorize(Roles = AppRoles.User)]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var orderModel = await _db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == id);
+            var orderModel = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == id);
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -51,7 +51,7 @@ namespace Limbs.Web.Controllers
 
         private bool CanViewOrder(OrderModel order)
         {
-            if (User.IsInRole("Administrator")) return true;
+            if (User.IsInRole(AppRoles.Administrator)) return true;
 
             //check ownership
             return order.OrderAmbassador.UserId == User.Identity.GetUserId() ||
@@ -59,14 +59,12 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Orders/ManoPedir
-        [Authorize(Roles = "Requester")]
         public ActionResult ManoPedir()
         {
             return View();
         }
 
         // POST: Orders/UploadImageUser
-        [Authorize(Roles = "Requester")]
         public ActionResult UploadImageUser(HttpPostedFileBase file)
         {
             if (file == null || file.ContentLength == 0)
@@ -96,7 +94,6 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Orders/ManoMedidas
-        [Authorize(Roles = "Requester")]
         public ActionResult ManoMedidas()
         {
             if (TempData["fileUrl"] == null)
@@ -110,7 +107,6 @@ namespace Limbs.Web.Controllers
 
         // POST: Orders/ManoOrden
         [HttpPost]
-        [Authorize(Roles = "Requester")]
         public ActionResult ManoOrden(string imageUrl, float distA, float distB, float distC)
         {
             if (string.IsNullOrWhiteSpace(imageUrl))
@@ -133,7 +129,6 @@ namespace Limbs.Web.Controllers
         }
 
         // POST: Orders/Create
-        [Authorize(Roles = "Requester")]
         [HttpPost]
         public async Task<ActionResult> Create(OrderModel orderModel)
         {
@@ -142,12 +137,12 @@ namespace Limbs.Web.Controllers
 
             var currentUserId = User.Identity.GetUserId();
             // Consulta DB. Cambiar con repos
-            var userModel = await _db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
+            var userModel = await Db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
             
             //TODO (ale): revisar logica, porque no lo validamos en paso 1?
-            //var hasPendingOrders = await _db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
+            //var hasPendingOrders = await Db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
             //if (hasPendingOrders > 1)
-            //    return RedirectToAction("UserPanel", "Users", new { message = "Cantidad de pedidos excedidos" });
+            //    return RedirectToAction("Index", "Users", new { message = "Cantidad de pedidos excedidos" });
 
             orderModel.OrderRequestor = userModel;
             orderModel.Status = OrderStatus.NotAssigned;
@@ -156,19 +151,10 @@ namespace Limbs.Web.Controllers
             //Asigno ambassador (ale: primer version, la asignacion la hacemos nosotros)
             //orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
 
-            _db.OrderModels.Add(orderModel);
-            await _db.SaveChangesAsync();
+            Db.OrderModels.Add(orderModel);
+            await Db.SaveChangesAsync();
 
-            return RedirectToAction("UserPanel", "Users");
-        }
-        
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _db.Dispose();
-            }
-            base.Dispose(disposing);
+            return RedirectToAction("Index", "Users");
         }
     }
 }

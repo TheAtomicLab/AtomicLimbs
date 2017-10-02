@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Configuration;
-using System.Net.Http;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using Limbs.Web.Models;
 using Microsoft.Owin.Security.Facebook;
@@ -73,4 +72,44 @@ namespace Limbs.Web
             //});
         }
     }
+
+    /// <summary>
+    /// Application authorization roles
+    /// </summary>
+    public class AppRoles
+    {
+        /// <summary>
+        /// Administrator IS a member of Atomic
+        /// </summary>
+        public const string Administrator = "Administrator";
+        /// <summary>
+        /// User IS NOT a member of Atomic
+        /// </summary>
+        public const string User = "User";
+
+        /// <summary>
+        /// Registered user without a specific role
+        /// </summary>
+        public const string Unassigned = "Unassigned";
+        /// <summary>
+        /// Registered user who is requesting orders
+        /// </summary>
+        public const string Requester = "Requester";
+        /// <summary>
+        /// Registered user who is processing orders
+        /// </summary>
+        public const string Ambassador = "Ambassador";
+    }
+
+    public class DefaultAuthorizeAttribute : AuthorizeAttribute
+    {
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            var action = filterContext.ActionDescriptor;
+            if (action.IsDefined(typeof(OverrideAuthorizeAttribute), true)) return;
+
+            base.OnAuthorization(filterContext);
+        }
+    }
+    public class OverrideAuthorizeAttribute : AuthorizeAttribute { }
 }

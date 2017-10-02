@@ -15,9 +15,7 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
-        private readonly ApplicationDbContext _db = new ApplicationDbContext();
-
+        
         public AccountController()
         {
         }
@@ -80,9 +78,7 @@ namespace Limbs.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    var existUser = _db.UserModelsT.Any(u => u.Email == model.Email);
-
-                    return existUser ? RedirectToAction("UserPanel", "Users") : RedirectToAction("AmbassadorPanel", "Ambassador");
+                    return RedirectToAction("RedirectUser");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -171,7 +167,7 @@ namespace Limbs.Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user.Id, "Unassigned");
+                    await UserManager.AddToRoleAsync(user.Id, AppRoles.Unassigned);
 
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
@@ -192,31 +188,9 @@ namespace Limbs.Web.Controllers
 
         public ActionResult SelectUserOrAmbassador()
         {
-            if(!User.IsInRole("Unassigned"))
-            {
-                return RedirectUser();
-            }
-
-            return View();
-
+            return !User.IsInRole(AppRoles.Unassigned) ? RedirectUser() : View();
         }
-
-        /*
-        public ActionResult UserOrAmbassador(LoginViewModel model)
-        {
-            bool existUser = db.UserModelsT.Any(u => u.Email == model.Email);
-
-            if (existUser)
-            {
-                return View("Users/Create");
-            }
-            else
-            {
-                return View("Ambassador/Create");
-            }
-        }*/
         
-       
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -426,7 +400,7 @@ namespace Limbs.Web.Controllers
 
                     if (result.Succeeded)
                     {
-                        await UserManager.AddToRoleAsync(user.Id, "Unassigned");
+                        await UserManager.AddToRoleAsync(user.Id, AppRoles.Unassigned);
 
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
@@ -460,9 +434,9 @@ namespace Limbs.Web.Controllers
 
         public ActionResult RedirectUser()
         {
-            if (User.IsInRole("Administrator")) return RedirectToAction("Index", "Panel", new { area = "Admin" });
-            if (User.IsInRole("Requester")) return RedirectToAction("UserPanel", "Users");
-            if (User.IsInRole("Ambassador")) return RedirectToAction("AmbassadorPanel", "Ambassador");
+            if (User.IsInRole(AppRoles.Administrator)) return RedirectToAction("Index", "Panel", new { area = "Admin" });
+            if (User.IsInRole(AppRoles.Requester)) return RedirectToAction("Index", "Users");
+            if (User.IsInRole(AppRoles.Ambassador)) return RedirectToAction("Index", "Ambassador");
             return RedirectToAction("SelectUserOrAmbassador");
         }
 

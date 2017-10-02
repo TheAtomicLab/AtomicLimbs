@@ -18,8 +18,8 @@ namespace Limbs.Web.Models
             // Add custom user claims here
 
             userIdentity.AddClaim(CheckIfAdmin(userIdentity.GetUserName())
-                ? new Claim(ClaimTypes.Role, "Administrator")
-                : new Claim(ClaimTypes.Role, "User"));
+                ? new Claim(ClaimTypes.Role, AppRoles.Administrator)
+                : new Claim(ClaimTypes.Role, AppRoles.User));
             return userIdentity;
         }
 

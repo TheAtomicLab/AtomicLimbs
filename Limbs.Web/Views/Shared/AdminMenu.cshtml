@@ -1,4 +1,4 @@
-﻿@if (User.IsInRole("Administrator"))
+﻿@if (User.IsInRole(AppRoles.Administrator))
 {
     <li>||</li>
     <li>@Html.ActionLink("Pedidos", "Index", new { controller = "Orders", area = "Admin" })</li>

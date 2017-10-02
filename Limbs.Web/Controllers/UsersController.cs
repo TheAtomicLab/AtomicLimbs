@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using System.Web.Mvc;
@@ -9,23 +8,29 @@ using Limbs.Web.Helpers;
 using Limbs.Web.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-
-
 namespace Limbs.Web.Controllers
 {
-    [Authorize]
-    public class UsersController : Controller
+    [DefaultAuthorize(Roles = AppRoles.Requester)]
+    public class UsersController : BaseController
     {
-        private readonly ApplicationDbContext _db = new ApplicationDbContext();
-
         // GET: Users
-        public async Task<ActionResult> Index()
+        public ActionResult Index(string message)
         {
-            return null;
+            var userId = User.Identity.GetUserId();
+            var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
+
+            var viewModel = new UserPanelViewModel
+            {
+                Order = orderList.ToList(),
+                Message = message
+
+            };
+
+            return View(viewModel);
         }
-        
+
         // GET: Users/Create
-        [Authorize(Roles = "Unassigned")]
+        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
         public ActionResult Create()
         {
             return View();
@@ -33,7 +38,7 @@ namespace Limbs.Web.Controllers
         
         // POST: Users/Create
         [HttpPost]
-        [Authorize(Roles = "Unassigned")]
+        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
         public async Task<ActionResult> Create(UserModel userModel)
         {
             if (!ModelState.IsValid) return View("Create", userModel);
@@ -44,42 +49,17 @@ namespace Limbs.Web.Controllers
             userModel.Email = User.Identity.GetUserName();
             userModel.UserId = User.Identity.GetUserId();
 
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_db));
-            await userManager.RemoveFromRoleAsync(userModel.UserId, "Unassigned");
-            await userManager.AddToRoleAsync(userModel.UserId, "Requester");
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(Db));
+            await userManager.RemoveFromRoleAsync(userModel.UserId, AppRoles.Unassigned);
+            await userManager.AddToRoleAsync(userModel.UserId, AppRoles.Requester);
 
-            _db.UserModelsT.Add(userModel);
-            await _db.SaveChangesAsync();
+            Db.UserModelsT.Add(userModel);
+            await Db.SaveChangesAsync();
 
-            return RedirectToAction("UserPanel");
+            return RedirectToAction("Index");
         }
         
-        [Authorize(Roles = "Requester")]
-        public ActionResult UserPanel(string message)
-        {
-            var userId = User.Identity.GetUserId();
-            var orderList = _db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
-            
-            var viewModel = new UserPanelViewModel
-            {
-                Order = orderList.ToList(),
-                Message = message
-
-            };
-
-            return View(viewModel); 
-     
-        }
-        
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _db.Dispose();
-            }
-            base.Dispose(disposing);
-        }
-
+        [OverrideAuthorize(Roles = AppRoles.User)]
         public ActionResult GetUserImage(string url)
         {
             var client = new HttpClient();

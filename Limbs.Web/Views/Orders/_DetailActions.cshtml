@@ -1,27 +1,32 @@
-﻿@model Limbs.Web.Models.OrderModel
+﻿@using Limbs.Web.Models
+@model OrderModel
 
-@if (User.IsInRole("Ambassador") || User.IsInRole("Administrator"))
+@if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
 {
     <div id="accion_solicitud">
-
-        @if (Model.Status != Limbs.Web.Models.OrderStatus.PreAssigned)
+        @if (Model.Status == OrderStatus.PreAssigned)
+        {
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="blue_button">Aceptar orden</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned})" class="blue_button">Rechazar orden</a>
+        }
+        else if (Model.Status == OrderStatus.Pending)
         {
             <a href="#" class="blue_button">Descargar mano</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="blue_button">Ya imprimí la mano</a>
         }
-
-        @if (Model.Status == Limbs.Web.Models.OrderStatus.PreAssigned)
+        else if (Model.Status == OrderStatus.Ready)
         {
-            <a href="@Url.Action("AssignOrder", "Ambassador", new {id = Model.Id, accion = "aceptar"}, null)" class="blue_button">Aceptar orden</a>
-            <a href="@Url.Action("AssignOrder", "Ambassador", new {id = Model.Id, accion = "rechazar"}, null)" class="blue_button">Rechazar orden</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="blue_button">Ya entregué la mano</a>
         }
-        else if (Model.Status == Limbs.Web.Models.OrderStatus.Pending)
-        {
-            <a href="@Url.Action("UpdateOrder", "Ambassador", new {orderid = Model.Id, status = Limbs.Web.Models.OrderStatus.Ready}, null)" class="blue_button">Ya imprimí la mano</a>
-        }
-        else if (Model.Status == Limbs.Web.Models.OrderStatus.Ready)
-        {
-            <a href="@Url.Action("UpdateOrder", "Ambassador", new {orderid = Model.Id, status = Limbs.Web.Models.OrderStatus.Delivered}, null)" class="blue_button">Ya entregué la mano</a>
-        }
-
     </div>
+
+    <script type="text/javascript">
+        $("#accion_solicitud a").click(function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            $("body").append('<form action="' + e.target.href +'" method="post" id="tempform"></form>');
+            $("#tempform").submit();
+        });
+    </script>
 }

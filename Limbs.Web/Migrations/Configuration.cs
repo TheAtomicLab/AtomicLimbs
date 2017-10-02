@@ -15,10 +15,10 @@ namespace Limbs.Web.Migrations
         {
             if (context.Roles.Any()) return;
 
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Unassigned"));
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Requester"));
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Ambassador"));
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole("Administrator"));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Unassigned));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Requester));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Ambassador));
+            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Administrator));
 
             context.SaveChanges();
         }

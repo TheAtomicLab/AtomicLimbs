@@ -9,7 +9,7 @@ using Limbs.Web.Models;
 
 namespace Limbs.Web.Controllers
 {
-    [Authorize(Roles = "Administrator")]
+    [Authorize(Roles = AppRoles.Administrator)]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

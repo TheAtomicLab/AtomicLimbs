@@ -1,12 +1,11 @@
 ﻿using System.Web.Mvc;
 using Limbs.Web.Models;
 
-namespace Limbs.Web.Areas.Admin.Controllers
+namespace Limbs.Web.Controllers
 {
-    [DefaultAuthorize(Roles = AppRoles.Administrator)]
-    public class AdminBaseController : Controller
+    public class BaseController : Controller
     {
-        public readonly ApplicationDbContext Db = new ApplicationDbContext();
+        public ApplicationDbContext Db = new ApplicationDbContext();
 
         protected override void Dispose(bool disposing)
         {

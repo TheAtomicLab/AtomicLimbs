@@ -8,7 +8,7 @@
                 <li>
                     <a onclick="cerrarmenu()" href="/">Inicio</a>
                 </li>
-                @if (User.IsInRole("Requester"))
+                @if (User.IsInRole(AppRoles.Requester))
                 {
                     <li>
                         <a onclick="cerrarmenu()" href="/">Pedir una mano</a>
