@@ -192,9 +192,33 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult SelectDelivery(int idorder)
+        // GET: Admin/Orders/SelectDelivery/?idOrder=2
+        public ActionResult SelectDelivery(int idOrder)
         {
-            throw new NotImplementedException();
+            var order = Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefault(x => x.Id == idOrder);
+
+            if (order == null)
+                return HttpNotFound();
+
+            return View("SelectDelivery", order);
+        }
+
+        // POST: Admin/Orders/AssignDelivery/?idOrder=2
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignDelivery(OrderModel orderModel)
+        {
+            var order = Db.OrderModels.Find(orderModel.Id);
+
+            if (order == null)
+                return HttpNotFound();
+
+            order.DeliveryCourier = orderModel.DeliveryCourier;
+            order.DeliveryTrackingCode = orderModel.DeliveryTrackingCode;
+            Db.SaveChanges();
+            //TODO (ale): notificar a los usuarios el cambio de estado + asignacion
+
+            return RedirectToAction("Index");
         }
     }
 }

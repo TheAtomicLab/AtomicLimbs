@@ -38,7 +38,7 @@
                 @item.Status.ToDescription()
                 @if (item.Status == OrderStatus.Ready)
                 {
-                    <span>(@Html.ActionLink("método de envío", "SelectDelivery", new { idOrder = item.Id }))</span>
+                    <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
                 }
             </td>
             <td>

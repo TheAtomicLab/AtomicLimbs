@@ -66,7 +66,7 @@ namespace Limbs.Web.Models
         PreAssigned,
         [Description("Pendiente")]
         Pending,
-        [Description("Lista para retirar")]
+        [Description("Lista")]
         Ready,
         [Description("Entregada")]
         Delivered,

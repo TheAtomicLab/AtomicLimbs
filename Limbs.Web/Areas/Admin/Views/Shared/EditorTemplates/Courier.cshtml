@@ -1,0 +1,13 @@
+﻿@using Limbs.Web.Models
+@model Courier
+@{
+    var values = Enum.GetValues(ViewData.ModelMetadata.ModelType).Cast<Courier>()
+        .Select(v => new SelectListItem
+        {
+            Selected = v.Equals(Model),
+            Text = v.ToDescription(),
+            Value = v.ToString()
+        });
+}
+
+@Html.DropDownList("", values)
