@@ -1,10 +1,8 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using Limbs.Web.Models
 @model Limbs.Web.ViewModels.AmbassadorPanelViewModel
-@using Limbs.Web.Models
 
 @{
     ViewBag.Title = "Ambassador Panel";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
@@ -35,7 +33,7 @@
                         </tr>
                         @foreach (var order in Model.PendingToAssignOrders)
                         {
-                            <tr onclick="location.href = '@(Url.Action("OrderDetails", "Ambassador", new { id = order.Id }))'">
+                            <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
                                 <td>#@order.Id</td>
                                 <td>@order.OrderRequestor.ResponsableName</td>
                                 <td>@order.Date.ToString("dd/MM/yyyy")</td>
@@ -57,7 +55,7 @@
                     </tr>
                     @foreach (var order in Model.PendingOrders)
                     {
-                        <tr onclick="location.href = '@(Url.Action("OrderDetails", "Ambassador", new { id = order.Id }))'">
+                        <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
                             <td>#@order.Id</td>
                             <td>@order.OrderRequestor.ResponsableName</td>
                             <td>@order.Date.ToString("dd/MM/yyyy")</td>
@@ -84,7 +82,7 @@
                         </tr>
                         @foreach (var order in Model.DeliveredOrders)
                         {
-                            <tr onclick="location.href = '@(Url.Action("OrderDetails", "Ambassador", new { id = order.Id }))'">
+                            <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
                                 <td>#@order.Id</td>
                                 <td>@order.OrderRequestor.ResponsableName</td>
                                 <td>@order.Date.ToString("dd/MM/yyyy")</td>

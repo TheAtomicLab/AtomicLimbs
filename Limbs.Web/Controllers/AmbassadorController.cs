@@ -16,7 +16,7 @@ namespace Limbs.Web.Controllers
     [Authorize]
     public class AmbassadorController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext _db = new ApplicationDbContext();
 
         // GET: Ambassador/Create
         [Authorize(Roles = "Unassigned")]
@@ -38,12 +38,12 @@ namespace Limbs.Web.Controllers
             ambassadorModel.Email = User.Identity.GetUserName();
             ambassadorModel.UserId = User.Identity.GetUserId();
 
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_db));
             await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, "Unassigned");
             await userManager.AddToRoleAsync(ambassadorModel.UserId, "Ambassador");
 
-            db.AmbassadorModels.Add(ambassadorModel);
-            await db.SaveChangesAsync();
+            _db.AmbassadorModels.Add(ambassadorModel);
+            await _db.SaveChangesAsync();
             return RedirectToAction("AmbassadorPanel", "Ambassador");
         }
         
@@ -53,10 +53,10 @@ namespace Limbs.Web.Controllers
         {
 
             var currentUserId = User.Identity.GetUserId();
-            AmbassadorModel ambassador = db.AmbassadorModels.Single(c => c.UserId == currentUserId);
+            AmbassadorModel ambassador = _db.AmbassadorModels.Single(c => c.UserId == currentUserId);
 
             // Consulta DB. Cambiar con repos
-            IEnumerable<OrderModel> orderList = db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
+            IEnumerable<OrderModel> orderList = _db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
 
             var deliveredOrdersCount = orderList.Count(c => c.Status == OrderStatus.Delivered);
             var pendingOrdersCount = orderList.Count(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready);
@@ -88,20 +88,7 @@ namespace Limbs.Web.Controllers
             return View(viewModel);
         }
         
-
-        // GET: /OrderDetails/1
-        [Authorize(Roles = "Ambassador")]
-        public ActionResult OrderDetails(int? id)
-        {
-            var userId = User.Identity.GetUserId();
-            var order = db.OrderModels.Include(c => c.OrderRequestor).SingleOrDefault(c => c.Id == id && c.OrderAmbassador.UserId == userId);
-
-            if (order == null) return HttpNotFound();
-
-            return View(order);
-        }
-
-
+        //TODO (ale): cambiar logica, usar el edit del admin
         // GET: Orders/Assignation/?id=5&action=accept
         // Aceptar o rechazar como embajador, pedidos pre-asignados.
         [Authorize(Roles = "Ambassador")]
@@ -109,7 +96,7 @@ namespace Limbs.Web.Controllers
         {
 
             // Consulta DB. Cambiar con repos
-            var orderInDb = db.OrderModels.Find(id);
+            var orderInDb = _db.OrderModels.Find(id);
 
             if (orderInDb == null) return HttpNotFound();
 
@@ -129,7 +116,7 @@ namespace Limbs.Web.Controllers
                 orderInDb.StatusLastUpdated = DateTime.Now;
 
                 // Consulta DB. Cambiar con repos
-                db.SaveChanges();
+                _db.SaveChanges();
 
                 return RedirectToAction("AmbassadorPanel");
 
@@ -146,7 +133,7 @@ namespace Limbs.Web.Controllers
         {
             // "Order" solo tiene la ID consigo.
             // Consulta DB. Cambiar con repos
-            var orderInDb = db.OrderModels.Find(orderid);
+            var orderInDb = _db.OrderModels.Find(orderid);
 
             if (orderInDb == null) return HttpNotFound();
 
@@ -158,7 +145,7 @@ namespace Limbs.Web.Controllers
             {
                 orderInDb.Status = status;
                 // Consulta DB. Cambiar con repos
-                db.SaveChanges();
+                _db.SaveChanges();
 
             }
             else if (status == OrderStatus.Delivered && orderInDb.Status == OrderStatus.Ready)
@@ -166,7 +153,7 @@ namespace Limbs.Web.Controllers
                 orderInDb.Status = status;
                 orderInDb.StatusLastUpdated = DateTime.Now;
                 // Consulta DB. Cambiar con repos
-                db.SaveChanges();
+                _db.SaveChanges();
             }
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -178,7 +165,7 @@ namespace Limbs.Web.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _db.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,0 +1,27 @@
+﻿@model Limbs.Web.Models.OrderModel
+
+@if (User.IsInRole("Ambassador") || User.IsInRole("Administrator"))
+{
+    <div id="accion_solicitud">
+
+        @if (Model.Status != Limbs.Web.Models.OrderStatus.PreAssigned)
+        {
+            <a href="#" class="blue_button">Descargar mano</a>
+        }
+
+        @if (Model.Status == Limbs.Web.Models.OrderStatus.PreAssigned)
+        {
+            <a href="@Url.Action("AssignOrder", "Ambassador", new {id = Model.Id, accion = "aceptar"}, null)" class="blue_button">Aceptar orden</a>
+            <a href="@Url.Action("AssignOrder", "Ambassador", new {id = Model.Id, accion = "rechazar"}, null)" class="blue_button">Rechazar orden</a>
+        }
+        else if (Model.Status == Limbs.Web.Models.OrderStatus.Pending)
+        {
+            <a href="@Url.Action("UpdateOrder", "Ambassador", new {orderid = Model.Id, status = Limbs.Web.Models.OrderStatus.Ready}, null)" class="blue_button">Ya imprimí la mano</a>
+        }
+        else if (Model.Status == Limbs.Web.Models.OrderStatus.Ready)
+        {
+            <a href="@Url.Action("UpdateOrder", "Ambassador", new {orderid = Model.Id, status = Limbs.Web.Models.OrderStatus.Delivered}, null)" class="blue_button">Ya entregué la mano</a>
+        }
+
+    </div>
+}

@@ -1,11 +1,13 @@
 ﻿@using Limbs.Web.Models
-@model Limbs.Web.Models.OrderModel
+@model OrderModel
 @{
     ViewBag.Title = "Detalles de pedido";
 }
 
 <article id="info_solicitud">
     <h1>Pedido:</h1>
+    
+    @Html.Partial("_DetailActions", Model)
 
     <table class="tabla_datos">
         <tr>

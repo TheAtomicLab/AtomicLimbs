@@ -406,7 +406,6 @@
     <Content Include="Views\Account\SelectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\AmbassadorPanel.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Ambassador\OrderDetails.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -460,7 +459,6 @@
     <Content Include="Areas\Admin\Views\Ambassadors\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
-    <Content Include="Views\Ambassador\Index.cshtml" />
     <Content Include="Views\Ambassador\Create.cshtml" />
     <Content Include="Views\Users\UserPanel.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
@@ -471,6 +469,7 @@
     <Content Include="Views\Shared\AdminMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\SelectAmbassador.cshtml" />
     <Content Include="Views\Orders\Details.cshtml" />
+    <Content Include="Views\Orders\_DetailActions.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

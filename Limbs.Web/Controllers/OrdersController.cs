@@ -42,11 +42,20 @@ namespace Limbs.Web.Controllers
             {
                 return HttpNotFound();
             }
-            if (!orderModel.OrderRequestor.Email.Equals(User.Identity.GetUserName()) && !User.IsInRole("Administrator"))
+            if (!CanViewOrder(orderModel))
             {
                 return HttpNotFound();
             }
             return View(orderModel);
+        }
+
+        private bool CanViewOrder(OrderModel order)
+        {
+            if (User.IsInRole("Administrator")) return true;
+
+            //check ownership
+            return order.OrderAmbassador.UserId == User.Identity.GetUserId() ||
+                   order.OrderRequestor.UserId == User.Identity.GetUserId();
         }
 
         // GET: Orders/ManoPedir

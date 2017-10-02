@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -51,10 +53,43 @@ namespace Limbs.Web.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid) return View(orderModel);
             
-            //TODO (ale): implement
-
+            Db.OrderModels.AddOrUpdate(orderModel);
             await Db.SaveChangesAsync();
+
             return RedirectToAction("Index");
+        }
+
+        // POST: Admin/Orders/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int orderId, OrderStatus newStatus)
+        {
+            var order = Db.OrderModels.Find(orderId);
+
+            if (order == null) return HttpNotFound();
+
+            if (!CanEditOrder(order, newStatus)) return HttpNotFound();
+
+            order.Status = newStatus;
+            order.StatusLastUpdated = DateTime.UtcNow;
+            Db.OrderModels.AddOrUpdate(order);
+            await Db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+        }
+
+        private bool CanEditOrder(OrderModel order, OrderStatus newStatus)
+        {
+            if (User.IsInRole("Administrator")) return true;
+
+            //check ownership
+            if (order.OrderAmbassador.UserId == User.Identity.GetUserId() ||
+                order.OrderRequestor.UserId == User.Identity.GetUserId())
+            {
+                //TODO (ale): check integrity with newStatus
+                return true;
+            }
+            return false;
         }
 
         // GET: Admin/Orders/Delete/5
