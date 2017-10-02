@@ -46,6 +46,10 @@
                                 {
                                     @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
                                 }
+                                else
+                                {
+                                    <text>No asignado</text>
+                                }
                             </td>
                             <td>
                                 @order.Status.ToDescription()
