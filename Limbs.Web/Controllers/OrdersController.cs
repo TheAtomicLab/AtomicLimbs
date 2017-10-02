@@ -140,18 +140,11 @@ namespace Limbs.Web.Controllers
             // Consulta DB. Cambiar con repos
             var userModel = await Db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
             
-            //TODO (ale): revisar logica, porque no lo validamos en paso 1?
-            //var hasPendingOrders = await Db.OrderModels.Where(c => c.OrderRequestor.Id == userModel.Id && c.Status != OrderStatus.Delivered).CountAsync();
-            //if (hasPendingOrders > 1)
-            //    return RedirectToAction("Index", "Users", new { message = "Cantidad de pedidos excedidos" });
-
             orderModel.OrderRequestor = userModel;
             orderModel.Status = OrderStatus.NotAssigned;
             orderModel.StatusLastUpdated = DateTime.UtcNow;
             orderModel.Date = DateTime.UtcNow;
-            //Asigno ambassador (ale: primer version, la asignacion la hacemos nosotros)
-            //orderModel.OrderAmbassador = MatchWithAmbassador(userModel);
-
+            
             Db.OrderModels.Add(orderModel);
             await Db.SaveChangesAsync();
 
