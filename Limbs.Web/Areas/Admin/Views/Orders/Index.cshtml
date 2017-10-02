@@ -34,8 +34,12 @@
                     @Html.DisplayFor(modelItem => item.Id)
                 </a>
             </td>
-            <td>
+            <td class="@item.Status">
                 @item.Status.ToDescription()
+                @if (item.Status == OrderStatus.Ready)
+                {
+                    <span>(@Html.ActionLink("método de envío", "SelectDelivery", new { idOrder = item.Id }))</span>
+                }
             </td>
             <td>
                 @item.Date.ToFriendlyDateString()

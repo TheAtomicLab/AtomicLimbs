@@ -1,21 +1,27 @@
 ﻿table {
-    width: 100%;
     background-color: #d9d9d9;
     border-collapse: collapse;
     text-align: left;
+    width: 100%;
 }
 
-tr:nth-child(even) {
-    background-color: #ebebeb;
-}
+tr:nth-child(even) { background-color: #ebebeb; }
 
 td, th {
-    padding: 11px 0px;
-    padding-left: 30px;
     border-left: solid 1px #c0c0c0;
     box-sizing: border-box;
+    padding: 11px 0px;
+    padding-left: 30px;
 }
 
-tr th:first-of-type, tr td:first-of-type {
-    border-left: solid 0px;
-}
+tr th:first-of-type, tr td:first-of-type { border-left: solid 0px; }
+
+.NotAssigned { background-color: orange; }
+
+.PreAssigned { background-color: greenyellow; }
+
+.Pending { background-color: yellow; }
+
+.Ready { background-color: orange; }
+
+.Delivered { background-color: greenyellow; }

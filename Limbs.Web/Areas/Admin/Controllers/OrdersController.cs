@@ -191,5 +191,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public ActionResult SelectDelivery(int idorder)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

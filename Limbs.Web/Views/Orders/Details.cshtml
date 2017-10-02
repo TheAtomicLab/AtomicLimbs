@@ -84,7 +84,7 @@
             </td>
         </tr>
         
-        @if (Model.Status == OrderStatus.Delivered)
+        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
         {
             <tr>
                 <td colspan="2">Delivery:</td>

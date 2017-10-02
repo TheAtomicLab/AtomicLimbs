@@ -10,6 +10,7 @@ namespace Limbs.Web.Models
         public OrderModel()
         {
             Sizes = new OrderSizesModel();
+            DeliveryCourier = Courier.NoCourier;
         }
 
         [Key]
@@ -72,10 +73,10 @@ namespace Limbs.Web.Models
     }
     public enum Courier
     {
-        [Description("Andreani")]
-        Andreani,
         [Description("Sin envio")]
         NoCourier,
+        [Description("Andreani")]
+        Andreani,
     }
 
     public enum OrderColor
