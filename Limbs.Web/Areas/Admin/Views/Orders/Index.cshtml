@@ -51,7 +51,10 @@
                 @if (item.OrderAmbassador != null)
                 {
                     @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
-                    <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
+                    if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.Delivered)
+                    {
+                        <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
+                    }
                 }
                 else
                 {
