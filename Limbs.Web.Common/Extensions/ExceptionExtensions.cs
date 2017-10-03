@@ -78,9 +78,10 @@ namespace Limbs.Web.Common.Extensions
                     mailSender.Send(mailMessage);
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 //estamos en la B, error del error
+                e.Log();
             }
 
             try

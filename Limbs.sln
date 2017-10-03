@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web.Storage.Azure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web.Common", "Limbs.Web.Common\Limbs.Web.Common.csproj", "{DFC2D76E-4E4B-4EF6-A378-5FB979C68C11}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web.Tests", "Limbs.Web.Tests\Limbs.Web.Tests.csproj", "{02F51078-AD81-4AF6-9801-3310B9C493A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{DFC2D76E-4E4B-4EF6-A378-5FB979C68C11}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DFC2D76E-4E4B-4EF6-A378-5FB979C68C11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DFC2D76E-4E4B-4EF6-A378-5FB979C68C11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02F51078-AD81-4AF6-9801-3310B9C493A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02F51078-AD81-4AF6-9801-3310B9C493A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02F51078-AD81-4AF6-9801-3310B9C493A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02F51078-AD81-4AF6-9801-3310B9C493A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
