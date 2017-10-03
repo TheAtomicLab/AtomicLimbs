@@ -37,7 +37,7 @@ namespace Limbs.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var orderModel = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == id);
+            var orderModel = await Db.OrderModels.Include(x => x.OrderRequestor).Include(x => x.Sizes).FirstOrDefaultAsync(x => x.Id == id);
             if (orderModel == null)
             {
                 return HttpNotFound();
