@@ -1049,6 +1049,10 @@ nav {
 .tabla_datos img {
     max-width: 30vw;
 }
+.tabla_datos ul.log li {
+    max-width: 50vw;
+    word-wrap: break-word;
+}
 /**FOOOOOTEEEERRRR**/
 .footer-distributed {
     background-color: #292c2f;

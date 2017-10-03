@@ -61,7 +61,7 @@ namespace Limbs.Web.Models
         [Display(Name = "Tracking", Description = "")]
         public string DeliveryTrackingCode { get; set; }
 
-        [Display(Name = "Etiqueta postal (opcional)", Description = "")]
+        [Display(Name = "Etiqueta postal", Description = "")]
         public string DeliveryPostalLabel { get; set; }
 
         [NotMapped]

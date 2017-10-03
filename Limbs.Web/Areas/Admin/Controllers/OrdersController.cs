@@ -120,7 +120,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             //check ownership
             if (order.OrderAmbassador != null)
-                return order.OrderAmbassador.UserId == User.Identity.GetUserId();
+                return order.OrderAmbassador.UserId == User.Identity.GetUserId() ||
+                       order.OrderRequestor.UserId == User.Identity.GetUserId();
             return order.OrderRequestor.UserId == User.Identity.GetUserId();
         }
 

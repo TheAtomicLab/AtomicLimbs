@@ -40,6 +40,15 @@
                         }
                     </td>
                 </tr>
+                if (!string.IsNullOrWhiteSpace(Model.DeliveryPostalLabel))
+                {
+                    <tr>
+                        <td>@Html.DisplayNameFor(x => x.DeliveryPostalLabel)</td>
+                        <td>
+                            <a href="@Model.DeliveryPostalLabel" target="_blank">Descargar</a>
+                        </td>
+                    </tr>
+                }
             }
             <tr>
                 <td colspan="2" class="proofofdelivery">
@@ -82,12 +91,10 @@
         </tr>
 
         <tr>
-            <td colspan="2">Imagen:</td>
-        </tr>
-
-        <tr>
             <td colspan="2">
-                <img src="@Model.IdImage" />
+                <p>Imagen:</p>
+                <br/>
+                <img src="@Model.IdImage"/>
             </td>
         </tr>
         <tr>
@@ -100,12 +107,10 @@
         </tr>
 
         <tr>
-            <td colspan="2">Color:</td>
-        </tr>
-
-        <tr>
             <td colspan="2">
-                <img src="/Content/img/mano_@(Model.Color).jpg" />
+                <p>Color:</p>
+                <br/>
+                <img src="/Content/img/mano_@(Model.Color).jpg"/>
             </td>
         </tr>
 
@@ -122,7 +127,7 @@
             <tr>
                 <td>Log:</td>
                 <td>
-                    <ul>
+                    <ul class="log">
                         @foreach (var item in Model.Log)
                         {
                             <li>

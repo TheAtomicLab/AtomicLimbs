@@ -27,7 +27,7 @@
         </div>
         
         <div class="form-group">
-            @Html.LabelFor(model => model.DeliveryPostalLabel, htmlAttributes: new { @class = "control-label col-md-2" }):
+            @Html.LabelFor(model => model.DeliveryPostalLabel, htmlAttributes: new { @class = "control-label col-md-2" })  (opcional):
             @Html.DisplayFor(x => x.DeliveryPostalLabel)
             <div class="col-md-10">
                 @if (!string.IsNullOrWhiteSpace(Model.DeliveryPostalLabel))
