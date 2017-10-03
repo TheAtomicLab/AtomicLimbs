@@ -6,7 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
-using Limbs.Web.Extensions;
+using Limbs.Web.Common.Extensions;
 using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Repositories.Interfaces;

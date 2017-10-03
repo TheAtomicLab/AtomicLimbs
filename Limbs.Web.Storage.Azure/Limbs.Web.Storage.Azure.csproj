@@ -68,6 +68,7 @@
     <Compile Include="FullStorageInitializer.cs" />
     <Compile Include="IStorageInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueueStorage\Messages\AppException.cs" />
     <Compile Include="QueueStorage\QueueStorageInitializer.cs" />
     <Compile Include="QueueStorage\MessageQueue.cs" />
     <Compile Include="QueueStorage\Messages\MailMessage.cs" />

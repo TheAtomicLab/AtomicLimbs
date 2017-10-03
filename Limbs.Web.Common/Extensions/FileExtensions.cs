@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Limbs.Web.Extensions
+namespace Limbs.Web.Common.Extensions
 {
     public static class HttpPostedFileBaseExtensions
     {

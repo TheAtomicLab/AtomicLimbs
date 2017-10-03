@@ -10,7 +10,8 @@ namespace Limbs.Web.Storage.Azure
 		{
 			var account = AzureStorageAccount.DefaultAccount;
 
-            new QueueStorageInitializer<MailMessage>(account).Initialize();
+		    new QueueStorageInitializer<MailMessage>(account).Initialize();
+		    new QueueStorageInitializer<AppException>(account).Initialize();
 
             new DocumentStorageInitializer(account, AzureStorageContainer.UserFiles).Initialize(BlobContainerPublicAccessType.Container);
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Limbs.Web.Extensions
+namespace Limbs.Web.Common.Extensions
 {
     public static class Extensions
     {
