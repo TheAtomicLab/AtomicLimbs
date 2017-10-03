@@ -477,6 +477,7 @@
     <Content Include="Views\Orders\Details.cshtml" />
     <Content Include="Views\Orders\_DetailActions.cshtml" />
     <Content Include="Views\Orders\_DetailProofOfDelivery.cshtml" />
+    <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
