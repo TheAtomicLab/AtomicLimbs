@@ -1,4 +1,5 @@
-﻿@using Limbs.Web.Models
+﻿@using Limbs.Web.Extensions
+@using Limbs.Web.Models
 @model OrderModel
 @{
     ViewBag.Title = "Detalles de pedido";
@@ -14,6 +15,39 @@
             <td>Estado:</td>
             <td><b>@Model.Status.ToDescription()</b></td>
         </tr>
+
+        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
+        {
+            <tr>
+                <td colspan="2">Delivery:</td>
+            </tr>
+            <tr>
+                <td>Courier:</td>
+                <td>@Model.DeliveryCourier.ToDescription()</td>
+            </tr>
+            if (Model.DeliveryCourier != Courier.NoCourier)
+            {
+                <tr>
+                    <td>Tracking:</td>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(Model.DeliveryTrackingCode))
+                        {
+                            @Model.DeliveryTrackingCode
+                        }
+                        else
+                        {
+                            <text>No disponible.</text>
+                        }
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2" class="proofofdelivery">
+                    @Html.Partial("_DetailProofOfDelivery", Model)
+                </td>
+            </tr>
+        }
+
         <tr>
             <td>Nombre:</td>
             <td>@Model.OrderRequestor.ResponsableName</td>
@@ -53,7 +87,15 @@
 
         <tr>
             <td colspan="2">
-                <img src="@Model.IdImage" style="max-width: 30vw;" />
+                <img src="@Model.IdImage" />
+            </td>
+        </tr>
+        <tr>
+            <td>Medidas:</td>
+            <td>
+                <p>A: @(Model.Sizes.A)cm</p>
+                <p>B: @(Model.Sizes.B)cm</p>
+                <p>C: @(Model.Sizes.C)cm</p>
             </td>
         </tr>
 
@@ -63,10 +105,10 @@
 
         <tr>
             <td colspan="2">
-                <img src="/Content/img/mano_@(Model.Color).jpg" style="max-width: 30vw;" />
+                <img src="/Content/img/mano_@(Model.Color).jpg" />
             </td>
         </tr>
-        
+
         @if (!string.IsNullOrWhiteSpace(Model.Comments))
         {
             <tr>
@@ -75,28 +117,24 @@
             </tr>
         }
 
-        <tr>
-            <td>Medidas:</td>
-            <td>
-                <p>A: @(Model.Sizes.A)cm</p>
-                <p>B: @(Model.Sizes.B)cm</p>
-                <p>C: @(Model.Sizes.C)cm</p>
-            </td>
-        </tr>
-        
-        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
+        @if (User.IsInRole(AppRoles.Administrator))
         {
             <tr>
-                <td colspan="2">Delivery:</td>
-            </tr>
-            <tr>
-                <td>Courier:</td>
-                <td>@Model.DeliveryCourier</td>
-            </tr>
-            <tr>
-                <td>Tracking:</td>
-                <td>@Model.DeliveryTrackingCode</td>
+                <td>Log:</td>
+                <td>
+                    <ul>
+                        @foreach (var item in Model.Log)
+                        {
+                            <li>
+                                <span>@item.Date.ToFriendlyDateString()</span> - 
+                                <span>@item.User</span> - 
+                                <span>@item.Message</span>
+                            </li>
+                        }
+                    </ul>
+                </td>
             </tr>
         }
+
     </table>
 </article>

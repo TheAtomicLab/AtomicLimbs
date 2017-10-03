@@ -51,8 +51,12 @@ namespace Limbs.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(OrderModel orderModel)
         {
+            //TODO (ale): implementar segun los campos que tengan sentido editarse
+            throw new NotImplementedException();
+
             if (!ModelState.IsValid) return View(orderModel);
-            
+
+            orderModel.LogMessage(User, "Edited order");
             Db.OrderModels.AddOrUpdate(orderModel);
             await Db.SaveChangesAsync();
 
@@ -74,11 +78,13 @@ namespace Limbs.Web.Areas.Admin.Controllers
             
             if (newStatus == OrderStatus.NotAssigned)
                 order.OrderAmbassador = null;
+            order.LogMessage(User, $"Change status from {order.Status} to {newStatus}");
             order.Status = newStatus;
             order.StatusLastUpdated = DateTime.UtcNow;
-
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
+
+            //TODO (ale): notificar a los usuarios el cambio de estado + asignacion
 
             return RedirectToLocal(returnUrl);
         }
@@ -182,6 +188,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             if (ambassador == null)
                 return HttpNotFound();
 
+            order.LogMessage(User, $"Change ambassador from {(order.OrderAmbassador != null ? order.OrderAmbassador.Email : "no-data")} to {ambassador.Email}");
             order.OrderAmbassador = ambassador;
             order.Status = OrderStatus.PreAssigned;
             order.StatusLastUpdated = DateTime.UtcNow;
@@ -213,6 +220,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             if (order == null)
                 return HttpNotFound();
 
+            order.LogMessage(User, $"Change delivery from {order.DeliveryCourier} to {orderModel.DeliveryCourier}");
             order.DeliveryCourier = orderModel.DeliveryCourier;
             order.DeliveryTrackingCode = orderModel.DeliveryTrackingCode;
             Db.SaveChanges();

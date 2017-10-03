@@ -25,6 +25,9 @@
         <th>
             Embajador
         </th>
+        <th>
+            Acciones
+        </th>
     </tr>
     @foreach (var item in Model)
     {
@@ -39,6 +42,11 @@
                 @if (item.Status == OrderStatus.Ready)
                 {
                     <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
+                }
+                @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) && 
+                    (item.Status == OrderStatus.Ready || item.Status == OrderStatus.Delivered))
+                {
+                    <span>(sin prueba de entrega)</span>
                 }
             </td>
             <td>
@@ -61,6 +69,11 @@
                     <span>No asignado (@Html.ActionLink("asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
                 }
 
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id, area = "Admin" }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id, area = "Admin" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id, area = "Admin" })
             </td>
         </tr>
     }

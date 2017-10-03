@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Principal;
+using Microsoft.AspNet.Identity;
+using Newtonsoft.Json;
 
 namespace Limbs.Web.Models
 {
@@ -11,6 +15,7 @@ namespace Limbs.Web.Models
         {
             Sizes = new OrderSizesModel();
             DeliveryCourier = Courier.NoCourier;
+            Log = new List<OrderLogItem>();
         }
 
         [Key]
@@ -56,6 +61,40 @@ namespace Limbs.Web.Models
         [Display(Name = "Tracking", Description = "")]
         public string DeliveryTrackingCode { get; set; }
 
+        [Display(Name = "Prueba de entrega", Description = "")]
+        public string DeliveryPostalLabel { get; set; }
+
+        [NotMapped]
+        [Display(Name = "Historial de cambios", Description = "")]
+        public List<OrderLogItem> Log { get; private set; }
+        public string OrderLog
+        {
+            get => JsonConvert.SerializeObject(Log);
+            set => Log = value != null ? JsonConvert.DeserializeObject<List<OrderLogItem>>(value) : new List<OrderLogItem>();
+        }
+
+        public void LogMessage(IPrincipal user, string message)
+        {
+            Log.Add(new OrderLogItem
+            {
+                User = user.Identity.GetUserName(),
+                Message = message,
+            });
+        }
+    }
+
+    public class OrderLogItem
+    {
+        public OrderLogItem()
+        {
+            Date = DateTime.UtcNow;
+        }
+
+        public DateTime Date { get; set; }
+
+        public string User { get; set; }
+
+        public string Message { get; set; }
     }
 
     public enum OrderStatus

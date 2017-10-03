@@ -1041,12 +1041,15 @@ nav {
     margin: 0px auto;
 }
 
-    .tabla_datos tr td {
-        padding: 11px 18px;
-        border-bottom: solid 1px #dadada;
-    }
+.tabla_datos tr td {
+    padding: 11px 18px;
+    border-bottom: solid 1px #dadada;
+}
 
-/**FOOOOOTEEEERRRR**/ 
+.tabla_datos img {
+    max-width: 30vw;
+}
+/**FOOOOOTEEEERRRR**/
 .footer-distributed {
     background-color: #292c2f;
     box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);

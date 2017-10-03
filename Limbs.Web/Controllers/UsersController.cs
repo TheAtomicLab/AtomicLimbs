@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Net.Http;
 using System.Web.Mvc;
 using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
@@ -58,16 +57,5 @@ namespace Limbs.Web.Controllers
 
             return RedirectToAction("Index");
         }
-        
-        [OverrideAuthorize(Roles = AppRoles.User)]
-        public ActionResult GetUserImage(string url)
-        {
-            var client = new HttpClient();
-
-            var file = client.GetByteArrayAsync(url);
-
-            return new FileContentResult(file.Result, "image/jpeg");
-        }
     }
-
 }

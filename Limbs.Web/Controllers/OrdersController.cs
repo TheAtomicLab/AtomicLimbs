@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using System.Net.Http;
 using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Extensions;
@@ -15,7 +16,6 @@ namespace Limbs.Web.Controllers
     [DefaultAuthorize(Roles = AppRoles.Requester)]
     public class OrdersController : BaseController
     {
-        //  public IOrdersRepository OrdersRepository { get; set; }
         private readonly IUserFiles _userFiles;
         
         public OrdersController(IUserFiles userFiles)
@@ -30,7 +30,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Orders/Details/5
-        [OverrideAuthorize(Roles = AppRoles.User)]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -89,7 +89,7 @@ namespace Limbs.Web.Controllers
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
 
-            TempData["fileUrl"] = Url.Action("GetUserImage", "Users", new { url = fileUrl.AbsoluteUri });
+            TempData["fileUrl"] = Url.Action("GetUserImage", new { url = fileUrl.AbsoluteUri });
 
             return RedirectToAction("ManoMedidas");
         }
@@ -142,11 +142,63 @@ namespace Limbs.Web.Controllers
             orderModel.Status = OrderStatus.NotAssigned;
             orderModel.StatusLastUpdated = DateTime.UtcNow;
             orderModel.Date = DateTime.UtcNow;
-            
+            orderModel.LogMessage(User, "New order");
+
             Db.OrderModels.Add(orderModel);
             await Db.SaveChangesAsync();
 
             return RedirectToAction("Index", "Users");
+        }
+
+        // GET: Orders/GetUserImage
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
+        public ActionResult GetUserImage(string url)
+        {
+            var client = new HttpClient();
+
+            var file = client.GetByteArrayAsync(url);
+
+            return new FileContentResult(file.Result, "image/jpeg");
+        }
+
+
+        // POST: Orders/UploadProofOfDelivery
+        [HttpPost]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
+        public ActionResult UploadProofOfDelivery(HttpPostedFileBase file, int orderId)
+        {
+            if (file == null || file.ContentLength == 0)
+            {
+                ModelState.AddModelError("nofile", "Seleccione una foto.");
+            }
+            else
+            {
+                if (file.ContentLength > 1000000 * 5)
+                {
+                    ModelState.AddModelError("bigfile", "La foto elegida es muy grande (max = 5 MB).");
+                }
+                if (!file.IsImage())
+                {
+                    ModelState.AddModelError("noimage", "El archivo seleccionado no es una imagen.");
+                }
+            }
+            var orderModel = Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefault(x => x.Id == orderId);
+            if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            if (!CanViewOrder(orderModel))
+            {
+                return RedirectToAction("RedirectUser", "Account");
+            }
+            if (!ModelState.IsValid) return View("Details", orderModel);
+
+
+            var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+            var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+
+            orderModel.ProofOfDelivery = fileUrl.AbsoluteUri;
+            orderModel.LogMessage(User, "New proof of delivery at: " + fileUrl.AbsoluteUri);
+            Db.SaveChanges();
+
+            return Redirect(Request.UrlReferrer?.PathAndQuery);
         }
     }
 }
