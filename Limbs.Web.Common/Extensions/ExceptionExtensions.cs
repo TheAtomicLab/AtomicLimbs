@@ -4,6 +4,7 @@ using System.Web;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
+using Microsoft.ApplicationInsights;
 
 namespace Limbs.Web.Common.Extensions
 {
@@ -84,7 +85,8 @@ namespace Limbs.Web.Common.Extensions
 
             try
             {
-                //Telemetry.TrackException(exception);
+                var ai = new TelemetryClient();
+                ai.TrackException(exception);
             }
             catch (Exception)
             {
