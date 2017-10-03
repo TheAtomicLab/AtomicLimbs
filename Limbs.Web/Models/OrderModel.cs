@@ -13,7 +13,6 @@ namespace Limbs.Web.Models
     {
         public OrderModel()
         {
-            Sizes = new OrderSizesModel();
             DeliveryCourier = Courier.NoCourier;
             Log = new List<OrderLogItem>();
         }
