@@ -4,15 +4,24 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Models;
+using Limbs.Web.Repositories.Interfaces;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
     public class OrdersController : AdminBaseController
     {
+        private readonly IUserFiles _userFiles;
+
+        public OrdersController(IUserFiles userFiles)
+        {
+            _userFiles = userFiles;
+        }
+
         // GET: Admin/Order
         public ActionResult Index()
         {
@@ -213,12 +222,21 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // POST: Admin/Orders/AssignDelivery/?idOrder=2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AssignDelivery(OrderModel orderModel)
+        public ActionResult AssignDelivery(HttpPostedFileBase file, OrderModel orderModel)
         {
             var order = Db.OrderModels.Find(orderModel.Id);
 
             if (order == null)
                 return HttpNotFound();
+
+            if (file != null)
+            {
+                var fileName = Guid.NewGuid().ToString("N") + file.FileName;
+                var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+
+                order.DeliveryPostalLabel = fileUrl.AbsoluteUri;
+                order.LogMessage(User, $"New delivery postal label at {fileUrl.AbsoluteUri}");
+            }
 
             order.LogMessage(User, $"Change delivery from {order.DeliveryCourier} to {orderModel.DeliveryCourier}");
             order.DeliveryCourier = orderModel.DeliveryCourier;
