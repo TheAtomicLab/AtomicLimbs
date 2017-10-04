@@ -19,7 +19,7 @@ body {
 }
 
 .min_full {
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 370px);
 }
 
 #cont {
@@ -29,6 +29,17 @@ body {
 
 .bg-gris {
     background-color: #e2e2e2;
+}
+
+.azulAtomicBG {
+    background-color: #4772b2;
+}
+
+.azulAtomicTx {
+    color: #4772b2;
+}
+h3 {
+    color: #444444;
 }
 
 /*inicio*/
@@ -1012,6 +1023,45 @@ nav {
 
 
 /*info solicitud*/
+#info_pedido {
+    max-width: 1000px;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0px auto;
+}
+#head_info {
+    border-bottom: solid 1px #4772b2;
+    padding: 5px;
+    box-sizing: border-box;
+    position: relative;
+}
+    #head_info h1 {
+        font-size: 3em;
+        font-weight: 200;
+        color: #4772B2;
+    }
+#estado_pedido {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+.info_bloque {
+    width: 100%;
+    max-width: 300px;
+    margin: 15px;
+    margin-bottom: 30px;
+    margin-right: 100px;
+    display: inline-block;
+}
+.info_bloque img {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+
+
 #info_solicitud {
     max-width: 900px;
     width: 100%;
@@ -1038,7 +1088,6 @@ nav {
     text-align: left;
     border-collapse: collapse;
     position: relative;
-    margin: 0px auto;
 }
 
 .tabla_datos tr td {
