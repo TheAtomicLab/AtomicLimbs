@@ -2,12 +2,12 @@
 @model Limbs.Web.Models.UserModel
 @section scripts
 {
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
-</script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
+    </script>
     <script src="~/Scripts/geo.js"></script>
-    <script src="~/Scripts/pages/users.js"></script>    
-    <script src="~/Scripts/register.js"></script>   
+    <script src="~/Scripts/pages/users.js"></script>
+    <script src="~/Scripts/register.js"></script>
     <script src="~/Scripts/menu.js"></script>
 }
 
@@ -15,19 +15,21 @@
 
     <div id="registro">
         @using (Html.BeginForm("Create", "Users",
-                 FormMethod.Post, new { @class = "form" }))
+                     FormMethod.Post, new { @class = "form" }))
         {
             <h2 class="f-titulo">Tus datos</h2>
             <div class="f-seccion">
                 <div class="f-campo-mitad">
-                   @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })    
-                   @Html.EditorFor(model => model.UserLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
+                    @Html.EditorFor(model => model.UserLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
                 </div>
                 <h3>¿Sos el usuario de la mano?</h3>
                 <select class="f-drop blue_button" name="selectUser">
-                    <option value="1">SI</option>
                     <option value="0">NO</option>
+                    <option value="1">SI</option>
                 </select>
+                <br />
+                <label name="isAdultCheck"><input type="checkbox"> ¿Declara que es mayor de 18 años?</label><br>
             </div>
             <h2 class="f-titulo" name="titleDateUser">Datos del usuario de la mano</h2>
             <div class="f-seccion">
