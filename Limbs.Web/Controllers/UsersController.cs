@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Models;
@@ -38,8 +39,12 @@ namespace Limbs.Web.Controllers
         // POST: Users/Create
         [HttpPost]
         [OverrideAuthorize(Roles = AppRoles.Unassigned)]
-        public async Task<ActionResult> Create(UserModel userModel)
+        public async Task<ActionResult> Create(UserModel userModel, bool selectUser, bool isAdultCheck)
         {
+            ViewBag.SelectUser = selectUser;
+            ViewBag.IsAdultCheck = isAdultCheck;
+
+            ValidateUserModel(userModel, selectUser, isAdultCheck);
             if (!ModelState.IsValid) return View("Create", userModel);
             
             var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
@@ -56,6 +61,29 @@ namespace Limbs.Web.Controllers
             await Db.SaveChangesAsync();
 
             return RedirectToAction("Index");
+        }
+
+        private void ValidateUserModel(UserModel userModel, bool selectUser, bool isAdultCheck)
+        {
+            if (selectUser)
+            {
+                userModel.UserName = userModel.ResponsableName;
+                userModel.UserLastName = userModel.ResponsableLastName;
+                ModelState[nameof(userModel.UserName)].Errors.Clear();
+                ModelState[nameof(userModel.UserLastName)].Errors.Clear();
+                if (userModel.Birth >= DateTime.UtcNow.AddYears(-18))
+                {
+                    ModelState.AddModelError("minbirthday", "Debe ser mayor de 18 años.");
+                }
+                return;
+            }
+            if(!isAdultCheck)
+                ModelState.AddModelError("minbirthdayresponsable", "Debe ser mayor de 18 años.");
+
+            if (userModel.Birth >= DateTime.UtcNow.AddYears(-4))
+            {
+                ModelState.AddModelError("minbirthday", "El usuario de la mano debe ser mayor de 4 años.");
+            }
         }
     }
 }

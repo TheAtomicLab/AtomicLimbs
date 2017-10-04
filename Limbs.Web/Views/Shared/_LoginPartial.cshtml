@@ -6,7 +6,7 @@
         <div id="icono_perfil" onclick="menu_mobil_activo()"></div>
         <ul id="opciones_perfil">
             <li class="perfil_name">Hola @User.Identity.GetUserName()</li>
-            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+            @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
                 @Html.AntiForgeryToken()
                 <li><a href="javascript:document.getElementById('logoutForm').submit()" class="cerrar_sesion">Cerrar sesión</a></li>

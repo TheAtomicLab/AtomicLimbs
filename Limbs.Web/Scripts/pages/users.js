@@ -1,68 +1,69 @@
 ﻿//TODO: Sacar los alert y poner un mensaje lindo
-$(document).ready(function () {
-    var birth = $("#Birth");
-    var birthDatepicker = birth.datepicker(
-        {
-            minDate: new Date(1900, 1, 1), maxDate: '-3Y',
-            //ISO 8601
-            dateFormat: 'yy-mm-dd',
-            changeYear: true,
-            changeMonth: true,
-            yearRange: '-110:-3'
-        }
-    );
+$(document).ready(function() {
+    setDatePicker(4);
 
-    var selectUs = $('[name="selectUser"]');
-    selectUs.on("change", function () {
-        selectUser(selectUs.val());
+    $('[name="selectUser"]').on("change", function () {
+        selectUser($(this).val());
     });
 
-    $('[name="register"]').click(function () {
-        isUser(selectUs.val());
+    $("form.form").submit(function() {
+        return isUser($('[name="selectUser"]').val());
     });
 });
 
-var checkBoxAdult = $('[name="isAdultCheck"]').children("input");
+var checkBoxAdult = $('[name="isAdultCheck"]');
+
+function setDatePicker(maxYear) {
+    $("#Birth").datepicker("destroy");
+    $("#Birth").datepicker(
+        {
+            minDate: new Date(1900, 1, 1),
+            maxDate: "-" + maxYear + "Y",
+            dateFormat: "yy-mm-dd",//ISO 8601
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-110:-" + maxYear
+        }
+    );
+}
 
 function selectUser(value) {
-    if (value === '1') {
+    if (value === "true") {
         //es usuario
-        $('#ResponsableName').hide();
-        $('#ResponsableLastName').hide();
-        $('[name="titleDateUser"]').hide();
-        $('[name="isAdultCheck"]').hide();
+        setDatePicker(18);
+        $("#UserName").hide();
+        $("#UserLastName").hide();
+        $("[name='titleDateUser']").hide();
+        $("#isAdultCheckContainer").hide();
     } else {
         //no es usuario
-        $('#ResponsableName').show();
-        $('[name="titleDateUser"]').show();
-        $('#ResponsableLastName').show();
-        $('[name="isAdultCheck"]').show();
+        setDatePicker(4);
+        $("#UserName").show();
+        $("#UserLastName").show();
+        $("[name='titleDateUser']").show();
+        $("#isAdultCheckContainer").show();
     }
 }
 
 function isUser(val) {
-    if (val === '1')
-    { validBirth(18); }
-    else {
-        validBirth(4);
-        validAdultCheck(checkBoxAdult);
+    if (val === "true") {
+        return validBirth(18);
+    } else {
+        return validBirth(4) && validAdultCheck(checkBoxAdult);
     }
 }
 
 function validBirth(minAge) {
-    //age = getAge(birth);
-    age = getAge($("#Birth"));
+    var age = getAge($("#Birth"));
 
     if (age < 0) {
-        alert("Por favor ingresa una fecha valida. Todavia no naciste :) .");
+        alert("Por favor ingresá una fecha válida. Todavía no naciste :) .");
         return false;
     } else if (age < minAge) {
-        
         alert("La edad tiene que ser mayor a " + minAge + " años.");
-        //reset datepicker
-        //$("#Birth").datepicker('setDate', null);
         return false;
     }
+    return true;
 }
 
 function getAge(birth) {
@@ -80,6 +81,9 @@ function getAge(birth) {
 }
 
 function validAdultCheck(check) {
-    if (!check.is(':checked'))
-        alert("Por favor. Si usted no es el usuario de la protesis es necesario que sea mayor de 18 años.");
+    if (!check.is(":checked")) {
+        alert("Por favor. Si usted no es el usuario de la mano es necesario que sea mayor de 18 años.");
+        return false;
+    }
+    return true;
 }

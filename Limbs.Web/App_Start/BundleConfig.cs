@@ -20,6 +20,9 @@ namespace Limbs.Web
                 "~/Content/estilo01.css",
                 "~/Content/estilo02.css",
                 "~/Content/estiloatomchoose.css"));
+
+            bundles.Add(new StyleBundle("~/Content/jqueryui").Include(
+                "~/Content/jquery-ui.min.css"));
         }
     }
 }
