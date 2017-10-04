@@ -81,7 +81,6 @@ namespace Limbs.Web.Common.Extensions
             catch (Exception e)
             {
                 //estamos en la B, error del error
-                e.Log();
             }
 
             try
