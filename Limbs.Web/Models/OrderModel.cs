@@ -24,20 +24,37 @@ namespace Limbs.Web.Models
         public DateTime Date { get; set; }
 
         /// <summary>
-        /// Usuario que solicita la orden de protesis
+        ///     Usuario que solicita la orden de protesis
         /// </summary>
         public UserModel OrderRequestor { get; set; }
 
         /// <summary>
-        /// Embajador que procesara la orden
+        ///     Embajador que procesara la orden
         /// </summary>
         public virtual AmbassadorModel OrderAmbassador { get; set; }
 
         public OrderColor Color { get; set; }
 
+        [Display(Name = "Cuál", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public ProductType ProductType { get; set; }
+
         public virtual ICollection<AccessoryModel> Extras { get; set; }
-        
+
+        [NotMapped]
         public virtual OrderSizesModel Sizes { get; set; }
+
+        public string SizesData
+        {
+            get => JsonConvert.SerializeObject(Sizes);
+            set => Sizes = value != null
+                ? JsonConvert.DeserializeObject<OrderSizesModel>(value)
+                : new OrderSizesModel();
+        }
+
+        [Display(Name = "Amputación", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public AmputationType AmputationType { get; set; }
 
         [Display(Name = "Comentarios", Description = "")]
         [DataType(DataType.MultilineText)]
@@ -66,10 +83,13 @@ namespace Limbs.Web.Models
         [NotMapped]
         [Display(Name = "Historial de cambios", Description = "")]
         public List<OrderLogItem> Log { get; private set; }
+
         public string OrderLog
         {
             get => JsonConvert.SerializeObject(Log);
-            set => Log = value != null ? JsonConvert.DeserializeObject<List<OrderLogItem>>(value) : new List<OrderLogItem>();
+            set => Log = value != null
+                ? JsonConvert.DeserializeObject<List<OrderLogItem>>(value)
+                : new List<OrderLogItem>();
         }
 
         public void LogMessage(IPrincipal user, string message)
@@ -77,7 +97,7 @@ namespace Limbs.Web.Models
             Log.Add(new OrderLogItem
             {
                 User = user.Identity.GetUserName(),
-                Message = message,
+                Message = message
             });
         }
     }
@@ -98,49 +118,32 @@ namespace Limbs.Web.Models
 
     public enum OrderStatus
     {
-        [Description("No asignado")]
-        NotAssigned,
-        [Description("Pre-asignado")]
-        PreAssigned,
-        [Description("Imprimiendo")]
-        Pending,
-        [Description("Lista")]
-        Ready,
-        [Description("Entregada")]
-        Delivered,
+        [Description("No asignado")] NotAssigned,
+        [Description("Pre-asignado")] PreAssigned,
+        [Description("Imprimiendo")] Pending,
+        [Description("Lista")] Ready,
+        [Description("Entregada")] Delivered
     }
+
     public enum Courier
     {
-        [Description("Sin envio")]
-        NoCourier,
-        [Description("Andreani")]
-        Andreani,
+        [Description("Sin envio")] NoCourier,
+        [Description("Andreani")] Andreani
     }
 
     public enum OrderColor
-{
-    [Description("Blanco y rojo")]
-    A,
-    [Description("Azul y rojo")]
-    B,
-    [Description("Rosa y blanco")]
-    C,
-    [Description("Azul y amarillo")]
-    D,
-    [Description("Azul blanco y rojo")]
-    E,
-    [Description("Rojo y amarillo")]
-    F,
-}
-
-public static class AttributesHelperExtension
     {
-        public static string ToDescription(this Enum value)
-        {
-            var da = (DescriptionAttribute[])(value.GetType().GetField(value.ToString())).GetCustomAttributes(typeof(DescriptionAttribute), false);
-            return da.Length > 0 ? da[0].Description : value.ToString();
-        }
+        [Description("Blanco y rojo")] A,
+        [Description("Azul y rojo")] B,
+        [Description("Rosa y blanco")] C,
+        [Description("Azul y amarillo")] D,
+        [Description("Azul blanco y rojo")] E,
+        [Description("Rojo y amarillo")] F
     }
 
-    
+    public enum ProductType
+    {
+        [Description("Derecha")] Right,
+        [Description("Izquierda")] Left
+    }
 }

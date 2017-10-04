@@ -270,21 +270,23 @@
     <Compile Include="Migrations\201710030230394_DeliveryLabelAndOrderLog.Designer.cs">
       <DependentUpon>201710030230394_DeliveryLabelAndOrderLog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710040419407_OrderRefactor.cs" />
+    <Compile Include="Migrations\201710040419407_OrderRefactor.Designer.cs">
+      <DependentUpon>201710040419407_OrderRefactor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AmputationType.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
     <Compile Include="Models\OrderSizesModel.cs" />
-    <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\AmbassadorModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
-    <Compile Include="Repositories\ProductRepository.cs" />
-    <Compile Include="Repositories\IProductRepository.cs" />
     <Compile Include="Repositories\IUsersRepository.cs" />
     <Compile Include="Repositories\IAmbassadorsRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
@@ -502,6 +504,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710030230394_DeliveryLabelAndOrderLog.resx">
       <DependentUpon>201710030230394_DeliveryLabelAndOrderLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710040419407_OrderRefactor.resx">
+      <DependentUpon>201710040419407_OrderRefactor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

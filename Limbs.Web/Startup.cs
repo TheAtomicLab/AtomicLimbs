@@ -26,7 +26,6 @@ namespace Limbs.Web
             container.Register<IOrdersRepository, OrdersRepository>();
             container.Register<IUsersRepository, UsersRepository>();
             container.Register<IAmbassadorsRepository, AmbassadorsRepository>();
-            container.Register<IProductsRepository, ProductsRepository>();
             container.Register<IUserFiles, UserFilesInAzureStorage>();
 
             container.RegisterControllers();

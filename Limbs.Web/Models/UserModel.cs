@@ -10,11 +10,6 @@ namespace Limbs.Web.Models
 
     public class UserModel
     {
-        public UserModel()
-        {
-            OrderModel = new List<OrderModel>();
-        }
-
         [Key]
         public int Id { get; set; }
 
@@ -37,14 +32,7 @@ namespace Limbs.Web.Models
         [Display(Name = "Apellido del Responsable", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableLastName { get; set; }
-
-        /*
-        [Display(Name = "Correo electrónico", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        [EmailAddress]
-        public string Email { get; set; }
-        */
-
+        
         [Display(Name = "Teléfono", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Phone { get; set; }
@@ -74,20 +62,7 @@ namespace Limbs.Web.Models
         [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
-
-        [Display(Name = "Tipo de prótesis", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public ProthesisType ProthesisType { get; set; }
-
-        [Display(Name = "Cuál", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public ProductType ProductType { get; set; }
-
         
-        [Display(Name = "Amputación", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public AmputationType AmputationType { get; set; }
-
         public DbGeography Location { get; set; }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
@@ -104,15 +79,7 @@ namespace Limbs.Web.Models
             return $"{UserName} {UserLastName}";
         }
     }
-
-    public enum ProthesisType
-    {
-        [Description("Mano")]
-        Hand,
-        [Description("Brazo")]
-        Arm
-    }
-
+    
     public enum Gender
     {
         [Description("Femenino")]
@@ -121,25 +88,5 @@ namespace Limbs.Web.Models
         Hombre,
         [Description("No Declara")]
         Otro
-    }
-
-    public enum AmputationType
-    {
-        [Description("Perdí una falange de cualquier dedo")]
-        A,
-        [Description("Perdí dos falanges de cualquier dedo")]
-        B,
-        [Description("Perdí mis cuatro dedos y tengo un pulgar")]
-        C,
-        [Description("Perdí el pulgar y no tengo los dedos (Poseo hueso capital)")]
-        D,
-        [Description("Perdí dos falanges de cualquier dedo")]
-        E,
-        [Description("Perdí dos falanges de cualquier dedo")]
-        F,
-        [Description("Perdí dos falanges de cualquier dedo")]
-        G,
-        [Description("Perdí dos falanges de cualquier dedo")]
-        H
     }
 }

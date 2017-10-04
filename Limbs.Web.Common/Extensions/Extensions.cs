@@ -1,9 +1,17 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Limbs.Web.Common.Extensions
 {
     public static class Extensions
     {
+        public static string ToDescription(this Enum value)
+        {
+            var da = (DescriptionAttribute[])value.GetType().GetField(value.ToString())
+                .GetCustomAttributes(typeof(DescriptionAttribute), false);
+            return da.Length > 0 ? da[0].Description : value.ToString();
+        }
+
         public static string ToFriendlyDateString(this DateTime date)
         {
             // 1.
