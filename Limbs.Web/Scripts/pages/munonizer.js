@@ -2,6 +2,12 @@
 
     var avg = 0; //AVRG VALUE
     var fallos = 0; //FAILS, doh
+    var lastmedida = 0;
+    var counter = 0;
+    var est = 1;
+    var drw = 1;
+    // Dibujo o no dibujo
+    var drawing = false;
     var ctx = canvas.getContext("2d");
     window.fastThreshold = 0.1;
     window.onload = function () {
@@ -12,9 +18,7 @@
         image.height = height;
         canvas.width = width;
         canvas.height = height;
-
-        var ctx = canvas.getContext("2d");
-
+        
         var doFindFeatures = function () {
             tracking.Fast.THRESHOLD = window.fastThreshold;
             ctx.drawImage(image, 0, 0, width, height);
@@ -96,19 +100,13 @@
                 };
         })();
         // Canvas
-        var lastmedida = 0;
         ctx.strokeStyle = "#4772B2";
         ctx.lineWith = 3;
         // UI
-        document.getElementById("clearBtn").addEventListener("click", clearCanvas);
-        // Dibujo o no dibujo
-        var drawing = false;
-
+        $(".clearBtn").click(clearCanvas);
         var mousePos = { x: 0, y: 0 };
         var firstPos = mousePos;
         var lastPos = mousePos;
-        var est = 1;
-        var drw = 1;
         canvas.addEventListener("mousedown",
             function (e) {
                 if (ctx) {
@@ -190,9 +188,7 @@
                 y: touchEvent.touches[0].clientY - rect.top
             };
         }
-
-        var counter = 0;
-
+        
         // dibujar en canvas
         function renderCanvas() {
             if (drawing) {
@@ -235,7 +231,11 @@
 
     function clearCanvas(e) {
         e.preventDefault();
-
+        counter = 0;
+        lastmedida = 0;
+        est = 1;
+        drw = 1;
+        drawing = false;
         ctx = canvas.getContext("2d");
         $(image).show();
         ctx.clearRect(0, 0, canvas.width, canvas.height);

@@ -63,11 +63,35 @@ namespace Limbs.Web.Controllers
         // GET: Orders/ManoPedir
         public ActionResult ManoPedir()
         {
-            return View();
+            return View("ManoPedir", new OrderModel());
+        }
+
+
+        // POST: Orders/ManoPedir
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ManoPedir(OrderModel orderModel)
+        {
+            TempData["AmputationType"] = orderModel.AmputationType;
+            TempData["ProductType"] = orderModel.ProductType;
+
+            return RedirectToAction("ManoImagen");
+        }
+
+        // GET: Orders/ManoImagen
+        public ActionResult ManoImagen()
+        {
+            return View("ManoImagen", new OrderModel
+            {
+                AmputationType = (AmputationType)TempData["AmputationType"],
+                ProductType = (ProductType)TempData["ProductType"],
+            });
         }
 
         // POST: Orders/UploadImageUser
-        public ActionResult UploadImageUser(HttpPostedFileBase file)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UploadImageUser(OrderModel orderModel, HttpPostedFileBase file)
         {
             if (file == null || file.ContentLength == 0)
             {
@@ -90,7 +114,9 @@ namespace Limbs.Web.Controllers
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
 
-            TempData["fileUrl"] = Url.Action("GetUserImage", new { url = fileUrl.AbsoluteUri });
+            TempData["fileUrl"] = fileUrl.AbsoluteUri;
+            TempData["AmputationType"] = orderModel.AmputationType;
+            TempData["ProductType"] = orderModel.ProductType;
 
             return RedirectToAction("ManoMedidas");
         }
@@ -102,36 +128,34 @@ namespace Limbs.Web.Controllers
             {
                 return RedirectToAction("ManoPedir", "Orders");
             }
-
-            ViewBag.ImageUrl = TempData["fileUrl"];
-            return View("ManoMedidas");
+            
+            return View("ManoMedidas", new OrderModel
+            {
+                IdImage = TempData["fileUrl"].ToString(),
+                AmputationType = (AmputationType)TempData["AmputationType"],
+                ProductType = (ProductType)TempData["ProductType"],
+            });
         }
 
         // POST: Orders/ManoOrden
         [HttpPost]
-        public ActionResult ManoOrden(string imageUrl, float distA, float distB, float distC)
+        [ValidateAntiForgeryToken]
+        public ActionResult ManoOrden(OrderModel orderModel)
         {
-            if (string.IsNullOrWhiteSpace(imageUrl))
+            ModelState.Clear();
+            if (string.IsNullOrWhiteSpace(orderModel.IdImage))
                 ModelState.AddModelError("noimage", "Error desconocido, vuelva a comenzar.");
-            if (distA <= 0 || distB <= 0 || distC <= 0)
+            if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0)
                 ModelState.AddModelError("nodistance", "Seleccione las medidas.");
-            ViewBag.ImageUrl = imageUrl;
+
             if (!ModelState.IsValid) return View("ManoMedidas");
 
-            return View("ManoOrden", new OrderModel
-            {
-                IdImage = imageUrl,
-                Sizes = new OrderSizesModel
-                {
-                    A = distA,
-                    B = distB,
-                    C = distC,
-                }
-            });
+            return View("ManoOrden", orderModel);
         }
 
         // POST: Orders/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(OrderModel orderModel)
         {
             if (!ModelState.IsValid) return View("ManoOrden", orderModel);

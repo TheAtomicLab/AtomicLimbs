@@ -1,0 +1,16 @@
+﻿@using Limbs.Web.Common.Extensions
+@using Limbs.Web.Models
+@model AmputationType
+@{
+    var values = Enum.GetValues(ViewData.ModelMetadata.ModelType).Cast<AmputationType>()
+        .Select(v => new SelectListItem
+        {
+            Selected = v.Equals(Model),
+            Text = v.ToDescription(),
+            Value = v.ToString()
+        });
+}
+@foreach (var item in values)
+{
+    @Html.RadioButtonFor(b => Model, item.Value, new { @class = "tipo_amp", title = item.Text,  })
+}

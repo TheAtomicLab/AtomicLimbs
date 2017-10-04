@@ -481,7 +481,7 @@
     <Content Include="Views\Shared\Footer.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
     <Content Include="Views\Orders\ManoMedidas.cshtml" />
-    <Content Include="Views\Orders\ManoPedir.cshtml" />
+    <Content Include="Views\Orders\ManoImagen.cshtml" />
     <Content Include="Views\Orders\ManoOrden.cshtml" />
     <Content Include="Views\Shared\AdminMenu.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\SelectAmbassador.cshtml" />
@@ -489,6 +489,11 @@
     <Content Include="Views\Orders\_DetailActions.cshtml" />
     <Content Include="Views\Orders\_DetailProofOfDelivery.cshtml" />
     <Content Include="Views\Shared\_GoogleAnalytics.cshtml" />
+    <Content Include="Views\Orders\ManoPedir.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DbGeography.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DbGeography.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AmputationType.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ProductType.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
