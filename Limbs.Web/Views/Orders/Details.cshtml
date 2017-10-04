@@ -5,10 +5,6 @@
     ViewBag.Title = "Detalles de pedido";
 }
 
-
-
-
-
 <article id="info_pedido">
     <div id="head_info">
         <h1>Solicitud:</h1>
@@ -18,225 +14,28 @@
         </div>
     </div>
     <div>
-        @Html.Partial("_DetailActions", Model)
+        @Html.Partial("Details/_Actions", Model)
     </div>
-    <div class="info_bloque">
-        <h3>Datos del usuario</h3>
-        <table class="tabla_datos">
-            <tr>
-                <td>Nombre:</td>
-                <td>@Model.OrderRequestor.ResponsableName</td>
-            </tr>
-            <tr>
-                <td>Apellido:</td>
-                <td>@Model.OrderRequestor.ResponsableLastName</td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td>@Model.OrderRequestor.Email</td>
-            </tr>
-            <tr>
-                <td>Nacimiento:</td>
-                <td>@Model.OrderRequestor.Birth.ToString("dd/MM/yyyy")</td>
-            </tr>
-            <tr>
-                <td>País:</td>
-                <td>@Model.OrderRequestor.Country</td>
-            </tr>
-            <tr>
-                <td>Ciudad:</td>
-                <td>@Model.OrderRequestor.City</td>
-            </tr>
-            <tr>
-                <td>Dirección:</td>
-                <td>@Model.OrderRequestor.Address</td>
-            </tr>
-            <tr>
-                <td>Teléfono:</td>
-                <td>@Model.OrderRequestor.Phone</td>
-            </tr>
-        </table>
-    </div>
-@if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
-{
-    <div class="info_bloque">
-        <h3>Delivery</h3>
-        <table class="tabla_datos">
-            <tr>
-                <td>Courier:</td>
-                <td>@Model.DeliveryCourier.ToDescription()</td>
-            </tr>
-            @if (Model.DeliveryCourier != Courier.NoCourier)
-            {
-                <tr>
-                    <td>Tracking:</td>
-                    <td>
-                        @if (!string.IsNullOrWhiteSpace(Model.DeliveryTrackingCode))
-                        {
-                            @Model.DeliveryTrackingCode
-                        }
-                        else
-                        {
-                            <text>No disponible.</text>
-                        }
-                    </td>
-                </tr>
-                if (!string.IsNullOrWhiteSpace(Model.DeliveryPostalLabel))
-                {
-                    <tr>
-                        <td>@Html.DisplayNameFor(x => x.DeliveryPostalLabel)</td>
-                        <td>
-                            <a href="@Model.DeliveryPostalLabel" target="_blank">Descargar</a>
-                        </td>
-                    </tr>
-                }
-            }
-            <tr>
-                <td colspan="2" class="proofofdelivery">
-                    @Html.Partial("_DetailProofOfDelivery", Model)
-                </td>
-            </tr>
-        </table>
-    </div>
-}
-</article>
-
-
-<article id="info_solicitud">
-    <h1>Pedido:</h1>
     
-    @Html.Partial("_DetailActions", Model)
+    <div class="info_bloque">
+        @Html.Partial("Details/_OrderInfo", Model)
+    </div>
 
-    <table class="tabla_datos">
-        <tr>
-            <td>Estado:</td>
-            <td><b>@Model.Status.ToDescription()</b></td>
-        </tr>
+    <div class="info_bloque">
+        @Html.Partial("Details/_UserInfo", Model)
+    </div>
+    
+    @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
+    {
+        <div class="info_bloque">
+            @Html.Partial("Details/_DeliveryInfo", Model)
+        </div>
+    }
+    @if (User.IsInRole(AppRoles.Administrator))
+    {
+        <div class="info_bloque">
+            @Html.Partial("Details/_AdminInfo", Model)
+        </div>
+    }
 
-        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
-        {
-            <tr>
-                <td colspan="2">Delivery:</td>
-            </tr>
-            <tr>
-                <td>Courier:</td>
-                <td>@Model.DeliveryCourier.ToDescription()</td>
-            </tr>
-            if (Model.DeliveryCourier != Courier.NoCourier)
-            {
-                <tr>
-                    <td>Tracking:</td>
-                    <td>
-                        @if (!string.IsNullOrWhiteSpace(Model.DeliveryTrackingCode))
-                        {
-                            @Model.DeliveryTrackingCode
-                        }
-                        else
-                        {
-                            <text>No disponible.</text>
-                        }
-                    </td>
-                </tr>
-                if (!string.IsNullOrWhiteSpace(Model.DeliveryPostalLabel))
-                {
-                    <tr>
-                        <td>@Html.DisplayNameFor(x => x.DeliveryPostalLabel)</td>
-                        <td>
-                            <a href="@Model.DeliveryPostalLabel" target="_blank">Descargar</a>
-                        </td>
-                    </tr>
-                }
-            }
-            <tr>
-                <td colspan="2" class="proofofdelivery">
-                    @Html.Partial("_DetailProofOfDelivery", Model)
-                </td>
-            </tr>
-        }
-
-        <tr>
-            <td>Nombre:</td>
-            <td>@Model.OrderRequestor.ResponsableName</td>
-        </tr>
-        <tr>
-            <td>Apellido:</td>
-            <td>@Model.OrderRequestor.ResponsableLastName</td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td>@Model.OrderRequestor.Email</td>
-        </tr>
-        <tr>
-            <td>Nacimiento:</td>
-            <td>@Model.OrderRequestor.Birth.ToString("dd/MM/yyyy")</td>
-        </tr>
-        <tr>
-            <td>País:</td>
-            <td>@Model.OrderRequestor.Country</td>
-        </tr>
-        <tr>
-            <td>Ciudad:</td>
-            <td>@Model.OrderRequestor.City</td>
-        </tr>
-        <tr>
-            <td>Dirección:</td>
-            <td>@Model.OrderRequestor.Address</td>
-        </tr>
-        <tr>
-            <td>Teléfono:</td>
-            <td>@Model.OrderRequestor.Phone</td>
-        </tr>
-
-        <tr>
-            <td colspan="2">
-                <p>Imagen:</p>
-                <br/>
-                <img src="@Model.IdImage"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Medidas:</td>
-            <td>
-                <p>A: @(Model.Sizes.A)cm</p>
-                <p>B: @(Model.Sizes.B)cm</p>
-                <p>C: @(Model.Sizes.C)cm</p>
-            </td>
-        </tr>
-
-        <tr>
-            <td colspan="2">
-                <p>Color:</p>
-                <br/>
-                <img src="/Content/img/mano_@(Model.Color).jpg"/>
-            </td>
-        </tr>
-
-        @if (!string.IsNullOrWhiteSpace(Model.Comments))
-        {
-            <tr>
-                <td>Comentarios:</td>
-                <td>@Model.Comments</td>
-            </tr>
-        }
-
-        @if (User.IsInRole(AppRoles.Administrator))
-        {
-            <tr>
-                <td>Log:</td>
-                <td>
-                    <ul class="log">
-                        @foreach (var item in Model.Log)
-                        {
-                            <li>
-                                <span>@item.Date.ToFriendlyDateString()</span> - 
-                                <span>@item.User</span> - 
-                                <span>@item.Message</span>
-                            </li>
-                        }
-                    </ul>
-                </td>
-            </tr>
-        }
-
-    </table>
 </article>

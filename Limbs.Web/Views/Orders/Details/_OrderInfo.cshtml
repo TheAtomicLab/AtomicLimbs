@@ -1,0 +1,38 @@
+﻿@model Limbs.Web.Models.OrderModel
+
+<h3>Datos de la orden</h3>
+<table class="tabla_datos">
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.AmputationType)</td>
+        <td>@Html.DisplayFor(x => x.AmputationType)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.ProductType)</td>
+        <td>@Html.DisplayFor(x => x.ProductType)</td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.IdImage)</td>
+        <td><img src="@Model.IdImage"/></td>
+    </tr>
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.Sizes)</td>
+        <td>
+            <p>A: @(Model.Sizes.A)cm</p>
+            <p>B: @(Model.Sizes.B)cm</p>
+            <p>C: @(Model.Sizes.C)cm</p>
+        </td>
+    </tr>
+
+    <tr>
+        <td>@Html.DisplayNameFor(x => x.Color)</td>
+        <td><img src="/Content/img/mano_@(Model.Color).jpg"/></td>
+    </tr>
+
+    @if (!string.IsNullOrWhiteSpace(Model.Comments))
+    {
+        <tr>
+            <td>@Html.DisplayNameFor(x => x.Comments)</td>
+            <td>@Html.DisplayFor(x => x.Comments)</td>
+        </tr>
+    }
+</table>

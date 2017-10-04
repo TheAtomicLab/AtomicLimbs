@@ -1049,11 +1049,9 @@ nav {
 }
 .info_bloque {
     width: 100%;
-    max-width: 300px;
-    margin: 15px;
-    margin-bottom: 30px;
-    margin-right: 100px;
-    display: inline-block;
+    max-width: 460px;
+    padding: 10px;
+    float: left;
 }
 .info_bloque img {
     max-height: 200px;
@@ -1088,6 +1086,7 @@ nav {
     text-align: left;
     border-collapse: collapse;
     position: relative;
+    width: 100%;
 }
 
 .tabla_datos tr td {
@@ -1095,9 +1094,6 @@ nav {
     border-bottom: solid 1px #dadada;
 }
 
-.tabla_datos img {
-    max-width: 30vw;
-}
 .tabla_datos ul.log li {
     max-width: 50vw;
     word-wrap: break-word;

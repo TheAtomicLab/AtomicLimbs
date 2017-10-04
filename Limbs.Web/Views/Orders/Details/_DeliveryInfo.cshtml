@@ -1,0 +1,41 @@
+﻿@using Limbs.Web.Common.Extensions
+@using Limbs.Web.Models
+@model OrderModel
+
+<h3>Delivery</h3>
+<table class="tabla_datos">
+    <tr>
+        <td>Courier:</td>
+        <td>@Model.DeliveryCourier.ToDescription()</td>
+    </tr>
+    @if (Model.DeliveryCourier != Courier.NoCourier)
+    {
+        <tr>
+            <td>@Html.DisplayNameFor(x => x.DeliveryTrackingCode)</td>
+            <td>
+                @if (!string.IsNullOrWhiteSpace(Model.DeliveryTrackingCode))
+                {
+                    @Model.DeliveryTrackingCode
+                }
+                else
+                {
+                    <text>No disponible.</text>
+                }
+            </td>
+        </tr>
+        if (!string.IsNullOrWhiteSpace(Model.DeliveryPostalLabel))
+        {
+            <tr>
+                <td>@Html.DisplayNameFor(x => x.DeliveryPostalLabel)</td>
+                <td>
+                    <a href="@Model.DeliveryPostalLabel" target="_blank">Descargar</a>
+                </td>
+            </tr>
+        }
+    }
+    <tr>
+        <td colspan="2" class="proofofdelivery">
+            @Html.Partial("Details/_ProofOfDelivery", Model)
+        </td>
+    </tr>
+</table>
