@@ -19,9 +19,7 @@ namespace Limbs.Web.Controllers
         {
 
             var currentUserId = User.Identity.GetUserId();
-            AmbassadorModel ambassador = Db.AmbassadorModels.Single(c => c.UserId == currentUserId);
 
-            // Consulta DB. Cambiar con repos
             IEnumerable<OrderModel> orderList = Db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
 
             var deliveredOrdersCount = orderList.Count(c => c.Status == OrderStatus.Delivered);
@@ -30,18 +28,12 @@ namespace Limbs.Web.Controllers
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
             var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready).ToList();
             var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
-
-            var lat = ambassador.Location.Latitude;
-            var lng = ambassador.Location.Longitude;
-
-            var pointIsValid = Geolocalization.PointIsValid(lat, lng);
-
+            
             var viewModel = new ViewModels.AmbassadorPanelViewModel
             {
                 PendingToAssignOrders = pendingAssignationOrders,
                 PendingOrders = pendingOrders,
                 DeliveredOrders = deliveredOrders,
-                PointIsValid = pointIsValid,
 
                 Stats = new ViewModels.OrderStats
                 {
@@ -52,6 +44,13 @@ namespace Limbs.Web.Controllers
 
 
             return View(viewModel);
+        }
+
+        // GET: Ambassador/TermsAndConditions
+        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
+        public ActionResult TermsAndConditions()
+        {
+            return View();
         }
 
         // GET: Ambassador/Create

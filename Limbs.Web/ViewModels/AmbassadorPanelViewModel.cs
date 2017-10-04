@@ -12,7 +12,6 @@ namespace Limbs.Web.ViewModels
         public List<OrderModel> PendingToAssignOrders { get; set; }
         public List<OrderModel> PendingOrders { get; set; }
         public List<OrderModel> DeliveredOrders { get; set; }
-        public bool PointIsValid { get; set; }
     }
 
     public class OrderStats

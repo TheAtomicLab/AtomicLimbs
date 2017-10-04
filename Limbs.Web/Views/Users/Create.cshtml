@@ -11,7 +11,15 @@
     <script src="~/Scripts/geo.js"></script>
     <script src="~/Scripts/pages/users.js"></script>
     <script src="~/Scripts/register.js"></script>
-    <script src="~/Scripts/menu.js"></script>
+    <script type="text/javascript">
+        $("form.form").submit(function() {
+            if ($("#termsandconditions").is(":checked")) {
+                return true;
+            }
+            alert("Debe aceptar los términos y condiciones.");
+            return false;
+        });
+    </script>
     @if (selectUser)
     {
         <script type="text/javascript">
@@ -75,8 +83,15 @@
                 @Html.ValidationMessageFor(x => x.Address)
                 <div id="map"></div>
             </div>
-            <button class="blue_button" style="margin-top:10px;" id="checkAddress">Ver dirección</button>
-            <button type="submit" class="blue_button" name="register">Registrarse</button>
+            <div>
+                <p><button class="blue_button" style="margin-top: 10px;" id="checkAddress">Ver dirección</button></p>
+                <p>
+                    <label for="termsandconditions">
+                        <input type="checkbox" id="termsandconditions"/> acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
+                    </label>
+                </p>
+                <p><button type="submit" class="blue_button" name="register">Registrarse</button></p>
+            </div>
         }
     </div>
 

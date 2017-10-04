@@ -29,13 +29,20 @@ namespace Limbs.Web.Controllers
             return View(viewModel);
         }
 
+        // GET: Users/TermsAndConditions
+        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
+        public ActionResult TermsAndConditions()
+        {
+            return View();
+        }
+
         // GET: Users/Create
         [OverrideAuthorize(Roles = AppRoles.Unassigned)]
         public ActionResult Create()
         {
             return View();
         }
-        
+
         // POST: Users/Create
         [HttpPost]
         [OverrideAuthorize(Roles = AppRoles.Unassigned)]

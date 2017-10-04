@@ -500,6 +500,8 @@
     <Content Include="Views\Shared\DisplayTemplates\ProductType.cshtml" />
     <Content Include="Views\Orders\Details\_DeliveryInfo.cshtml" />
     <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
+    <Content Include="Views\Ambassador\TermsAndConditions.cshtml" />
+    <Content Include="Views\Users\TermsAndConditions.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
