@@ -12,6 +12,21 @@
     max-width: calc(100% - 20px - 10px);
     position: relative;
     width: 100%;
+    cursor: crosshair;
+}
+
+.siguiente_medidas {
+    position: relative;
+    float: none;
+    display: block;
+    margin: 11px 0px 4px;
+}
+
+.volver_a_empezar {
+    background: no-repeat;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 #image, #cphoto {
@@ -28,7 +43,7 @@
 }
 
 #exp_pedido_inp {
-    text-align: center;
+    text-align: left;
 }
 
 #exp_pedido_inp input[type=number] {
