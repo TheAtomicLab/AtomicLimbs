@@ -73,7 +73,7 @@ function getAge(birth) {
     var birthdate = dob.split("-");
     var born = new Date(birthdate[0], birthdate[1] - 1, birthdate[2]);
 
-    var birthday = new Date(now.getFullYear(), born.getMonth(), born.getDate());
+    var birthday = new Date(born.getFullYear(), born.getMonth(), born.getDate());
     if (now >= birthday)
         return now.getFullYear() - born.getFullYear();
     else
