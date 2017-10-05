@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Microsoft.WindowsAzure.Storage;
 using Newtonsoft.Json;
@@ -13,6 +14,11 @@ namespace Limbs.Web.Storage.Azure.QueueStorage
         {
             var mq = new MessageQueue<TM>();
             mq.Enqueue(message);
+        }
+
+        public static Task EnqueueAsync<TM>(TM message) where TM : class
+        {
+            return Task.Run(() => Enqueue(message));
         }
     }
 

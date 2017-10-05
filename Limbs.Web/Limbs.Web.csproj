@@ -294,6 +294,8 @@
     <Compile Include="Repositories\IOrdersRepository.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
+    <Compile Include="Services\IOrderNotificationService.cs" />
+    <Compile Include="Services\OrderMailNotificationService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Services\UserFilesInAzureStorage.cs" />

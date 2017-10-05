@@ -10,6 +10,7 @@ using Limbs.Web.Common.Extensions;
 using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Repositories.Interfaces;
+using Limbs.Web.Services;
 
 namespace Limbs.Web.Controllers
 {
@@ -17,10 +18,12 @@ namespace Limbs.Web.Controllers
     public class OrdersController : BaseController
     {
         private readonly IUserFiles _userFiles;
-        
-        public OrdersController(IUserFiles userFiles)
+        private readonly IOrderNotificationService _ns;
+
+        public OrdersController(IUserFiles userFiles, IOrderNotificationService notificationService)
         {
             _userFiles = userFiles;
+            _ns = notificationService;
         }
 
         // GET: Orders/Index
@@ -190,7 +193,7 @@ namespace Limbs.Web.Controllers
         // POST: Orders/UploadProofOfDelivery
         [HttpPost]
         [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
-        public ActionResult UploadProofOfDelivery(HttpPostedFileBase file, int orderId)
+        public async Task<ActionResult> UploadProofOfDelivery(HttpPostedFileBase file, int orderId)
         {
             if (file == null || file.ContentLength == 0)
             {
@@ -207,7 +210,7 @@ namespace Limbs.Web.Controllers
                     ModelState.AddModelError("noimage", "El archivo seleccionado no es una imagen.");
                 }
             }
-            var orderModel = Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefault(x => x.Id == orderId);
+            var orderModel = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == orderId);
             if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
             if (!CanViewOrder(orderModel))
             {
@@ -222,6 +225,8 @@ namespace Limbs.Web.Controllers
             orderModel.ProofOfDelivery = fileUrl.AbsoluteUri;
             orderModel.LogMessage(User, "New proof of delivery at: " + fileUrl.AbsoluteUri);
             Db.SaveChanges();
+
+            await _ns.SendProofOfDeliveryNotification(orderModel);
 
             return Redirect(Request.UrlReferrer?.PathAndQuery);
         }

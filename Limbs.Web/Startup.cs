@@ -27,6 +27,7 @@ namespace Limbs.Web
             container.Register<IUsersRepository, UsersRepository>();
             container.Register<IAmbassadorsRepository, AmbassadorsRepository>();
             container.Register<IUserFiles, UserFilesInAzureStorage>();
+            container.Register<IOrderNotificationService, OrderMailNotificationService>();
 
             container.RegisterControllers();
             container.EnableMvc();

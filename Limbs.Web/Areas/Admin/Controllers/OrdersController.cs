@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Models;
 using Limbs.Web.Repositories.Interfaces;
+using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Areas.Admin.Controllers
@@ -16,17 +17,19 @@ namespace Limbs.Web.Areas.Admin.Controllers
     public class OrdersController : AdminBaseController
     {
         private readonly IUserFiles _userFiles;
+        private readonly IOrderNotificationService _ns;
 
-        public OrdersController(IUserFiles userFiles)
+        public OrdersController(IUserFiles userFiles, IOrderNotificationService notificationService)
         {
             _userFiles = userFiles;
+            _ns = notificationService;
         }
 
         // GET: Admin/Order
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             //TODO (ale): implementar paginacion, export to excel, ordenamiento
-            var orderList = Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToList();
+            var orderList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
             return View(orderList);
         }
 
@@ -38,7 +41,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Orders/Edit/5
-        public ActionResult Edit(int? id)
+        public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
@@ -46,7 +49,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             }
 
             // Consulta DB. Cambiar con repos
-            var orderModel = Db.OrderModels.Find(id.Value);
+            var orderModel = await Db.OrderModels.FindAsync(id.Value);
 
             if (orderModel == null)
             {
@@ -58,18 +61,18 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // POST: Admin/Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(OrderModel orderModel)
+        public ActionResult Edit(OrderModel orderModel)
         {
             //TODO (ale): implementar segun los campos que tengan sentido editarse
             throw new NotImplementedException();
 
-            if (!ModelState.IsValid) return View(orderModel);
-
-            orderModel.LogMessage(User, "Edited order");
-            Db.OrderModels.AddOrUpdate(orderModel);
-            await Db.SaveChangesAsync();
-
-            return RedirectToAction("Index");
+            //if (!ModelState.IsValid) return View(orderModel);
+            //
+            //orderModel.LogMessage(User, "Edited order");
+            //Db.OrderModels.AddOrUpdate(orderModel);
+            //await Db.SaveChangesAsync();
+            //
+            //return RedirectToAction("Index");
         }
 
         // POST: Admin/Orders/EditStatus/5
@@ -79,21 +82,23 @@ namespace Limbs.Web.Areas.Admin.Controllers
         {
             if (newStatus == OrderStatus.PreAssigned) return new HttpUnauthorizedResult("use admin panel to assign ambassador");
 
-            var order = Db.OrderModels.Find(orderId);
+            var order = await Db.OrderModels.FindAsync(orderId);
 
             if (order == null) return HttpNotFound();
 
-            if (!CanEditOrder(order, newStatus)) return HttpNotFound();
-            
-            if (newStatus == OrderStatus.NotAssigned)
-                order.OrderAmbassador = null;
-            order.LogMessage(User, $"Change status from {order.Status} to {newStatus}");
+            if (!CanEditOrder(order)) return HttpNotFound();
+
+            var oldStatus = order.Status;
+
+            if (newStatus == OrderStatus.NotAssigned) order.OrderAmbassador = null;
             order.Status = newStatus;
             order.StatusLastUpdated = DateTime.UtcNow;
+            order.LogMessage(User, $"Change status from {oldStatus} to {newStatus}");
+            
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
-            //TODO (ale): notificar a los usuarios el cambio de estado + asignacion
+            await _ns.SendStatusChangeNotification(order, oldStatus, newStatus);
 
             return RedirectToLocal(returnUrl);
         }
@@ -114,7 +119,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 RedirectToAction("RedirectUser", "Account");
         }
 
-        private bool CanEditOrder(OrderModel order, OrderStatus newStatus)
+        private bool CanEditOrder(OrderModel order)
         {
             if (User.IsInRole(AppRoles.Administrator)) return true;
 
@@ -126,14 +131,14 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Orders/Delete/5
-        public ActionResult Delete(int? id)
+        public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var orderModel = Db.OrderModels.Find(id.Value);
+            var orderModel = await Db.OrderModels.FindAsync(id.Value);
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -161,21 +166,20 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
         
         // GET: Admin/Orders/SelectAmbassador/5
-        public ActionResult SelectAmbassador(int idOrder)
+        public async Task<ActionResult> SelectAmbassador(int idOrder)
         {
-            var order = Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefault(x => x.Id == idOrder);
+            var order = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
 
             if (order == null)
                 return HttpNotFound();
 
             var orderRequestorLocation = order.OrderRequestor.Location;
-            var ambassadorList = Db.AmbassadorModels
+            var ambassadorList = await Db.AmbassadorModels
                 .OrderBy(x => x.Location.Distance(orderRequestorLocation))
-                .ToList()
                 .Select(ambassadorModel => new Tuple<AmbassadorModel, double>(
                     ambassadorModel, 
                     ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
-                    .ToList();
+                    .ToListAsync();
 
             return View(new AssignOrderAmbassadorViewModel
             {
@@ -186,33 +190,37 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Orders/AssignAmbassador/5?idOrder=2
-        public ActionResult AssignAmbassador(int id, int idOrder)
+        public async Task<ActionResult> AssignAmbassador(int id, int idOrder)
         {
-            var order = Db.OrderModels.Find(idOrder);
+            var order = await Db.OrderModels.FindAsync(idOrder);
 
             if (order == null)
                 return HttpNotFound();
 
-            var ambassador = Db.AmbassadorModels.Find(id);
+            var newAmbassador = await Db.AmbassadorModels.FindAsync(id);
 
-            if (ambassador == null)
+            if (newAmbassador == null)
                 return HttpNotFound();
 
-            order.LogMessage(User, $"Change ambassador from {(order.OrderAmbassador != null ? order.OrderAmbassador.Email : "no-data")} to {ambassador.Email}");
-            order.OrderAmbassador = ambassador;
+            var oldAmbassador = order.OrderAmbassador;
+            var orderOldStatus = order.Status;
+
+            order.OrderAmbassador = newAmbassador;
             order.Status = OrderStatus.PreAssigned;
             order.StatusLastUpdated = DateTime.UtcNow;
-            Db.SaveChanges();
+            order.LogMessage(User, $"Change ambassador from {(oldAmbassador != null ? oldAmbassador.Email : "no-data")} to {newAmbassador.Email}");
 
-            //TODO (ale): notificar a los usuarios el cambio de estado + asignacion
+            await Db.SaveChangesAsync();
+            await _ns.SendStatusChangeNotification(order, orderOldStatus, OrderStatus.PreAssigned);
+            await _ns.SendAmbassadorChangedNotification(order, oldAmbassador, newAmbassador);
 
             return RedirectToAction("Index");
         }
 
         // GET: Admin/Orders/SelectDelivery/?idOrder=2
-        public ActionResult SelectDelivery(int idOrder)
+        public async Task<ActionResult> SelectDelivery(int idOrder)
         {
-            var order = Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefault(x => x.Id == idOrder);
+            var order = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
 
             if (order == null)
                 return HttpNotFound();
@@ -223,9 +231,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // POST: Admin/Orders/AssignDelivery/?idOrder=2
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AssignDelivery(HttpPostedFileBase file, OrderModel orderModel)
+        public async Task<ActionResult> AssignDelivery(HttpPostedFileBase file, OrderModel orderModel)
         {
-            var order = Db.OrderModels.Find(orderModel.Id);
+            var order = await Db.OrderModels.FindAsync(orderModel.Id);
 
             if (order == null)
                 return HttpNotFound();
@@ -242,8 +250,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             order.LogMessage(User, $"Change delivery from {order.DeliveryCourier} to {orderModel.DeliveryCourier}");
             order.DeliveryCourier = orderModel.DeliveryCourier;
             order.DeliveryTrackingCode = orderModel.DeliveryTrackingCode;
-            Db.SaveChanges();
-            //TODO (ale): notificar a los usuarios el cambio de estado + asignacion
+
+            await Db.SaveChangesAsync();
+            await _ns.SendProofOfDeliveryNotification(order);
 
             return RedirectToAction("Index");
         }
