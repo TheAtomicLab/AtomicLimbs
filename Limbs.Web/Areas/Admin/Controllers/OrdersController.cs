@@ -176,15 +176,16 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var orderRequestorLocation = order.OrderRequestor.Location;
             var ambassadorList = await Db.AmbassadorModels
                 .OrderBy(x => x.Location.Distance(orderRequestorLocation))
-                .Select(ambassadorModel => new Tuple<AmbassadorModel, double>(
-                    ambassadorModel, 
-                    ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
-                    .ToListAsync();
+                .ToListAsync();
 
             return View(new AssignOrderAmbassadorViewModel
             {
                 Order = order,
-                AmbassadorList = ambassadorList,
+                AmbassadorList = ambassadorList.Select(
+                    ambassadorModel => new Tuple<AmbassadorModel, double>(
+                        ambassadorModel,
+                        ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
+                    .ToList(),
             });
 
         }
