@@ -14,4 +14,8 @@ $(document).ready(function () {
             yearRange: "-110:-18"
         }
     );
+	
+	$("form.form").submit(function() {
+        return validBirth(18);
+    });
 });
