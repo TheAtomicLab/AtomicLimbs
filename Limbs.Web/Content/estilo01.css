@@ -19,7 +19,7 @@ body {
 }
 
 .min_full {
-    min-height: calc(100vh - 370px);
+    min-height: calc(100vh - 70px);
 }
 
 #cont {
@@ -325,6 +325,8 @@ nav {
 }
 #tipo_de_amp {
     padding: 20px 0px;
+    max-width: 700px;
+    margin: 0px auto;
 }
 .tipo_amp {
     position: relative;
