@@ -31,7 +31,7 @@ namespace Limbs.Web.Services
                         From = _fromEmail,
                         Subject = $"[Atomic Limbs] Aceptaste orden (orden {order.Id})",
                         To = order.OrderAmbassador.Email,
-                        Body = "", //TODO (ale): segun template
+                        Body = CompiledTemplateEngine.Render("Mails.OrderAcceptedToAmbassador", order),
                     };
                     await AzureQueue.EnqueueAsync(mailMessage);
 
@@ -40,7 +40,7 @@ namespace Limbs.Web.Services
                         From = _fromEmail,
                         Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
                         To = order.OrderRequestor.Email,
-                        Body = "", //TODO (ale): segun template
+                        Body = CompiledTemplateEngine.Render("Mails.OrderAcceptedToRequestor", order),
                     };
                     await AzureQueue.EnqueueAsync(mailMessage);
 
@@ -52,7 +52,7 @@ namespace Limbs.Web.Services
                         From = _fromEmail,
                         Subject = $"[Atomic Limbs] Coordinar envío (orden {order.Id})",
                         To = _adminEmails,
-                        Body = "", //TODO (ale): segun template
+                        Body = CompiledTemplateEngine.Render("Mails.OrderReadyToAdmin", order),
                     };
                     await AzureQueue.EnqueueAsync(mailMessage);
 
@@ -61,7 +61,7 @@ namespace Limbs.Web.Services
                         From = _fromEmail,
                         Subject = $"[Atomic Limbs] Coordinar envío (orden {order.Id})",
                         To = order.OrderAmbassador.Email,
-                        Body = "", //TODO (ale): segun template
+                        Body = CompiledTemplateEngine.Render("Mails.OrderReadyToAmbassador", order),
                     };
                     await AzureQueue.EnqueueAsync(mailMessage);
 
@@ -69,8 +69,8 @@ namespace Limbs.Web.Services
                     {
                         From = _fromEmail,
                         Subject = $"[Atomic Limbs] Pedido listo (orden {order.Id})",
-                        To = order.OrderAmbassador.Email,
-                        Body = "", //TODO (ale): segun template
+                        To = order.OrderRequestor.Email,
+                        Body = CompiledTemplateEngine.Render("Mails.OrderReadyToRequestor", order),
                     };
                     await AzureQueue.EnqueueAsync(mailMessage);
                     
@@ -88,7 +88,7 @@ namespace Limbs.Web.Services
                 From = _fromEmail,
                 Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
                 To = newAmbassador.Email,
-                Body = CompiledTemplateEngine.Render("Mails.Generic", order),
+                Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassador", order),
             };
             await AzureQueue.EnqueueAsync(mailMessage);
 
@@ -99,7 +99,7 @@ namespace Limbs.Web.Services
                     From = _fromEmail,
                     Subject = $"[Atomic Limbs] Cambio de embajador (orden {order.Id})",
                     To = oldAmbassador.Email,
-                    Body = "" //TODO (ale): segun template
+                    Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassadorToOldAmbassador", order),
                 };
                 await AzureQueue.EnqueueAsync(mailMessage);
             }
@@ -114,7 +114,7 @@ namespace Limbs.Web.Services
                 Subject = $"[Atomic Limbs] Información de envío (orden {order.Id})",
                 To = order.OrderAmbassador.Email,
                 Cc = order.OrderRequestor.Email,
-                Body = "" //TODO (ale): segun template
+                Body = CompiledTemplateEngine.Render("Mails.OrderDeliveryInformation", order),
             };
 
             await AzureQueue.EnqueueAsync(mailMessage);
@@ -128,7 +128,7 @@ namespace Limbs.Web.Services
                 Subject = $"[Atomic Limbs] Nueva prueba de entrega (orden {order.Id})",
                 To = order.OrderAmbassador.Email,
                 Cc = order.OrderRequestor.Email,
-                Body = "" //TODO (ale): segun template
+                Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfo", order),
             };
 
             await AzureQueue.EnqueueAsync(mailMessage);

@@ -93,6 +93,15 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="Mail\Templates\Generic.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderReadyToAmbassador.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderAcceptedToAmbassador.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderAcceptedToRequestor.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderReadyToAdmin.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderDeliveryInformation.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderReadyToRequestor.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderNewAmbassador.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderProofOfDeliveryInfo.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderNewAmbassadorToOldAmbassador.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
