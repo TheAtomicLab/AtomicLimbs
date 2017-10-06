@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Limbs.Web.Models;
+using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Services
 {

@@ -1,4 +1,4 @@
-﻿using Limbs.Web.Models;
+﻿using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Repositories
 {

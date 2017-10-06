@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.Models
 {
     public class OrderSizesModel
     {

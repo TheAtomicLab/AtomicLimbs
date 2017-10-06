@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Limbs.Web.Entities.Models;
 using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Helpers;

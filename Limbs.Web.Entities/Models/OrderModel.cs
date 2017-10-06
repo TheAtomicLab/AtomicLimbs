@@ -7,7 +7,7 @@ using System.Security.Principal;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.Models
 {
     public class OrderModel
     {

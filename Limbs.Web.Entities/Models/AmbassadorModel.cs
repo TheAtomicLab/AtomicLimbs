@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
 using System.Web.Mvc;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.Models
 {
 
-    public class UserModel
+    public class AmbassadorModel
     {
         [Key]
         public int Id { get; set; }
@@ -17,25 +16,13 @@ namespace Limbs.Web.Models
 
         public string Email { get; set; }
 
-        [Display(Name = "Nombre del usuario", Description = "")]
+        [Display(Name = "Nombre", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        public string UserName { get; set; }
+        public string AmbassadorName { get; set; }
 
-        [Display(Name = "Apellido del usuario", Description = "")]
+        [Display(Name = "Apellido", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        public string UserLastName { get; set; }
-
-        [Display(Name = "Nombre del Responsable", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string ResponsableName { get; set; }
-
-        [Display(Name = "Apellido del Responsable", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string ResponsableLastName { get; set; }
-        
-        [Display(Name = "Teléfono", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public string Phone { get; set; }
+        public string AmbassadorLastName { get; set; }
 
         [DataType("datetime2")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
@@ -43,7 +30,7 @@ namespace Limbs.Web.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Genero", Description = "")]
+        [Display(Name = "Sexo", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public Gender Gender { get; set; }
 
@@ -59,13 +46,17 @@ namespace Limbs.Web.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string Address { get; set; }
 
-        [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
+        [Display(Name = "Teléfono", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public string Phone { get; set; }
+
+        [Display(Name = "Documento de identidad o pasaporte", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string Dni { get; set; }
-        
-        public DbGeography Location { get; set; }
 
-        public virtual ICollection<OrderModel> OrderModel { get; set; }
+        public DbGeography Location { get; set; }
+        
+        public virtual ICollection<OrderModel> OrderModel { get; set; } = new List<OrderModel>();
 
         public static IEnumerable<SelectListItem> GetGenderSelect()
         {
@@ -76,17 +67,7 @@ namespace Limbs.Web.Models
 
         public string FullName()
         {
-            return $"{UserName} {UserLastName}";
+            return $"{AmbassadorName} {AmbassadorLastName}";
         }
-    }
-    
-    public enum Gender
-    {
-        [Description("Femenino")]
-        Mujer,
-        [Description("Masculino")]
-        Hombre,
-        [Description("No Declara")]
-        Otro
     }
 }

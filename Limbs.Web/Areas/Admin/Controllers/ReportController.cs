@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
-using Limbs.Web.Models;
+using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
