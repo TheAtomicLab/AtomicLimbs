@@ -20,7 +20,12 @@
         {
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Seleccioná tu amputación</h2>
-
+            <div>
+                @Html.EditorFor(x => x.ProductType)
+            </div>
+            <p>
+                @Html.ValidationMessageFor(x => x.ProductType)
+            </p>
             <div id="tipo_de_amp">
                 @Html.EditorFor(x => x.AmputationType)
             </div>
@@ -28,12 +33,7 @@
                 @Html.ValidationMessageFor(x => x.AmputationType)
             </p>
 
-            <div>
-                @Html.EditorFor(x => x.ProductType)
-            </div>
-            <p>
-                @Html.ValidationMessageFor(x => x.ProductType)
-            </p>
+
 
             <div>
                 <input id="enviar" type="submit" name="enviar" value="Siguiente" class="blue_button">
