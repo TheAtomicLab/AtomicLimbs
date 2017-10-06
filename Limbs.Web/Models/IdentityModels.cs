@@ -26,7 +26,7 @@ namespace Limbs.Web.Models
 
         private static bool CheckIfAdmin(string email)
         {
-            var admins = ConfigurationManager.AppSettings["AdminEmails"].Split(';').ToList();
+            var admins = ConfigurationManager.AppSettings["AdminEmails"].Split(',').ToList();
 
             return admins.Contains(email);
         }
