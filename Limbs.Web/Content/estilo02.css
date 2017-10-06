@@ -226,8 +226,31 @@
         text-overflow: ellipsis;
         max-width: calc(100vw - 140px);
     }
+    /*info solicitud*/
+    #estado_pedido {
+        position: relative;
+        padding-top: 50px;
+    }
+    #info_pedido {
+        padding: 20px 0px;
+    }
+    .flex_info {
+        display: block;
+    }
 
+    .info_bloque {
+        padding: 5px;
+        margin: 0px auto 30px;
+    }
 
+    .tabla_datos {
+        width: 100%;
+        margin-left: 0px;
+    }
+
+        .tabla_datos tr td {
+            padding: 8px 4px;
+        }
 }
 
 

@@ -1001,9 +1001,8 @@ nav {
 }
 
     .tabla_emb tr {
-        background: #4772b2;
-        color: white;
-        border-bottom: solid 5px white;
+        color: #4772b2;
+        border-bottom: solid 1px #c6ccd4;
         position: relative;
     }
 
@@ -1047,11 +1046,21 @@ nav {
     right: 5px;
     bottom: 5px;
 }
+.flex_info {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 .info_bloque {
     width: 100%;
-    max-width: 460px;
+    max-width: 400px;
     padding: 10px;
-    float: left;
+    margin-right: 35px;
+    margin-bottom: 35px;
+    background: white;
+    border: solid 1px #c3c3c3;
+    box-sizing: border-box;
 }
 .info_bloque img {
     max-height: 200px;
@@ -1089,9 +1098,15 @@ nav {
     width: 100%;
 }
 
+.tabla_datos tr {
+    border-bottom: solid 1px #dadada;
+}
+
 .tabla_datos tr td {
     padding: 11px 18px;
-    border-bottom: solid 1px #dadada;
+}
+.tabla_datos tr:last-of-type {
+    border-bottom: none;
 }
 
 .tabla_datos ul.log li {
