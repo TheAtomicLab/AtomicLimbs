@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Limbs.QueueConsumers;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.Azure.WebJobs;
 
 namespace Limbs.Worker
@@ -20,6 +18,10 @@ namespace Limbs.Worker
             {
                 config.UseDevelopmentSettings();
             }
+
+            QueueConsumerFor<MailMessage>.WithinCurrentThread.Using(new MailsMessagesSender())
+                .With(PoolingFrequencer.For(MailsMessagesSender.EstimatedTime))
+                .StartConsimung();
 
             var host = new JobHost(config);
             // The following code ensures that the WebJob will be running continuously

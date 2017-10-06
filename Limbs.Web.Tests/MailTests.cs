@@ -1,15 +1,9 @@
 ﻿using System;
-using System.CodeDom;
-using System.CodeDom.Compiler;
 using System.Configuration;
-using System.Dynamic;
-using System.IO;
-using System.Net.Mail;
-using System.Reflection;
-using System.Text;
-using System.Web.Razor;
+using Limbs.QueueConsumers;
 using Limbs.Web.Common.Mail;
-using Microsoft.CSharp;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Limbs.Web.Tests
@@ -26,19 +20,20 @@ namespace Limbs.Web.Tests
             var adminmail = ConfigurationManager.AppSettings["AdminEmails"];
 
             var mailSender = new GeneralMailSender(mailserver, username, password);
-            var mailMessage = new MailMessage(username,
+            var mailMessage = new System.Net.Mail.MailMessage(username,
                 adminmail?.Split(',')[0] ?? throw new InvalidOperationException(), "Limb.Web.Tests", "TEST MESSAGE");
 
             // si el mensaje es null significa que el maker controló algunas situaciones y no hay nada para enviar y el mensaje se puede remover de la queue
             mailSender.Send(mailMessage);
         }
 
-        [TestMethod]
-        
 
-        private static string GetStringFromSomewhere()
+        [TestMethod]
+        public void StartConsumigMailsMessagesSender()
         {
-            return "<b>Well done @DynModel.Who !!</b>";
+            QueueConsumerFor<MailMessage>.WithinCurrentThread.Using(new MailsMessagesSender())
+                .With(PoolingFrequencer.For(MailsMessagesSender.EstimatedTime))
+                .StartConsimung();
         }
     }
 }

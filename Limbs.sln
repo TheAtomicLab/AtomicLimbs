@@ -15,6 +15,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web.Entities", "Limbs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Worker", "Limbs.Worker\Limbs.Worker.csproj", "{B6D306A4-DCB4-4B4E-8AE5-FE3C49EE4D47}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LimbsWorker", "LimbsWorker", "{C0B07CDB-BDA8-4AE3-9F0E-F54F55FF029E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.QueueConsumers", "Limbs.QueueConsumers\Limbs.QueueConsumers.csproj", "{55421E93-38D9-4A57-A4CB-217F16EC1838}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,9 +49,17 @@ Global
 		{B6D306A4-DCB4-4B4E-8AE5-FE3C49EE4D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6D306A4-DCB4-4B4E-8AE5-FE3C49EE4D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6D306A4-DCB4-4B4E-8AE5-FE3C49EE4D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55421E93-38D9-4A57-A4CB-217F16EC1838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55421E93-38D9-4A57-A4CB-217F16EC1838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55421E93-38D9-4A57-A4CB-217F16EC1838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55421E93-38D9-4A57-A4CB-217F16EC1838}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B6D306A4-DCB4-4B4E-8AE5-FE3C49EE4D47} = {C0B07CDB-BDA8-4AE3-9F0E-F54F55FF029E}
+		{55421E93-38D9-4A57-A4CB-217F16EC1838} = {C0B07CDB-BDA8-4AE3-9F0E-F54F55FF029E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {401178DB-921A-4091-A147-671B3AF04EC6}
