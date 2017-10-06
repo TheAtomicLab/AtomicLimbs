@@ -1,20 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.Models
 {
     
     public class AccessoryModel
     {
-        public AccessoryModel()
-        {
-            Color = new HashSet<Color>();
-        }
-
         [Key]
         public int Id { get; set; }
 
@@ -24,7 +15,7 @@ namespace Limbs.Web.Models
 
         public string ImageUrl { get; set; }
 
-        public virtual ICollection<Color> Color { get; set; }
+        public virtual ICollection<Color> Color { get; set; } = new HashSet<Color>();
     }
 
     public class Color

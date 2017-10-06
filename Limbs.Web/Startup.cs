@@ -1,4 +1,5 @@
 ﻿using LightInject;
+using Limbs.Web.Common.Mail;
 using Limbs.Web.Repositories;
 using Microsoft.Owin;
 using Owin;
@@ -17,6 +18,7 @@ namespace Limbs.Web
             ConfigureServices();
 
             FullStorageInitializer.Initialize();
+            MailTemplatesRegistration.Initialize();
         }
 
         public void ConfigureServices()

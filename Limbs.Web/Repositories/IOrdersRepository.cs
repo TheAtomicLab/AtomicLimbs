@@ -1,6 +1,5 @@
-﻿using Limbs.Web.Models;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Repositories
 {

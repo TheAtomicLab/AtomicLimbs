@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.Models
 {
     public enum AmputationType
     {

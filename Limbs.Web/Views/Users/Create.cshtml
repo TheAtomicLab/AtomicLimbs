@@ -1,5 +1,6 @@
-﻿@using Microsoft.AspNet.Identity
-@model Limbs.Web.Models.UserModel
+﻿@using Limbs.Web.Entities.Models
+@using Microsoft.AspNet.Identity
+@model Limbs.Web.Entities.Models.UserModel
 @{
     bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool) ViewBag.IsAdultCheck;
     bool selectUser = ViewBag.SelectUser != null && (bool) ViewBag.SelectUser;
@@ -72,7 +73,8 @@
                 <label class="f-label">Fecha de nacimiento</label>
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "2017-05-11" } })
                 <label class="f-label">Sexo</label>
-                @Html.DropDownListFor(m => m.Gender, Limbs.Web.Models.AmbassadorModel.GetGenderSelect(), new { @class = "f-campo f-post-l" })
+                @* TODO (ale): refactor al select*@
+                @Html.DropDownListFor(m => m.Gender, AmbassadorModel.GetGenderSelect(), new { @class = "f-campo f-post-l" })
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = "País" } })
                     @Html.ValidationMessageFor(x => x.Country)

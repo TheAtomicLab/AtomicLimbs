@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity.Spatial;
+﻿using System.Data.Entity.Spatial;
 using System.Net;
 using System.Web.Script.Serialization;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Limbs.Web.Models;
+using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Areas.Admin.Models
 {

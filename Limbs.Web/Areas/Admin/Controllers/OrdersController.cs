@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
-using Limbs.Web.Models;
+using Limbs.Web.Entities.Models;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
@@ -176,15 +176,16 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var orderRequestorLocation = order.OrderRequestor.Location;
             var ambassadorList = await Db.AmbassadorModels
                 .OrderBy(x => x.Location.Distance(orderRequestorLocation))
-                .Select(ambassadorModel => new Tuple<AmbassadorModel, double>(
-                    ambassadorModel, 
-                    ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
-                    .ToListAsync();
+                .ToListAsync();
 
             return View(new AssignOrderAmbassadorViewModel
             {
                 Order = order,
-                AmbassadorList = ambassadorList,
+                AmbassadorList = ambassadorList.Select(
+                    ambassadorModel => new Tuple<AmbassadorModel, double>(
+                        ambassadorModel,
+                        ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
+                    .ToList(),
             });
 
         }

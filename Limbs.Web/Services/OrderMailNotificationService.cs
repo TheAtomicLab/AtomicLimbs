@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using System.Threading.Tasks;
-using Limbs.Web.Models;
+using Limbs.Web.Common.Mail;
+using Limbs.Web.Entities.Models;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 
@@ -24,16 +25,23 @@ namespace Limbs.Web.Services
                     //Entra por SendAmbassadorChangedNotification
                     break;
                 case OrderStatus.Pending:
-                    //TODO: avisar que esta en proceso de impresion
 
                     var mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
-                        To = "",
+                        Subject = $"[Atomic Limbs] Aceptaste orden (orden {order.Id})",
+                        To = order.OrderAmbassador.Email,
                         Body = "", //TODO (ale): segun template
                     };
+                    await AzureQueue.EnqueueAsync(mailMessage);
 
+                    mailMessage = new MailMessage
+                    {
+                        From = _fromEmail,
+                        Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
+                        To = order.OrderRequestor.Email,
+                        Body = "", //TODO (ale): segun template
+                    };
                     await AzureQueue.EnqueueAsync(mailMessage);
 
                     break;
@@ -80,9 +88,8 @@ namespace Limbs.Web.Services
                 From = _fromEmail,
                 Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
                 To = newAmbassador.Email,
-                Body = "" //TODO (ale): segun template
+                Body = CompiledTemplateEngine.Render("Mails.Generic", order),
             };
-
             await AzureQueue.EnqueueAsync(mailMessage);
 
             if (oldAmbassador != null && oldAmbassador != newAmbassador) //tenia otro embajador
@@ -94,13 +101,12 @@ namespace Limbs.Web.Services
                     To = oldAmbassador.Email,
                     Body = "" //TODO (ale): segun template
                 };
-
                 await AzureQueue.EnqueueAsync(mailMessage);
             }
 
         }
 
-        public async Task SendDeliveryInformationNotification(OrderModel order)
+        public async Task SendDeliveryInformationNotification(OrderModel order) 
         {
             var mailMessage = new MailMessage
             {
