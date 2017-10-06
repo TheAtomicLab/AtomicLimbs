@@ -196,6 +196,8 @@
                     ctx.beginPath();
                     ctx.moveTo(firstPos.x, firstPos.y);
                     ctx.lineTo(lastPos.x, lastPos.y);
+                    ctx.strokeStyle = "#4772b2";
+                    ctx.lineWidth = 3;
                     ctx.stroke();
                     var a = Math.pow((Math.abs(lastPos.x - firstPos.x)), 2);
                     var b = Math.pow((Math.abs(lastPos.y - firstPos.y)), 2);

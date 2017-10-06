@@ -9,7 +9,7 @@
     }
 
     .min_full {
-        min-height: calc(100vh - 55px);
+        min-height: calc(100vh - 365px);
     }
 
     #main_head {
