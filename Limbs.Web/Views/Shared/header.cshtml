@@ -11,14 +11,14 @@
                 @if (User.IsInRole(AppRoles.Requester))
                 {
                     <li>
-                        <a onclick="cerrarmenu()" href="/">Pedir una mano</a>
+                        <a onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
                     </li>
                 }
                 <li>
                     <a onclick="cerrarmenu()" href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a>
                 </li>
                 <li>
-                    <a onclick="cerrarmenu()" href="http://atomiclab.org/donar/">Donar</a>
+                    <a onclick="cerrarmenu()" href="http://atomiclab.org/donar/" target="_blank">Donar</a>
                 </li>
                 
                 @Html.Partial("AdminMenu")
