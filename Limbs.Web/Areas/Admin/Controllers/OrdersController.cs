@@ -82,7 +82,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         {
             if (newStatus == OrderStatus.PreAssigned) return new HttpUnauthorizedResult("use admin panel to assign ambassador");
 
-            var order = await Db.OrderModels.FindAsync(orderId);
+            var order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == orderId);
 
             if (order == null) return HttpNotFound();
 
@@ -193,7 +193,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Orders/AssignAmbassador/5?idOrder=2
         public async Task<ActionResult> AssignAmbassador(int id, int idOrder)
         {
-            var order = await Db.OrderModels.FindAsync(idOrder);
+            var order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
 
             if (order == null)
                 return HttpNotFound();
