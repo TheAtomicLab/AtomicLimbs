@@ -23,8 +23,9 @@ namespace Limbs.QueueConsumers
                 var password = ConfigurationManager.AppSettings["Mail.Password"];
 
                 var mailSender = new GeneralMailSender(mailserver, username, password);
-                var mailMessage = new System.Net.Mail.MailMessage(message.Data.From, message.Data.To, message.Data.Subject, message.Data.Body);
-
+                var mailMessage = new System.Net.Mail.MailMessage(
+                    message.Data.From, message.Data.To,
+                    message.Data.Subject, message.Data.Body) {IsBodyHtml = true};
                 // si el mensaje es null significa que el maker controló algunas situaciones y no hay nada para enviar y el mensaje se puede remover de la queue
                 mailSender.Send(mailMessage);
 
