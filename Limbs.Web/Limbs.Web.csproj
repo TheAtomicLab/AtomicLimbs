@@ -382,6 +382,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\pages\munonizer.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
+    <Content Include="Scripts\pages\orders.js" />
     <Content Include="Scripts\register.js" />
     <Content Include="Scripts\jquery-3.2.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.js" />

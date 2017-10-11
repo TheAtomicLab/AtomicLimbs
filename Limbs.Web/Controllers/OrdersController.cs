@@ -111,8 +111,7 @@ namespace Limbs.Web.Controllers
                     ModelState.AddModelError("noimage", "El archivo seleccionado no es una imagen.");
                 }
             }
-            if (!ModelState.IsValid) return View("ManoPedir");
-
+            if (!ModelState.IsValid) return View("ManoPedir", new OrderModel());
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
