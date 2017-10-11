@@ -1,22 +1,23 @@
 ﻿@using System.Configuration
 @using Microsoft.AspNet.Identity
 
-@{ #if DEBUG }
+@if (!Request.IsLocal)
+{
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-107456898-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments)};
+        gtag('js', new Date());
+
+        gtag('config', '@ConfigurationManager.AppSettings["Google.Analytics.TrackingCodes"]');
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <text>gtag('set', { 'user_id': '@User.Identity.GetUserName()'});</text>
+        }
+    </script>
+}
+else
+{
     <!-- [Debug mode] Google Analytics code -->
-@{ #else }
-        
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107456898-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments)};
-    gtag('js', new Date());
-
-    gtag('config', '@ConfigurationManager.AppSettings["Google.Analytics.TrackingCodes"]');
-
-    @if (User.Identity.IsAuthenticated)
-    {
-        <text>gtag('set', { 'user_id': '@User.Identity.GetUserName()'});</text>
-    }
-</script>
-
-@{ #endif }
+}
