@@ -229,5 +229,12 @@ namespace Limbs.Web.Controllers
 
             return Redirect(Request.UrlReferrer?.PathAndQuery);
         }
+
+        [AllowAnonymous]
+        public ActionResult PublicOrders()
+        {
+            var orders = Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToList();
+            return View(orders);
+        }
     }
 }

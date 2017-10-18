@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Text.RegularExpressions;
 
 namespace Limbs.Web.Common.Extensions
 {
@@ -10,6 +11,16 @@ namespace Limbs.Web.Common.Extensions
             var da = (DescriptionAttribute[])value.GetType().GetField(value.ToString())
                 .GetCustomAttributes(typeof(DescriptionAttribute), false);
             return da.Length > 0 ? da[0].Description : value.ToString();
+        }
+
+        public static string EmailMask(this String email)
+        {
+            string pattern = @"(.{1}).+@.+(.{2}(?:\..{2,3}){1,1})";
+            String replace = "$1****@****$2";
+            string result = Regex.Replace(email, pattern, replace);
+            
+            return result;
+
         }
 
         public static string ToFriendlyDateString(this DateTime date)

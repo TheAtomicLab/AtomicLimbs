@@ -1,0 +1,65 @@
+﻿@using Limbs.Web.Common.Extensions
+@using Limbs.Web.Entities.Models
+@model IEnumerable<OrderModel>
+@section scripts{
+    <link rel="stylesheet" href="~/Content/publicOrders.css">
+}
+
+@{
+    ViewBag.Title = "Ordenes";
+}
+
+<h2>Ordenes</h2>
+@**
+//TODO: Lucas - buscador
+*@
+<table>
+    <tr>
+        <th>
+            Solicitante
+        </th>
+        <th>
+            E-mail solicitante
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            Embajador
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.OrderRequestor.UserName
+            </td>
+            <td>
+                @*@item.OrderRequestor.Email.Substring(1, 3).MaskEmail()*@
+                @item.OrderRequestor.Email.EmailMask()
+            </td>
+            <td>
+                @item.Date.ToFriendlyDateString()
+            </td>
+            <td>
+                @item.Status
+            </td>
+                @if (item.OrderAmbassador != null)
+                {
+                    <td>
+                        @item.OrderAmbassador.AmbassadorName
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Aún no asignado
+                    </td>
+                }
+        </tr>
+    }
+
+</table>
