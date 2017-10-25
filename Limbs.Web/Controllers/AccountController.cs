@@ -125,7 +125,7 @@ namespace Limbs.Web.Controllers
             {
                 case SignInStatus.Success:
                     RedirectToLocal(model.ReturnUrl);
-                    return null; //CAmbiar este return null
+                    return null; //Cambiar este return null
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 //case SignInStatus.Failure:
@@ -222,11 +222,15 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return View("ForgotPasswordConfirmation");
+                    ModelState.AddModelError("", "Disculpe, su usuario no existe");
+                    return View(model);
                 }
+
+                //TODO: Generate url and send mail.
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link

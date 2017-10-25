@@ -427,6 +427,10 @@ nav {
     cursor: pointer;
 }
 
+button[name="recoverPassword"] {
+    width: 100%;
+}
+
 .disabled_button {
     border:none;
     background: #FFFFFF;
