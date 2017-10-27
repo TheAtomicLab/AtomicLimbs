@@ -1,5 +1,13 @@
 $(document).ready(function () {
     disabledRegister();
+    $("#fileUpload").bind("change",
+        function () {
+            if (this.files[0].size > 1000000 * 5) {
+                alert("Seleccione un archivo menor a 5 MB.");
+                this.value = null;
+            }
+        });
+
     $("#fileUpload").on("change", function () {
         validateImg();
     });

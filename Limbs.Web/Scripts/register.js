@@ -1,8 +1,15 @@
 $(document).ready(function () {
+    disabledRegister();
     $("#Country,#City,#Address").on('change', function () {
         disabledRegister();
     });
-    disabledRegister();
+    $("form.form").submit(function () {
+        if ($("#termsandconditions").is(":checked")) {
+            return true;
+        }
+        alert("Debe aceptar los términos y condiciones.");
+        return false;
+    });
 });
 
 function disabledRegister() {
