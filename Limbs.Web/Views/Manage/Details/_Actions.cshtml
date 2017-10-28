@@ -1,0 +1,25 @@
+﻿@model Limbs.Web.Models.IndexViewModel
+
+<div id="accion_solicitud">
+    @if (User.IsInRole(AppRoles.Ambassador))
+    {
+        <a href="@Url.Action("Edit", "Ambassadors", new {area = "Admin"})" class="blue_button">Editar datos</a>
+    }
+    @if (User.IsInRole(AppRoles.User))
+    {
+        <a href="@Url.Action("Edit", "Users", new {area = "Admin"})" class="blue_button">Editar datos</a>
+    }
+    @if (Model.HasPassword)
+    {
+        <a href="@Url.Action("ChangePassword", "Manage", new {area = ""})" class="blue_button">Cambiar password</a>
+    }
+    else
+    {
+        <div style="display: inline;">
+            <a href="@Url.Action("SetPassword", "Manage", new { area = "" })" class="blue_button">Crear password</a>
+            <span style="font-size: 8px;">Iniciaste sesión con Facebook, podes crear un password.</span>
+        </div>
+    }
+</div>
+
+@*Html.ActionLink("Manage", "ManageLogins")*@

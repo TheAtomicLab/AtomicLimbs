@@ -5,7 +5,9 @@
     <div id="menu_perfil">
         <div id="icono_perfil" onclick="menu_mobil_activo()"></div>
         <ul id="opciones_perfil">
-            <li class="perfil_name">Hola @User.Identity.GetUserName()</li>
+            <li class="perfil_name">
+                @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: new { area = "",}, htmlAttributes: new {title = "Manage"})
+            </li>
             @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
             {
                 @Html.AntiForgeryToken()

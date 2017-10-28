@@ -67,6 +67,7 @@ namespace Limbs.Web.Entities.Models
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
 
+        //TODO (ale): sacar esto
         public static IEnumerable<SelectListItem> GetGenderSelect()
         {
             yield return new SelectListItem { Text = "Masculino", Value = "Hombre" };

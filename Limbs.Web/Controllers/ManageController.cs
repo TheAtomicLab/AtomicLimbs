@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Data.Entity;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +12,7 @@ using Limbs.Web.Models;
 namespace Limbs.Web.Controllers
 {
     [Authorize(Roles = AppRoles.Administrator)]
-    public class ManageController : Controller
+    public class ManageController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -42,22 +44,63 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                message == ManageMessageId.ChangePasswordSuccess ? "Tu password fué modificado."
+                : message == ManageMessageId.SetPasswordSuccess ? "Creaste tu nuevo password."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.Error ? "Ocurrió un error."
                 : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
                 : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
                 : "";
 
             var userId = User.Identity.GetUserId();
+            UserViewModel user;
+            if (User.IsInRole(AppRoles.User))
+            {
+                var u = await Db.UserModelsT.Where(c => c.UserId == userId).SingleAsync();
+                if(u == null) return new HttpNotFoundResult();
+
+                user = new UserViewModel
+                {
+                    Email = u.Email,
+                    Address = u.Address,
+                    City = u.City,
+                    Country = u.Country,
+                    Phone = u.Phone,
+                    Birth = u.Birth,
+                    ResponsableName = u.ResponsableName,
+                    ResponsableLastName = u.ResponsableLastName,
+                };
+            }
+            else if(User.IsInRole(AppRoles.Ambassador))
+            {
+                var a = await Db.AmbassadorModels.Where(c => c.UserId == userId).SingleAsync();
+                if (a == null) return new HttpNotFoundResult();
+
+                user = new UserViewModel
+                {
+                    Email = a.Email,
+                    Address = a.Address,
+                    City = a.City,
+                    Country = a.Country,
+                    Phone = a.Phone,
+                    Birth = a.Birth,
+                    ResponsableName = a.AmbassadorName,
+                    ResponsableLastName = a.AmbassadorLastName,
+                };
+            }
+            else
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+
             var model = new IndexViewModel
             {
+                User = user,
                 HasPassword = HasPassword(),
-                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-                Logins = await UserManager.GetLoginsAsync(userId),
-                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+                //PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                //TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                //Logins = await UserManager.GetLoginsAsync(userId),
+                //BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
         }

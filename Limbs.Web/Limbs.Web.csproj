@@ -494,6 +494,8 @@
     <Content Include="Views\Ambassador\TermsAndConditions.cshtml" />
     <Content Include="Views\Users\TermsAndConditions.cshtml" />
     <Content Include="Views\Orders\PublicOrders.cshtml" />
+    <Content Include="Views\Manage\Details\_UserInfo.cshtml" />
+    <Content Include="Views\Manage\Details\_Actions.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

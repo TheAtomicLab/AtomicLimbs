@@ -1,0 +1,37 @@
+﻿@model Limbs.Web.Models.UserViewModel
+
+<h3>Datos del usuario</h3>
+<table class="tabla_datos">
+    <tr>
+        <td>Nombre:</td>
+        <td>@Model.ResponsableName</td>
+    </tr>
+    <tr>
+        <td>Apellido:</td>
+        <td>@Model.ResponsableLastName</td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td>@Model.Email</td>
+    </tr>
+    <tr>
+        <td>Nacimiento:</td>
+        <td>@Model.Birth.ToString("dd/MM/yyyy")</td>
+    </tr>
+    <tr>
+        <td>País:</td>
+        <td>@Model.Country</td>
+    </tr>
+    <tr>
+        <td>Ciudad:</td>
+        <td>@Model.City</td>
+    </tr>
+    <tr>
+        <td>Dirección:</td>
+        <td>@Model.Address</td>
+    </tr>
+    <tr>
+        <td>Teléfono:</td>
+        <td>@Model.Phone</td>
+    </tr>
+</table>

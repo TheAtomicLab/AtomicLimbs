@@ -228,6 +228,12 @@ nav {
     font-size: 15px;
 }
 
+.perfil_name a {
+    text-decoration-line: underline;
+    color: white;
+    font-size: 15px;
+}
+
 .cerrar_sesion {
     font-size: 13px;
     font-weight: 300;

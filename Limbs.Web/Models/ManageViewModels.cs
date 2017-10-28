@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -8,10 +10,23 @@ namespace Limbs.Web.Models
     public class IndexViewModel
     {
         public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
+        //public IList<UserLoginInfo> Logins { get; set; }
+        //public string PhoneNumber { get; set; }
+        //public bool TwoFactor { get; set; }
+        //public bool BrowserRemembered { get; set; }
+        public UserViewModel User { get; set; }
+    }
+
+    public class UserViewModel
+    {
+        public string ResponsableName { get; set; }
+        public string ResponsableLastName { get; set; }
+        public string Email { get; set; }
+        public DateTime Birth { get; set; }
+        public string Country { get; set; }
+        public string City { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -28,14 +43,14 @@ namespace Limbs.Web.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nuevo password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirmá el nuevo password")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "El password no coincide.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -43,18 +58,18 @@ namespace Limbs.Web.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Current password")]
+        [Display(Name = "Password actual")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "El {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "New password")]
+        [Display(Name = "Nuevo password")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm new password")]
-        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        [Display(Name = "Confirmá el nuevo password")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "El password no coincide.")]
         public string ConfirmPassword { get; set; }
     }
 
