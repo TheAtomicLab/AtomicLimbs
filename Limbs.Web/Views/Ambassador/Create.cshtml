@@ -1,8 +1,11 @@
-﻿@using Limbs.Web.Entities.Models
+﻿@using System.Configuration
+@using Limbs.Web.Entities.Models
 @model AmbassadorModel
-
+@{
+    var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
+}
 @section scripts{
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj_qLzys5aRCbeG-DREBx7n4ZlKccHd4Y&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&callback=initMap">
     </script>
     <script src="~/Scripts/geo.js"></script>
     <script src="~/Scripts/pages/ambassador.js"></script>
