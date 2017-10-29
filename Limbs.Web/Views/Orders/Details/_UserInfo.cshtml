@@ -10,10 +10,13 @@
         <td>Apellido:</td>
         <td>@Model.OrderRequestor.ResponsableLastName</td>
     </tr>
-    <tr>
-        <td>Email:</td>
-        <td>@Model.OrderRequestor.Email</td>
-    </tr>
+    @if (!User.IsInRole(AppRoles.Ambassador))
+    {
+        <tr>
+            <td>Email:</td>
+            <td>@Model.OrderRequestor.Email</td>
+        </tr>
+    }
     <tr>
         <td>Nacimiento:</td>
         <td>@Model.OrderRequestor.Birth.ToString("dd/MM/yyyy")</td>
@@ -26,12 +29,15 @@
         <td>Ciudad:</td>
         <td>@Model.OrderRequestor.City</td>
     </tr>
-    <tr>
-        <td>Dirección:</td>
-        <td>@Model.OrderRequestor.Address</td>
-    </tr>
-    <tr>
-        <td>Teléfono:</td>
-        <td>@Model.OrderRequestor.Phone</td>
-    </tr>
+    @if (!User.IsInRole(AppRoles.Ambassador))
+    {
+        <tr>
+            <td>Dirección:</td>
+            <td>@Model.OrderRequestor.Address</td>
+        </tr>
+        <tr>
+            <td>Teléfono:</td>
+            <td>@Model.OrderRequestor.Phone</td>
+        </tr>
+    }
 </table>
