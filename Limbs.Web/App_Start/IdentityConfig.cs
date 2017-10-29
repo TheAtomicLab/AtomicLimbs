@@ -1,16 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
+using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Limbs.Web.Models;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 
 namespace Limbs.Web
 {
@@ -18,8 +17,15 @@ namespace Limbs.Web
     {
         public Task SendAsync(IdentityMessage message)
         {
-            // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var mailMessage = new MailMessage
+            {
+                From = ConfigurationManager.AppSettings["Mail.Username"],
+                To = message.Destination,
+                Subject = message.Subject,
+                Body = message.Body
+            };
+
+            return AzureQueue.EnqueueAsync(mailMessage);
         }
     }
 
