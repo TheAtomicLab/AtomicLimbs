@@ -10,6 +10,11 @@ namespace Limbs.Web.Entities.Models
 
     public class UserModel
     {
+        public UserModel()
+        {
+            Gender = Gender.Otro;
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -66,14 +71,6 @@ namespace Limbs.Web.Entities.Models
         public DbGeography Location { get; set; }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
-
-        //TODO (ale): sacar esto
-        public static IEnumerable<SelectListItem> GetGenderSelect()
-        {
-            yield return new SelectListItem { Text = "Masculino", Value = "Hombre" };
-            yield return new SelectListItem { Text = "Femenino", Value = "Mujer" };
-            yield return new SelectListItem { Text = "No Declara", Value = "Otro" };
-        }
 
         public string FullName()
         {

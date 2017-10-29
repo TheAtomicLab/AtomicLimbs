@@ -389,6 +389,8 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Properties\webjobs-list.json" />
+    <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
     <None Include="Properties\PublishProfiles\limbs - Web Deploy.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -465,8 +467,6 @@
     <Content Include="Areas\Admin\Views\Orders\Edit.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
     <Content Include="Views\Ambassador\Create.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Shared\Footer.cshtml" />
@@ -496,6 +496,9 @@
     <Content Include="Views\Orders\PublicOrders.cshtml" />
     <Content Include="Views\Manage\Details\_UserInfo.cshtml" />
     <Content Include="Views\Manage\Details\_Actions.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Gender.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

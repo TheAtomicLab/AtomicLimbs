@@ -5,7 +5,7 @@
     {
         <a href="@Url.Action("Edit", "Ambassadors", new {area = "Admin"})" class="blue_button">Editar datos</a>
     }
-    @if (User.IsInRole(AppRoles.User))
+    @if (User.IsInRole(AppRoles.Requester))
     {
         <a href="@Url.Action("Edit", "Users", new {area = "Admin"})" class="blue_button">Editar datos</a>
     }

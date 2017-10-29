@@ -9,6 +9,11 @@ namespace Limbs.Web.Entities.Models
 
     public class AmbassadorModel
     {
+        public AmbassadorModel()
+        {
+            Gender = Gender.Otro;
+        }
+
         [Key]
         public int Id { get; set; }
 
@@ -27,7 +32,6 @@ namespace Limbs.Web.Entities.Models
         [DataType("datetime2")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
         [Display(Name = "Sexo", Description = "")]
@@ -57,13 +61,6 @@ namespace Limbs.Web.Entities.Models
         public DbGeography Location { get; set; }
         
         public virtual ICollection<OrderModel> OrderModel { get; set; } = new List<OrderModel>();
-
-        public static IEnumerable<SelectListItem> GetGenderSelect()
-        {
-            yield return new SelectListItem { Text = "Masculino", Value = "Hombre" };
-            yield return new SelectListItem { Text = "Femenino", Value = "Mujer" };
-            yield return new SelectListItem { Text = "No Declara", Value = "Otro" };
-        }
 
         public string FullName()
         {

@@ -1,6 +1,4 @@
 ﻿@using System.Configuration
-@using Limbs.Web.Entities.Models
-@using Microsoft.AspNet.Identity
 @model Limbs.Web.Entities.Models.UserModel
 @{
     bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool) ViewBag.IsAdultCheck;
@@ -64,10 +62,9 @@
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
                 @Html.ValidationMessageFor(x => x.Phone)
                 <label class="f-label">Fecha de nacimiento</label>
-                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "2017-05-11" } })
+                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("dd/MM/yyyy") } })
                 <label class="f-label">Sexo</label>
-                @* TODO (ale): refactor al select*@
-                @Html.DropDownListFor(m => m.Gender, AmbassadorModel.GetGenderSelect(), new { @class = "f-campo f-post-l" })
+                @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" }})
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = "País" } })
                     @Html.ValidationMessageFor(x => x.Country)
@@ -76,11 +73,11 @@
                 </div>
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección" } })
                 @Html.ValidationMessageFor(x => x.Address)
+                <button class="blue_button" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
                 <div id="map"></div>
             </div>
             <div>
-                <p><button class="blue_button" style="margin-top: 10px;" id="checkAddress">Ver dirección</button></p>
-                <p>
+                <p style="margin-top: 20px;">
                     <label for="termsandconditions">
                         <input type="checkbox" id="termsandconditions"/> acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
                     </label>

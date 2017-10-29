@@ -1,92 +1,104 @@
 ﻿@model Limbs.Web.Entities.Models.AmbassadorModel
 
-@{
-    ViewBag.Title = "Details";
-}
-
-<h2>Details</h2>
-
 <div>
-    <h4>Embajadores</h4>
+    <h4>AmbassadorModel</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+    
+        <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-
+    
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Birth)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Birth)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dni)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dni)
-        </dd>
-
+    
         <dt>
             @Html.DisplayNameFor(model => model.AmbassadorName)
         </dt>
-
+    
         <dd>
             @Html.DisplayFor(model => model.AmbassadorName)
         </dd>
-        @*
-                    --Leave comments for possible evolution-#idEvolution = 1#-----##
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AtributoEmbajador1)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AtributoEmbajador1)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AtributoEmbajador2)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AtributoEmbajador2)
-            </dd>
-
-            <dt>
-                @Html.DisplayNameFor(model => model.AtributoEmbajador3)
-            </dt>
-
-            <dd>
-                @Html.DisplayFor(model => model.AtributoEmbajador3)
-            </dd>
-        *@
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.AmbassadorLastName)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.AmbassadorLastName)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Birth)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Birth)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Country)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Country)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Dni)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Dni)
+        </dd>
+    
+        <dt>
+            @Html.DisplayNameFor(model => model.Location)
+        </dt>
+    
+        <dd>
+            @Html.DisplayFor(model => model.Location)
+        </dd>
+    
     </dl>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
