@@ -284,7 +284,6 @@
     <Compile Include="Models\GoogleGeoModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
     <Compile Include="Repositories\IUsersRepository.cs" />

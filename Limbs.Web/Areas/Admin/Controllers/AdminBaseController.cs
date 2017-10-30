@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Limbs.Web.Entities.Models;
 using Limbs.Web.Models;
 
 namespace Limbs.Web.Areas.Admin.Controllers

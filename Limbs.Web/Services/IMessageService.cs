@@ -1,4 +1,5 @@
-﻿using Limbs.Web.Models;
+﻿using Limbs.Web.Entities.Models;
+using Limbs.Web.Models;
 
 namespace Limbs.Web.Services
 {

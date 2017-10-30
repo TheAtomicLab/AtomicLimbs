@@ -1,3 +1,5 @@
+using Limbs.Web.Entities.Models;
+
 namespace Limbs.Web.Migrations
 {
     using Limbs.Web.Models;

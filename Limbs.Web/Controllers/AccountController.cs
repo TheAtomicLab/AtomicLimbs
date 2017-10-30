@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Limbs.Web.Models;
 using Limbs.Web.Common.Mail;
+using Limbs.Web.Entities.Models;
 
 
 namespace Limbs.Web.Controllers

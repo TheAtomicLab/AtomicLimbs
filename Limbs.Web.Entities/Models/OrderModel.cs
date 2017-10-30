@@ -84,6 +84,8 @@ namespace Limbs.Web.Entities.Models
         [Display(Name = "Historial de cambios", Description = "")]
         public List<OrderLogItem> Log { get; private set; }
 
+        public virtual ICollection<MessageModel> Messages { get; set; }
+
         public string OrderLog
         {
             get => JsonConvert.SerializeObject(Log);

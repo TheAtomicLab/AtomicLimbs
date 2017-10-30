@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Web.Services.Configuration;
-using Limbs.Web.Entities.Models;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.Models
 {
     /// <summary>
     /// Message entity from internal messaging. 1:1 messaging
