@@ -35,5 +35,17 @@ namespace Limbs.Web.Tests
                 .With(PoolingFrequencer.For(MailsMessagesSender.EstimatedTime))
                 .StartConsimung();
         }
+
+        [TestMethod]
+        public void EnqueueMailMessage()
+        {
+            AzureQueue.Enqueue(new MailMessage
+            {
+                From = "no-reply@atomiclab.org",
+                To = "alebanzas@outlook.com",
+                Subject = "TEST MSJ",
+                Body = "Test body",
+            });
+        }
     }
 }
