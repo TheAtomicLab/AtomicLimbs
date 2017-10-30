@@ -47,7 +47,9 @@ namespace Limbs.Web.Models
         public DbSet<UserModel> UserModelsT { get; set; }
 
         public DbSet<AmbassadorModel> AmbassadorModels { get; set; }
-        
+
         public DbSet<OrderModel> OrderModels { get; set; }
+
+        public DbSet<MessageModel> Messages { get; set; }
     }
 }
