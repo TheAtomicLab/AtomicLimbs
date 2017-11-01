@@ -199,7 +199,7 @@ namespace Limbs.Web.Controllers
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
                 protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(user.Id, "Confirma tu cuenta",
+            await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Confirma tu cuenta",
                 "Por favor, confirmá tu cuenta haciendo click <a href=\"" + callbackUrl + "\">acá</a>");
         }
 
@@ -239,18 +239,19 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                if (user == null)
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     ModelState.AddModelError("", "Disculpe, su usuario no existe");
                     return View(model);
                 }
-                //TODO: Send mail and token time.
-                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                 //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+
+                //TODO (ale): mail template
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Cambiá tu password", "Para recuperar tu clave, hacé click <a href=\"" + callbackUrl + "\">acá</a>");
+
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
