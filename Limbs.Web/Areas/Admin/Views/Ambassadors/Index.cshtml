@@ -42,6 +42,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
+                <span>
+                    (@Html.ActionLink("enviar mensaje", "Create", new { to = item.UserId, controller = "Messages", area = "Admin", }))
+                </span>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Birth)

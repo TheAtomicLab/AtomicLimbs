@@ -234,12 +234,14 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Areas\Admin\Models\AssignOrderAmbassadorViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DelayedOrdersViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\MessageViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -247,6 +249,7 @@
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Extensions\ApplicationUserExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -295,6 +298,7 @@
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Services\IMessageService.cs" />
     <Compile Include="Services\IOrderNotificationService.cs" />
+    <Compile Include="Services\MessagesService.cs" />
     <Compile Include="Services\OrderMailNotificationService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
@@ -396,6 +400,11 @@
     <Content Include="Properties\webjobs-list.json" />
     <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Messages\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Messages\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\Messages\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Messages\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Messages\Index.cshtml" />
     <None Include="Properties\PublishProfiles\limbs - Web Deploy.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -505,6 +514,7 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Gender.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ApplicationUserViewModel.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,10 +1,10 @@
-﻿using Limbs.Web.Entities.Models;
-using Limbs.Web.Models;
+﻿using System.Threading.Tasks;
+using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Services
 {
     public interface IMessageService
     {
-        void Send(MessageModel message);
+        Task<int> Send(MessageModel message);
     }
 }

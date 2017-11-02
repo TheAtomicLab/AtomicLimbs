@@ -11,6 +11,7 @@ namespace Limbs.Web.Entities.Models
     {
         public MessageModel()
         {
+            Status = MessageStatus.Unread;
             Priority = Priority.Normal;
             Time = DateTime.UtcNow;
         }
