@@ -7,10 +7,11 @@ $(document).ready(function () {
         if ($("#termsandconditions").is(":checked")) {
             return true;
         }
-        alert("Debe aceptar los términos y condiciones.");
+        alertAtomic("Debe aceptar los términos y condiciones.","#alertAtomic");
         return false;
     });
 });
+
 
 function disabledRegister() {
     $("[name=register]").removeClass("blue_button");
