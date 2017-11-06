@@ -102,6 +102,28 @@ namespace Limbs.Web.Entities.Models
                 Message = message
             });
         }
+
+        public Pieces Pieces { get; set; }
+
+    }
+
+    public class Pieces
+    {
+        public bool AtomicLabCover { get; set; }
+        public bool FingerMechanismHolder { get; set; }
+        public bool Fingers { get; set; }
+        public bool FingerStopper { get; set; }
+        public bool FingersX1 { get; set; }
+        public bool FingersX2P { get; set; }
+        public bool Palm { get; set; }
+        public bool ThumbConnector { get; set; }
+        public bool ThumbThumbClip { get; set; }
+        public bool ThumbScrew { get; set; }
+        public bool UpperArm_FingerConnector { get; set; }
+        public bool UpperArm_PalmConnector { get; set; }
+        public bool UpperArm_ThumbShortConnector { get; set; }
+        public bool UpperArm_FingerSlider { get; set; }
+        public bool UpperArm { get; set; }
     }
 
     public class OrderLogItem
@@ -148,4 +170,7 @@ namespace Limbs.Web.Entities.Models
         [Description("Derecha")] Right,
         [Description("Izquierda")] Left
     }
+
+    
+
 }
