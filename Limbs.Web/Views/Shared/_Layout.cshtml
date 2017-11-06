@@ -14,6 +14,7 @@
     @RenderSection("styles", false)
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/scripts/functions.js")
     @if (User.IsInRole(AppRoles.Administrator)) { <link href="/Content/admin.css" rel="stylesheet" type="text/css" /> }
     <script src="~/Scripts/menu.js"></script>
     <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico"/>
@@ -31,6 +32,7 @@
 @Scripts.Render("~/bundles/jqueryui")
 @RenderSection("scripts", false)
 @Html.Partial("_GoogleAnalytics")
-
+    <div id="alertAtomic" display="none" style="display: none;">
+    </div>
 </body>
 </html>

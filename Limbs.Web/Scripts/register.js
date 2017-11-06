@@ -29,10 +29,10 @@ function validBirth(minAge) {
     var age = getAge($("#Birth"));
 
     if (age < 0) {
-        alert("Por favor ingresá una fecha válida. Todavía no naciste :) .");
+        alertAtomic("Por favor ingresá una fecha válida.","#alertAtomic");
         return false;
     } else if (age < minAge) {
-        alert("La edad tiene que ser mayor a " + minAge + " años.");
+        alertAtomic("La edad tiene que ser mayor a " + minAge + " años.", "#alertAtomic");
         return false;
     }
     return true;
