@@ -1377,3 +1377,7 @@ button[name="recoverPassword"] {
     background-color: #395697;
     margin-bottom: 25px;
 }
+
+.message.unread {
+    font-weight: bold;
+}

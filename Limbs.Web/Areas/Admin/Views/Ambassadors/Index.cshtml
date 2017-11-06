@@ -41,10 +41,7 @@
                 @Html.DisplayFor(modelItem => item.AmbassadorName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
-                <span>
-                    (@Html.ActionLink("enviar mensaje", "Create", new { to = item.UserId, controller = "Messages", area = "Admin", }))
-                </span>
+                @Html.ActionLink(item.Email, "Create", new { to = item.UserId, controller = "Messages", area = "Admin", })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Birth)

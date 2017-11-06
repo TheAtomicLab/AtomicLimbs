@@ -20,8 +20,10 @@ namespace Limbs.Web.Areas.Admin.Models
 
         public Priority Priority { get; set; }
 
+        [Required]
         public ApplicationUserViewModel From { get; set; }
 
+        [Required]
         public ApplicationUserViewModel To { get; set; }
 
         [DataType(DataType.MultilineText)]

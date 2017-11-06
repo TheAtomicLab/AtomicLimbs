@@ -17,24 +17,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Messages
         public async Task<ActionResult> Index()
         {
-            return View(await Db.Messages.ToListAsync());
+            return View(await Db.Messages.Include(x => x.From).Include(x => x.To).ToListAsync());
         }
-
-        // GET: Admin/Messages/Details/5
-        public async Task<ActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MessageModel messageModel = await Db.Messages.FindAsync(id);
-            if (messageModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(messageModel);
-        }
-
+        
         // GET: Admin/Messages/Create
         public async Task<ActionResult> Create(Guid? parentId, Guid? to)
         {
@@ -65,6 +50,14 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 var toId = to.Value.ToString("D");
                 var toUser = Db.Users.FirstOrDefault(x => x.Id == toId);
                 messageModel.To = toUser.ToViewModel();
+            }
+            else
+            {
+                ViewBag.Users = Db.Users.ToList().Select(x => new SelectListItem
+                {
+                    Value = x.Id,
+                    Text = x.Email,
+                });
             }
 
             return View("Create", messageModel);
@@ -97,39 +90,6 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         
-        // GET: Admin/Messages/Delete/5
-        public async Task<ActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var messageModel = await Db.Messages.FindAsync(id);
-            if (messageModel == null)
-            {
-                return HttpNotFound();
-            }
-            return View(messageModel);
-        }
-
-        // POST: Admin/Messages/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(Guid id)
-        {
-            var messageModel = await Db.Messages.FindAsync(id);
-
-            if (messageModel != null) messageModel.Status = MessageStatus.Deleted;
-
-            await Db.SaveChangesAsync();
-
-            return RedirectToAction("Index");
-        }
-
-        public ActionResult Reply(Guid id)
-        {
-            return RedirectToAction("Create", new { parentId = id });
-        }
 
         public ActionResult GetUsername(string term)
         {

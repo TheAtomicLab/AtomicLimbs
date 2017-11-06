@@ -1,0 +1,8 @@
+﻿@using Limbs.Web.Common.Extensions
+@model DateTime?
+@if (Model.HasValue)
+{
+    <span title="@Model.Value.ToString("F")">
+        @Model.Value.ToFriendlyDateString()
+    </span>
+}

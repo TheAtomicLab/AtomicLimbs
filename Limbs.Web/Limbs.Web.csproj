@@ -246,6 +246,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
@@ -405,10 +406,11 @@
     <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Messages\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\Messages\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\Messages\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Messages\Edit.cshtml" />
+    <Content Include="Views\Messages\Delete.cshtml" />
+    <Content Include="Views\Messages\Details.cshtml" />
+    <Content Include="Views\Messages\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Messages\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ToFriendlyDateString.cshtml" />
     <None Include="Properties\PublishProfiles\limbs - Web Deploy.pubxml" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -518,7 +520,9 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Gender.cshtml" />
     <Content Include="Views\Account\DisplayEmail.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\ApplicationUserViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\ApplicationUserViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ApplicationUser.cshtml" />
+    <Content Include="Views\Messages\Inbox.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

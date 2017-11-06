@@ -1,6 +1,6 @@
 ﻿@model Limbs.Web.Areas.Admin.Models.MessageViewModel
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Messages")) 
 {
     @Html.AntiForgeryToken()
         
@@ -8,19 +8,17 @@
         <h4>MessageModel</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(x => x.From)
-        @Html.HiddenFor(x => x.To)
         <div class="form-group">
             @Html.LabelFor(model => model.From, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(x => x.From)
+                @Html.EditorFor(x => x.From)
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.To, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DisplayFor(x => x.To)
+                @Html.EditorFor(x => x.To)
             </div>
         </div>
     

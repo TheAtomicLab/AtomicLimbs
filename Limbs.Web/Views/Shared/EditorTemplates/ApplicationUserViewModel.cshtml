@@ -1,0 +1,21 @@
+﻿@model Limbs.Web.Areas.Admin.Models.ApplicationUserViewModel
+@{
+    IEnumerable<SelectListItem> users = ViewBag.Users ?? new List<SelectListItem>();
+}
+@if (users.Any())
+{
+    var modelId = Html.NameFor(x => Model).ToString();
+
+    @Html.DropDownList(modelId, users)
+}
+else if (Model != null)
+{
+    <p>@Model.Email</p>
+
+    @Html.HiddenFor(x => Model.Id)
+    @Html.HiddenFor(x => Model.Email)
+}
+else
+{
+    <!-- ApplicationUserViewModel.cshtml (Model == null) -->
+}
