@@ -1,4 +1,3 @@
-//TODO: Sacar los alert y poner un mensaje lindo
 $(document).ready(function() {
     setDatePicker(4);
 
@@ -55,7 +54,7 @@ function isUser(val) {
 
 function validAdultCheck(check) {
     if (!check.is(":checked")) {
-        alert("Por favor. Si usted no es el usuario de la mano es necesario que sea mayor de 18 años.");
+        alertAtomic("Por favor. Si usted no es el usuario de la mano es necesario que sea mayor de 18 años.");
         return false;
     }
     return true;

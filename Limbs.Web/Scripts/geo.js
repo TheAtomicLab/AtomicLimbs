@@ -122,7 +122,7 @@ function geocodeAddress(geocoder, resultsMap) {
             enableRegister();
         } else {
             if (status === 'ZERO_RESULTS') {
-                alert('Por favor ingresé una dirección valida para poder registrarse.');
+                alertAtomic('Por favor ingresé una dirección valida para poder registrarse.', "#alertAtomic"); 
                 initMap();
             }else{
                 alert('Geocode was not successful for the following reason: ' + status);

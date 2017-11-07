@@ -239,18 +239,23 @@ namespace Limbs.Web.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                //if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                //if (user == null)
                 if (user == null)
                 {
-                    // Don't reveal that the user does not exist or is not confirmed
-                    ModelState.AddModelError("", "Disculpe, su usuario no existe");
+                    ModelState.AddModelError("", "Disculpe, su usuario no existe.");
                     return View(model);
                 }
-                //TODO: Send mail and token time.
-                 string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                 //await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                    else if(!(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                {
+                    ModelState.AddModelError("", "Por favor, primero confirme su mail.");
+                    return View(model);
+                }
+
+                //TODO (Lucas): Template mail and token time.
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Restablecer", "Por favor, para restablecer su contraseña haga click <a href=\"" + callbackUrl + "\">aquí</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
