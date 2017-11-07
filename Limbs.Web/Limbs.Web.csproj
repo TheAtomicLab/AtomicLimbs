@@ -396,6 +396,7 @@
     <Content Include="Migrations\README.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\pages\munonizer.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
     <Content Include="Scripts\pages\orders.js" />

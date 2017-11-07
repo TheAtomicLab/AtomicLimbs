@@ -7,7 +7,7 @@ $(document).ready(function () {
         if ($("#termsandconditions").is(":checked")) {
             return true;
         }
-        alert("Debe aceptar los términos y condiciones.");
+        alertAtomic("Debe aceptar los términos y condiciones.");
         return false;
     });
 });
@@ -24,14 +24,15 @@ function enableRegister() {
     $("[name=register]").prop('disabled', false);
 };
 
+
 function validBirth(minAge) {
     var age = getAge($("#Birth"));
 
     if (age < 0) {
-        alert("Por favor ingresá una fecha válida. Todavía no naciste :) .");
+        alertAtomic("Por favor ingresá una fecha válida.");
         return false;
     } else if (age < minAge) {
-        alert("La edad tiene que ser mayor a " + minAge + " años.");
+        alertAtomic("La edad tiene que ser mayor a " + minAge + " años.");
         return false;
     }
     return true;
