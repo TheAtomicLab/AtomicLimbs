@@ -6,7 +6,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Limbs.Web.Models;
-using Limbs.Web.Common.Mail;
 using Limbs.Web.Entities.Models;
 
 
@@ -97,7 +96,7 @@ namespace Limbs.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 //case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Usuario o contraseña incorrectos");
+                    ModelState.AddModelError("loginfail", @"Usuario o contraseña incorrectos");
                     return View(model);
             }
         }
@@ -132,17 +131,17 @@ namespace Limbs.Web.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
-                    RedirectToLocal(model.ReturnUrl);
-                    return null; //Cambiar este return null
+                    return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                //case SignInStatus.Failure:
+                case SignInStatus.Failure:
+                    return View("Error");
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", @"Invalid code.");
                     return View(model);
             }
         }
@@ -194,13 +193,14 @@ namespace Limbs.Web.Controllers
 
         private async Task SendEmailConfirmation(ApplicationUser user)
         {
-            //TODO (ale): mail template
-
+            //TODO: mail template
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code = code},
-                protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(user.Id, "Confirma tu cuenta",
-                "Por favor, confirmá tu cuenta haciendo click <a href=\"" + callbackUrl + "\">acá</a>");
+            if (Request.Url != null)
+            {
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Confirma tu cuenta",
+                    "Por favor, confirmá tu cuenta haciendo click <a href=\"" + callbackUrl + "\">acá</a>");
+            }
         }
 
         public ActionResult SelectUserOrAmbassador()
@@ -236,30 +236,28 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            if (ModelState.IsValid)
-            {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                //if (user == null)
-                if (user == null)
-                {
-                    ModelState.AddModelError("", "Disculpe, su usuario no existe.");
-                    return View(model);
-                }
-                    else if(!(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    ModelState.AddModelError("", "Por favor, primero confirme su mail.");
-                    return View(model);
-                }
+            if (!ModelState.IsValid) return View(model);
 
-                //TODO (Lucas): Template mail and token time.
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Restablecer", "Por favor, para restablecer su contraseña haga click <a href=\"" + callbackUrl + "\">aquí</a>");
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+            var user = await UserManager.FindByNameAsync(model.Email);
+            if (user == null)
+            {
+                ModelState.AddModelError("", @"Disculpe, su usuario no existe.");
+                return View(model);
+            }
+            if(!(await UserManager.IsEmailConfirmedAsync(user.Id)))
+            {
+                ModelState.AddModelError("", @"Por favor, primero confirme su mail.");
+                return View(model);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            //TODO: Template mail and token time.
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            if (Request.Url != null)
+            {
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Restablecer contraseña", "Por favor, para restablecer su contraseña haga click <a href=\"" + callbackUrl + "\">aquí</a>");
+            }
+            return RedirectToAction("ForgotPasswordConfirmation", "Account");
         }
 
         //
