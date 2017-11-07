@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -18,17 +19,41 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Inbox");
         }
 
-        // GET: Messages
+        // GET: Messages/Inbox
         public async Task<ActionResult> Inbox()
         {
-            var userId = User.Identity.GetUserId();
-
-            var messages = await Db.Messages.Include(x => x.From).Where(x => x.To.Id == userId && x.Status != MessageStatus.Deleted).ToListAsync();
+            var messages = await GetInboxMessages();
 
             return View(messages);
         }
 
-        // GET: Admin/Messages/Details/5
+        public async Task<ActionResult> InboxPartial()
+        {
+            var messages = await GetInboxMessages();
+
+            return PartialView("_InboxPartial", messages);
+        }
+
+        private async Task<List<MessageModel>> GetInboxMessages()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var messages = await Db.Messages.Include(x => x.From)
+                .Where(x => x.To.Id == userId && x.Status != MessageStatus.Deleted).OrderByDescending(x => x.Time).ToListAsync();
+            return messages;
+        }
+
+        // GET: Messages/UnreadCount
+        public async Task<ActionResult> UnreadCount()
+        {
+            var userId = User.Identity.GetUserId();
+
+            var messages = await Db.Messages.Include(x => x.From).Where(x => x.To.Id == userId && x.Status == MessageStatus.Unread).ToListAsync();
+
+            return Json(messages, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: Messages/Details/5
         public async Task<ActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -55,7 +80,7 @@ namespace Limbs.Web.Controllers
             return View(messageModel);
         }
 
-        // GET: Admin/Messages/Delete/5
+        // GET: Messages/Delete/5
         public async Task<ActionResult> Delete(Guid? id)
         {
             if (id == null)
@@ -70,7 +95,7 @@ namespace Limbs.Web.Controllers
             return View(messageModel);
         }
 
-        // POST: Admin/Messages/Delete/5
+        // POST: Messages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(Guid id)

@@ -329,6 +329,7 @@
     <Content Include="Content\img\amputaciones_tipo\f.png" />
     <Content Include="Content\img\amputaciones_tipo\g.png" />
     <Content Include="Content\img\amputaciones_tipo\h.png" />
+    <Content Include="Content\img\default_messages.svg" />
     <Content Include="Content\img\ej_no001.jpg" />
     <Content Include="Content\img\ej_no002.jpg" />
     <Content Include="Content\img\ej_si001.jpg" />
@@ -523,6 +524,7 @@
     <Content Include="Views\Shared\EditorTemplates\ApplicationUserViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApplicationUser.cshtml" />
     <Content Include="Views\Messages\Inbox.cshtml" />
+    <Content Include="Views\Messages\_InboxPartial.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

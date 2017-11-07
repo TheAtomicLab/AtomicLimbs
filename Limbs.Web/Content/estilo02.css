@@ -24,7 +24,7 @@
         left: 0px;
         right: initial;
         transition: width 0.3s, height 0.3s;
-        padding: 5px;
+        padding: 5px 20px 5px 5px;
     }
 
     #icono_perfil {

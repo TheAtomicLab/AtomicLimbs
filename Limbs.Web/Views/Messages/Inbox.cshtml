@@ -4,30 +4,29 @@
     ViewBag.Title = "Mensajes";
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.From)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th></th>
-    </tr>
-    
-    @foreach (var item in Model) {
-        <tr class="message @item.Status.ToString().ToLowerInvariant()">
-            <td>
-                @Html.DisplayFor(modelItem => item.From)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time, "ToFriendlyDateString")
-            </td>
-            <td>
-                @Html.ActionLink("Ver", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Borrar", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
-    
-</table>
+<div id="inbox">
+    @Html.Partial("_InboxPartial", Model)    
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(getInbox);
+        
+        function getInbox() {
+            var $dummy = $("<div>");
+            $dummy.load("@Url.Action("InboxPartial", "Messages")", function(response, status, xhr) {
+                var $container = $("#inbox");
+                if (status !== "success") {
+                    location.reload();
+                }
+                else
+                {
+                    $container.html($dummy.html());
+                }
+                $dummy.remove();
+                setTimeout(getInbox, 5000);
+            });
+        }
+    </script>
+}

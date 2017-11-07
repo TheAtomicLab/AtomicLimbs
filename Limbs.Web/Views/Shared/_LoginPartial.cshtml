@@ -3,7 +3,9 @@
 @if (Request.IsAuthenticated)
 {
     <div id="menu_perfil">
-        <div id="icono_perfil" onclick="menu_mobil_activo()"></div>
+        <div id="icono_perfil" onclick="menu_mobil_activo()">
+            <a href="@Url.Action("Index", "Messages", new { area = "" })" id="message-count">&nbsp;</a>
+        </div>
         <ul id="opciones_perfil">
             <li class="perfil_name">
                 @Html.ActionLink(User.Identity.GetUserName(), "Index", "Manage", routeValues: new { area = "",}, htmlAttributes: new {title = "Manage"})
@@ -15,4 +17,25 @@
             }
         </ul>
     </div>
+}
+
+@if (Request.IsAuthenticated)
+{
+    <script type="text/javascript">
+        $(document).ready(getUnreadCount);
+
+        function getUnreadCount() {
+            
+            $.getJSON("@Url.Action("UnreadCount", "Messages")",
+                null,
+                function(e) {
+                    $("#message-count").text(e.length);
+                    
+                    setTimeout(getUnreadCount, 5000);
+                }, function (e) {
+                    console.log(e);
+                    setTimeout(getUnreadCount, 5000);
+                });
+        }
+    </script>
 }
