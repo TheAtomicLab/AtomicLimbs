@@ -26,6 +26,20 @@ namespace Limbs.Web.Services
 
         public async Task<int> Send(IPrincipal user, MessageModel message)
         {
+            if (message.PreviousMessage != null) //add to thread
+            {
+                message.Status = MessageStatus.Unread;
+                message.Priority = message.PreviousMessage.Priority;
+                if (message.From.Equals(message.PreviousMessage.From)) //adding to your message
+                {
+                    message.To = message.PreviousMessage.To;
+                }
+                else
+                {
+                    message.To = message.PreviousMessage.From;
+                }
+            }
+
             Db.Messages.Add(message);
 
             return await Db.SaveChangesAsync();
@@ -42,8 +56,26 @@ namespace Limbs.Web.Services
         {
             var userId = user.Identity.GetUserId();
 
-            return await Db.Messages.Include(x => x.From)
-                .Where(x => x.To.Id == userId && x.Status != MessageStatus.Deleted)
+            return await Db.Messages.Include(x => x.From).Include(x => x.To)
+                .Where(x => (x.To.Id == userId || x.From.Id == userId ) && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
+                .OrderByDescending(x => x.Time)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, Guid mainMessageId)
+        {
+            var mainMessage = await View(user, mainMessageId);
+            return await GetThreadMessages(user, mainMessage);
+        }
+
+        public async Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, MessageModel mainMessage)
+        {
+            var userId = user.Identity.GetUserId();
+
+            if (mainMessage.To.Id != userId && mainMessage.From.Id != userId) return null;
+
+            return await Db.Messages.Include(x => x.From).Include(x => x.To)
+                .Where(x => x.Status != MessageStatus.Deleted && x.PreviousMessage.Id == mainMessage.Id)
                 .OrderByDescending(x => x.Time)
                 .ToListAsync();
         }

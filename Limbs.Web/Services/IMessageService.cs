@@ -14,6 +14,10 @@ namespace Limbs.Web.Services
 
         Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user);
 
+        Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, MessageModel mainMessage);
+
+        Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, Guid mainMessageId);
+
         Task<int> GetUnreadCount(IPrincipal user);
 
         Task<int> MarkAsRead(IPrincipal user, MessageModel message);

@@ -6,6 +6,9 @@
             @Html.DisplayNameFor(model => model.From)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.To)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Time)
         </th>
         <th></th>
@@ -17,6 +20,9 @@
              <tr class="message @item.Status.ToString().ToLowerInvariant()">
                  <td>
                      @Html.DisplayFor(modelItem => item.From)
+                 </td>
+                 <td>
+                     @Html.DisplayFor(modelItem => item.To)
                  </td>
                  <td>
                      @Html.DisplayFor(modelItem => item.Time, "ToFriendlyDateString")

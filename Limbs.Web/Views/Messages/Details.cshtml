@@ -2,39 +2,84 @@
 
 <div>
     <h4>MessageModel</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
+    <hr/>
+
+    @Html.Partial("_Reply", Model)
     
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    
-    </dl>
+    <p id="loading">Cargando mensajes...</p>
+
+    <ul id="messages" style="display: none;">
+        <li>
+            @Html.Partial("_Detail", Model)
+        </li>
+    </ul>
 </div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "GET",
+                url: "@Url.Action("ThreadMessages", new { threadId = Model.Id })",
+                success: function (data) {
+                    $("#messages").prepend(data).show();
+                    $("#loading").hide();
+                }
+            });
+        });
+
+        $(window).scroll(function () {
+            $.each($('.message-item'),
+                function (key, value) {
+                    var item = $(value);
+                    if (isInView(item) && item.attr("data-status") === "Unread") {
+                        item.attr("data-status", "Read");
+                        markAsRead(item.attr("data-id"));
+                    }
+                });
+        });
+
+        $("#reply-form").submit(function (e) {
+            e.preventDefault();
+
+            var content = $("#@(Html.IdFor(x => Model.Content).ToString())");
+
+            if (content.val().length < 10) {
+                return;
+            }
+            $(".btn-submit").attr("disabled", "disabled");
+            var form = $("#reply-form");
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: form.prop('action'),
+                data: form.serialize(),
+                success: function (data) {
+                    $(".btn-submit").removeAttr("disabled");
+                    $(content).val("");
+                    $("#messages").prepend("<li>" + data + "</li>");
+                }
+            });
+        });
+
+        function isInView(elem){
+            return $(elem).offset().top - $(window).scrollTop() < $(elem).height();
+        }
+
+        function markAsRead(id) {
+            $.ajax({
+                cache: false,
+                async: true,
+                type: "POST",
+                url: "@Url.Action("MarkAsRead")?id=" + id,
+                success: function (data) {
+                    console.log("Message read:" + id);
+                }
+            });
+        }
+    </script>
+}

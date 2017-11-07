@@ -50,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Email)
+                @Html.ActionLink(item.Email, "Create", new { to = item.UserId, controller = "Messages", area = "Admin", })
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Phone)

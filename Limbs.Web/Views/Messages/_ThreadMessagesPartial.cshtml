@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Limbs.Web.Entities.Models.MessageModel>
+
+@if (Model != null && Model.Any())
+{
+    foreach (var item in Model)
+    {
+     <li>
+         @Html.Partial("_Detail", item)
+     </li>
+    }
+}

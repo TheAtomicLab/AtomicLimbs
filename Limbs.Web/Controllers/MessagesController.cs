@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
+using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Controllers
 {
@@ -37,7 +38,14 @@ namespace Limbs.Web.Controllers
 
             return PartialView("_InboxPartial", messages);
         }
-        
+
+        public async Task<ActionResult> ThreadMessages(Guid threadId)
+        {
+            var messages = await _ms.GetThreadMessages(User, threadId);
+
+            return PartialView("_ThreadMessagesPartial", messages);
+        }
+
         // GET: Messages/UnreadCount
         public async Task<ActionResult> UnreadCount()
         {
@@ -87,9 +95,27 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Reply(Guid id)
+        // POST: Messages/Reply/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Reply(MessageModel messageModel)
         {
-            return RedirectToAction("Create", new { parentId = id });
+            var userId = User.Identity.GetUserId();
+            var fromUser = Db.Users.Find(userId);
+            messageModel.From = fromUser;
+
+            var mainMessage = await _ms.View(User, messageModel.PreviousMessage.Id);
+            messageModel.PreviousMessage = mainMessage;
+            
+            await _ms.Send(User, messageModel);
+
+            return PartialView("_Detail", messageModel);
+        }
+
+        [HttpPost]
+        public async Task MarkAsRead(Guid id)
+        {
+            await _ms.View(User, id);
         }
     }
 }
