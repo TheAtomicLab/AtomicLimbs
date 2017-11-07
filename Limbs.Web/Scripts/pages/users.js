@@ -54,7 +54,7 @@ function isUser(val) {
 
 function validAdultCheck(check) {
     if (!check.is(":checked")) {
-        alertAtomic("Por favor. Si usted no es el usuario de la mano es necesario que sea mayor de 18 años.", "#alertAtomic");
+        alertAtomic("Por favor. Si usted no es el usuario de la mano es necesario que sea mayor de 18 años.");
         return false;
     }
     return true;

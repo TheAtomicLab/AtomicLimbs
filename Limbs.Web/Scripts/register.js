@@ -7,11 +7,10 @@ $(document).ready(function () {
         if ($("#termsandconditions").is(":checked")) {
             return true;
         }
-        alertAtomic("Debe aceptar los términos y condiciones.","#alertAtomic");
+        alertAtomic("Debe aceptar los términos y condiciones.");
         return false;
     });
 });
-
 
 function disabledRegister() {
     $("[name=register]").removeClass("blue_button");
@@ -25,14 +24,15 @@ function enableRegister() {
     $("[name=register]").prop('disabled', false);
 };
 
+
 function validBirth(minAge) {
     var age = getAge($("#Birth"));
 
     if (age < 0) {
-        alertAtomic("Por favor ingresá una fecha válida.","#alertAtomic");
+        alertAtomic("Por favor ingresá una fecha válida.");
         return false;
     } else if (age < minAge) {
-        alertAtomic("La edad tiene que ser mayor a " + minAge + " años.", "#alertAtomic");
+        alertAtomic("La edad tiene que ser mayor a " + minAge + " años.");
         return false;
     }
     return true;

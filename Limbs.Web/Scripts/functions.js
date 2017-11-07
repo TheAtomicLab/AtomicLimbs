@@ -1,6 +1,12 @@
+//TODO (Lucas): Listar alerts en li
+function alertAtomic(text, div = "#alertAtomic") {
+/*
+    if (call) {
+        $(div).find('li').remove();
+        call = false;
+    }
+*/
 
-//example alertAtomic("Esto es un alert","#alertAtomic")
-function alertAtomic(text, div) {
     $(div).find('p').remove();
     var p = "<p>" + text + "</p>";
     $(div).append(p);
@@ -12,4 +18,23 @@ function alertAtomic(text, div) {
             }
         }
     })
+    return false;
 };
+
+/*
+function alertAtomic(text) {
+    $("#alertAtomic").find('p').remove();
+    var dialog = "<div id=alertAtomic ><p>" + text + "</p></div>";
+    $('body').append(dialog);
+    $("#alertAtomic").dialog({
+        modal: true,
+        //title: "Advertencia",
+        buttons: {
+            Ok: function () {
+                $(this).dialog("close");
+            }
+        }
+    })
+    return false;
+};
+*/
