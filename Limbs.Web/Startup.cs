@@ -1,5 +1,6 @@
 ﻿using LightInject;
 using Limbs.Web.Common.Mail;
+using Limbs.Web.Models;
 using Limbs.Web.Repositories;
 using Microsoft.Owin;
 using Owin;
@@ -30,6 +31,7 @@ namespace Limbs.Web
             container.Register<IAmbassadorsRepository, AmbassadorsRepository>();
             container.Register<IUserFiles, UserFilesInAzureStorage>();
             container.Register<IOrderNotificationService, OrderMailNotificationService>();
+            container.Register<IMessageService, MessagesService>();
 
             container.RegisterControllers();
             container.EnableMvc();

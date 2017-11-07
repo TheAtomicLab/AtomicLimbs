@@ -28,9 +28,10 @@
             
             $.getJSON("@Url.Action("UnreadCount", "Messages")",
                 null,
-                function(e) {
-                    $("#message-count").text(e.length);
-                    
+                function (e) {
+                    if (parseInt(e) > 0) {
+                        $("#message-count").show().text(e);
+                    }
                     setTimeout(getUnreadCount, 5000);
                 }, function (e) {
                     console.log(e);

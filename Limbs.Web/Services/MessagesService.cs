@@ -1,18 +1,97 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Security.Principal;
+using System.Threading.Tasks;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Extensions;
 using Limbs.Web.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Services
 {
     public class MessagesService : IMessageService
     {
-        public ApplicationDbContext Db = new ApplicationDbContext();
-        
-        public async Task<int> Send(MessageModel message)
+        public ApplicationDbContext Db;
+
+        public MessagesService()
+        {
+            Db = new ApplicationDbContext();
+        }
+        public MessagesService(ApplicationDbContext db)
+        {
+            Db = db;
+        }
+
+        public async Task<int> Send(IPrincipal user, MessageModel message)
         {
             Db.Messages.Add(message);
 
             return await Db.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<MessageModel>> GetAllMessages(IPrincipal user)
+        {
+            if(user.IsInRole(AppRoles.Administrator))
+                return await Db.Messages.Include(x => x.From).Include(x => x.To).ToListAsync();
+            return await GetInboxMessages(user);
+        }
+
+        public async Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user)
+        {
+            var userId = user.Identity.GetUserId();
+
+            return await Db.Messages.Include(x => x.From)
+                .Where(x => x.To.Id == userId && x.Status != MessageStatus.Deleted)
+                .OrderByDescending(x => x.Time)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetUnreadCount(IPrincipal user)
+        {
+            var userId = user.Identity.GetUserId();
+
+            return await Db.Messages.Include(x => x.From)
+                .Where(x => x.To.Id == userId && x.Status == MessageStatus.Unread).CountAsync();
+        }
+
+        public async Task<int> MarkAsRead(IPrincipal user, MessageModel message)
+        {
+            if (message.Status != MessageStatus.Unread || !user.IsDestination(message)) return 0;
+            
+            message.Status = MessageStatus.Read;
+
+            return await Db.SaveChangesAsync();
+        }
+
+        public async Task<int> Delete(IPrincipal user, Guid id)
+        {
+            var messageModel = await View(user, id);
+
+            if (messageModel == null) return 0;
+
+            messageModel.Status = MessageStatus.Deleted;
+
+            return await Db.SaveChangesAsync();
+        }
+
+        public async Task<MessageModel> View(IPrincipal user, Guid id)
+        {
+            var message = await Db.Messages.Include(x => x.To).Include(x => x.From)
+                .FirstOrDefaultAsync(x => x.Id == id);
+            
+            if (user.IsInMessage(message))
+            {
+                await MarkAsRead(user, message);
+
+                return message;
+            }
+
+            if (user.IsInRole(AppRoles.Administrator))
+                return message;
+
+            return null;
         }
     }
 }

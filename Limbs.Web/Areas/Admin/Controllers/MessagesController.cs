@@ -1,23 +1,28 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Net;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Extensions;
+using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
-using MessageModel = Limbs.Web.Entities.Models.MessageModel;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
     public class MessagesController : AdminBaseController
     {
+        private readonly IMessageService _ms;
+
+        public MessagesController(IMessageService ms)
+        {
+            _ms = new MessagesService(Db);
+        }
+
         // GET: Admin/Messages
         public async Task<ActionResult> Index()
         {
-            return View(await Db.Messages.Include(x => x.From).Include(x => x.To).ToListAsync());
+            return View(await _ms.GetAllMessages(User));
         }
         
         // GET: Admin/Messages/Create
@@ -30,7 +35,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             messageModel.AddFrom(fromUser);
             if (parentId.HasValue)
             {
-                var parentMessage = await Db.Messages.FindAsync(parentId.Value);
+                var parentMessage = await _ms.View(User, parentId.Value);
                 messageModel.PreviousMessage = parentMessage;
                 if (parentMessage != null)
                 {
@@ -79,13 +84,12 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 To = toUser,
                 Id = Guid.NewGuid(),
                 Priority = messageViewModel.Priority,
-                PreviousMessage = messageViewModel.PreviousMessage,
+                //PreviousMessage = messageViewModel.PreviousMessage,
                 Content = messageViewModel.Content,
-                Order = messageViewModel.Order,
+                //Order = messageViewModel.Order,
             };
 
-            Db.Messages.Add(messageModel);
-            await Db.SaveChangesAsync();
+            await _ms.Send(User, messageModel);
 
             return RedirectToAction("Index");
         }
@@ -102,6 +106,15 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 value = m.Email,
                 label = m.UserName.ToString()
             }), JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                Db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
