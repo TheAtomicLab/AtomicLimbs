@@ -1,8 +1,8 @@
-﻿@model Limbs.Web.Entities.Models.MessageModel
+﻿@using Limbs.Web.Entities.Models
+@model MessageModel
 
 @using (Html.BeginForm("Reply", "Messages", FormMethod.Post, new { id = "reply-form" }))
 {
-    Model.Content = "";
     @Html.AntiForgeryToken()
     @Html.Hidden(Html.NameFor(x => x.PreviousMessage.Id).ToString(), Model.Id)
     @Html.Hidden(Html.NameFor(x => x.From.Id).ToString(), Model.From.Id)
@@ -35,7 +35,7 @@
         <div>
             @Html.LabelFor(model => model.Content)
             <div>
-                @Html.EditorFor(model => model.Content)
+                @Html.EditorFor(model => (new MessageModel()).Content)
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
