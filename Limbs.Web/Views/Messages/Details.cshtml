@@ -17,29 +17,39 @@
 
 @section scripts
 {
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js" type="text/javascript"></script>
+    <script src="~/signalr/hubs" type="text/javascript"></script>
+
     <script type="text/javascript">
+
         $(document).ready(function () {
-            $.ajax({
-                cache: false,
-                async: true,
-                type: "GET",
-                url: "@Url.Action("ThreadMessages", new { threadId = Model.Id })",
-                success: function (data) {
-                    $("#messages").prepend(data).show();
-                    $("#loading").hide();
-                }
+            $.connection.messagesHub.client.receiveMessage = function(message) {
+                console.log("receiveMessage");
+
+                var newMessage = $($.parseHTML("<li>" + message + "</li>"));
+                $(".message-item", newMessage).removeClass("ToHim").addClass("ToMe").removeClass("Read").addClass("Unread").attr("data-status", "Unread");;
+                $("#messages").prepend(newMessage);
+                processUnreadMessages();
+            };
+            $.connection.hub.qs = 'threadId=@(Model.Id)';
+            $.connection.hub.start().done(function (e) {
+                console.log("socket started");
             });
+            $.ajax({
+                    cache: false,
+                    async: true,
+                    type: "GET",
+                    url: "@Url.Action("ThreadMessages", new { threadId = Model.Id })",
+                    success: function (data) {
+                        $("#messages").prepend(data).show();
+                        $("#loading").hide();
+                        processUnreadMessages();
+                    }
+                });
         });
 
         $(window).scroll(function () {
-            $.each($('.message-item'),
-                function (key, value) {
-                    var item = $(value);
-                    if (isInView(item) && item.attr("data-status") === "Unread") {
-                        item.attr("data-status", "Read");
-                        markAsRead(item);
-                    }
-                });
+            processUnreadMessages();
         });
 
         $("#reply-form").submit(function (e) {
@@ -47,10 +57,10 @@
 
             var content = $("#@(Html.IdFor(x => Model.Content).ToString())");
 
-            if (content.val().length < 10) {
+            if (content.val().length < 1) {
                 return;
             }
-            $(".btn-submit").attr("disabled", "disabled");
+            $("input[type=submit]").attr("disabled", "disabled");
             var form = $("#reply-form");
             $.ajax({
                 cache: false,
@@ -59,15 +69,31 @@
                 url: form.prop('action'),
                 data: form.serialize(),
                 success: function (data) {
-                    $(".btn-submit").removeAttr("disabled");
+                    $("input[type=submit]").removeAttr("disabled");
                     $(content).val("");
+                    $.connection.messagesHub.server.sendMessage("@(Model.Id)", data.toString());
                     $("#messages").prepend("<li>" + data + "</li>");
                 }
             });
         });
 
-        function isInView(elem){
-            return $(elem).offset().top - $(window).scrollTop() < $(elem).height();
+        function processUnreadMessages() {
+            $.each($('.message-item[data-status="Unread"]'),
+                function (key, value) {
+                    var item = $(value);
+                    if (isInView(item)) {
+                        item.attr("data-status", "Read");
+                        markAsRead(item);
+                    }
+                });
+        }
+
+        function isInView(elem) {
+            console.log(":A=" + $(elem).offset().top + ":B=" + $(window).scrollTop() + ":C=" + $(elem).height() + ":" + "D=" + $(window).height());
+            var rf = $(window).scrollTop();
+            var rt = $(window).scrollTop() + $(window).height();
+            var ip = $(elem).offset().top + $(elem).height();
+            return rf < ip && ip < rt;
         }
 
         function markAsRead(item) {

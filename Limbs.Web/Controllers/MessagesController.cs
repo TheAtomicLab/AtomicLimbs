@@ -108,7 +108,7 @@ namespace Limbs.Web.Controllers
             messageModel.PreviousMessage = mainMessage;
             
             await _ms.Send(User, messageModel);
-
+            
             return PartialView("_Detail", messageModel);
         }
 
