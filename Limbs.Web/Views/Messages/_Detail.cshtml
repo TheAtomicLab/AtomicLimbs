@@ -1,60 +1,23 @@
 ﻿@using Limbs.Web.Entities.Models
 @using Microsoft.AspNet.Identity
-@model Limbs.Web.Entities.Models.MessageModel
+@model MessageModel
 @{
     var cl = MessageStatus.Read;
+    var cll = "ToHim";
     if (Model.To.Id == User.Identity.GetUserId() && Model.Status == MessageStatus.Unread)
     {
         cl = MessageStatus.Unread;
     }
+    if (Model.To.Id == User.Identity.GetUserId())
+    {
+        cll = "ToMe";
+    }
 }
-<hr/>
-<dl class="dl-horizontal message-item @cl" data-status="@Model.Status" data-id="@Model.Id">
-        <dt>
-            @Html.DisplayNameFor(model => model.From)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.From)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.To)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.To)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Time, "ToFriendlyDateString")
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Priority)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Priority)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-    </dl>
+<dl class="message-item @cl @cll" data-status="@Model.Status" data-id="@Model.Id">
+    <dd>
+        @Html.DisplayFor(model => model.Time, "ToFriendlyDateString")
+    </dd>
+    <dd>
+        @Html.DisplayFor(model => model.Content)
+    </dd>
+</dl>
