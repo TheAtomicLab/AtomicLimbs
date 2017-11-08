@@ -31,6 +31,8 @@
                 function (e) {
                     if (parseInt(e) > 0) {
                         $("#message-count").show().text(e);
+                    } else {
+                        $("#message-count").hide().text("");
                     }
                     setTimeout(getUnreadCount, 5000);
                 }, function (e) {
