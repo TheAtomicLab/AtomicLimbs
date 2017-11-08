@@ -72,7 +72,7 @@ namespace Limbs.Web.Controllers
                     ResponsableLastName = u.ResponsableLastName,
                 };
             }
-            else if(User.IsInRole(AppRoles.Ambassador))
+            else if (User.IsInRole(AppRoles.Ambassador))
             {
                 var a = await Db.AmbassadorModels.Where(c => c.UserId == userId).SingleAsync();
                 if (a == null) return new HttpNotFoundResult();
@@ -91,6 +91,10 @@ namespace Limbs.Web.Controllers
             }
             else
             {
+                if (User.IsInRole(AppRoles.Administrator))
+                {
+                    return RedirectToAction("SelectUserOrAmbassador", "Account");
+                }
                 return new HttpStatusCodeResult(HttpStatusCode.Conflict);
             }
 

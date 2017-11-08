@@ -37,7 +37,7 @@
                     var item = $(value);
                     if (isInView(item) && item.attr("data-status") === "Unread") {
                         item.attr("data-status", "Read");
-                        markAsRead(item.attr("data-id"));
+                        markAsRead(item);
                     }
                 });
         });
@@ -70,14 +70,15 @@
             return $(elem).offset().top - $(window).scrollTop() < $(elem).height();
         }
 
-        function markAsRead(id) {
+        function markAsRead(item) {
             $.ajax({
                 cache: false,
                 async: true,
                 type: "POST",
-                url: "@Url.Action("MarkAsRead")?id=" + id,
+                url: "@Url.Action("MarkAsRead")?id=" + item.attr("data-id"),
                 success: function (data) {
-                    console.log("Message read:" + id);
+                    $(item).removeClass("Unread");
+                    console.log("Message read:" + item.attr("data-id"));
                 }
             });
         }

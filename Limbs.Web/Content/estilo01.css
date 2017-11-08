@@ -1391,3 +1391,7 @@ button[name="recoverPassword"] {
 .message.unread {
     font-weight: bold;
 }
+.message-item.Unread {
+    background-color: #f3f3f3;
+    font-weight: bold;
+}
