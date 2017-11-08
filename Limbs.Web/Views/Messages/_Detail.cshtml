@@ -1,7 +1,15 @@
-﻿@model Limbs.Web.Entities.Models.MessageModel
-
+﻿@using Limbs.Web.Entities.Models
+@using Microsoft.AspNet.Identity
+@model Limbs.Web.Entities.Models.MessageModel
+@{
+    var cl = MessageStatus.Read;
+    if (Model.To.Id == User.Identity.GetUserId() && Model.Status == MessageStatus.Unread)
+    {
+        cl = MessageStatus.Unread;
+    }
+}
 <hr/>
-<dl class="dl-horizontal message-item" data-status="@Model.Status" data-id="@Model.Id">
+<dl class="dl-horizontal message-item @cl" data-status="@Model.Status" data-id="@Model.Id">
         <dt>
             @Html.DisplayNameFor(model => model.From)
         </dt>
