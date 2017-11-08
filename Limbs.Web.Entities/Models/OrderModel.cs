@@ -15,6 +15,7 @@ namespace Limbs.Web.Entities.Models
         {
             DeliveryCourier = Courier.NoCourier;
             Log = new List<OrderLogItem>();
+            Pieces = new Pieces();
         }
 
         [Key]
