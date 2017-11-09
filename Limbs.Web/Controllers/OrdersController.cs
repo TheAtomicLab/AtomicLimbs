@@ -235,12 +235,12 @@ namespace Limbs.Web.Controllers
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces,int orderId)
         {
-            var order = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == orderId);
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
             order.Pieces = pieces;
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
-            return View("Details", order);
+            return RedirectToAction("Details", "Orders", new { id = orderId });
         }
 
         /*
