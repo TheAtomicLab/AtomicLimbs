@@ -20,7 +20,7 @@ namespace Limbs.Web
         {
             var mailMessage = new MailMessage
             {
-                From = ConfigurationManager.AppSettings["Mail.Username"],
+                From = ConfigurationManager.AppSettings["Mail.From"],
                 To = message.Destination,
                 Subject = message.Subject,
                 Body = message.Body

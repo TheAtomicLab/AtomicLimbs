@@ -106,6 +106,17 @@ namespace Limbs.Web.Entities.Models
 
         public Pieces Pieces { get; set; }
 
+        public bool CanView(IPrincipal user)
+        {
+            if (user.IsInRole(AppRoles.Administrator)) return true;
+
+            //check ownership
+            if (OrderAmbassador != null)
+                return OrderAmbassador.UserId == user.Identity.GetUserId() ||
+                       OrderRequestor.UserId == user.Identity.GetUserId();
+            return OrderRequestor.UserId == user.Identity.GetUserId();
+        }
+
     }
 
     public class Pieces

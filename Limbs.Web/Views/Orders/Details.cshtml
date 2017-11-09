@@ -25,6 +25,20 @@
             @Html.Partial("Details/_UserInfo", Model)
         </div>
 
+        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
+        {
+            <div class="info_bloque">
+                @Html.Partial("Details/_Messages", Model)
+            </div>
+        }
+        
+        @if (!User.IsInRole(AppRoles.Requester))
+        {
+            <div class="info_bloque">
+                @Html.Partial("Details/_PrintedPieces", Model)
+            </div>   
+        }
+
         @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
         {
             <div class="card card-l">

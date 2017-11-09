@@ -29,6 +29,9 @@ namespace Limbs.Web.Common.Extensions
 
         public static void Log(this Exception exception, HttpContext context, string customMessage, ExceptionAction action = ExceptionAction.Enqueue)
         {
+#if DEBUG
+return;
+#endif
             var url = "Not available";
             var urlreferer = "Not available";
 
@@ -69,10 +72,11 @@ namespace Limbs.Web.Common.Extensions
                     var mailserver = ConfigurationManager.AppSettings["Mail.Server"];
                     var username = ConfigurationManager.AppSettings["Mail.Username"];
                     var password = ConfigurationManager.AppSettings["Mail.Password"];
+                    var from = ConfigurationManager.AppSettings["Mail.From"];
                     var adminmail = ConfigurationManager.AppSettings["AdminEmails"];
 
                     var mailSender = new GeneralMailSender(mailserver, username, password);
-                    var mailMessage = new System.Net.Mail.MailMessage(username, adminmail?.Split(',')[0] ?? throw new InvalidOperationException(), message.CustomMessage, message.Url + "\n\n" + message.UrlReferrer + "\n\n" + message.Exception + "\n\n" + message.LogMessage + "\n\n" + message.Message + "\n\n" + message.StackTrace + "\n\n" + message.InnerExceptionMessage);
+                    var mailMessage = new System.Net.Mail.MailMessage(from, adminmail?.Split(',')[0] ?? throw new InvalidOperationException(), message.CustomMessage, message.Url + "\n\n" + message.UrlReferrer + "\n\n" + message.Exception + "\n\n" + message.LogMessage + "\n\n" + message.Message + "\n\n" + message.StackTrace + "\n\n" + message.InnerExceptionMessage);
 
                     // si el mensaje es null significa que el maker controló algunas situaciones y no hay nada para enviar y el mensaje se puede remover de la queue
                     mailSender.Send(mailMessage);

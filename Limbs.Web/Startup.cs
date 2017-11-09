@@ -7,6 +7,7 @@ using Owin;
 using Limbs.Web.Services;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Storage.Azure;
+using Microsoft.AspNet.SignalR;
 
 [assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
 namespace Limbs.Web
@@ -16,13 +17,13 @@ namespace Limbs.Web
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            ConfigureServices();
+            ConfigureServices(app);
 
             FullStorageInitializer.Initialize();
             MailTemplatesRegistration.Initialize();
         }
 
-        public void ConfigureServices()
+        public void ConfigureServices(IAppBuilder app)
         {
             var container = new ServiceContainer();
             
@@ -32,6 +33,9 @@ namespace Limbs.Web
             container.Register<IUserFiles, UserFilesInAzureStorage>();
             container.Register<IOrderNotificationService, OrderMailNotificationService>();
             container.Register<IMessageService, MessagesService>();
+
+            GlobalHost.DependencyResolver.Register(typeof(MessagesHub), () => new MessagesHub(new MessagesService()));
+            app.MapSignalR();
 
             container.RegisterControllers();
             container.EnableMvc();

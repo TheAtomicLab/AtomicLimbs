@@ -1,32 +1,36 @@
 ﻿@using Limbs.Web.Entities.Models
 @model OrderModel
 
-@if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
-{
-    <div id="accion_solicitud">
-        @if (Model.Status == OrderStatus.PreAssigned)
+<div id="accion_solicitud">
+    @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
+    {
+        if (Model.Status == OrderStatus.PreAssigned)
         {
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="blue_button">Aceptar orden</a>
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned})" class="blue_button">Rechazar orden</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="blue_button">Aceptar orden</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned})" class="blue_button">Rechazar orden</a>
         }
         else if (Model.Status == OrderStatus.Pending)
         {
             <a href="#" class="blue_button">Descargar mano</a>
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="blue_button">Ya imprimí la mano</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="blue_button">Ya imprimí la mano</a>
         }
         else if (Model.Status == OrderStatus.Ready)
         {
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="blue_button">Ya entregué la mano</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="blue_button">Ya entregué la mano</a>
         }
-    </div>
+        <script type="text/javascript">
+            $("#accion_solicitud a").click(function(e) {
+                e.stopPropagation();
+                e.preventDefault();
 
-    <script type="text/javascript">
-        $("#accion_solicitud a").click(function (e) {
-            e.stopPropagation();
-            e.preventDefault();
-
-            $("body").append('<form action="' + e.target.href +'" method="post" id="tempform"></form>');
-            $("#tempform").submit();
-        });
-    </script>
-}
+                $("body").append('<form action="' + e.target.href + '" method="post" id="tempform"></form>');
+                $("#tempform").submit();
+            });
+        </script>
+    }
+    @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
+    {
+    <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="blue_button">Enviar mensaje</a>
+    }
+    <a href="@Url.Action("Index", "Home")" class="blue_button">Volver</a>
+</div>

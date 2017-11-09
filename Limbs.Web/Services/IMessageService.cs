@@ -14,6 +14,8 @@ namespace Limbs.Web.Services
 
         Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user);
 
+        Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user, int? orderId);
+
         Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, MessageModel mainMessage);
 
         Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, Guid mainMessageId);
