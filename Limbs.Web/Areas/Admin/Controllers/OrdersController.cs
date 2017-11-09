@@ -234,7 +234,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AssignDelivery(HttpPostedFileBase file, OrderModel orderModel)
         {
-            var order = await Db.OrderModels.FindAsync(orderModel.Id);
+            var order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstAsync(x => x.Id == orderModel.Id);
 
             if (order == null)
                 return HttpNotFound();
