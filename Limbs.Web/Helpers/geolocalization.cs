@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.Net;
 using System.Web.Script.Serialization;
 
@@ -39,7 +40,7 @@ namespace Limbs.Web.Helpers
         */
         public static DbGeography GeneratePoint(double lat, double lng)
         {
-            return DbGeography.FromText("POINT(" + lng +" " + lat +")");
+            return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);
         }
     }
 }
