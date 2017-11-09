@@ -9,7 +9,7 @@ namespace Limbs.Web.Services
 {
     public class OrderMailNotificationService : IOrderNotificationService
     {
-        private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.Username"];
+        private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
         private readonly string _adminEmails = ConfigurationManager.AppSettings["AdminEmails"];
 
         public async Task SendStatusChangeNotification(OrderModel order, OrderStatus oldStatus, OrderStatus newStatus)
