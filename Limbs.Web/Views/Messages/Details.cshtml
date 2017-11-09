@@ -31,10 +31,19 @@
                 $("#messages").prepend(newMessage);
                 processUnreadMessages();
             };
-            $.connection.hub.qs = 'threadId=@(Model.Id)';
-            $.connection.hub.start().done(function (e) {
-                console.log("socket started");
+            $.connection.hub.reconnecting(function () {
+                console.log("socket reconnecting...");
             });
+
+            $.connection.hub.reconnected(function() {
+                console.log("socket reconnected");
+            });
+            $.connection.hub.disconnected(function() {
+                console.log("socket disconnected");
+                connectSocket();
+            });
+            $.connection.hub.qs = 'threadId=@(Model.Id)';
+            connectSocket();
             $.ajax({
                     cache: false,
                     async: true,
@@ -76,6 +85,16 @@
                 }
             });
         });
+
+        function connectSocket() {
+            console.log("trying to connect to socket");
+            $.connection.hub.start().done(function (e) {
+                console.log("socket started");
+            }).fail(function(e) {
+                console.log("socket not started");
+                connectSocket();
+            });
+        }
 
         function processUnreadMessages() {
             $.each($('.message-item[data-status="Unread"]'),
