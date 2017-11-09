@@ -29,6 +29,9 @@ namespace Limbs.Web.Common.Extensions
 
         public static void Log(this Exception exception, HttpContext context, string customMessage, ExceptionAction action = ExceptionAction.Enqueue)
         {
+#if DEBUG
+return;
+#endif
             var url = "Not available";
             var urlreferer = "Not available";
 
