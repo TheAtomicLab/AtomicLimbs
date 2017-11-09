@@ -94,6 +94,8 @@ namespace Limbs.Web.Services
 
             if (oldAmbassador != null && oldAmbassador != newAmbassador) //tenia otro embajador
             {
+                order.OrderAmbassador = oldAmbassador;
+
                 mailMessage = new MailMessage
                 {
                     From = _fromEmail,
@@ -102,6 +104,8 @@ namespace Limbs.Web.Services
                     Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassadorToOldAmbassador", order),
                 };
                 await AzureQueue.EnqueueAsync(mailMessage);
+
+                order.OrderAmbassador = newAmbassador;
             }
 
         }
