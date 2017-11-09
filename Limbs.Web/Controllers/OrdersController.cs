@@ -1,16 +1,17 @@
-﻿using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Net;
-using System.Net.Http;
-using System.Web;
-using System.Web.Mvc;
-using Limbs.Web.Common.Extensions;
+﻿using Limbs.Web.Common.Extensions;
 using Limbs.Web.Entities.Models;
-using Microsoft.AspNet.Identity;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Services;
+using Microsoft.AspNet.Identity;
+using System;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+using System.Web.Mvc;
 
 namespace Limbs.Web.Controllers
 {
@@ -164,7 +165,7 @@ namespace Limbs.Web.Controllers
             
             var currentUserId = User.Identity.GetUserId();
             var userModel = await Db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
-            
+
             orderModel.OrderRequestor = userModel;
             orderModel.Status = OrderStatus.NotAssigned;
             orderModel.StatusLastUpdated = DateTime.UtcNow;
@@ -229,6 +230,27 @@ namespace Limbs.Web.Controllers
 
             return Redirect(Request.UrlReferrer?.PathAndQuery);
         }
+
+        [HttpPost]
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces,int orderId)
+        {
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
+            order.Pieces = pieces;
+            Db.OrderModels.AddOrUpdate(order);
+            await Db.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Orders", new { id = orderId });
+        }
+
+        /*
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        public ActionResult PrintedPieces(int orderId)
+        {
+            var order = Db.OrderModels.Where(o => o.Id == orderId).Single();
+            return View(order);
+        }
+        */
 
         [AllowAnonymous]
         public ActionResult PublicOrders()

@@ -24,6 +24,9 @@
         <div class="info_bloque">
             @Html.Partial("Details/_UserInfo", Model)
         </div>
+        <div class="info_bloque">
+            @Html.Partial("Details/_PrintedPieces", Model)
+        </div>
 
         @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
         {
