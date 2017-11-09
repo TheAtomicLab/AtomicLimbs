@@ -89,7 +89,6 @@
         }
 
         function isInView(elem) {
-            console.log(":A=" + $(elem).offset().top + ":B=" + $(window).scrollTop() + ":C=" + $(elem).height() + ":" + "D=" + $(window).height());
             var rf = $(window).scrollTop();
             var rt = $(window).scrollTop() + $(window).height();
             var ip = $(elem).offset().top + $(elem).height();

@@ -12,40 +12,41 @@
             <img src="http://limbs.azurewebsites.net/content/img/logoatomicmail.png" style="max-width: 200px; min-width: 100px; position: relative; text-align: center; width: 50%;">
         </div>
         <div style="margin: 0px auto; max-width: 475px; position: relative; width: 94%;">
-
             <!-- Caja 1 -->
             <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
-                <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">Hola!! Soy un título</p>
-                <p>Soy texto, soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto.</p>
-
+                <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.OrderAmbassador.AmbassadorName)!</p>
+                <p>Todo el equipo de Atomic Lab te agradece que hayas aceptado la solicitud de @(Model.OrderRequestor.ResponsableName). Juntos vamos a mejorar su calidad de vida.
+</p>
                 <!-- Inicio del boton -->
                 <p style="margin: 0px; padding: 10px 0px; text-align: center;">
-                    <a href="" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
+                    <a href="http://limbs.azurewebsites.net/orders/details/@(Model.Id)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
                 </p>
                 <!-- Fin del boton -->
-
-                <p>Soy texto, soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto soy texto.</p>
+                <p>Este es un compromiso sumamente importante, @(Model.OrderRequestor.ResponsableName) estará esperando su mano mecánica 3D con muchas ansias; te pedimos que cualquier duda que tengas nos contactes o leas el manual de buenas prácticas <a href="www.AtomicLab.org/limbs/ambassador/bestpractices/es">acá</a>.</p>
             </div>
-
             <!-- Caja 2 -->
             <div style="background: white; background-color: #4772b2; border: 1px solid #dddddd; box-sizing: border-box; color: white; font-size: 20px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; text-align: center; width: 100%;">
-                Info importante info importante info importante info importante.
+                No te olvides
             </div>
-
             <!-- Caja 3 -->
             <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
                 <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">Por favor, recordá:</p>
                 <p>
-                    Traer DNI (sin excepciones).<br>
-                    Llegar puntual ya que el ingreso será por orden de llegada.
+                    <ol>
+                        <li>El material que tenes que utilizar es PLA.</li>
+                        <li>El archivo esta en la página. En la misma podrás gestionar el avance de impresión de las piezas.</li>
+                        <li>Las piezas no deben tener impurezas o puntas afiladas, esto puede ser peligroso para @(Model.OrderRequestor.ResponsableName).</li>
+                    </ol>
                 </p>
+                <br/>
+                <p>¡Saludos!</p>
+                <p>El equipo de Atomic Lab.</p>
             </div>
         </div>
-
         <div style="background: #232323; color: #bbbbbb; padding: 40px; text-align: center;">
-            <p>Soy el texto legal del footer</p>
+            <p>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</p>
             <p>
-                <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">AtomicLab.org</a>
+                <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">Limbs, Atomic Lab © 2017 - AtomicLab.org</a>
             </p>
         </div>
     </div>
