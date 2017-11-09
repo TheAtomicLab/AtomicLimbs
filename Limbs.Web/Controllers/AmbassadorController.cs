@@ -48,7 +48,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Ambassador/TermsAndConditions
-        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
+        [OverrideAuthorize(Roles = AppRoles.Unassigned + "," + AppRoles.Ambassador)]
         public ActionResult TermsAndConditions()
         {
             return View();

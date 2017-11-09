@@ -31,7 +31,7 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Users/TermsAndConditions
-        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
+        [OverrideAuthorize(Roles = AppRoles.Unassigned + "," + AppRoles.Requester)]
         public ActionResult TermsAndConditions()
         {
             return View();
