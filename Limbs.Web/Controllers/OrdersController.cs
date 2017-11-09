@@ -46,24 +46,13 @@ namespace Limbs.Web.Controllers
             {
                 return HttpNotFound();
             }
-            if (!CanViewOrder(orderModel))
+            if (!orderModel.CanView(User))
             {
                 return RedirectToAction("RedirectUser", "Account");
             }
             return View(orderModel);
         }
-
-        private bool CanViewOrder(OrderModel order)
-        {
-            if (User.IsInRole(AppRoles.Administrator)) return true;
-
-            //check ownership
-            if (order.OrderAmbassador != null)
-                return order.OrderAmbassador.UserId == User.Identity.GetUserId() || 
-                    order.OrderRequestor.UserId == User.Identity.GetUserId();
-            return order.OrderRequestor.UserId == User.Identity.GetUserId();
-        }
-
+        
         // GET: Orders/ManoPedir
         public ActionResult ManoPedir()
         {
@@ -99,23 +88,23 @@ namespace Limbs.Web.Controllers
         {
             if (file == null || file.ContentLength == 0)
             {
-                ModelState.AddModelError("nofile", "Seleccione una foto.");
+                ModelState.AddModelError("nofile", @"Seleccione una foto.");
             }
             else
             {
                 if (file.ContentLength > 1000000 * 5)
                 {
-                    ModelState.AddModelError("bigfile", "La foto elegida es muy grande (max = 5 MB).");
+                    ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
                 }
                 if (!file.IsImage())
                 {
-                    ModelState.AddModelError("noimage", "El archivo seleccionado no es una imagen.");
+                    ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
             }
             if (!ModelState.IsValid) return View("ManoPedir", new OrderModel());
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
-            var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+            var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
 
             TempData["fileUrl"] = fileUrl.AbsoluteUri;
             TempData["AmputationType"] = orderModel.AmputationType;
@@ -147,9 +136,9 @@ namespace Limbs.Web.Controllers
         {
             ModelState.Clear();
             if (string.IsNullOrWhiteSpace(orderModel.IdImage))
-                ModelState.AddModelError("noimage", "Error desconocido, vuelva a comenzar.");
+                ModelState.AddModelError("noimage", @"Error desconocido, vuelva a comenzar.");
             if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0)
-                ModelState.AddModelError("nodistance", "Seleccione las medidas.");
+                ModelState.AddModelError("nodistance", @"Seleccione las medidas.");
 
             if (!ModelState.IsValid) return View("ManoMedidas");
 
@@ -197,22 +186,22 @@ namespace Limbs.Web.Controllers
         {
             if (file == null || file.ContentLength == 0)
             {
-                ModelState.AddModelError("nofile", "Seleccione una foto.");
+                ModelState.AddModelError("nofile", @"Seleccione una foto.");
             }
             else
             {
                 if (file.ContentLength > 1000000 * 5)
                 {
-                    ModelState.AddModelError("bigfile", "La foto elegida es muy grande (max = 5 MB).");
+                    ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
                 }
                 if (!file.IsImage())
                 {
-                    ModelState.AddModelError("noimage", "El archivo seleccionado no es una imagen.");
+                    ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
             }
             var orderModel = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == orderId);
             if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
-            if (!CanViewOrder(orderModel))
+            if (!orderModel.CanView(User))
             {
                 return RedirectToAction("RedirectUser", "Account");
             }
@@ -220,7 +209,7 @@ namespace Limbs.Web.Controllers
 
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
-            var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+            var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
 
             orderModel.ProofOfDelivery = fileUrl.AbsoluteUri;
             orderModel.LogMessage(User, "New proof of delivery at: " + fileUrl.AbsoluteUri);
