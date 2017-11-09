@@ -91,11 +91,7 @@ namespace Limbs.Web.Controllers
             }
             else
             {
-                if (User.IsInRole(AppRoles.Administrator))
-                {
-                    return RedirectToAction("SelectUserOrAmbassador", "Account");
-                }
-                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+                return RedirectToAction("SelectUserOrAmbassador", "Account");
             }
 
             var model = new IndexViewModel
