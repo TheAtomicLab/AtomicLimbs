@@ -1,4 +1,4 @@
-﻿﻿@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Entities.Models
 @model OrderModel
 
 @section scripts{
@@ -12,7 +12,7 @@
 <h2>Piezas impresas</h2>
 
 
-@using (Html.BeginForm("PrintedPiecesUpdate", "Orders", FormMethod.Post, new { orderId = Model.Id }))
+@using (Html.BeginForm("PrintedPiecesUpdate", "Orders", new { orderId = Model.Id }, FormMethod.Post))
 {
     <table>
         <tr>
