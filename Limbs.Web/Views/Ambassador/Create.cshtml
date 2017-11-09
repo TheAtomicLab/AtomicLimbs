@@ -25,7 +25,7 @@
                 @Html.EditorFor(model => model.Dni, new {htmlAttributes = new {@class = "f-campo", placeholder = "DNI o Pasaporte"}})
                 @Html.EditorFor(model => model.Phone, new {htmlAttributes = new {@class = "f-campo", placeholder = "Teléfono"}})
                 <label class="f-label">Fecha de nacimiento</label>
-                @Html.EditorFor(model => model.Birth, new {htmlAttributes = new {@class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("dd/MM/yyyy") }})
+                @Html.EditorFor(model => model.Birth, new {htmlAttributes = new {@class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") }})
                 <label class="f-label">Sexo</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new {@class = "f-campo f-post-l"}})
                 <div class="f-campo-mitad">
