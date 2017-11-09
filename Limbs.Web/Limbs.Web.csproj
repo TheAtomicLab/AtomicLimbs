@@ -541,6 +541,7 @@
     <Content Include="Views\Messages\_Detail.cshtml" />
     <Content Include="Views\Messages\_Reply.cshtml" />
     <Content Include="Views\Messages\_ThreadMessagesPartial.cshtml" />
+    <Content Include="Views\Orders\Details\_PrintedPieces.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

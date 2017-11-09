@@ -1,0 +1,148 @@
+﻿﻿@using Limbs.Web.Entities.Models
+@model OrderModel
+
+@section scripts{
+    <link rel="stylesheet" href="~/Content/publicOrders.css">
+}
+
+@{
+    ViewBag.Title = "Piezas impresas";
+}
+
+<h2>Piezas impresas</h2>
+
+
+@using (Html.BeginForm("PrintedPiecesUpdate", "Orders", FormMethod.Post, new { orderId = Model.Id }))
+{
+    <table>
+        <tr>
+            <th>
+                Pieza
+            </th>
+            <th>
+                Impresa
+            </th>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.AtomicLabCover)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.AtomicLabCover)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.FingerMechanismHolder)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.FingerMechanismHolder)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.Fingers)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.Fingers)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.FingerStopper)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.FingerStopper)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.FingersX1)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.FingersX1)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.FingersX2P)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.FingersX2P)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.Palm)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.Palm)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.ThumbConnector)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.ThumbConnector)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.ThumbScrew)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.ThumbScrew)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.ThumbThumbClip)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.ThumbThumbClip)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.UpperArm)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.UpperArm)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.UpperArm_FingerConnector)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.UpperArm_FingerConnector)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.UpperArm_FingerSlider)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.UpperArm_FingerSlider)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.UpperArm_PalmConnector)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.UpperArm_PalmConnector)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.DisplayNameFor(model => model.Pieces.UpperArm_ThumbShortConnector)
+            </td>
+            <td>
+                @Html.CheckBoxFor(model => model.Pieces.UpperArm_ThumbShortConnector)
+            </td>
+        </tr>
+    </table>
+    <button type="submit" class="blue_button">Actualizar</button>
+}
