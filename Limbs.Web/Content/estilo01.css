@@ -19,7 +19,8 @@ body {
 }
 
 .min_full {
-    min-height: calc(100vh - 70px);
+    min-height: calc(100vh - 70px - 255px);
+    background-color: rgb(238,238,238);
 }
 
 #cont {
@@ -942,23 +943,15 @@ button[name="recoverPassword"] {
 }
 
 /*panel embajadores*/
-#panel_embajadores {
-    width: 100%;
-    max-width: 1200px;
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-    margin: 0px auto;
+#panel_embajadores h1 {
+    font-size: 3em;
+    font-weight: 200;
+    color: #4772B2;
+    padding: 30px 0px;
+}
+#panel_embajadores .info_panel_embajador {
     text-align: center;
 }
-
-    #panel_embajadores h1 {
-        font-size: 3em;
-        font-weight: 200;
-        color: #4772B2;
-        padding: 10vh 0px 30px 0px;
-    }
-
 #estadistica_emb {
     overflow: auto;
 }
@@ -1008,7 +1001,6 @@ button[name="recoverPassword"] {
     display: inline-block;
     position: relative;
     background: white;
-    border: solid 1px #dadada;
     box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 }
 
@@ -1016,42 +1008,8 @@ button[name="recoverPassword"] {
         text-align: left;
     }
 
-.tabla_emb {
-    width: 100%;
-    border-collapse: collapse;
-    text-align: left;
-}
-
-    .tabla_emb tr {
-        color: #4772b2;
-        border-bottom: solid 1px #c6ccd4;
-        position: relative;
-    }
-
-    .tabla_emb th {
-        display: none;
-    }
-
-    .tabla_emb td, .tabla_emb th {
-        padding: 11px 0px;
-        padding-left: 5px;
-        box-sizing: border-box;
-    }
-
-    .tabla_emb tr th:first-of-type, .tabla_emb tr td:first-of-type {
-        border-left: solid 0px;
-    }
-
 
 /*info solicitud*/
-#info_pedido {
-    max-width: 1000px;
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    position: relative;
-    margin: 0px auto;
-}
 #head_info {
     border-bottom: solid 1px #4772b2;
     padding: 5px;
@@ -1074,17 +1032,7 @@ button[name="recoverPassword"] {
     justify-content: flex-start;
     align-items: flex-start;
 }
-.info_bloque {
-    width: 100%;
-    max-width: 400px;
-    padding: 10px;
-    margin-right: 35px;
-    margin-bottom: 35px;
-    background: white;
-    border: solid 1px #c3c3c3;
-    box-sizing: border-box;
-}
-.info_bloque img {
+#info_pedido .card img {
     max-height: 200px;
     max-width: 200px;
 }
@@ -1143,7 +1091,8 @@ button[name="recoverPassword"] {
     width: 100%;
     text-align: left;
     font: bold 16px sans-serif;
-    padding: 55px 50px;
+    padding: 55px 50px 20px;
+    min-height: 255px;
 }
 
 .footer-distributed .footer-left,
