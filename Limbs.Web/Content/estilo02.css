@@ -255,3 +255,92 @@
 
 
 /*termina media*/
+
+
+/*--------------------------------------Loader---------------------------------------------*/
+#loadingModal {
+    position: fixed;
+    background: rgba(142, 141, 141,0.5);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100
+}
+
+.loader {
+    /*
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 100px;
+    height: 100px;
+    margin: -50px 0 0 -50px;
+    border: solid #556270 3px;
+    z-index: 150;
+    */
+    border: 16px solid #3498db;
+    border-radius: 50%;
+    border-top: 16px solid #E1E1E1;
+    width: 100px;
+    height: 100px;
+    animation: spin 1.8s linear infinite;
+    position: fixed;
+    left: 45%;
+    top: 45%;
+}
+/*
+.loader:before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    border: 4px solid #4ECDC4;
+}
+
+.loader:after {
+    content: "";
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    border: 2px solid #C7F464;
+}
+    */
+.loader {
+    -webkit-animation: giro 3s linear infinite;
+    animation: giro 3s linear infinite;
+}
+
+@-webkit-keyframes giro {
+    0% {
+        -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg); /* IE 9 */
+        transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg); /* IE 9 */
+        transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+}
+
+@keyframes giro {
+    0% {
+        -webkit-transform: rotate(0deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(0deg); /* IE 9 */
+        transform: rotate(0deg); /* Firefox 16+, IE 10+, Opera */
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg); /* Chrome, Opera 15+, Safari 3.1+ */
+        -ms-transform: rotate(360deg); /* IE 9 */
+        transform: rotate(360deg); /* Firefox 16+, IE 10+, Opera */
+    }
+}
+/*--------------------------------------Loader---------------------------------------------*/

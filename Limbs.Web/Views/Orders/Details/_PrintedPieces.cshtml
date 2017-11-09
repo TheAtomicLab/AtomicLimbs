@@ -138,3 +138,27 @@
     </table>
     <button type="submit" class="blue_button">Actualizar</button>
 }
+
+<script type="text/javascript">
+    $(function () {
+    $('form').submit(function () {
+        if ($(this).valid()) {
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                beforeSend: function () {
+                    $('#loadingModal').fadeIn();
+                },
+                success: function () {
+                    $("#loadingModal").fadeOut();
+                },
+                error: function () {
+                    alert("fuck");
+                }
+            });
+        }
+        return false;
+    });
+});
+</script>

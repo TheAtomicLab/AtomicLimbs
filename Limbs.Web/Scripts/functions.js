@@ -1,3 +1,8 @@
+$(window).load(function () {
+    $("#loader").fadeOut();
+    $("#loader-wrapper").delay(500).fadeOut("slow")
+})
+
 //TODO (Lucas): Listar alerts en li
 function alertAtomic(text, div = "#alertAtomic") {
 /*
