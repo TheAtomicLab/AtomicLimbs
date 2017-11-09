@@ -1,46 +1,42 @@
-﻿@model System.Collections.Generic.IEnumerable<Limbs.Web.Entities.Models.MessageModel>
+﻿@model IEnumerable<Limbs.Web.Entities.Models.MessageModel>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.From)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.To)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th></th>
-    </tr>
-    @if (Model.Any())
-    {
-        foreach (var item in Model)
-         {
-             <tr class="message @item.Status.ToString().ToLowerInvariant()">
-                 <td>
-                     @Html.DisplayFor(modelItem => item.From)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.To)
-                 </td>
-                 <td>
-                     @Html.DisplayFor(modelItem => item.Time, "ToFriendlyDateString")
-                 </td>
-                 <td>
-                     @Html.ActionLink("Ver", "Details", new {id = item.Id}) |
-                     @Html.ActionLink("Borrar", "Delete", new {id = item.Id})
-                 </td>
-             </tr>
-         }
-    }
-    else
-    {
+@if (Model.Any())
+{
+    <table class="table">
         <tr>
-            <td colspan="3">
-                <p>No hay mensajes.</p>
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.From)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.To)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th></th>
         </tr>
-    }
+        @foreach (var item in Model)
+        {
+            <tr class="message @item.Status.ToString().ToLowerInvariant()">
+                <td>
+                    @Html.DisplayFor(modelItem => item.From)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.To)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time, "ToFriendlyDateString")
+                </td>
+                <td>
+                    @Html.ActionLink("Ver", "Details", new {id = item.Id}) |
+                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id})
+                </td>
+            </tr>
+        }
 
-</table>
+    </table>
+}
+else
+{
+    <p>No hay mensajes.</p>
+}

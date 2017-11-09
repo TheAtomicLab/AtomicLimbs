@@ -57,7 +57,18 @@ namespace Limbs.Web.Services
             var userId = user.Identity.GetUserId();
 
             return await Db.Messages.Include(x => x.From).Include(x => x.To)
-                .Where(x => (x.To.Id == userId || x.From.Id == userId ) && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
+                .Where(x => (x.To.Id == userId || x.From.Id == userId) && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
+                .OrderByDescending(x => x.Time)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user, int? orderId)
+        {
+            if (!orderId.HasValue) return await GetInboxMessages(user);
+
+            var userId = user.Identity.GetUserId();
+
+            return await Db.Messages.Include(x => x.From).Include(x => x.To)
+                .Where(x => (x.To.Id == userId || x.From.Id == userId) && x.Order.Id == orderId.Value && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
                 .OrderByDescending(x => x.Time)
                 .ToListAsync();
         }

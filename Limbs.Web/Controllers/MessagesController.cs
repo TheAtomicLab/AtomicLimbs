@@ -32,13 +32,15 @@ namespace Limbs.Web.Controllers
             return View(messages);
         }
 
-        public async Task<ActionResult> InboxPartial()
+        // GET: Messages/InboxPartial
+        public async Task<ActionResult> InboxPartial(int? orderId)
         {
-            var messages = await _ms.GetInboxMessages(User);
+            var messages = await _ms.GetInboxMessages(User, orderId);
 
             return PartialView("_InboxPartial", messages);
         }
 
+        // GET: Messages/ThreadMessages
         public async Task<ActionResult> ThreadMessages(Guid threadId)
         {
             var messages = await _ms.GetThreadMessages(User, threadId);

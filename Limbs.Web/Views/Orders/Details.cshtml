@@ -24,6 +24,13 @@
         <div class="info_bloque">
             @Html.Partial("Details/_UserInfo", Model)
         </div>
+
+        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
+        {
+            <div class="info_bloque">
+                @Html.Partial("Details/_Messages", Model)
+            </div>
+        }
         
         @if (!User.IsInRole(AppRoles.Requester))
         {
