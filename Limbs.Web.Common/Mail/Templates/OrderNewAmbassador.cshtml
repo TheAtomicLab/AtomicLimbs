@@ -15,25 +15,17 @@
             <!-- Caja 1 -->
             <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
                 <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.OrderAmbassador.AmbassadorName)!</p>
-                <p>Tal como te contamos en otros correos, tu embajador designado tiene 2 semanas para construir tu mano mecánica 3D.</p>
-                <p> Lamentablemente el embajador que lo había tomado no pudo finalizarlo a tiempo y se te asignó un nuevo embajador, por favor, visita la página para continuar viendo el estado de tu solicitud.</p>
+                <p>Tenemos una gran noticia que contarte, @(Model.OrderRequestor.ResponsableName) nos esta pidiendo que le imprimamos su mano y necesitamos de tu ayuda para poder cumplirle el sueño.</p>
+                <p>El siguiente paso va a ser entrar a la plataforma y aceptarlo. Vas a encontrar toda la información necesaria en el siguiente link:</p>
                 <!-- Inicio del boton -->
                 <p style="margin: 0px; padding: 10px 0px; text-align: center;">
-                    <a href="http://limbs.azurewebsites.net/" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
+                    <a href="http://limbs.azurewebsites.net/Orders/Detail/@Model.Id" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
                 </p>
                 <p>
-                Gracias entender la situación,
+                    Saludos,
                 </p>
-
-
-              <p>El equipo de Atomic Lab.</p>
-                <!-- Fin del boton -->
-
+                <p>El equipo de Atomic Lab.</p>
             </div>
-            <!-- Caja 2 -->
-
-            <!-- Caja 3 -->
-
         </div>
         <div style="background: #232323; color: #bbbbbb; padding: 40px; text-align: center;">
             <p>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</p>
