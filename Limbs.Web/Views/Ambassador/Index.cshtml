@@ -6,26 +6,28 @@
 }
 
 
-    <article id="panel_embajadores" class="min_full">
-        <h1>Panel de control</h1>
-        <div id="estadistica_emb">
-            <div>
-                <p>Entregaste</p>
-                <h2>@Model.Stats.HandledOrders</h2>
-                <p>Manos</p>
-            </div>
-            <div>
-                <p>Tenés</p>
-                <h2>@Model.Stats.PendingOrders</h2>
-                <p>Pedidos</p>
+    <article id="panel_embajadores">
+        <div class="info_panel_embajador">
+            <h1>Panel de control</h1>
+            <div id="estadistica_emb">
+                <div>
+                    <p>Entregaste</p>
+                    <h2>@Model.Stats.HandledOrders</h2>
+                    <p>Manos</p>
+                </div>
+                <div>
+                    <p>Tenés</p>
+                    <h2>@Model.Stats.PendingOrders</h2>
+                    <p>Pedidos</p>
+                </div>
             </div>
         </div>
         <div id="paneles_embajador">
             @if (Model.PendingToAssignOrders.Count > 0)
             {
-                <article class="panel_emb">
+                <article class="card card-l">
                     <h2>Pedidos entrantes:</h2>
-                    <table class="tabla_emb">
+                    <table class="table-items">
                         <tr>
                             <td>Nro. de pedido</td>
                             <td>Nombre solicitante</td>
@@ -44,9 +46,9 @@
             }
             
 
-            <article class="panel_emb">
+            <article class="card card-l">
                 <h2>Tus pedidos:</h2>
-                <table class="tabla_emb">
+                <table class="table-items">
                     <tr>
                         <td>Nro. de pedido</td>
                         <td>Nombre solicitante</td>
@@ -67,9 +69,9 @@
 
             @if (Model.DeliveredOrders.Count > 0)
             {
-                <article id="terminadas" class="panel_emb">
+                <article id="terminadas" class="card card-l">
                     <h2>Terminadas:</h2>
-                    <table class="tabla_emb">
+                    <table class="table-items">
                         <tr>
                             <td>Nro. de pedido</td>
                             <td>Nombre solicitante</td>

@@ -1,0 +1,119 @@
+﻿/*General Style*/
+
+/*containers*/
+.cont-wr {
+    max-width: 1200px;
+    width: 100%;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    position: relative;
+    margin: 0px auto;
+}
+
+/*cards*/
+.card {
+    color: rgba(0,0,0,0.87);
+    background-color: rgb(255,255,255);
+    border-radius: 2px;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 2px 1px -1px rgba(0,0,0,.12);
+    padding: 20px;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+
+.card.center-card {
+    position: relative;
+    display: initial;
+    margin: 0px 0px 20px;
+}
+    .card.center-card-xl, .card.center-card-l, .card.center-card-m, .card.center-card-s {
+        width: 100%;
+        margin: 0px auto;
+        margin-bottom: 20px;
+    }
+    .card.center-card-xl {
+        max-width: 1200px;
+    }
+    .card.center-card-l {
+        max-width: 700px;
+    }
+    .card.center-card-m {
+        max-width: 400px;
+    }
+    .card.center-card-s {
+        max-width: 250px;
+    }
+
+    .card.card-l, .card.card-m, .card.card-s {
+        display: inline-block;
+        margin: 20px 1%;
+        margin-top: 0px;
+    }
+    .card.card-l {
+        width: calc(48% - 2px);
+        min-width: 480px;
+    }
+    .card.card-m {
+        width: calc(31% - 2px);
+        min-width: 300px;
+    }
+    .card.card-s {
+        width: calc(18% - 2px);
+        min-width: 300px;
+    }
+
+/*tables*/
+.table-items tr:first-child {
+    cursor: inherit !important;
+    background-color: inherit !important;
+    color: inherit !important;
+}
+
+.table-items tr:hover {
+    cursor: pointer;
+    background-color: #4772B2;
+    color: white;
+}
+.table-items {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+.table-items tr {
+    color: #4772b2;
+    border-bottom: solid 1px #c6ccd4;
+    position: relative;
+}
+
+.table-items td, .table-items th {
+    padding: 11px 0px;
+    padding-left: 5px;
+    box-sizing: border-box;
+}
+
+.table-items tr th:first-of-type, .table-items tr td:first-of-type {
+    border-left: solid 0px;
+}
+
+/*text*/
+.t-center {
+    text-align:center;
+}
+.t-left {
+    text-align: left
+}
+.t-right {
+    text-align: right;
+}
+
+@media only screen and (max-width: 760px) {
+    .cont-wr {
+        padding: 20px 0px;
+    }
+    .card.card-l, .card.card-m, .card.card-s, .card.center-card {
+        min-width: initial;
+        width: 100%;
+        margin: 0px 0px 20px;
+    }
+}

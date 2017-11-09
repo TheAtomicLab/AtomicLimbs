@@ -208,39 +208,28 @@
     }
 
     /*Embajadores*/
-    #panel_embajadores {
-        padding: 20px 0px;
-    }
     .panel_emb {
         padding: 5px;
         width: 100%;
         min-width: initial;
         margin: 20px 0px;
     }
-    #paneles_embajador table tr td:nth-of-type(1), #paneles_embajador table tr td:nth-of-type(3) {
+    #paneles_embajador table tr td:nth-of-type(1) {
         display: none;
     }
     #paneles_embajador table tr td {
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
-        max-width: calc(100vw - 140px);
+        max-width: calc(100vw - 190px);
     }
     /*info solicitud*/
     #estado_pedido {
         position: relative;
         padding-top: 50px;
     }
-    #info_pedido {
-        padding: 20px 0px;
-    }
     .flex_info {
         display: block;
-    }
-
-    .info_bloque {
-        padding: 5px;
-        margin: 0px auto 30px;
     }
 
     .tabla_datos {

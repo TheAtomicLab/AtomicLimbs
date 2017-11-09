@@ -19,6 +19,7 @@ namespace Limbs.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/estilo01.css",
                 "~/Content/estilo02.css",
+                "~/Content/general_style.css",
                 "~/Content/estiloatomchoose.css"));
 
             bundles.Add(new StyleBundle("~/Content/jqueryui").Include(

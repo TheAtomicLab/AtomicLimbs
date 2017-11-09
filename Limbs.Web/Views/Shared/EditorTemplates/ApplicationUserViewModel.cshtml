@@ -4,14 +4,12 @@
 }
 @if (users.Any())
 {
-    var modelId = Html.NameFor(x => Model).ToString();
-
-    @Html.DropDownList(modelId, users)
+    @Html.DropDownListFor(x => x.Id, users)
 }
 else if (Model != null)
 {
     <p>@Model.Email</p>
-
+    
     @Html.HiddenFor(x => Model.Id)
     @Html.HiddenFor(x => Model.Email)
 }

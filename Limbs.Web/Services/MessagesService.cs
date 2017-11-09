@@ -48,7 +48,7 @@ namespace Limbs.Web.Services
         public async Task<IEnumerable<MessageModel>> GetAllMessages(IPrincipal user)
         {
             if(user.IsInRole(AppRoles.Administrator))
-                return await Db.Messages.Include(x => x.From).Include(x => x.To).ToListAsync();
+                return await Db.Messages.Include(x => x.From).Include(x => x.To).OrderByDescending(x => x.Time).ToListAsync();
             return await GetInboxMessages(user);
         }
 

@@ -17,23 +17,23 @@
         @Html.Partial("Details/_Actions", Model)
     </div>
     <div class="flex_info">
-        <div class="info_bloque">
+        <div class="card card-l">
             @Html.Partial("Details/_OrderInfo", Model)
         </div>
 
-        <div class="info_bloque">
+        <div class="card card-l">
             @Html.Partial("Details/_UserInfo", Model)
         </div>
 
         @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
         {
-            <div class="info_bloque">
+            <div class="card card-l">
                 @Html.Partial("Details/_DeliveryInfo", Model)
             </div>
         }
         @if (User.IsInRole(AppRoles.Administrator))
         {
-            <div class="info_bloque">
+            <div class="card card-l">
                 @Html.Partial("Details/_AdminInfo", Model)
             </div>
         }
