@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
@@ -54,6 +57,54 @@ namespace Limbs.Web.Controllers
             var count = await _ms.GetUnreadCount(User);
 
             return Json(count, JsonRequestBehavior.AllowGet);
+        }
+
+        // GET: Messages/Create
+        public async Task<ActionResult> Create(int orderId)
+        {
+            var messageModel = await GetMessageModelForCreation(orderId);
+            if (messageModel == null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
+            return View("Create", messageModel);
+        }
+        
+        // POST: Admin/Messages/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(MessageModel model, string returnUrl)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var messageModel = await GetMessageModelForCreation(model.Order.Id);
+            if (messageModel == null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            messageModel.Content = model.Content;
+            
+            await _ms.Send(User, messageModel);
+            return messageModel.Order != null ? 
+                RedirectToAction("Details", "Orders", new { id = messageModel.Order.Id }) : 
+                RedirectToAction("Index");
+        }
+
+        private async Task<MessageModel> GetMessageModelForCreation(int orderId)
+        {
+            var order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+
+            if (order == null || !order.CanView(User)) return null;
+
+            var userId = User.Identity.GetUserId();
+            var fromUser = Db.Users.Find(userId);
+            var toUser = Db.Users.Find(User.IsInRole(AppRoles.Requester)
+                ? order.OrderAmbassador.UserId
+                : order.OrderRequestor.UserId);
+
+            var messageModel = new MessageModel
+            {
+                From = fromUser,
+                To = toUser,
+                Order = order
+            };
+            return messageModel;
         }
 
         // GET: Messages/Details/5
