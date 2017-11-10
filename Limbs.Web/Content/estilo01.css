@@ -1261,6 +1261,10 @@ button[name="recoverPassword"] {
         padding-bottom: 0px;
     }
 
+.input-validation-error {
+    border-bottom-color: red;    
+}
+
 #post-form-ini {
     max-width: 300px;
 }
