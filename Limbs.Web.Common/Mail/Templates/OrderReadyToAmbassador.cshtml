@@ -18,14 +18,12 @@
                 <p>Gracias por imprimir y ensamblar la solicitud de @(Model.OrderRequestor.ResponsableName). Ahora queda hacerle llegar su mano y la dirección es: </p>
                 <p>@(Model.OrderRequestor.Address), @(Model.OrderRequestor.City), @(Model.OrderRequestor.Country)</p>
                 <p>
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=@(Model.OrderRequestor.Location.Latitude),@(Model.OrderRequestor.Location.Longitude)&zoom=16&size=300x300&maptype=roadmap%20&markers=color:blue%7Clabel:S%7C@(Model.OrderRequestor.Location.Latitude),@(Model.OrderRequestor.Location.Longitude)" />
+                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=@(Model.OrderRequestor.Address),@(Model.OrderRequestor.City),@(Model.OrderRequestor.Country)&zoom=16&size=300x300&maptype=roadmap%20&markers=color:blue%7Clabel:S%7C@(Model.OrderRequestor.Address),@(Model.OrderRequestor.City),@(Model.OrderRequestor.Country)" />
                 </p>
 
     
                 <p>Si estas en Argentina, te proveemos de forma gratuita el envío por correo.</p>
-                <p style="margin: 0px; padding: 10px 0px; text-align: center;">
-                    <a href="" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
-                </p>
+                
                 <p style="margin: 0px; padding: 10px 0px; text-align: center;">
                     <a href="http://limbs.azurewebsites.net/orders/details/@(Model.Id)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
                 </p>
