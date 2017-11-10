@@ -23,13 +23,9 @@ function validateImg() {
 }
 
 function disabledRegister() {
-    $("[name=enviar]").removeClass("blue_button");
-    $("[name=enviar]").addClass("disabled_button");
     $("[name=enviar]").prop('disabled', true);
 };
 
 function enableRegister() {
-    $("[name=enviar]").addClass("blue_button");
-    $("[name=enviar]").removeClass("disabled_button");
     $("[name=enviar]").prop('disabled', false);
 };

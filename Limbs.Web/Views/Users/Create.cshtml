@@ -39,7 +39,7 @@
                     @Html.ValidationMessageFor(x => x.ResponsableLastName)
                 </div>
                 <h3>¿Sos el usuario de la mano?</h3>
-                <select class="f-drop blue_button" name="selectUser">
+                <select class="f-drop bn_blue" name="selectUser">
                     <option value="false">NO</option>
                     <option value="true">SI</option>
                 </select>
@@ -73,7 +73,7 @@
                 </div>
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección" } })
                 @Html.ValidationMessageFor(x => x.Address)
-                <button class="blue_button" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
+                <button class="bn_blue" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
                 <div id="map"></div>
             </div>
             <div>
@@ -82,7 +82,7 @@
                         <input type="checkbox" id="termsandconditions"/> acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
                     </label>
                 </p>
-                <p><button type="submit" class="blue_button" name="register">Registrarse</button></p>
+                <p><button type="submit" class="bn_blue" name="register">Registrarse</button></p>
             </div>
         }
     </div>

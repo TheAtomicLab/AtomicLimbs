@@ -4,21 +4,21 @@
 <div id="accion_solicitud">
     @if (User.IsInRole(AppRoles.Ambassador))
     {
-        <a href="@Url.Action("Edit", "Ambassadors", new {area = "Admin"})" class="blue_button">Editar datos</a>
+        <a href="@Url.Action("Edit", "Ambassadors", new {area = "Admin"})" class="bn_blue">Editar datos</a>
     }
     @if (User.IsInRole(AppRoles.Requester))
     {
-        <a href="@Url.Action("Edit", "Users", new {area = "Admin"})" class="blue_button">Editar datos</a>
+        <a href="@Url.Action("Edit", "Users", new {area = "Admin"})" class="bn_blue">Editar datos</a>
     }
-    <a href="@Url.Action("Index", "Messages", new {area = ""})" class="blue_button">Mensajes</a>
+    <a href="@Url.Action("Index", "Messages", new {area = ""})" class="bn_blue">Mensajes</a>
     @if (Model.HasPassword)
     {
-        <a href="@Url.Action("ChangePassword", "Manage", new {area = ""})" class="blue_button">Cambiar password</a>
+        <a href="@Url.Action("ChangePassword", "Manage", new {area = ""})" class="bn_blue">Cambiar password</a>
     }
     else
     {
         <div style="display: inline;">
-            <a href="@Url.Action("SetPassword", "Manage", new { area = "" })" class="blue_button">Crear password</a>
+            <a href="@Url.Action("SetPassword", "Manage", new { area = "" })" class="bn_blue">Crear password</a>
             <span style="font-size: 8px;">Iniciaste sesión con Facebook, podes crear un password.</span>
         </div>
     }
