@@ -1,7 +1,7 @@
 ﻿@using Limbs.Web.Entities.Models
 @model OrderModel
 
-<div id="accion_solicitud">
+<div id="accion_pedido">
     @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
     {
         if (Model.Status == OrderStatus.PreAssigned)
@@ -19,7 +19,7 @@
             <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="blue_button">Ya entregué la mano</a>
         }
         <script type="text/javascript">
-            $("#accion_solicitud a").click(function(e) {
+            $("#accion_pedido a").click(function(e) {
                 e.stopPropagation();
                 e.preventDefault();
 

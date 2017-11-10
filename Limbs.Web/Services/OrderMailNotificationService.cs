@@ -29,7 +29,7 @@ namespace Limbs.Web.Services
                     var mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Aceptaste orden (orden {order.Id})",
+                        Subject = $"[Atomic Limbs] Aceptaste el pedido (#{order.Id})",
                         To = order.OrderAmbassador.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderAcceptedToAmbassador", order),
                     };
@@ -38,7 +38,7 @@ namespace Limbs.Web.Services
                     mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
+                        Subject = $"[Atomic Limbs] Pedido aceptado por embajador (#{order.Id})",
                         To = order.OrderRequestor.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderAcceptedToRequestor", order),
                     };
@@ -50,7 +50,7 @@ namespace Limbs.Web.Services
                     mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Coordinar envío (orden {order.Id})",
+                        Subject = $"[Atomic Limbs] Coordinar envío (#{order.Id})",
                         To = _adminEmails,
                         Body = CompiledTemplateEngine.Render("Mails.OrderReadyToAdmin", order),
                     };
@@ -59,7 +59,7 @@ namespace Limbs.Web.Services
                     mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Coordinar envío (orden {order.Id})",
+                        Subject = $"[Atomic Limbs] Coordinar envío (#{order.Id})",
                         To = order.OrderAmbassador.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderReadyToAmbassador", order),
                     };
@@ -68,7 +68,7 @@ namespace Limbs.Web.Services
                     mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Pedido listo (orden {order.Id})",
+                        Subject = $"[Atomic Limbs] Pedido lista (#{order.Id})",
                         To = order.OrderRequestor.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderReadyToRequestor", order),
                     };
@@ -86,7 +86,7 @@ namespace Limbs.Web.Services
             var mailMessage = new MailMessage
             {
                 From = _fromEmail,
-                Subject = $"[Atomic Limbs] Solicitud de orden (orden {order.Id})",
+                Subject = $"[Atomic Limbs] Nuevo pedido (#{order.Id})",
                 To = newAmbassador.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassador", order),
             };
@@ -99,7 +99,7 @@ namespace Limbs.Web.Services
                 mailMessage = new MailMessage
                 {
                     From = _fromEmail,
-                    Subject = $"[Atomic Limbs] Cambio de embajador (orden {order.Id})",
+                    Subject = $"[Atomic Limbs] Cambio de embajador (pedido #{order.Id})",
                     To = oldAmbassador.Email,
                     Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassadorToOldAmbassador", order),
                 };
@@ -115,7 +115,7 @@ namespace Limbs.Web.Services
             var mailMessage = new MailMessage
             {
                 From = _fromEmail,
-                Subject = $"[Atomic Limbs] Información de envío (orden {order.Id})",
+                Subject = $"[Atomic Limbs] Información de envío (pedido #{order.Id})",
                 To = order.OrderAmbassador.Email,
                 Cc = order.OrderRequestor.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderDeliveryInformation", order),
@@ -129,7 +129,7 @@ namespace Limbs.Web.Services
             var mailMessage = new MailMessage
             {
                 From = _fromEmail,
-                Subject = $"[Atomic Limbs] Nueva prueba de entrega (orden {order.Id})",
+                Subject = $"[Atomic Limbs] Nueva prueba de entrega (pedido #{order.Id})",
                 To = order.OrderAmbassador.Email,
                 Cc = order.OrderRequestor.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfo", order),

@@ -1,8 +1,8 @@
 ﻿@using Limbs.Web.Common.Extensions
 @using Limbs.Web.Entities.Models
 @model Limbs.Web.ViewModels.UserPanelViewModel
-
 @{
+    var o = new OrderModel();
     ViewBag.Title = "Panel usuario";
 }
 
@@ -23,21 +23,16 @@
                 <h2>Tus pedidos:</h2>
                 <table>
                     <tr>
-                        <th>Id</th>
-                        <th>Fecha de solicitud</th>
-                        <th>Embajador</th>
-                        <th>Estado</th>
+                        <th>@Html.NameFor(x => o.Id)</th>
+                        <th>@Html.NameFor(x => o.OrderAmbassador.AmbassadorName) embajador</th>
+                        <th>@Html.NameFor(x => o.Date)</th>
+                        <th>@Html.NameFor(x => o.Status)</th>
                     </tr>
                     @foreach (var order in Model.Order)
                     {
                         <tr>
                             <td>
                                 @Html.ActionLink(order.Id.ToString(), "Details", new { controller = "Orders", id = order.Id })
-                            </td>
-                            <td>
-                                <span title="@order.Date.ToString("f")">
-                                    @order.Date.ToFriendlyDateString()
-                                </span>
                             </td>
                             <td>
                                 @if (OrderStatus.Pending.Equals(order.Status)
@@ -50,6 +45,9 @@
                                 {
                                     <text>No asignado</text>
                                 }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(x => order.Date, "ToFriendlyDateString")
                             </td>
                             <td>
                                 @order.Status.ToDescription()

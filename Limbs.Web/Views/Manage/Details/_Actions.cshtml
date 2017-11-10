@@ -1,7 +1,7 @@
 ﻿@using Limbs.Web.Entities.Models
 @model Limbs.Web.Models.IndexViewModel
 
-<div id="accion_solicitud">
+<div id="accion_pedido">
     @if (User.IsInRole(AppRoles.Ambassador))
     {
         <a href="@Url.Action("Edit", "Ambassadors", new {area = "Admin"})" class="blue_button">Editar datos</a>

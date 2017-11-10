@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity.Spatial;
-using System.Web.Mvc;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -30,11 +29,11 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = "Campo requerido")]
         public string UserLastName { get; set; }
 
-        [Display(Name = "Nombre del Responsable", Description = "")]
+        [Display(Name = "Nombre del responsable", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableName { get; set; }
 
-        [Display(Name = "Apellido del Responsable", Description = "")]
+        [Display(Name = "Apellido del responsable", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public string ResponsableLastName { get; set; }
         

@@ -1,4 +1,5 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@using Limbs.Web.Common.Extensions
+@model Limbs.Web.Entities.Models.OrderModel
 
 <h3>Datos de la orden</h3>
 <table class="tabla_datos">
@@ -24,7 +25,13 @@
     </tr>
 
     <tr>
-        <td>@Html.DisplayNameFor(x => x.Color)</td>
+        <td>
+            <p>
+                @Html.DisplayNameFor(x => x.Color)
+                <br/>
+                @Html.DescriptionFor(x => x.Color)
+            </p>
+        </td>
         <td><img src="/Content/img/mano_@(Model.Color).jpg"/></td>
     </tr>
 

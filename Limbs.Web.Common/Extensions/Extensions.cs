@@ -1,11 +1,21 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Text.RegularExpressions;
+using System.Web.Mvc;
 
 namespace Limbs.Web.Common.Extensions
 {
     public static class Extensions
     {
+        public static MvcHtmlString DescriptionFor<TModel, TValue>(this HtmlHelper<TModel> self, Expression<Func<TModel, TValue>> expression)
+        {
+            var metadata = ModelMetadata.FromLambdaExpression(expression, self.ViewData);
+            var description = metadata.Description;
+
+            return MvcHtmlString.Create(description);
+        }
+
         public static string ToDescription(this Enum value)
         {
             var da = (DescriptionAttribute[])value.GetType().GetField(value.ToString())

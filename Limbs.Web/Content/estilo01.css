@@ -610,23 +610,6 @@ button[name="recoverPassword"] {
     display: block !important;
 }
 /*forms*/
-.form_solicitud {
-    width: calc(100% - 40px);
-    padding: 60px 20px 20px 20px;
-    max-width: 600px;
-    display: block;
-    position: relative;
-    text-align: left;
-    margin: 0px auto;
-}
-
-    .form_solicitud h2 {
-        text-align: left;
-        color: #4772b2;
-        font-size: 1.2em;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
 
 #medidas_mano {
     display: inline-block;
@@ -1043,7 +1026,7 @@ button[name="recoverPassword"] {
     }
 
 
-/*info solicitud*/
+/*info pedido*/
 #info_pedido {
     max-width: 1000px;
     width: 100%;
@@ -1091,7 +1074,7 @@ button[name="recoverPassword"] {
 
 
 
-#info_solicitud {
+#info_pedido {
     max-width: 900px;
     width: 100%;
     padding: 20px;
@@ -1101,14 +1084,14 @@ button[name="recoverPassword"] {
     text-align: center;
 }
 
-    #info_solicitud h1 {
+    #info_pedido h1 {
         font-size: 3em;
         font-weight: 200;
         color: #4772B2;
         padding: 10vh 0px 10px 0px;
     }
 
-#accion_solicitud {
+#accion_pedido {
     padding: 20px 0px;
 }
 

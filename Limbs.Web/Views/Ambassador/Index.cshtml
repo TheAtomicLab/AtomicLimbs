@@ -1,93 +1,93 @@
 ﻿@using Limbs.Web.Common.Extensions
+@using Limbs.Web.Entities.Models
 @model Limbs.Web.ViewModels.AmbassadorPanelViewModel
-
 @{
+    var o = new OrderModel();
     ViewBag.Title = "Ambassador Panel";
 }
 
-
-    <article id="panel_embajadores" class="min_full">
-        <h1>Panel de control</h1>
-        <div id="estadistica_emb">
-            <div>
-                <p>Entregaste</p>
-                <h2>@Model.Stats.HandledOrders</h2>
-                <p>Manos</p>
-            </div>
-            <div>
-                <p>Tenés</p>
-                <h2>@Model.Stats.PendingOrders</h2>
-                <p>Pedidos</p>
-            </div>
+<article id="panel_embajadores" class="min_full">
+    <h1>Panel de control</h1>
+    <div id="estadistica_emb">
+        <div>
+            <p>Entregaste</p>
+            <h2>@Model.Stats.HandledOrders</h2>
+            <p>Manos</p>
         </div>
-        <div id="paneles_embajador">
-            @if (Model.PendingToAssignOrders.Count > 0)
-            {
-                <article class="panel_emb">
-                    <h2>Pedidos entrantes:</h2>
-                    <table class="tabla_emb">
-                        <tr>
-                            <td>Nro. de pedido</td>
-                            <td>Nombre solicitante</td>
-                            <td>Fecha de solicitud</td>
-                        </tr>
-                        @foreach (var order in Model.PendingToAssignOrders)
-                        {
-                            <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
-                                <td>#@order.Id</td>
-                                <td>@order.OrderRequestor.ResponsableName</td>
-                                <td>@order.Date.ToString("dd/MM/yyyy")</td>
-                            </tr>
-                        }
-                    </table>
-                </article>
-            }
-            
-
+        <div>
+            <p>Tenés</p>
+            <h2>@Model.Stats.PendingOrders</h2>
+            <p>Pedidos</p>
+        </div>
+    </div>
+    <div id="paneles_embajador">
+        @if (Model.PendingToAssignOrders.Count > 0)
+        {
             <article class="panel_emb">
-                <h2>Tus pedidos:</h2>
+                <h2>Pedidos entrantes:</h2>
                 <table class="tabla_emb">
                     <tr>
-                        <td>Nro. de pedido</td>
-                        <td>Nombre solicitante</td>
-                        <td>Fecha de solicitud</td>
-                        <td>Estado</td>
+                        <td>@Html.NameFor(x => o.Id)</td>
+                        <td>@Html.NameFor(x => o.OrderRequestor.ResponsableName)</td>
+                        <td>@Html.NameFor(x => o.Date)</td>
                     </tr>
-                    @foreach (var order in Model.PendingOrders)
+                    @foreach (var order in Model.PendingToAssignOrders)
                     {
                         <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
                             <td>#@order.Id</td>
                             <td>@order.OrderRequestor.ResponsableName</td>
-                            <td>@order.Date.ToString("dd/MM/yyyy")</td>
+                            <td>@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</td>
+                        </tr>
+                    }
+                </table>
+            </article>
+        }
+            
+
+        <article class="panel_emb">
+            <h2>Tus pedidos:</h2>
+            <table class="tabla_emb">
+                <tr>
+                    <td>@Html.NameFor(x => o.Id)</td>
+                    <td>@Html.NameFor(x => o.OrderRequestor.ResponsableName)</td>
+                    <td>@Html.NameFor(x => o.Date)</td>
+                    <td>@Html.NameFor(x => o.Status)</td>
+                </tr>
+                @foreach (var order in Model.PendingOrders)
+                {
+                    <tr onclick="location.href='@(Url.Action("Details", "Orders", new { id = order.Id }))'">
+                        <td>#@order.Id</td>
+                        <td>@order.OrderRequestor.ResponsableName</td>
+                        <td>@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</td>
+                        <td>@order.Status.ToDescription()</td>
+                    </tr>
+                }
+            </table>
+        </article>
+
+        @if (Model.DeliveredOrders.Count > 0)
+        {
+            <article id="terminadas" class="panel_emb">
+                <h2>Terminadas:</h2>
+                <table class="tabla_emb">
+                    <tr>
+                        <td>@Html.NameFor(x => o.Id)</td>
+                        <td>@Html.NameFor(x => o.OrderRequestor.ResponsableName)</td>
+                        <td>@Html.NameFor(x => o.Date)</td>
+                        <td>@Html.NameFor(x => o.Status)</td>
+                    </tr>
+                    @foreach (var order in Model.DeliveredOrders)
+                    {
+                        <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
+                            <td>#@order.Id</td>
+                            <td>@order.OrderRequestor.ResponsableName</td>
+                            <td>@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</td>
                             <td>@order.Status.ToDescription()</td>
                         </tr>
                     }
                 </table>
             </article>
+        }
 
-            @if (Model.DeliveredOrders.Count > 0)
-            {
-                <article id="terminadas" class="panel_emb">
-                    <h2>Terminadas:</h2>
-                    <table class="tabla_emb">
-                        <tr>
-                            <td>Nro. de pedido</td>
-                            <td>Nombre solicitante</td>
-                            <td>Fecha de solicitud</td>
-                            <td>Estado</td>
-                        </tr>
-                        @foreach (var order in Model.DeliveredOrders)
-                        {
-                            <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
-                                <td>#@order.Id</td>
-                                <td>@order.OrderRequestor.ResponsableName</td>
-                                <td>@order.Date.ToString("dd/MM/yyyy")</td>
-                                <td>@order.Status.ToDescription()</td>
-                            </tr>
-                        }
-                    </table>
-                </article>
-            }
-
-        </div>
-    </article>
+    </div>
+</article>

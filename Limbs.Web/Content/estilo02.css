@@ -226,7 +226,7 @@
         text-overflow: ellipsis;
         max-width: calc(100vw - 140px);
     }
-    /*info solicitud*/
+    /*info pedido*/
     #estado_pedido {
         position: relative;
         padding-top: 50px;

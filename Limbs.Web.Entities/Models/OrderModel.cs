@@ -19,6 +19,7 @@ namespace Limbs.Web.Entities.Models
         }
 
         [Key]
+        [Display(Name = "Pedido #", Description = "")]
         public int Id { get; set; }
 
         [Display(Name = "Creado", Description = "")]
@@ -34,15 +35,17 @@ namespace Limbs.Web.Entities.Models
         /// </summary>
         public virtual AmbassadorModel OrderAmbassador { get; set; }
 
+        [Display(Name = "Color", Description = "(si es posible)")]
         public OrderColor Color { get; set; }
 
-        [Display(Name = "Cuál", Description = "")]
+        [Display(Name = "¿Cuál?", Description = "")]
         [Required(ErrorMessage = "Campo requerido")]
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<AccessoryModel> Extras { get; set; }
 
         [NotMapped]
+        [Display(Name = "Tamaños", Description = "")]
         public virtual OrderSizesModel Sizes { get; set; }
 
         public string SizesData
@@ -61,6 +64,7 @@ namespace Limbs.Web.Entities.Models
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
+        [Display(Name = "Foto", Description = "")]
         public string IdImage { get; set; }
 
         [Display(Name = "Estado", Description = "")]
