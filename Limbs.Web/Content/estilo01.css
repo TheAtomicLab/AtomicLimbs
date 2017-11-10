@@ -1035,13 +1035,13 @@ button[name="recoverPassword"] {
     position: relative;
     margin: 0px auto;
 }
-#head_info {
+.head_info {
     border-bottom: solid 1px #4772b2;
     padding: 5px;
     box-sizing: border-box;
     position: relative;
 }
-    #head_info h1 {
+    .head_info h1 {
         font-size: 3em;
         font-weight: 200;
         color: #4772B2;

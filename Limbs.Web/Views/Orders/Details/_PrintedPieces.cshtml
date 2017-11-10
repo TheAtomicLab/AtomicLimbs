@@ -138,30 +138,3 @@
     </table>
     <button type="submit" class="blue_button">Actualizar</button>
 }
-<div id="loadingModal" style="display: none;">
-    <div class="loader"></div>
-</div>
-
-<script type="text/javascript">
-    $(function () {
-    $('form').submit(function () {
-        if ($(this).valid()) {
-            $.ajax({
-                url: this.action,
-                type: this.method,
-                data: $(this).serialize(),
-                beforeSend: function () {
-                    $('#loadingModal').fadeIn();
-                },
-                success: function () {
-                    $("#loadingModal").fadeOut();
-                },
-                error: function () {
-                    alert("error al guardar la información.");
-                }
-            });
-        }
-        return false;
-    });
-});
-</script>

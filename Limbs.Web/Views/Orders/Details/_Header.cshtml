@@ -1,0 +1,15 @@
+﻿@using Limbs.Web.Common.Extensions
+@using Limbs.Web.Entities.Models
+@model OrderModel
+
+<h1>Pedido:</h1>
+<div id="estado_pedido">
+    <p>Estado:</p>
+    <h2>
+        @Model.Status.ToDescription()
+        @if (Model.Status == OrderStatus.Pending)
+        {
+            <text>(</text>@(Model.Pieces.GetPercentage())<text>%)</text>
+        }
+    </h2>
+</div>

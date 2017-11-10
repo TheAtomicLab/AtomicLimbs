@@ -140,6 +140,43 @@ namespace Limbs.Web.Entities.Models
         public bool UpperArm_ThumbShortConnector { get; set; }
         public bool UpperArm_FingerSlider { get; set; }
         public bool UpperArm { get; set; }
+
+        public bool Ready()
+        {
+            return AtomicLabCover
+                   && FingerMechanismHolder
+                   && Fingers
+                   && FingerStopper
+                   && FingersX1
+                   && FingersX2P
+                   && Palm
+                   && ThumbConnector
+                   && ThumbThumbClip
+                   && ThumbScrew
+                   && UpperArm_FingerConnector
+                   && UpperArm_PalmConnector
+                   && UpperArm_ThumbShortConnector
+                   && UpperArm_FingerSlider
+                   && UpperArm;
+        }
+
+        public int GetPercentage()
+        {
+            var pCount = 0;
+            var pTrue = 0;
+            var t = typeof(Pieces);
+            foreach (var prop in t.GetProperties())
+            {
+                if (typeof(bool) != prop.PropertyType) continue;
+                pCount++;
+                if ((bool) prop.GetValue(this, null))
+                {
+                    pTrue++;
+                }
+            }
+
+            return (int)((float)pTrue / pCount * 100);
+        }
     }
 
     public class OrderLogItem

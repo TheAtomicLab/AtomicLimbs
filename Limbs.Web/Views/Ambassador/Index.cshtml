@@ -27,9 +27,9 @@
                 <h2>Pedidos entrantes:</h2>
                 <table class="tabla_emb">
                     <tr>
-                        <td>@Html.NameFor(x => o.Id)</td>
-                        <td>@Html.NameFor(x => o.OrderRequestor.ResponsableName)</td>
-                        <td>@Html.NameFor(x => o.Date)</td>
+                        <td>@Html.DisplayNameFor(x => o.Id)</td>
+                        <td>@Html.DisplayNameFor(x => o.OrderRequestor.ResponsableName)</td>
+                        <td>@Html.DisplayNameFor(x => o.Date)</td>
                     </tr>
                     @foreach (var order in Model.PendingToAssignOrders)
                     {
@@ -48,10 +48,10 @@
             <h2>Tus pedidos:</h2>
             <table class="tabla_emb">
                 <tr>
-                    <td>@Html.NameFor(x => o.Id)</td>
-                    <td>@Html.NameFor(x => o.OrderRequestor.ResponsableName)</td>
-                    <td>@Html.NameFor(x => o.Date)</td>
-                    <td>@Html.NameFor(x => o.Status)</td>
+                    <td>@Html.DisplayNameFor(x => o.Id)</td>
+                    <td>@Html.DisplayNameFor(x => o.OrderRequestor.ResponsableName)</td>
+                    <td>@Html.DisplayNameFor(x => o.Date)</td>
+                    <td>@Html.DisplayNameFor(x => o.Status)</td>
                 </tr>
                 @foreach (var order in Model.PendingOrders)
                 {
@@ -71,10 +71,10 @@
                 <h2>Terminadas:</h2>
                 <table class="tabla_emb">
                     <tr>
-                        <td>@Html.NameFor(x => o.Id)</td>
-                        <td>@Html.NameFor(x => o.OrderRequestor.ResponsableName)</td>
-                        <td>@Html.NameFor(x => o.Date)</td>
-                        <td>@Html.NameFor(x => o.Status)</td>
+                        <td>@Html.DisplayNameFor(x => o.Id)</td>
+                        <td>@Html.DisplayNameFor(x => o.OrderRequestor.ResponsableName)</td>
+                        <td>@Html.DisplayNameFor(x => o.Date)</td>
+                        <td>@Html.DisplayNameFor(x => o.Status)</td>
                     </tr>
                     @foreach (var order in Model.DeliveredOrders)
                     {

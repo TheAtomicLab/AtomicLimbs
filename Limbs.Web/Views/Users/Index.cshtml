@@ -23,10 +23,10 @@
                 <h2>Tus pedidos:</h2>
                 <table>
                     <tr>
-                        <th>@Html.NameFor(x => o.Id)</th>
-                        <th>@Html.NameFor(x => o.OrderAmbassador.AmbassadorName) embajador</th>
-                        <th>@Html.NameFor(x => o.Date)</th>
-                        <th>@Html.NameFor(x => o.Status)</th>
+                        <th>@Html.DisplayNameFor(x => o.Id)</th>
+                        <th>@Html.DisplayNameFor(x => o.OrderAmbassador.AmbassadorName) embajador</th>
+                        <th>@Html.DisplayNameFor(x => o.Date)</th>
+                        <th>@Html.DisplayNameFor(x => o.Status)</th>
                     </tr>
                     @foreach (var order in Model.Order)
                     {

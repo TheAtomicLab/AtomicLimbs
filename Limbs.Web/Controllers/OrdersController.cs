@@ -222,25 +222,31 @@ namespace Limbs.Web.Controllers
 
         [HttpPost]
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
-        public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces,int orderId)
+        public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces, int orderId)
         {
             var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
+            if(!order.CanView(User)) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             order.Pieces = pieces;
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
+            if (Request.IsAjaxRequest())
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             return RedirectToAction("Details", "Orders", new { id = orderId });
         }
-
-        /*
+        
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
-        public ActionResult PrintedPieces(int orderId)
+        public async Task<ActionResult> GetPartial(int orderId, string partialName)
         {
-            var order = Db.OrderModels.Where(o => o.Id == orderId).Single();
-            return View(order);
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
+            if (order.CanView(User))
+            {
+                return PartialView("Details/_" + partialName, order);
+            }
+            return new HttpUnauthorizedResult();
         }
-        */
-
+        
         [AllowAnonymous]
         public ActionResult PublicOrders()
         {

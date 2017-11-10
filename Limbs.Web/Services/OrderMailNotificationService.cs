@@ -68,7 +68,7 @@ namespace Limbs.Web.Services
                     mailMessage = new MailMessage
                     {
                         From = _fromEmail,
-                        Subject = $"[Atomic Limbs] Pedido lista (#{order.Id})",
+                        Subject = $"[Atomic Limbs] Pedido listo (#{order.Id})",
                         To = order.OrderRequestor.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderReadyToRequestor", order),
                     };

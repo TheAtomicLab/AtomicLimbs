@@ -6,16 +6,15 @@
 }
 
 <article id="info_pedido">
-    <div id="head_info">
-        <h1>Pedido:</h1>
-        <div id="estado_pedido">
-            <p>Estado:</p>
-            <h2>@Model.Status.ToDescription()</h2>
-        </div>
+    
+    <div id="Header" class="head_info">
+        @Html.Partial("Details/_Header", Model)
     </div>
-    <div>
+
+    <div id="Actions">
         @Html.Partial("Details/_Actions", Model)
     </div>
+
     <div class="flex_info">
         <div class="info_bloque">
             @Html.Partial("Details/_OrderInfo", Model)
@@ -31,12 +30,12 @@
                 @Html.Partial("Details/_Messages", Model)
             </div>
         }
-        
-        @if (!User.IsInRole(AppRoles.Requester) && (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered))
+
+        @if (!User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Pending)
         {
             <div class="info_bloque">
                 @Html.Partial("Details/_PrintedPieces", Model)
-            </div>   
+            </div>
         }
 
         @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
@@ -54,3 +53,51 @@
     </div>
 
 </article>
+
+<div id="loadingModal" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('form').submit(function (e) {
+                e.preventDefault();
+                if ($(this).valid()) {
+                    $.ajax({
+                        url: this.action,
+                        type: this.method,
+                        data: $(this).serialize(),
+                        beforeSend: function () {
+                            $('#loadingModal').fadeIn();
+                        },
+                        success: function () {
+                            $("#loadingModal").fadeOut();
+                            updatePartial("Header");
+                            updatePartial("Actions");
+                        },
+                        error: function () {
+                            alert("error al guardar la información.");
+                        }
+                    });
+                }
+            });
+        });
+
+        function updatePartial(name) {
+            var $dummy = $("<div>");
+            $dummy.load("@Url.Action("GetPartial", "Orders", new { orderId = Model.Id })&partialName=" + name, function(response, status, xhr) {
+                var $container = $("#" + name);
+                if (status !== "success") {
+                    //location.reload();
+                }
+                else
+                {
+                    $container.html($dummy.html());
+                }
+                $dummy.remove();
+            });
+        }
+    </script>
+}
