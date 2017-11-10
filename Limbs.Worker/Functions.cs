@@ -24,7 +24,7 @@ namespace Limbs.Worker
             {
                 Console.WriteLine("ProcessMethod");
 
-                QueueConsumerFor<MailMessage>.WithinCurrentThread.Using(new MailsMessagesSender())
+                QueueConsumerFor<MailMessage>.WithStandaloneThread.Using(new MailsMessagesSender())
                     .With(PoolingFrequencer.For(MailsMessagesSender.EstimatedTime))
                     .StartConsimung();
             }
@@ -32,12 +32,7 @@ namespace Limbs.Worker
             {
                 Console.WriteLine("ProcessMethod error");
                 Console.WriteLine(ex);
-                log.WriteLine("Error occurred in processing pending altapay requests. Error : {0}", ex.Message);
-            }
-
-            while (true)
-            {
-                await Task.Delay(TimeSpan.FromMinutes(3));
+                log.WriteLine("Error occurred in processing pending requests. Error : {0}", ex.Message);
             }
         }
     }

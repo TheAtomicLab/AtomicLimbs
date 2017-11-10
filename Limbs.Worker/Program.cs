@@ -1,10 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Threading;
-using System.Threading.Tasks;
-using Limbs.QueueConsumers;
-using Limbs.Web.Storage.Azure.QueueStorage;
-using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.Azure.WebJobs;
 
 namespace Limbs.Worker
@@ -24,9 +19,18 @@ namespace Limbs.Worker
             }
 
             var host = new JobHost(config);
-            host.CallAsync(typeof(Functions).GetMethod("ProcessMethod"));
-            // The following code ensures that the WebJob will be running continuously
-            host.RunAndBlock();
+
+            while (true)
+            {
+                host.CallAsync(typeof(Functions).GetMethod("ProcessMethod"));
+                // The following code ensures that the WebJob will be running continuously
+
+                Console.WriteLine("host.RunAndBlock();");
+                host.RunAndBlock();
+
+                Console.WriteLine("MainThread.Sleep(5000);");
+                Thread.Sleep(5000);
+            }
         }
     }
 }
