@@ -4,7 +4,9 @@
     bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool) ViewBag.IsAdultCheck;
     bool selectUser = ViewBag.SelectUser != null && (bool) ViewBag.SelectUser;
     var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
+    ViewBag.Title = "Registro";
 }
+
 @section scripts
 {
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&callback=initMap">
