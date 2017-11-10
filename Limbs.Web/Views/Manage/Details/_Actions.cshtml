@@ -13,13 +13,13 @@
     <a href="@Url.Action("Index", "Messages", new {area = ""})" class="bn_blue">Mensajes</a>
     @if (Model.HasPassword)
     {
-        <a href="@Url.Action("ChangePassword", "Manage", new {area = ""})" class="bn_blue">Cambiar password</a>
+        <a href="@Url.Action("ChangePassword", "Manage", new {area = ""})" class="bn_blue">Cambiar contraseña</a>
     }
     else
     {
         <div style="display: inline;">
-            <a href="@Url.Action("SetPassword", "Manage", new { area = "" })" class="bn_blue">Crear password</a>
-            <span style="font-size: 8px;">Iniciaste sesión con Facebook, podes crear un password.</span>
+            <a href="@Url.Action("SetPassword", "Manage", new { area = "" })" class="bn_blue">Crear contraseña</a>
+            <span style="font-size: 8px;">Iniciaste sesión con Facebook, podes crear una contraseña.</span>
         </div>
     }
 </div>
