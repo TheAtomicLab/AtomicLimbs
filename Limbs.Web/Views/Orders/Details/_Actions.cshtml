@@ -6,20 +6,20 @@
     {
         if (Model.Status == OrderStatus.PreAssigned)
         {
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="blue_button">Aceptar pedido</a>
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned})" class="blue_button">Rechazar pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="bn_blue">Aceptar pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned})" class="bn_blue">Rechazar pedido</a>
         }
         else if (Model.Status == OrderStatus.Pending)
         {
-            <a href="#" class="blue_button">Descargar archivos</a>
+            <a href="#" class="bn_blue">Descargar archivos</a>
             if (Model.Pieces.Ready())
             {
-                <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="blue_button">Terminé de imprimir</a>
+                <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="bn_blue">Terminé de imprimir</a>
             }
         }
         else if (Model.Status == OrderStatus.Ready)
         {
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="blue_button">Ya entregué el pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">Ya entregué el pedido</a>
         }
         <script type="text/javascript">
             $("#accion_pedido a").click(function(e) {
@@ -33,7 +33,7 @@
     }
     @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
     {
-        <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="blue_button">Enviar mensaje</a>
+        <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
     }
-    <a href="@Url.Action("Index", "Home")" class="blue_button">Volver</a>
+    <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
 </div>

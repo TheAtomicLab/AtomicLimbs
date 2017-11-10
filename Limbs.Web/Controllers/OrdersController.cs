@@ -140,7 +140,7 @@ namespace Limbs.Web.Controllers
             if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0)
                 ModelState.AddModelError("nodistance", @"Seleccione las medidas.");
 
-            if (!ModelState.IsValid) return View("ManoMedidas");
+            if (!ModelState.IsValid) return View("ManoMedidas", orderModel);
 
             return View("ManoOrden", orderModel);
         }

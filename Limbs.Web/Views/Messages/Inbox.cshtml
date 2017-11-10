@@ -4,7 +4,7 @@
     ViewBag.Title = "Mensajes";
 }
 
-<div id="inbox">
+<div id="inbox" class="card">
     @Html.Partial("_InboxPartial", Model)    
 </div>
 
@@ -18,7 +18,7 @@
             $dummy.load("@Url.Action("InboxPartial", "Messages")", function(response, status, xhr) {
                 var $container = $("#inbox");
                 if (status !== "success") {
-                    location.reload();
+                    //location.reload();
                 }
                 else
                 {

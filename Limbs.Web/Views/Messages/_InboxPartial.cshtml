@@ -2,7 +2,7 @@
 
 @if (Model.Any())
 {
-    <table class="table">
+    <table class="table-items">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.From)
@@ -17,7 +17,7 @@
         </tr>
         @foreach (var item in Model)
         {
-            <tr class="message @item.Status.ToString().ToLowerInvariant()">
+            <tr class="message @item.Status.ToString().ToLowerInvariant()" onclick="location.href='@Url.Action("Details", "Messages", new {id = item.Id})'">
                 <td>
                     @Html.DisplayFor(modelItem => item.From)
                 </td>
@@ -28,8 +28,7 @@
                     @Html.DisplayFor(modelItem => item.Time, "ToFriendlyDateString")
                 </td>
                 <td>
-                    @Html.ActionLink("Ver", "Details", new {id = item.Id}) |
-                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id})
+                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id}, new { @class = "bn_delete" })
                 </td>
             </tr>
         }

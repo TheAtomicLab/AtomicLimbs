@@ -2,10 +2,12 @@
     padding: 30px 0;
     box-sizing: border-box;
 }
+#cuerpo_pedir input[type='submit']{
+    margin-top: 10px;
+}
 
 #exp_inicial {
     position: relative;
-    padding: 50px;
     text-align: center;
     display: block;
 }
@@ -13,8 +15,6 @@
     #exp_inicial h1 {
         font-size: 3em;
         font-weight: 200;
-        padding: 60px 20px;
-        padding-bottom: 0;
     }
 
 #bajada_exp {
@@ -32,8 +32,6 @@
         padding: 30px 38px;
         text-align: center;
         display: inline-block;
-        background: #f2f2f2;
-        outline: solid 1px #bbbbbb;
     }
 
     #recomendaciones_foto p {
@@ -53,11 +51,7 @@
     vertical-align: top;
     width: 100%;
     max-width: 460px;
-    padding: 10px 20px 20px 20px;
     margin: 20px;
-    box-sizing: border-box;
-    outline: solid 1px #bbbbbb;
-    background-color: #f2f2f2;
 }
 
     .ej_exp p {

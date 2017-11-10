@@ -16,11 +16,11 @@
     </div>
 
     <div class="flex_info">
-        <div class="info_bloque">
+        <div class="card card-l">
             @Html.Partial("Details/_OrderInfo", Model)
         </div>
 
-        <div class="info_bloque">
+        <div class="card card-l">
             @Html.Partial("Details/_UserInfo", Model)
         </div>
 
@@ -33,20 +33,20 @@
 
         @if (!User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Pending)
         {
-            <div class="info_bloque">
+            <div id="PrintedPieces" class="info_bloque">
                 @Html.Partial("Details/_PrintedPieces", Model)
             </div>
         }
 
         @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
         {
-            <div class="info_bloque">
+            <div class="card card-l">
                 @Html.Partial("Details/_DeliveryInfo", Model)
             </div>
         }
         @if (User.IsInRole(AppRoles.Administrator))
         {
-            <div class="info_bloque">
+            <div class="card card-l">
                 @Html.Partial("Details/_AdminInfo", Model)
             </div>
         }
@@ -62,7 +62,7 @@
 {
     <script type="text/javascript">
         $(function () {
-            $('form').submit(function (e) {
+            $('form', $("#PrintedPieces")).submit(function (e) {
                 e.preventDefault();
                 if ($(this).valid()) {
                     $.ajax({

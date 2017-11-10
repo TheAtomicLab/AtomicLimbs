@@ -1,5 +1,10 @@
 ﻿@model Limbs.Web.Entities.Models.MessageModel
 
+@{ 
+    ViewBag.Title = "Mensajes";
+}
+    
+
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()

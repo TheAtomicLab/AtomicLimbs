@@ -1,7 +1,9 @@
 ﻿@using Limbs.Web.Models
 @model LoginViewModel
+@{ 
+    ViewBag.Title = "Home";
+}
     <head>
-        <title>Limbs - Atomic Lab</title>
         <link rel="stylesheet" href="~/Content/style.css">
         <link rel="stylesheet" href="~/Content/style2.css">
         <script src="/Scripts/menu-login.js"></script>
@@ -13,7 +15,7 @@
         <!--end social meta-->
         <meta name="description" content="Desde Limbs, una plataforma de Atomic Lab, creemos que todos deben tener su mano impresa en 3D.">
     </head>
-    
+
 <div id="inicio">
     <div class="primero_ini">
         <div id="cont_inicio">
@@ -21,7 +23,7 @@
                 <img src="~/Content/img/limbs_white.svg" alt="logo atomic lab">
             </div>
             <div>
-                <a href="@Url.Action("Login", "Account")" class="blue_button">Iniciar sesión</a>
+                <a href="@Url.Action("Login", "Account")" class="bn_blue">Iniciar sesión</a>
             </div>
             <div>
                 <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>

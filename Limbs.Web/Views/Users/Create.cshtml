@@ -4,7 +4,9 @@
     bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool) ViewBag.IsAdultCheck;
     bool selectUser = ViewBag.SelectUser != null && (bool) ViewBag.SelectUser;
     var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
+    ViewBag.Title = "Registro";
 }
+
 @section scripts
 {
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&callback=initMap">
@@ -39,7 +41,7 @@
                     @Html.ValidationMessageFor(x => x.ResponsableLastName)
                 </div>
                 <h3>¿Sos el usuario de la mano?</h3>
-                <select class="f-drop blue_button" name="selectUser">
+                <select class="f-drop bn_blue" name="selectUser">
                     <option value="false">NO</option>
                     <option value="true">SI</option>
                 </select>
@@ -62,7 +64,7 @@
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
                 @Html.ValidationMessageFor(x => x.Phone)
                 <label class="f-label">Fecha de nacimiento</label>
-                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("dd/MM/yyyy") } })
+                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
                 <label class="f-label">Sexo</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" }})
                 <div class="f-campo-mitad">
@@ -73,7 +75,7 @@
                 </div>
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección" } })
                 @Html.ValidationMessageFor(x => x.Address)
-                <button class="blue_button" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
+                <button class="bn_blue" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
                 <div id="map"></div>
             </div>
             <div>
@@ -82,7 +84,7 @@
                         <input type="checkbox" id="termsandconditions"/> acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
                     </label>
                 </p>
-                <p><button type="submit" class="blue_button" name="register">Registrarse</button></p>
+                <p><button type="submit" class="bn_blue" name="register">Registrarse</button></p>
             </div>
         }
     </div>

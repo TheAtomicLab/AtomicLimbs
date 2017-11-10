@@ -133,7 +133,7 @@ function geocodeAddress(geocoder, resultsMap) {
 
 /*
 function enableRegister() {
-    $("[name=register]").addClass("blue_button");
+    $("[name=register]").addClass("bn_blue");
     $("[name=register]").removeClass("disabled_button");
     $("[name=register]").prop('disabled', false);
 };
