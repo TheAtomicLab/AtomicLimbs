@@ -15,7 +15,7 @@
         
         <p id="bajada_exp">Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación <b>de lo contrario, la mano no podrá ser otorgada.</b></p>
         <div id="recomendaciones_foto">
-            <div>
+            <div class="card center-card-m">
                 <p>Requisitos de la foto</p>
                 <ul>
                     <li>Hoja cuadriculada de fondo</li>
@@ -25,14 +25,14 @@
                 </ul>
             </div>
         </div>
-        <div id="ej_si" class="ej_exp">
+        <div id="ej_si" class="ej_exp card">
             <p class="azulAtomicTx">SI</p>
             <ul>
                 <li></li>
                 <li></li>
             </ul>
         </div>
-        <div id="ej_no" class="ej_exp">
+        <div id="ej_no" class="ej_exp card">
             <p>NO</p>
             <ul>
                 <li></li>
@@ -48,8 +48,10 @@
                 @Html.HiddenFor(x => x.AmputationType)
                 @Html.HiddenFor(x => x.ProductType)
 
-                <input id="fileUpload" type="file" name="file" accept="image/*" />
-                <input id="enviar" type="submit" name="enviar" value="Subir foto" class="blue_button">
+                <input id="fileUpload" class="bn_upload" type="file" name="file" accept="image/*" />
+                <div>
+                    <input id="enviar" type="submit" name="enviar" value="Continuar" class="bn_blue">
+                </div>
             }
        </div>
     </article>

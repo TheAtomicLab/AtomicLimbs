@@ -113,7 +113,7 @@ h3 {
     }
 }
 
-#inicio .blue_button {
+#inicio .bn_blue {
     position: relative;
     background-color: white;
     color: #4772B2;
@@ -432,39 +432,11 @@ nav {
     padding-bottom: 20px;
 }
 
-.blue_button {
-    border: none;
-    background: #4772B2;
-    color: white;
-    font-size: 1em;
-    padding: 7px 11px 8px 11px;
-    border-radius: 18px;
-    border: 1px solid #4772B2;
-    transition: color 0.3s ease, border 0.3s ease;
-    cursor: pointer;
-}
+
 
 button[name="recoverPassword"] {
     width: 100%;
 }
-
-.disabled_button {
-    border:none;
-    background: #FFFFFF;
-    color: black;
-    font-size: 1em;
-    padding: 7px 11px 8px 11px;
-    border-radius: 18px;
-    border: 1px solid #4772B2;
-    transition: color 0.3s ease, border 0.3s ease;
-    cursor: pointer;
-}
-
-    .blue_button:hover {
-        background: white;
-        border-color: #4772B2;
-        color: #4772B2;
-    }
 
 #categoria_mano {
     position: absolute;
