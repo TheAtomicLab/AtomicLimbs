@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -193,13 +194,13 @@ namespace Limbs.Web.Controllers
 
         private async Task SendEmailConfirmation(ApplicationUser user)
         {
-            //TODO: mail template
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             if (Request.Url != null)
             {
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Confirma tu cuenta",
-                    "Por favor, confirmá tu cuenta haciendo click <a href=\"" + callbackUrl + "\">acá</a>");
+                var body = CompiledTemplateEngine.Render("Mails.EmailConfirmation", callbackUrl);
+
+                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Confirma tu cuenta", body);
             }
         }
 
@@ -247,15 +248,20 @@ namespace Limbs.Web.Controllers
             if(!(await UserManager.IsEmailConfirmedAsync(user.Id)))
             {
                 ModelState.AddModelError("", @"Por favor, primero confirme su mail.");
+
+                await SendEmailConfirmation(user);
+
                 return View(model);
             }
 
-            //TODO: Template mail and token time.
-            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
             if (Request.Url != null)
             {
+                //TODO: token time.
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Restablecer contraseña", "Por favor, para restablecer su contraseña haga click <a href=\"" + callbackUrl + "\">aquí</a>");
+                var body = CompiledTemplateEngine.Render("Mails.EmailPasswordChange", callbackUrl);
+
+                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Restablecer contraseña", body);
             }
             return RedirectToAction("ForgotPasswordConfirmation", "Account");
         }

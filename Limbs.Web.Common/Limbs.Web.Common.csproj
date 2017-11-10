@@ -102,6 +102,8 @@
     <EmbeddedResource Include="Mail\Templates\OrderNewAmbassador.cshtml" />
     <EmbeddedResource Include="Mail\Templates\OrderProofOfDeliveryInfo.cshtml" />
     <EmbeddedResource Include="Mail\Templates\OrderNewAmbassadorToOldAmbassador.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\EmailConfirmation.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\EmailPasswordChange.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

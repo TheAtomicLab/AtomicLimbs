@@ -8,6 +8,8 @@ namespace Limbs.Web.Common.Mail
     {
         public static void Initialize()
         {
+            CompiledTemplateEngine.Add<string>("Mails.EmailConfirmation", GetStringTemplate("Limbs.Web.Common.Mail.Templates.EmailConfirmation.cshtml"));
+            CompiledTemplateEngine.Add<string>("Mails.EmailPasswordChange", GetStringTemplate("Limbs.Web.Common.Mail.Templates.EmailPasswordChange.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderAcceptedToAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderAcceptedToAmbassador.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderAcceptedToRequestor", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderAcceptedToRequestor.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderReadyToAdmin", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderReadyToAdmin.cshtml"));
