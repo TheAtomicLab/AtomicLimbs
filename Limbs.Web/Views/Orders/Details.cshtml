@@ -26,14 +26,14 @@
 
         @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
         {
-            <div class="info_bloque">
+            <div class="card card-l">
                 @Html.Partial("Details/_Messages", Model)
             </div>
         }
 
         @if (!User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Pending)
         {
-            <div id="PrintedPieces" class="info_bloque">
+            <div id="PrintedPieces" class="card card-l">
                 @Html.Partial("Details/_PrintedPieces", Model)
             </div>
         }
