@@ -25,7 +25,7 @@
                 @Html.EditorFor(x => x.AmputationType)
             </div>
             <p>
-                @Html.ValidationMessageFor(x => x.AmputationType)
+                @Html.ValidationMessageFor(x => x.AmputationType, "Por favor, elegí tu amputación")
             </p>
             <div>
                 <input id="enviar" type="submit" value="Siguiente" class="blue_button">

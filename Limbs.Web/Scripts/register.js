@@ -26,7 +26,7 @@ function enableRegister() {
 
 
 function validBirth(minAge) {
-    var age = getAge($("#Birth"));
+    var age = getAge2($("#Birth").val());
 
     if (age < 0) {
         alertAtomic("Por favor ingresá una fecha válida.");
@@ -39,15 +39,6 @@ function validBirth(minAge) {
 }
 
 function getAge(birth) {
-
-    var dob = birth.val();
-    var now = new Date();
-    var birthdate = dob.split("-");
-    var born = new Date(birthdate[0], birthdate[1] - 1, birthdate[2]);
-
-    var birthday = new Date(born.getFullYear(), born.getMonth(), born.getDate());
-    if (now >= birthday)
-        return now.getFullYear() - born.getFullYear();
-    else
-        return -1;
+    var birthday = +new Date(birth);
+    return ~~((Date.now() - birthday) / (31557600000));
 }
