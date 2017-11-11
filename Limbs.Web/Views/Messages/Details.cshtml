@@ -44,7 +44,7 @@
             });
             $.connection.hub.disconnected(function() {
                 console.log("socket disconnected");
-                connectSocket();
+                setTimeout(connectSocket, 3000);
             });
             $.connection.hub.qs = 'threadId=@(Model.Id)';
             connectSocket();
@@ -96,7 +96,7 @@
                 console.log("socket started");
             }).fail(function(e) {
                 console.log("socket not started");
-                connectSocket();
+                setTimeout(connectSocket, 3000);
             });
         }
 
