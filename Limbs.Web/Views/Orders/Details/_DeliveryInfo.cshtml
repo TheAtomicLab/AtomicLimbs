@@ -10,7 +10,7 @@
             <td>Tipo de entrega:</td>
             <td>@Model.DeliveryCourier.ToDescription()</td>
         </tr>
-        if (Model.Status != OrderStatus.ArrangeDelivery && !User.IsInRole(AppRoles.Requester))
+        if (Model.Status != OrderStatus.ArrangeDelivery && !User.IsInRole(AppRoles.Requester) && string.IsNullOrWhiteSpace(Model.ProofOfDelivery))
         {
             <tr>
                 <td></td>
