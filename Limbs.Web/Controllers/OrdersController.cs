@@ -235,6 +235,7 @@ namespace Limbs.Web.Controllers
             if(!order.CanView(User)) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
             order.Pieces = pieces;
+            order.StatusLastUpdated = DateTime.UtcNow;
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
