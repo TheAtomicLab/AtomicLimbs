@@ -411,6 +411,14 @@
     <Content Include="Migrations\README.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\basic.css" />
+    <Content Include="Content\basic.min.css" />
+    <Content Include="Scripts\dropzone-amd-module.js" />
+    <Content Include="Scripts\dropzone-amd-module.min.js" />
+    <Content Include="Content\dropzone.css" />
+    <Content Include="Scripts\dropzone.js" />
+    <Content Include="Content\dropzone.min.css" />
+    <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\functions.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
