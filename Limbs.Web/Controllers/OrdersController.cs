@@ -74,13 +74,20 @@ namespace Limbs.Web.Controllers
         // GET: Orders/ManoImagen
         public ActionResult ManoImagen()
         {
+            var amputationType =  TempData["AmputationType"];
+            var productType = TempData["ProductType"];
+            if (amputationType == null || productType == null)
+            {
+                return RedirectToAction("ManoPedir");
+            }
+
             return View("ManoImagen", new OrderModel
             {
-                AmputationType = (AmputationType)TempData["AmputationType"],
-                ProductType = (ProductType)TempData["ProductType"],
+                AmputationType = (AmputationType)amputationType,
+                ProductType = (ProductType)productType,
             });
         }
-
+        
         // POST: Orders/UploadImageUser
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -101,7 +108,7 @@ namespace Limbs.Web.Controllers
                     ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
             }
-            if (!ModelState.IsValid) return View("ManoPedir", new OrderModel());
+            if (!ModelState.IsValid) return View("ManoImagen", orderModel);
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
