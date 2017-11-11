@@ -62,6 +62,9 @@ namespace Limbs.Web.Controllers
         // GET: Messages/Create
         public async Task<ActionResult> Create(int orderId)
         {
+            var orderMessage = await Db.Messages.FirstAsync(x => x.Order.Id == orderId);
+            if (orderMessage != null) return RedirectToAction("Details", new {id = orderMessage.Id});
+
             var messageModel = await GetMessageModelForCreation(orderId);
             if (messageModel == null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
