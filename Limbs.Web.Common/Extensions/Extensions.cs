@@ -37,7 +37,7 @@ namespace Limbs.Web.Common.Extensions
         {
             // 1.
             // Get time span elapsed since the date.
-            var s = DateTime.Now.Subtract(date);
+            var s = DateTime.UtcNow.Subtract(date);
 
             // 2.
             // Get total number of days elapsed.
