@@ -68,8 +68,8 @@ namespace Limbs.Web.Controllers
                     Country = u.Country,
                     Phone = u.Phone,
                     Birth = u.Birth,
-                    ResponsableName = u.ResponsableName,
-                    ResponsableLastName = u.ResponsableLastName,
+                    UserName = u.Name,
+                    UserLastName = u.LastName,
                 };
             }
             else if (User.IsInRole(AppRoles.Ambassador))
@@ -85,8 +85,8 @@ namespace Limbs.Web.Controllers
                     Country = a.Country,
                     Phone = a.Phone,
                     Birth = a.Birth,
-                    ResponsableName = a.AmbassadorName,
-                    ResponsableLastName = a.AmbassadorLastName,
+                    UserName = a.AmbassadorName,
+                    UserLastName = a.AmbassadorLastName,
                 };
             }
             else
@@ -193,12 +193,12 @@ namespace Limbs.Web.Controllers
 
         //
         // GET: /Manage/VerifyPhoneNumber
-        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
-        {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
-            // Send an SMS through the SMS provider to verify the phone number
-            return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
-        }
+        //public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
+        //{
+        //    var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
+        //    // Send an SMS through the SMS provider to verify the phone number
+        //    return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
+        //}
 
         //
         // POST: /Manage/VerifyPhoneNumber

@@ -296,6 +296,10 @@
     <Compile Include="Migrations\201711012316550_orderPieces.Designer.cs">
       <DependentUpon>201711012316550_orderPieces.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711111443527_UserUpdate.cs" />
+    <Compile Include="Migrations\201711111443527_UserUpdate.Designer.cs">
+      <DependentUpon>201711111443527_UserUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -418,7 +422,6 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Properties\webjobs-list.json" />
-    <Content Include="Areas\Admin\Views\Ambassadors\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Ambassadors\Details.cshtml" />
     <Content Include="Areas\Admin\Views\Messages\Create.cshtml" />
     <Content Include="Views\Messages\Delete.cshtml" />
@@ -435,7 +438,6 @@
     <Content Include="Scripts\menu-login.js" />
     <Content Include="Scripts\menu.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\pages\ambassador.js" />
     <Content Include="Scripts\pages\pedir_mano.js" />
     <Content Include="Scripts\pages\users.js" />
     <Content Include="Scripts\respond.js" />
@@ -496,7 +498,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
-    <Content Include="Areas\Admin\Views\Users\Edit.cshtml" />
     <Compile Include="Services\ApiAleBanzas.cs" />
     <Content Include="Areas\Admin\Views\Orders\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\Edit.cshtml" />
@@ -582,6 +583,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711012316550_orderPieces.resx">
       <DependentUpon>201711012316550_orderPieces.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711111443527_UserUpdate.resx">
+      <DependentUpon>201711111443527_UserUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -15,10 +15,10 @@
             <!-- Caja 1 -->
             <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
                 <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.OrderAmbassador.AmbassadorName)!</p>
-                <p>Gracias por imprimir y ensamblar la solicitud de @(Model.OrderRequestor.ResponsableName). Ahora queda hacerle llegar su mano y la dirección es: </p>
-                <p>@(Model.OrderRequestor.Address), @(Model.OrderRequestor.City), @(Model.OrderRequestor.Country)</p>
+                <p>Gracias por imprimir y ensamblar la solicitud de @(Model.OrderRequestor.Name). Ahora queda hacerle llegar su mano y la dirección es: </p>
+                <p>@(Model.OrderRequestor.FullAddress())</p>
                 <p>
-                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=@(Model.OrderRequestor.Address),@(Model.OrderRequestor.City),@(Model.OrderRequestor.Country)&zoom=16&size=300x300&maptype=roadmap%20&markers=color:blue%7Clabel:S%7C@(Model.OrderRequestor.Address),@(Model.OrderRequestor.City),@(Model.OrderRequestor.Country)" />
+                    <img src="https://maps.googleapis.com/maps/api/staticmap?center=@(Model.OrderRequestor.FullAddress())&zoom=16&size=300x300&maptype=roadmap%20&markers=color:blue%7Clabel:S%7C@(Model.OrderRequestor.FullAddress())" />
                 </p>
 
     

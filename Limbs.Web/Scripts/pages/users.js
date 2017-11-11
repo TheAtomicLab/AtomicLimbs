@@ -1,12 +1,8 @@
 $(document).ready(function() {
     setDatePicker(4);
 
-    $('[name="selectUser"]').on("change", function () {
-        selectUser($(this).val());
-    });
-
-    $("form.form").submit(function() {
-        return isUser($('[name="selectUser"]').val());
+    $('[name="IsProductUser"]').on("change", function () {
+        isProductUser($(this).val());
     });
 });
 
@@ -26,29 +22,21 @@ function setDatePicker(maxYear) {
     );
 }
 
-function selectUser(value) {
+function isProductUser(value) {
     if (value === "true") {
         //es usuario
         setDatePicker(18);
-        $("#UserName").hide();
-        $("#UserLastName").hide();
+        $("#ResponsableName").hide();
+        $("#ResponsableLastName").hide();
         $("[name='titleDateUser']").hide();
         $("#isAdultCheckContainer").hide();
     } else {
         //no es usuario
         setDatePicker(4);
-        $("#UserName").show();
-        $("#UserLastName").show();
+        $("#ResponsableName").show();
+        $("#ResponsableLastName").show();
         $("[name='titleDateUser']").show();
         $("#isAdultCheckContainer").show();
-    }
-}
-
-function isUser(val) {
-    if (val === "true") {
-        return validBirth(18);
-    } else {
-        return validBirth(4) && validAdultCheck(checkBoxAdult);
     }
 }
 

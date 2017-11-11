@@ -541,10 +541,22 @@ button[name="recoverPassword"] {
         display: block;
     }
 
-.field-validation-error, .validation-summary-errors ul li {
+.field-validation-error, .validation-summary-errors ul li, label.error {
     color: red;
     font-size: 12px;
     list-style-type: none;
+}
+
+.address-selector {
+    display: none;
+    padding: 15px 10px;
+    text-align: left;
+}
+.address-selector ul {
+    margin-left: 15px;
+}
+.address-selector ul li {
+    margin-top: 7px;
 }
 
 #cont_login input {
@@ -1261,8 +1273,8 @@ button[name="recoverPassword"] {
         padding-bottom: 0px;
     }
 
-.input-validation-error {
-    border-bottom-color: red;    
+.input-validation-error, .f-campo.error {
+    border-bottom-color: red;
 }
 
 #post-form-ini {

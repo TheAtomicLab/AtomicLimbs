@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Entities.Models;
-using Limbs.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Limbs.Web.Helpers;
@@ -61,26 +62,81 @@ namespace Limbs.Web.Controllers
             return View();
         }
 
+        // GET: Ambassador/Edit
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + "," + AppRoles.Administrator)]
+        public async Task<ActionResult> Edit(int? id)
+        {
+            AmbassadorModel ambassadorModel;
+            var userId = User.Identity.GetUserId();
+            if (!id.HasValue && User.IsInRole(AppRoles.Ambassador))
+            {
+                ambassadorModel = await Db.AmbassadorModels.FirstAsync(x => x.UserId == userId);
+            }
+            else
+            {
+                if (!id.HasValue) return HttpNotFound();
+                ambassadorModel = await Db.AmbassadorModels.FindAsync(id);
+            }
+            if (ambassadorModel == null || !ambassadorModel.CanViewOrEdit(User))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+            ViewBag.ReturnUrl = Request.UrlReferrer?.AbsoluteUri;
+            return View("Create", ambassadorModel);
+        }
+
         // POST: Ambassador/Create
         [HttpPost]
-        [OverrideAuthorize(Roles = AppRoles.Unassigned)]
-        public async Task<ActionResult> Create(AmbassadorModel ambassadorModel)
+        [OverrideAuthorize(Roles = AppRoles.Unassigned + "," + AppRoles.Ambassador + "," + AppRoles.Administrator)]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {
+            if (!User.IsInRole(AppRoles.Administrator))
+            {
+                ambassadorModel.Email = User.Identity.GetUserName();
+                ambassadorModel.UserId = User.Identity.GetUserId();
+            }
+
+            ValidateData(ambassadorModel, termsAndConditions);
+            ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", ambassadorModel);
 
             var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
-            
             ambassadorModel.Location = Geolocalization.GetPoint(pointAddress);
-            ambassadorModel.Email = User.Identity.GetUserName();
-            ambassadorModel.UserId = User.Identity.GetUserId();
 
-            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(Db));
-            await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, AppRoles.Unassigned);
-            await userManager.AddToRoleAsync(ambassadorModel.UserId, AppRoles.Ambassador);
+            if (ambassadorModel.Id == 0 && (User.IsInRole(AppRoles.Unassigned) || User.IsInRole(AppRoles.Administrator)))
+            {
+                //CREATE
+                var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(Db));
+                await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, AppRoles.Unassigned);
+                await userManager.AddToRoleAsync(ambassadorModel.UserId, AppRoles.Ambassador);
 
-            Db.AmbassadorModels.Add(ambassadorModel);
+                Db.AmbassadorModels.Add(ambassadorModel);
+                await Db.SaveChangesAsync();
+
+                return RedirectToAction("Index");
+            }
+            if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+
+            //EDIT
+            Db.Entry(ambassadorModel).State = EntityState.Modified;
             await Db.SaveChangesAsync();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Index", "Manage");
+        }
+
+        private void ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
+        {
+            ModelState[nameof(ambassadorModel.Id)]?.Errors.Clear();
+            ModelState[nameof(ambassadorModel.UserId)]?.Errors.Clear();
+            ModelState[nameof(ambassadorModel.Email)]?.Errors.Clear();
+
+            if (ambassadorModel.Birth > DateTime.UtcNow.AddYears(-AmbassadorModel.MinYear))
+                ModelState.AddModelError(nameof(ambassadorModel.Birth), $@"Debes ser mayor de {AmbassadorModel.MinYear} años.");
+
+            if (termsAndConditions.HasValue && !termsAndConditions.Value)
+                ModelState.AddModelError(nameof(termsAndConditions), @"Debe aceptar terminos y condiciones.");
         }
     }
 }
+

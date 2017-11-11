@@ -18,8 +18,8 @@ namespace Limbs.Web.Models
 
     public class UserViewModel
     {
-        public string ResponsableName { get; set; }
-        public string ResponsableLastName { get; set; }
+        public string UserName { get; set; }
+        public string UserLastName { get; set; }
         public string Email { get; set; }
         public DateTime Birth { get; set; }
         public string Country { get; set; }

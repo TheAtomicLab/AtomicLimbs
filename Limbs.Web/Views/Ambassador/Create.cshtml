@@ -1,27 +1,45 @@
 ﻿@using System.Configuration
 @using Limbs.Web.Entities.Models
-
-@{
-    ViewBag.Title = "Registro";
-}
-
-
 @model AmbassadorModel
 @{
+    var isEdit = Model != null && Model?.Id != 0;
+    var minYear = AmbassadorModel.MinYear;
+    bool termsAndConditions = ViewBag.TermsAndConditions != null && (bool)ViewBag.TermsAndConditions;
+
+    ViewBag.Title = isEdit ? "Editar datos" : "Registro";
     var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
 }
+
 @section scripts{
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)">
     </script>
     <script src="~/Scripts/geo.js"></script>
-    <script src="~/Scripts/pages/ambassador.js"></script>
-    <script src="~/Scripts/register.js"></script>
+    <script type="text/javascript">
+        $("#@Html.IdFor(model => model.Birth)").datepicker(
+            {
+                minDate: new Date(1900, 1, 1),
+                maxDate: "-@(minYear)Y",
+                dateFormat: "yy-mm-dd",//ISO 8601
+                changeYear: true,
+                changeMonth: true,
+                yearRange: "-110:-@(minYear)"
+            }
+        );
+    </script>
+    @if (!isEdit)
+    {
+        <script src="~/Scripts/register.js"></script>
+    }
 }
 
 <div id="cont" class="min_full">
     <div id="registro">
-        @using (Html.BeginForm("Create", "Ambassador", FormMethod.Post, new {@class = "form"}))
+        @using (Html.BeginForm("Create", "Ambassador", FormMethod.Post, new { @class = "form" }))
         {
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.Email)
+            @Html.HiddenFor(x => x.UserId)
+            @Html.AntiForgeryToken()
             <h2 class="f-titulo">Tus datos</h2>
             <div class="f-seccion">
                 <div class="f-campo-mitad">
@@ -39,18 +57,24 @@
                     @Html.EditorFor(model => model.City, new {htmlAttributes = new {@class = "f-campo", placeholder = "Ciudad"}})
                 </div>
                 @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "f-campo", placeholder = "Dirección"}})
-
-                <button class="bn_blue" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
-                <div id="map"></div>
+                <div class="address-selector">
+                    <p>¿Cuál de las siguientes es su dirección?:</p>
+                    <ul></ul>
+                </div>
             </div>
             <div>
-                <p style="margin-top: 20px;">
-                    <label for="termsandconditions">
-                        <input type="checkbox" id="termsandconditions" /> acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
-                    </label>
-                </p>
+                @if (!isEdit)
+                {
+                    <p style="margin-top: 20px;">
+                        <label for="termsAndConditions">
+                            @Html.CheckBox("termsAndConditions", termsAndConditions, new { id = "termsAndConditions" })
+                            acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
+                        </label>
+                    </p>
+                }
                 <p>
-                    <button type="submit" class="bn_blue" name="register">Registrarse</button>
+                    @Html.ValidationSummary("", new {@class = "text-danger"})
+                    <button type="submit" class="bn_blue" name="register">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
             </div>
         }
