@@ -195,33 +195,34 @@ namespace Limbs.Web.Entities.Models
 
     public enum OrderStatus
     {
-        [Description("No asignado")] NotAssigned,
-        [Description("Pre-asignado")] PreAssigned,
-        [Description("Imprimiendo")] Pending,
-        [Description("Lista")] Ready,
-        [Description("Entregada")] Delivered
+        [Description("No asignado")] NotAssigned = 0,
+        [Description("Pre-asignado")] PreAssigned = 1,
+        [Description("Imprimiendo")] Pending = 2,
+        [Description("Lista")] Ready = 3,
+        [Description("Entregada")] Delivered = 4,
+        [Description("Coordinando envío")] ArrangeDelivery = 5,
     }
 
     public enum Courier
     {
-        [Description("Sin envio")] NoCourier,
-        [Description("Andreani")] Andreani
+        [Description("Sin envío (entrega personalmente)")] NoCourier = 0,
+        [Description("Andreani")] Andreani = 1,
     }
 
     public enum OrderColor
     {
-        [Description("Blanco y rojo")] A,
-        [Description("Azul y rojo")] B,
-        [Description("Rosa y blanco")] C,
-        [Description("Azul y amarillo")] D,
-        [Description("Azul blanco y rojo")] E,
-        [Description("Rojo y amarillo")] F
+        [Description("Blanco y rojo")] A = 0,
+        [Description("Azul y rojo")] B = 1,
+        [Description("Rosa y blanco")] C = 2,
+        [Description("Azul y amarillo")] D = 3,
+        [Description("Azul blanco y rojo")] E = 4,
+        [Description("Rojo y amarillo")] F = 5,
     }
 
     public enum ProductType
     {
-        [Description("Derecha")] Right,
-        [Description("Izquierda")] Left
+        [Description("Derecha")] Right = 0,
+        [Description("Izquierda")] Left = 1,
     }
 
     

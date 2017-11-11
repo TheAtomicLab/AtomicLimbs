@@ -20,6 +20,7 @@
         else if (Model.Status == OrderStatus.Ready)
         {
             <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">Ya entregué el pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery})" class="bn_blue">Solicitar envío</a>
         }
         <script type="text/javascript">
             $("#accion_pedido a").click(function(e) {
@@ -31,7 +32,7 @@
             });
         </script>
     }
-    @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
+    @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
     {
         <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
     }

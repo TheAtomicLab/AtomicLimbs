@@ -38,6 +38,7 @@
                             <td>
                                 @if (OrderStatus.Pending.Equals(order.Status)
                                      || OrderStatus.Ready.Equals(order.Status)
+                                     || OrderStatus.ArrangeDelivery.Equals(order.Status)
                                      || OrderStatus.Delivered.Equals(order.Status))
                                 {
                                     @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)

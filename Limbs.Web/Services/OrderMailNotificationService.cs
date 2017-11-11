@@ -78,6 +78,9 @@ namespace Limbs.Web.Services
                 case OrderStatus.Delivered:
                     //Entra por SendDeliveryInformationNotification
                     break;
+                case OrderStatus.ArrangeDelivery:
+                    //No action
+                    break;
             }
         }
 

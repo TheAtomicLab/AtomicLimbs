@@ -22,6 +22,8 @@ tr th:first-of-type, tr td:first-of-type { border-left: solid 0px; }
 
 .Pending { background-color: yellow; }
 
-.Ready { background-color: orange; }
+.Ready { background-color: greenyellow; }
+
+.ArrangeDelivery { background-color: orange; }
 
 .Delivered { background-color: greenyellow; }

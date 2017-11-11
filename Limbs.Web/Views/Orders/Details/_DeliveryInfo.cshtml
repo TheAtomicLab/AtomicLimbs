@@ -4,12 +4,45 @@
 
 <h3>Delivery</h3>
 <table class="tabla_datos">
-    <tr>
-        <td>Courier:</td>
-        <td>@Model.DeliveryCourier.ToDescription()</td>
-    </tr>
-    @if (Model.DeliveryCourier != Courier.NoCourier)
+    @if (Model.DeliveryCourier == Courier.NoCourier)
     {
+        <tr>
+            <td>Tipo de entrega:</td>
+            <td>@Model.DeliveryCourier.ToDescription()</td>
+        </tr>
+        if (Model.Status != OrderStatus.ArrangeDelivery && !User.IsInRole(AppRoles.Requester))
+        {
+            <tr>
+                <td></td>
+                <td>
+                    <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery})" class="bn_blue accion-pedido">Solicitar envío</a>
+                    
+                    <script type="text/javascript">
+                        $(".accion-pedido").click(function(e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+
+                            $("body").append('<form action="' + e.target.href + '" method="post" id="tempform"></form>');
+                            $("#tempform").submit();
+                        });
+                    </script>
+                </td>
+            </tr>
+        }
+        if(Model.Status == OrderStatus.ArrangeDelivery)
+        {
+            <tr>
+                <td></td>
+                <td><p>@Model.Status.ToDescription()</p></td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td>Courier:</td>
+            <td>@Model.DeliveryCourier.ToDescription()</td>
+        </tr>
         <tr>
             <td>@Html.DisplayNameFor(x => x.DeliveryTrackingCode)</td>
             <td>
@@ -26,7 +59,7 @@
         if (!string.IsNullOrWhiteSpace(Model.DeliveryPostalLabel))
         {
             <tr>
-                <td>@Html.DisplayNameFor(x => x.DeliveryPostalLabel)</td>
+                <td>@Html.DisplayNameFor(x => x.DeliveryPostalLabel):</td>
                 <td>
                     <a href="@Model.DeliveryPostalLabel" target="_blank">Descargar</a>
                 </td>
@@ -34,7 +67,7 @@
         }
     }
     <tr>
-        <td colspan="2" class="proofofdelivery">
+        <td colspan="2">
             @Html.Partial("Details/_ProofOfDelivery", Model)
         </td>
     </tr>

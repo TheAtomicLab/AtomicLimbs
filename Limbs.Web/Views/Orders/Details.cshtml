@@ -1,5 +1,4 @@
-﻿@using Limbs.Web.Common.Extensions
-@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Entities.Models
 @model OrderModel
 @{
     ViewBag.Title = "Detalles de pedido";
@@ -24,7 +23,7 @@
             @Html.Partial("Details/_UserInfo", Model)
         </div>
 
-        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
+        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
         {
             <div class="card card-l">
                 @Html.Partial("Details/_Messages", Model)
@@ -38,7 +37,7 @@
             </div>
         }
 
-        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
+        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Ready)
         {
             <div class="card card-l">
                 @Html.Partial("Details/_DeliveryInfo", Model)
@@ -87,7 +86,7 @@
 
         function updatePartial(name) {
             var $dummy = $("<div>");
-            $dummy.load("@Url.Action("GetPartial", "Orders", new { orderId = Model.Id })&partialName=" + name, function(response, status, xhr) {
+            $dummy.load("@Url.Action("GetPartial", "Orders", new { orderId = Model.Id })&partialName=" + name, function(response, status) {
                 var $container = $("#" + name);
                 if (status !== "success") {
                     //location.reload();

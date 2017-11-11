@@ -39,12 +39,12 @@
             </td>
             <td class="@item.Status">
                 @item.Status.ToDescription()
-                @if (item.Status == OrderStatus.Ready)
+                @if (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery)
                 {
                     <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
                 }
-                @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) && 
-                    (item.Status == OrderStatus.Ready || item.Status == OrderStatus.Delivered))
+                @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) &&
+                    (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery || item.Status == OrderStatus.Delivered))
                 {
                     <span>(sin prueba de entrega)</span>
                 }
@@ -59,7 +59,7 @@
                 @if (item.OrderAmbassador != null)
                 {
                     @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
-                    if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.Delivered)
+                    if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.ArrangeDelivery && item.Status != OrderStatus.Delivered)
                     {
                         <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
                     }

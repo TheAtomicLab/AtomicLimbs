@@ -25,10 +25,10 @@ namespace Limbs.Web.Controllers
             IEnumerable<OrderModel> orderList = Db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
 
             var deliveredOrdersCount = orderList.Count(c => c.Status == OrderStatus.Delivered);
-            var pendingOrdersCount = orderList.Count(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.Ready);
+            var pendingOrdersCount = orderList.Count(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.ArrangeDelivery || c.Status == OrderStatus.Ready);
 
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
-            var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready).ToList();
+            var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.ArrangeDelivery || o.Status == OrderStatus.Ready).ToList();
             var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
             
             var viewModel = new ViewModels.AmbassadorPanelViewModel
