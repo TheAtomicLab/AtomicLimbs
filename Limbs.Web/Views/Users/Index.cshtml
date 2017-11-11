@@ -26,6 +26,7 @@
                         <th>@Html.DisplayNameFor(x => o.Id)</th>
                         <th>@Html.DisplayNameFor(x => o.OrderAmbassador.AmbassadorName) embajador</th>
                         <th>@Html.DisplayNameFor(x => o.Date)</th>
+                        <th>@Html.DisplayNameFor(x => o.StatusLastUpdated)</th>
                         <th>@Html.DisplayNameFor(x => o.Status)</th>
                     </tr>
                     @foreach (var order in Model.Order)
@@ -50,7 +51,14 @@
                                 @Html.DisplayFor(x => order.Date, "ToFriendlyDateString")
                             </td>
                             <td>
+                                @Html.DisplayFor(x => order.StatusLastUpdated, "ToFriendlyDateString")
+                            </td>
+                            <td>
                                 @order.Status.ToDescription()
+                                @if (order.Status == OrderStatus.Pending)
+                                {
+                                    <text>(</text>@(order.Pieces.GetPercentage())<text>%)</text>
+                                }
                             </td>
                         </tr>
                     }
