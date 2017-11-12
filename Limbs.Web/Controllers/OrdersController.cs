@@ -117,8 +117,9 @@ namespace Limbs.Web.Controllers
             TempData["AmputationType"] = orderModel.AmputationType;
             TempData["ProductType"] = orderModel.ProductType;
 
-            return RedirectToAction("ManoMedidas");
-        }
+            return Json(new { Action = "ManoMedidas" });
+                //return RedirectToAction("ManoMedidas");
+            }
 
         // GET: Orders/ManoMedidas
         public ActionResult ManoMedidas()

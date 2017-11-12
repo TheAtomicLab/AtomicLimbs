@@ -1,5 +1,9 @@
 ﻿@model Limbs.Web.Entities.Models.OrderModel
-    
+
+@{
+    ViewBag.Title = "Pedido";
+}
+
 @section scripts
 {
     <script src="~/Scripts/pages/orders.js"></script>
@@ -9,10 +13,6 @@
     <link rel="stylesheet" href="~/Content/dropzone.css">
 }
 
-
-@{ 
-    ViewBag.Title = "Pedido";
-}
 
 <div class="min_full" id="cuerpo_pedir">
     <article id="exp_inicial">
@@ -45,27 +45,14 @@
             </ul>
         </div>
         <div>
-            @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", @id = "formDropzone" }))
+            @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", @id = "formManoMedidas" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary()
                 @Html.HiddenFor(x => x.AmputationType)
                 @Html.HiddenFor(x => x.ProductType)
-
-                <input type="file" name="file" accept="image/*" />
-                @*<input id="enviar" type="submit" name="enviar" value="Continuar" class="bn_blue">*@
-                <button id="enviar" name="enviar" class="bn_blue">Continuar</button>
             }
-                        @*
-
-                    <div>
-                        <input id="fileUpload" class="fileDragAndDrop"type="file" name="file" accept="image/*" />
-                    </div>
-        <div class="fallback">
-            <input id="fileUpload" class="bn_upload" type="file" name="file" accept="image/*" />
-            <input type="submit" value="Upload" />
-        </div>
-                        *@
+            <button id="enviar" name="enviar" class="bn_blue">Continuar</button>
        </div>
     </article>
 </div>

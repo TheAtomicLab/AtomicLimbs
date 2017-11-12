@@ -1,60 +1,78 @@
-    $(document).ready(function () {
+﻿    $(document).ready(function () {
+        disabledRegister();
 
-        var formDropzone = $("#formDropzone").dropzone({
+        var formManoMedidas = $("#formManoMedidas").dropzone({
             url: null,
             maxFilesize: 5,
-            filesizeBase: 1000,
             maxFiles: 1,
-            clickable: true,
-            ignoreHiddenFiles: true,
-            acceptedFiles: null,
-            acceptedMimeTypes: null,
+            uploadMultiple: false,
+            maxThumbnailFilesize: 1,
+            acceptedFiles: "image/*",
             autoProcessQueue: false,
             autoQueue: true,
-            addRemoveLinks: false,
-            previewsContainer: null,
-            hiddenInputContainer: "body",
-            capture: null,
-            dictDefaultMessage: "Arrastre su imagen aqui o presione click para cargar una.",
-            dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
-            dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
-            dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
-            dictInvalidFileType: "You can't upload files of this type.",
-            dictResponseError: "Server responded with {{statusCode}} code.",
-            dictCancelUpload: "Cancel upload",
-            dictCancelUploadConfirmation: "Are you sure you want to cancel this upload?",
-            dictRemoveFile: "Remove file",
+            addRemoveLinks: true,
+            dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+            dictFileTooBig: "La imagen es muy grande ({{filesize}}MB). Max filesize: {{maxFilesize}}MB.",
+            dictInvalidFileType: "El tipo de archivo es invalido.",
+            dictRemoveFile: "Borrar imagen",
+            dictCancelUpload: "Cancelar subida",
+            dictCancelUploadConfirmation: "¿Estas seguro de cancelar la subida de la foto?",
             dictRemoveFileConfirmation: null,
-            dictMaxFilesExceeded: "You can not upload any more files.",
+            dictMaxFilesExceeded: "No puedes subir más de una imagen.",
             createImageThumbnails: false, 
             init: function () {
-                myDropZone = this;
+                dropZoneManoMedidas = this;
+
+                //defino el submit button
                 $("#enviar").click(function (e) {
                     e.preventDefault();
                     e.stopPropagation();
-                    myDropZone.processQueue();
-                    //myDropZone.disable();
-                });
-                this.on("addedfile", function (file) {
 
-                    // Create the remove button
-                    var removeButton = Dropzone.createElement("<button> Remove file</button>");
-                    var _this = this;
-
-                    removeButton.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        _this.removeFile(file);
-                    });
-
-                    // Add the button to the file preview element.
-                    file.previewElement.appendChild(removeButton);
-                    enableRegister()
+                    //procesa los archivos que estan en la cola (en este caso 1)
+                    dropZoneManoMedidas.processQueue();
                 });
                 
-                this.on("complete", function (file) {
-                    window.location = "/Orders/ManoMedidas/";
+                this.on("addedfile", function (file) {
+
+                    if (dropZoneManoMedidas.files.length > 1) {
+                        /*for (var i = 1; i < dropZoneManoMedidas.files.length; i++) {
+                            dropZoneManoMedidas.removeFile(dropZoneManoMedidas.files[i]);
+                        }
+                        */
+                        dropZoneManoMedidas.removeFile(dropZoneManoMedidas.files[0]);
+                    }
+
+                    enableRegister()
                 });
+                this.on("removedfile", function (file) {
+                    disabledRegister()
+                });
+                
+                
+                this.on("success", function (file, response) {
+                    window.location = response.Action;
+                });
+               
             }
         });
-    });
+
+        var filesDropManoMedidas = dropZoneManoMedidas.files;
+});
+
+
+
+    function validateImg() {
+        if (filesDropManoMedidas.length < 1) {
+            disabledRegister()
+        } else {
+            enableRegister()
+        }
+    }
+
+    function disabledRegister() {
+        $("[name=enviar]").prop('disabled', true);
+    };
+
+    function enableRegister() {
+        $("[name=enviar]").prop('disabled', false);
+    };

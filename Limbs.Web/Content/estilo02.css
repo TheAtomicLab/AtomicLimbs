@@ -303,47 +303,58 @@
 }
 /*--------------------------------------Loader---------------------------------------------*/
 
-.fileDragAndDrop {
-    color: #353131;
-    background: white;
-    border-color: #003eff;
-    border-style: dashed;
+.fontFileUpload {
+    font-size: 6em;
+    color: #2a2a56;
+}
+
+.dropzone {
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
-    height: 5em;
+    margin-bottom: 1em;
 }
 
-/**********File Inputs**********/
-.file-input {
-    visibility: hidden;
-    width: 0;
+.fontUploadFile{
+    font-family: Roboto,sans-serif;
+}
+
+
+.dropzone .dz-preview.dz-file-preview .dz-imageMano {
+    border-radius: 20px;
+    background: #999;
+    background: linear-gradient(to bottom, #eee, #ddd);
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-details {
+    opacity: 1;
+}
+
+.dropzone .dz-preview:hover .dz-imageMano img {
+    -webkit-transform: scale(1.05, 1.05);
+    -moz-transform: scale(1.05, 1.05);
+    -ms-transform: scale(1.05, 1.05);
+    -o-transform: scale(1.05, 1.05);
+    transform: scale(1.05, 1.05);
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.dropzone .dz-preview .dz-imageMano {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 120px;
+    height: 100px;
     position: relative;
+    display: block;
+    z-index: 10;
 }
 
-    .file-input::before {
-        content: 'Select some files';
-        display: inline-block;
-        background: -webkit-linear-gradient(top, #f9f9f9, #e3e3e3);
-        border: 1px solid #999;
-        border-radius: 3px;
-        padding: 5px 8px;
-        outline: none;
-        white-space: nowrap;
-        -webkit-user-select: none;
-        cursor: pointer;
-        text-shadow: 1px 1px #fff;
-        font-weight: 700;
-        font-size: 10pt;
-        visibility: visible;
-        position: absolute;
+    .dropzone .dz-preview .dz-imageMano img {
+        display: block;
     }
 
-    .file-input:hover::before {
-        border-color: black;
-    }
-
-    .file-input:active::before {
-        background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-    }
-    /**********End File Inputs**********/
+#formManoMedidas:hover {
+    border: 3px solid #4772b2;
+    background: #d6d6d6;
+}
