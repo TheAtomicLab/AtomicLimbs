@@ -119,14 +119,14 @@
       withCredentials: false,
       parallelUploads: 2,
       uploadMultiple: false,
-      maxFilesize: 256,
+      maxFilesize: 5,
       paramName: "file",
-      createImageThumbnails: true,
+      createImageThumbnails: false,
       maxThumbnailFilesize: 10,
       thumbnailWidth: 120,
       thumbnailHeight: 120,
       filesizeBase: 1000,
-      maxFiles: null,
+      maxFiles: 5,
       params: {},
       clickable: true,
       ignoreHiddenFiles: true,
@@ -138,7 +138,7 @@
       previewsContainer: null,
       hiddenInputContainer: "body",
       capture: null,
-      dictDefaultMessage: "Drop files here to upload",
+      dictDefaultMessage: "Arrastre su imagen aqui o presione click para cargar una.",
       dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
       dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
       dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
@@ -1433,7 +1433,7 @@
     return element.dropzone;
   };
 
-  Dropzone.autoDiscover = true;
+  Dropzone.autoDiscover = false;
 
   Dropzone.discover = function() {
     var checkElements, dropzone, dropzones, _i, _len, _results;

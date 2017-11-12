@@ -1,6 +1,28 @@
 $(document).ready(function () {
+
+    /*#####################
+    var uploader = $('#formDropzone');
+    var dropzoneOptions = {
+        dictDefaultMessage: 'Drop Here!',
+        paramName: "file",
+        maxFilesize: 2, // MB
+        maxFiles: 1,
+        addRemoveLinks: true,
+        init: function () {
+            this.on("success", function (file) {
+                console.log("success > " + file.name);
+            });
+        }
+    };
+    var newDropzone = new Dropzone(uploader, dropzoneOptions);
+
+    #######################*/
+
+
+
+
     disabledRegister();
-    $("#fileUpload").bind("change",
+    $("#formDropzone").bind("change",
         function () {
             if (this.files[0].size > 1000000 * 5) {
                 alertAtomic("Seleccione un archivo menor a 5 MB.","#alertAtomic");
@@ -8,14 +30,14 @@ $(document).ready(function () {
             }
         });
 
-    $("#fileUpload").on("change", function () {
+    $("#formDropzone").on("change", function () {
         validateImg();
     });
 });
 
 
 function validateImg() {
-    if ($("#fileUpload").val() == "") {
+    if ($("#formDropzone").val() == "") {
         disabledRegister()      
     } else {
         enableRegister()
