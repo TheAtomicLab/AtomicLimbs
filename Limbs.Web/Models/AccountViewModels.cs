@@ -97,7 +97,7 @@ namespace Limbs.Web.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }

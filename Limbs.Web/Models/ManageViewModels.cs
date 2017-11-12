@@ -42,7 +42,7 @@ namespace Limbs.Web.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva contraseña")]
         public string NewPassword { get; set; }
@@ -61,7 +61,7 @@ namespace Limbs.Web.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
         [Display(Name = "Nueva contraseña")]
         public string NewPassword { get; set; }

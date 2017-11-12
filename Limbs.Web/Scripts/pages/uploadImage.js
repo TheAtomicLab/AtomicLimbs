@@ -12,7 +12,7 @@
             autoQueue: true,
             addRemoveLinks: true,
             dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
-            dictFileTooBig: "La imagen es muy grande ({{filesize}}MB). Max filesize: {{maxFilesize}}MB.",
+            dictFileTooBig: "La imagen es muy grande ({{filesize}}MB). Tamaño máximo: {{maxFilesize}}MB.",
             dictInvalidFileType: "El tipo de archivo es invalido.",
             dictRemoveFile: "Borrar imagen",
             dictCancelUpload: "Cancelar subida",
@@ -47,7 +47,10 @@
                 this.on("removedfile", function (file) {
                     disabledRegister()
                 });
-                
+
+                this.on("error", function (file,msg) {
+                    disabledRegister()
+                });
                 
                 this.on("success", function (file, response) {
                     window.location = response.Action;
@@ -58,8 +61,6 @@
 
         var filesDropManoMedidas = dropZoneManoMedidas.files;
 });
-
-
 
     function validateImg() {
         if (filesDropManoMedidas.length < 1) {
