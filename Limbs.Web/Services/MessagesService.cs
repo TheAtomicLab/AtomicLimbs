@@ -30,7 +30,6 @@ namespace Limbs.Web.Services
             {
                 message.Status = MessageStatus.Unread;
                 message.Priority = message.PreviousMessage.Priority;
-                message.PreviousMessage.Status = MessageStatus.Unread;
                 if (message.From.Equals(message.PreviousMessage.From)) //adding to your message
                 {
                     message.To = message.PreviousMessage.To;
@@ -52,14 +51,20 @@ namespace Limbs.Web.Services
             return await GetInboxMessages(user);
         }
 
+        private IOrderedQueryable<MessageModel> GetInboxMessagesQuery(string userId)
+        {
+            return Db.Messages.Include(x => x.From).Include(x => x.To)
+                .Where(x => (x.To.Id == userId || x.From.Id == userId) && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
+                .OrderByDescending(x => x.Time);
+        }
+
         public async Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user)
         {
             var userId = user.Identity.GetUserId();
+            var inboxMessages = await GetInboxMessagesQuery(userId).ToListAsync();
+            await ProcessMessageStatus(user, userId, inboxMessages);
 
-            return await Db.Messages.Include(x => x.From).Include(x => x.To)
-                .Where(x => (x.To.Id == userId || x.From.Id == userId) && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
-                .OrderByDescending(x => x.Time)
-                .ToListAsync();
+            return inboxMessages;
         }
 
         public async Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user, int? orderId)
@@ -67,11 +72,25 @@ namespace Limbs.Web.Services
             if (!orderId.HasValue) return await GetInboxMessages(user);
 
             var userId = user.Identity.GetUserId();
+            var inboxMessages = await GetInboxMessagesQuery(userId).Where(x => x.Order.Id == orderId.Value).ToListAsync();
+            await ProcessMessageStatus(user, userId, inboxMessages);
 
-            return await Db.Messages.Include(x => x.From).Include(x => x.To)
-                .Where(x => (x.To.Id == userId || x.From.Id == userId) && x.Order.Id == orderId.Value && x.Status != MessageStatus.Deleted && x.PreviousMessage == null)
-                .OrderByDescending(x => x.Time)
-                .ToListAsync();
+            return inboxMessages;
+        }
+
+        private async Task ProcessMessageStatus(IPrincipal user, string userId, List<MessageModel> inboxMessages)
+        {
+            foreach (var m in inboxMessages)
+            {
+                if (m.To.Id != userId)
+                {
+                    m.Status = MessageStatus.Read;
+                }
+                if (await GetUnreadCount(user, m) > 0)
+                {
+                    m.Status = MessageStatus.Unread;
+                }
+            }
         }
 
         public async Task<IEnumerable<MessageModel>> GetThreadMessages(IPrincipal user, Guid mainMessageId)

@@ -1,8 +1,10 @@
+using System;
+using System.Data.Entity.Validation;
 using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Migrations
 {
-    using Limbs.Web.Models;
+    using Models;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -15,14 +17,33 @@ namespace Limbs.Web.Migrations
 
         protected override void Seed(ApplicationDbContext context)
         {
-            if (context.Roles.Any()) return;
+            try
+            {
+                context.Users.AddOrUpdate(ApplicationUser.AdminAlias());
 
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Unassigned));
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Requester));
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Ambassador));
-            context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Administrator));
+                if (!context.Roles.Any())
+                {
+                    context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Unassigned));
+                    context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Requester));
+                    context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Ambassador));
+                    context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole(AppRoles.Administrator));
+                }
 
-            context.SaveChanges();
+                context.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.WriteLine(e);
+                Console.WriteLine(nameof(e.EntityValidationErrors));
+                foreach (var dbEntityValidationResult in e.EntityValidationErrors)
+                {
+                    foreach (var validateError in dbEntityValidationResult.ValidationErrors)
+                    {
+                        Console.WriteLine($@"{validateError.PropertyName}: {validateError.ErrorMessage}");
+                    }
+                }
+                throw;
+            }
         }
     }
 }

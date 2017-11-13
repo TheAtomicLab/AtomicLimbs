@@ -2,7 +2,6 @@
 using System.Reflection;
 using LightInject;
 using Limbs.Web.Common.Mail;
-using Limbs.Web.Models;
 using Limbs.Web.Repositories;
 using Microsoft.Owin;
 using Owin;

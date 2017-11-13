@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
@@ -28,11 +26,9 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Messages/Inbox
-        public async Task<ActionResult> Inbox()
+        public ActionResult Inbox()
         {
-            var messages = await _ms.GetInboxMessages(User);
-
-            return View(messages);
+            return View();
         }
 
         // GET: Messages/InboxPartial
