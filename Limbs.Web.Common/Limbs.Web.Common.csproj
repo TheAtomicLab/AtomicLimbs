@@ -129,10 +129,11 @@
     <EmbeddedResource Include="Mail\Templates\OrderDeliveryInformation.cshtml" />
     <EmbeddedResource Include="Mail\Templates\OrderReadyToRequestor.cshtml" />
     <EmbeddedResource Include="Mail\Templates\OrderNewAmbassador.cshtml" />
-    <EmbeddedResource Include="Mail\Templates\OrderProofOfDeliveryInfo.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderProofOfDeliveryInfoToAmbassador.cshtml" />
     <EmbeddedResource Include="Mail\Templates\OrderNewAmbassadorToOldAmbassador.cshtml" />
     <EmbeddedResource Include="Mail\Templates\EmailConfirmation.cshtml" />
     <EmbeddedResource Include="Mail\Templates\EmailPasswordChange.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\OrderProofOfDeliveryInfoToRequestor.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
