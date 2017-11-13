@@ -1,43 +1,26 @@
 ﻿using System.Data.Entity.Spatial;
 using System.Globalization;
-using System.Net;
-using System.Web.Script.Serialization;
+using System.Threading.Tasks;
 
 namespace Limbs.Web.Helpers
 {
     public class Geolocalization
     {
-        public static DbGeography GetPoint(string pointAddress)
+        public static async Task<DbGeography> GetPointAsync(string pointAddress)
         {
-            var url = $"http://maps.google.com/maps/api/geocode/json?address={pointAddress.Replace(" ", "+")}&sensor=false";
-            var result = new WebClient().DownloadString(url);
-            var dict = new JavaScriptSerializer().Deserialize<dynamic>(result);
-            var dictStatus = dict["status"];
-
-            if (dictStatus != "OK") return GeneratePoint(0,0);
-
-            var lat = double.Parse(dict["results"][0]["geometry"]["location"]["lat"].ToString());
-            var lng = double.Parse(dict["results"][0]["geometry"]["location"]["lng"].ToString());
-
-            return GeneratePoint(lat, lng);
+            //IGeocoder geocoder = new GoogleGeocoder() { ApiKey = ConfigurationManager.AppSettings["Google.Maps.Key"] };
+            //var addresses = await geocoder.GeocodeAsync(pointAddress);
+            //var addressesArray = addresses as Address[] ?? addresses.ToArray();
+            //
+            //if (addressesArray.Length != 1) return null;
+            //
+            //var address = addressesArray.First();
+            //
+            ////if() TODO (ale): check number
+            return await Task.Run(() => GeneratePoint(0,0));
+            //return GeneratePoint(address.Coordinates.Latitude, address.Coordinates.Longitude);
         }
-
-        public static bool PointIsValid(double? lat, double? Long)
-        {
-            return lat != 0 && Long != 0;
-        }
-
-       /*
-        public async Task<JsonResult> GetPoint(string address)
-        {
-            var httpClient = Api.GetHttpClient();
-            var result = await httpClient.GetAsync(("Geocoder/").ToAbsoluteUri(new { address = address }));
-            var value = await result.Content.ReadAsStringAsync();
-            var r = JsonConvert.DeserializeObject<List<GeocoderResult>>(value);
-
-            return Json(r, JsonRequestBehavior.AllowGet);
-        }
-        */
+        
         public static DbGeography GeneratePoint(double lat, double lng)
         {
             return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);

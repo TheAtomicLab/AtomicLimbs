@@ -22,6 +22,7 @@ function geocodeAddress() {
 
                     var addressSelector = $(".address-selector").show().find("ul").empty();
                     var template = $($.parseHTML('<li><a href="#" data-country="" data-city="" data-address="" onclick="selectAddress(this); return false;">Ecuador 1419, CABA, Argentina</a></li>'));
+                    var itemCount = 0;
                     for (var i = 0; i < results.length; i++) {
                         var item = template.clone();
                         var itemLink = item.find("a");
@@ -68,8 +69,14 @@ function geocodeAddress() {
                         itemLink.attr("data-city", cityStr);
                         itemLink.attr("data-address", addressStr + " " + addressNumber);
                         itemLink.text(results[i].formatted_address);
-
-                        addressSelector.append(item);
+                        if (addressNumber !== "") {
+                            itemCount=itemCount+1;
+                            addressSelector.append(item);
+                        }
+                    }
+                    if (itemCount === 0) {
+                        $(".address-selector").hide();
+                        setNoResultError("Ingrese altura de la calle.");
                     }
                 }
             } else {
@@ -82,9 +89,12 @@ function geocodeAddress() {
         });
 }
 
-function setNoResultError() {
+function setNoResultError(msj) {
+    if (!msj) {
+        msj = "Dirección invalida.";
+    }
     var errorArray = {
-        "Address": "Dirección invalida."
+        "Address": msj
     };
     form.validate().showErrors(errorArray);
 

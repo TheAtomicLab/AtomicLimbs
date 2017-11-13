@@ -88,7 +88,7 @@ namespace Limbs.Web.Controllers
             if (!ModelState.IsValid) return View("Create", userModel);
             
             var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
-            userModel.Location = Geolocalization.GetPoint(pointAddress);
+            userModel.Location = await Geolocalization.GetPointAsync(pointAddress);
 
             if (userModel.Id == 0)
             {

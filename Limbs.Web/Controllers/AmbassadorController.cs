@@ -97,13 +97,10 @@ namespace Limbs.Web.Controllers
                 ambassadorModel.UserId = User.Identity.GetUserId();
             }
 
-            ValidateData(ambassadorModel, termsAndConditions);
+            await ValidateData(ambassadorModel, termsAndConditions);
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", ambassadorModel);
-
-            var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
-            ambassadorModel.Location = Geolocalization.GetPoint(pointAddress);
-
+            
             if (ambassadorModel.Id == 0 && (User.IsInRole(AppRoles.Unassigned) || User.IsInRole(AppRoles.Administrator)))
             {
                 //CREATE
@@ -125,11 +122,15 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        private void ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
+        private async Task ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {
             ModelState[nameof(ambassadorModel.Id)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.UserId)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.Email)]?.Errors.Clear();
+
+            var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
+            ambassadorModel.Location = await Geolocalization.GetPointAsync(pointAddress);
+
 
             if (ambassadorModel.Birth > DateTime.UtcNow.AddYears(-AmbassadorModel.MinYear))
                 ModelState.AddModelError(nameof(ambassadorModel.Birth), $@"Debes ser mayor de {AmbassadorModel.MinYear} años.");
