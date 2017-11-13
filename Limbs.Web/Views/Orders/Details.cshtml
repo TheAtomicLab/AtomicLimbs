@@ -45,7 +45,7 @@
         }
         @if (User.IsInRole(AppRoles.Administrator))
         {
-            <div class="card card-l">
+            <div class="card card-l" style="width: auto;">
                 @Html.Partial("Details/_AdminInfo", Model)
             </div>
         }

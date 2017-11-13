@@ -133,7 +133,8 @@ namespace Limbs.Web.Entities.Models
         public bool FingersX2P { get; set; }
         public bool Palm { get; set; }
         public bool ThumbConnector { get; set; }
-        public bool ThumbThumbClip { get; set; }
+        public bool Thumb { get; set; }
+        public bool ThumbClip { get; set; }
         public bool ThumbScrew { get; set; }
         public bool UpperArm_FingerConnector { get; set; }
         public bool UpperArm_PalmConnector { get; set; }
@@ -151,7 +152,8 @@ namespace Limbs.Web.Entities.Models
                    && FingersX2P
                    && Palm
                    && ThumbConnector
-                   && ThumbThumbClip
+                   && ThumbClip
+                   && Thumb
                    && ThumbScrew
                    && UpperArm_FingerConnector
                    && UpperArm_PalmConnector

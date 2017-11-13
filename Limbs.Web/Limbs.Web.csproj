@@ -300,6 +300,10 @@
     <Compile Include="Migrations\201711111443527_UserUpdate.Designer.cs">
       <DependentUpon>201711111443527_UserUpdate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711130201004_PiecesNew.cs" />
+    <Compile Include="Migrations\201711130201004_PiecesNew.Designer.cs">
+      <DependentUpon>201711130201004_PiecesNew.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -365,6 +369,9 @@
     <Content Include="Content\img\ManoMedidas\Paso3.gif" />
     <Content Include="Content\img\mockup.jpg" />
     <Content Include="Content\img\piezas.jpg" />
+    <Content Include="Content\img\PrintedPieces\PrintedPieces1.png" />
+    <Content Include="Content\img\PrintedPieces\PrintedPieces2.png" />
+    <Content Include="Content\img\PrintedPieces\PrintedPieces3.png" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.structure.min.css" />
@@ -600,6 +607,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711111443527_UserUpdate.resx">
       <DependentUpon>201711111443527_UserUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711130201004_PiecesNew.resx">
+      <DependentUpon>201711130201004_PiecesNew.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
