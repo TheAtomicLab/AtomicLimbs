@@ -5,10 +5,11 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using Limbs.Web.Helpers;
 
 
 namespace Limbs.Web.Controllers
@@ -129,7 +130,7 @@ namespace Limbs.Web.Controllers
             ModelState[nameof(ambassadorModel.Email)]?.Errors.Clear();
 
             var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
-            ambassadorModel.Location = await Geolocalization.GetPointAsync(pointAddress);
+            ambassadorModel.Location = await GeocoderLocation.GetPointAsync(pointAddress);
 
 
             if (ambassadorModel.Birth > DateTime.UtcNow.AddYears(-AmbassadorModel.MinYear))

@@ -2,9 +2,9 @@
 using System.Globalization;
 using System.Threading.Tasks;
 
-namespace Limbs.Web.Helpers
+namespace Limbs.Web.Common.Geocoder
 {
-    public class Geolocalization
+    public class GeocoderLocation
     {
         public static async Task<DbGeography> GetPointAsync(string pointAddress)
         {

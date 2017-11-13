@@ -5,9 +5,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
-using Limbs.Web.Helpers;
 using Limbs.Web.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -88,7 +89,7 @@ namespace Limbs.Web.Controllers
             if (!ModelState.IsValid) return View("Create", userModel);
             
             var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
-            userModel.Location = await Geolocalization.GetPointAsync(pointAddress);
+            userModel.Location = await GeocoderLocation.GetPointAsync(pointAddress);
 
             if (userModel.Id == 0)
             {
