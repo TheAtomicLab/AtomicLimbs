@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Common.Geocoder;
+using Limbs.Web.Common.Geocoder.Google;
 using Limbs.Web.Entities.Models;
-using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.ViewModels;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -83,14 +82,11 @@ namespace Limbs.Web.Controllers
                 userModel.UserId = User.Identity.GetUserId();
             }
 
-            ValidateUserModel(userModel, isAdultCheck, termsAndConditions);
+            await ValidateUserModel(userModel, isAdultCheck, termsAndConditions);
             ViewBag.IsAdultCheck = isAdultCheck;
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", userModel);
             
-            var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
-            userModel.Location = await GeocoderLocation.GetPointAsync(pointAddress);
-
             if (userModel.Id == 0)
             {
                 //CREATE
@@ -112,11 +108,22 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        private void ValidateUserModel(UserModel userModel, bool isAdultCheck, bool? termsAndConditions)
+        private async Task ValidateUserModel(UserModel userModel, bool isAdultCheck, bool? termsAndConditions)
         {
             ModelState[nameof(userModel.Id)]?.Errors.Clear();
             ModelState[nameof(userModel.UserId)]?.Errors.Clear();
             ModelState[nameof(userModel.Email)]?.Errors.Clear();
+            ModelState[nameof(userModel.Location)]?.Errors.Clear();
+            
+            var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
+            var address = await GeocoderLocation.GetAddressAsync(pointAddress) as GoogleAddress;
+            userModel.Location = GeocoderLocation.GeneratePoint(address);
+
+            if (address == null)
+                ModelState.AddModelError(nameof(userModel.Address), @"Dirección inválida.");
+
+            if (address != null && address[GoogleAddressType.StreetNumber] == null)
+                ModelState.AddModelError(nameof(userModel.Address), @"La dirección debe tener altura en la calle.");
 
             if (termsAndConditions.HasValue && !termsAndConditions.Value)
                 ModelState.AddModelError(nameof(termsAndConditions), @"Debe aceptar terminos y condiciones.");

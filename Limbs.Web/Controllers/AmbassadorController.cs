@@ -6,6 +6,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Common.Geocoder;
+using Limbs.Web.Common.Geocoder.Google;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
@@ -128,10 +129,17 @@ namespace Limbs.Web.Controllers
             ModelState[nameof(ambassadorModel.Id)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.UserId)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.Email)]?.Errors.Clear();
+            ModelState[nameof(ambassadorModel.Location)]?.Errors.Clear();
 
             var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
-            ambassadorModel.Location = await GeocoderLocation.GetPointAsync(pointAddress);
+            var address = await GeocoderLocation.GetAddressAsync(pointAddress) as GoogleAddress;
+            ambassadorModel.Location = GeocoderLocation.GeneratePoint(address);
 
+            if (address == null)
+                ModelState.AddModelError(nameof(ambassadorModel.Address), @"Dirección inválida.");
+
+            if (address != null && address[GoogleAddressType.StreetNumber] == null)
+                ModelState.AddModelError(nameof(ambassadorModel.Address), @"La dirección debe tener altura en la calle.");
 
             if (ambassadorModel.Birth > DateTime.UtcNow.AddYears(-AmbassadorModel.MinYear))
                 ModelState.AddModelError(nameof(ambassadorModel.Birth), $@"Debes ser mayor de {AmbassadorModel.MinYear} años.");

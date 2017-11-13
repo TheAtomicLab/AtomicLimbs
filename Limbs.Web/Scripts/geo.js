@@ -91,7 +91,7 @@ function geocodeAddress() {
 
 function setNoResultError(msj) {
     if (!msj) {
-        msj = "Dirección invalida.";
+        msj = "Dirección inválida.";
     }
     var errorArray = {
         "Address": msj
