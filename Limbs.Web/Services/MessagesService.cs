@@ -30,6 +30,7 @@ namespace Limbs.Web.Services
             {
                 message.Status = MessageStatus.Unread;
                 message.Priority = message.PreviousMessage.Priority;
+                message.PreviousMessage.Status = MessageStatus.Unread;
                 if (message.From.Equals(message.PreviousMessage.From)) //adding to your message
                 {
                     message.To = message.PreviousMessage.To;
@@ -39,7 +40,6 @@ namespace Limbs.Web.Services
                     message.To = message.PreviousMessage.From;
                 }
             }
-
             Db.Messages.Add(message);
 
             return await Db.SaveChangesAsync();
@@ -61,6 +61,7 @@ namespace Limbs.Web.Services
                 .OrderByDescending(x => x.Time)
                 .ToListAsync();
         }
+
         public async Task<IEnumerable<MessageModel>> GetInboxMessages(IPrincipal user, int? orderId)
         {
             if (!orderId.HasValue) return await GetInboxMessages(user);
@@ -99,11 +100,27 @@ namespace Limbs.Web.Services
                 .Where(x => x.To.Id == userId && x.Status == MessageStatus.Unread).CountAsync();
         }
 
+        public async Task<int> GetUnreadCount(IPrincipal user, MessageModel mainMessage)
+        {
+            if (mainMessage == null) return -1;
+
+            var userId = user.Identity.GetUserId();
+
+            return await Db.Messages.Include(x => x.From)
+                .Where(x => x.To.Id == userId && 
+                            x.PreviousMessage.Id == mainMessage.Id && 
+                            x.Status == MessageStatus.Unread).CountAsync();
+        }
+
         public async Task<int> MarkAsRead(IPrincipal user, MessageModel message)
         {
             if (message.Status != MessageStatus.Unread || !user.IsDestination(message)) return 0;
             
             message.Status = MessageStatus.Read;
+            if (await GetUnreadCount(user, message.PreviousMessage) == 0)
+            {
+                message.PreviousMessage.Status = MessageStatus.Read;
+            }
 
             return await Db.SaveChangesAsync();
         }
