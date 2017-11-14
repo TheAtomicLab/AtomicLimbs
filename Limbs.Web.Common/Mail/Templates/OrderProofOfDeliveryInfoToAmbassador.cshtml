@@ -14,19 +14,16 @@
                 <!-- Caja 1 -->
                 <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
                     <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.OrderAmbassador.AmbassadorName)!</p>
-                    <p>Gracias por acompañarnos en este largo proceso, este es un mail para agradecerte de parte de todos en Atomic Lab. Esperamos que esta experiencia haya sido única para vos ¡Y que te volvamos a ver ayudando a crear otro super heroe más!</p>
-                    <p>Para poder aceptar un nuevo pedido, tenes que subir la "prueba de entrega" en el sitio. Con una foto de la persona que ayudaste es suficiente ¡No se olviden de sonreir!</p>
-                    <p>Además, no te olvides que podes podes ayudarnos a mejorar enviando tu opinión en el sitio.</p>
+                    <p>Gracias por acompañarnos en este largo proceso, este es un mail para agradecerte de parte de todos en Atomic Lab. Esperamos que esta experiencia haya sido única para vos ¡Y que te volvamos a ver ayudando a crear más superhéroes!</p>
+                    <p>Para poder aceptar un nuevo pedido, tenés que subir una foto de @(Model.OrderRequestor.UserName) usando la mano mecánica, puede ser una selfie también ¡No se olviden de sonreir!</p>
+                    <p>Además, no te olvides que desde la plataforma podés enviarnos tus comentarios o sugerencias para que podamos mejorar.</p>
                     <!-- Inicio del boton -->
                     <p style="margin: 0px; padding: 10px 0px; text-align: center;">
                         <a href="http://limbs.azurewebsites.net/orders/details/@(Model.Id)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
                     </p>
                     <!-- Fin del boton -->
-                    <p> Por favor, ayudanos a seguir creciendo, podes ayudarnos de dos formas: </p>
-                    <ul>
-                        <li>Compartiendo Atomic Lab y el proyecto Limbs en <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.atomiclab.org%2F&amp;src=sdkpreparse">Facebook</a>, <a href="https://twitter.com/intent/tweet?text=Recibi%20mi%20mano%203D%20en%20www.atomiclab.org%20Compartilo%20para%20que%20otros%20puedan%20pedir%20la%20suya">Twitter</a> y todos los lados que quieras.</li>
-                        <li>Podes donar para que el proyecto siga creciendo <a href="http://www.atomiclab.org/donar/" target="_blank">acá</a></li>
-                    </ul>
+                    <p>Por favor, ayudanos a seguir creciendo compartiendo Atomic Lab y el proyecto Limbs en <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.atomiclab.org%2F&amp;src=sdkpreparse">Facebook</a>, <a href="https://twitter.com/intent/tweet?text=Recibi%20mi%20mano%203D%20en%20www.atomiclab.org%20Compartilo%20para%20que%20otros%20puedan%20pedir%20la%20suya">Twitter</a> y todos los lados que quieras.</p>
+        +
                     <p>¡Gracias!</p>
                     <p>El equipo de Atomic Lab</p>
                 </div>
@@ -34,7 +31,7 @@
             <div style="background: #232323; color: #bbbbbb; padding: 40px; text-align: center;">
                 <p>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</p>
                 <p>
-                    <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">Limbs, Atomic Lab © 2017 - AtomicLab.org</a>
+                    <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">Limbs, Atomic Lab © @DateTime.UtcNow.Year - AtomicLab.org</a>
                 </p>
             </div>
         </div>
