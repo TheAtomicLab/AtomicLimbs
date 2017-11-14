@@ -15,7 +15,7 @@
             <!-- Caja 1 -->
             <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
                 <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.OrderRequestor.Name)!</p>
-                <p>@(Model.OrderAmbassador.AmbassadorName), el embajador asignado a tu caso, ya imprimió tu mano y está todo listo para enviartela. Como te va a llegar por correo, te enviamos el código de seguimiento, para que puedas seguir el envío: @(Model.DeliveryCourier) #@(Model.DeliveryTrackingCode) </p>
+                <p>@(Model.OrderAmbassador.AmbassadorName), el embajador asignado a tu caso, ya imprimió tu mano y está todo listo para enviarla. Como te va a llegar por correo, te enviamos el código de seguimiento para que puedas seguir el envío: @(Model.DeliveryCourier) #@(Model.DeliveryTrackingCode) </p>
                 <!-- Inicio del boton -->
                 <p style="margin: 0px; padding: 10px 0px; text-align: center;">
                     <a href="http://limbs.azurewebsites.net/orders/details/@(Model.Id)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">Ir al sitio</a>
@@ -26,7 +26,7 @@
             <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
                 <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">Por favor, no te olvides:</p>
                 
-                <p>Recordá que al momento de recibirla, tenés que subir una foto a la plataforma para comprobar que todo haya salido bien, ingresando a http://limbs.azurewebsites.net/orders/details/@(Model.Id)</p>
+                <p>Recordá que al momento de recibirla tenés que subir una foto a la plataforma para comprobar que todo haya salido bien, ingresando a http://limbs.azurewebsites.net/orders/details/@(Model.Id)</p>
                 <p>
                     Además, te recomendamos leer el siguiente link para revisar las buenas prácticas y entender cómo se coloca y de qué manera podés armarla/desarmarla: <a href="http://www.AtomicLab.org/limbs/order/bestpractices/es.">con este manual</a>
                 </p>
