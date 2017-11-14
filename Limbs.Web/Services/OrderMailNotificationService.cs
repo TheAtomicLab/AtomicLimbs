@@ -133,9 +133,18 @@ namespace Limbs.Web.Services
             {
                 From = _fromEmail,
                 Subject = $"[Atomic Limbs] Nueva prueba de entrega (pedido #{order.Id})",
+                To = order.OrderRequestor.Email,
+                Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfoToRequestor", order),
+            };
+            
+            await AzureQueue.EnqueueAsync(mailMessage);
+
+            mailMessage = new MailMessage
+            {
+                From = _fromEmail,
+                Subject = $"[Atomic Limbs] Nueva prueba de entrega (pedido #{order.Id})",
                 To = order.OrderAmbassador.Email,
-                Cc = order.OrderRequestor.Email,
-                Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfo", order),
+                Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfoToAmbassador", order),
             };
 
             await AzureQueue.EnqueueAsync(mailMessage);
