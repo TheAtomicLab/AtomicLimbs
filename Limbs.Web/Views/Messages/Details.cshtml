@@ -1,23 +1,47 @@
-﻿@model Limbs.Web.Entities.Models.MessageModel
-
-@{ 
+﻿@using Limbs.Web.Entities.Models
+@using Microsoft.AspNet.Identity
+@model MessageModel
+@{
+    var to = Model.To.Email;
+    if (User.IsInRole(AppRoles.Administrator))
+    {
+        to += $" - {Model.From.Email}";
+    }
+    if (to != User.Identity.GetUserName())
+    {
+        to = Model.From.Email;
+    }
     ViewBag.Title = "Mensajes";
 }
-
+<h2>@(to)</h2>
 <div class="messages-details">
-    <h4>MessageModel</h4>
-    <hr/>
+    <div class="messages">
+        <p id="loading">Cargando mensajes...</p>
+        <p id="more-messages" class="card">Tenés más mensajes sin leer...</p>
 
-    @Html.Partial("_Reply", Model)
-    
-    <p id="loading">Cargando mensajes...</p>
+        <ul id="messages" style="display: none;">
+            <li>
+                @Html.Partial("_Detail", Model)
+            </li>
+        </ul>
+    </div>
 
-    <ul id="messages" style="display: none;">
-        <li>
-            @Html.Partial("_Detail", Model)
-        </li>
-    </ul>
+    <div class="reply">
+        @Html.Partial("_Reply", Model)
+    </div>
 </div>
+
+@section styles
+{
+    <style type="text/css">
+        .cont-wr {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    </style>
+}
 
 @section scripts
 {
@@ -27,13 +51,17 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $("#more-messages").click(function() {
+
+            });
+
             $.connection.messagesHub.client.receiveMessage = function(message) {
                 console.log("receiveMessage");
 
                 var newMessage = $($.parseHTML("<li>" + message + "</li>"));
-                $(".message-item", newMessage).removeClass("ToHim").addClass("ToMe").removeClass("Read").addClass("Unread").attr("data-status", "Unread");;
-                $("#messages").prepend(newMessage);
-                processUnreadMessages();
+                $(".message-item", newMessage).removeClass("ToHim").addClass("ToMe").removeClass("Read").addClass("Unread").attr("data-status", "Unread");
+                $("#messages").append(newMessage);
+                $(".messages").animate({ scrollTop: $('.messages').prop("scrollHeight") }, 1000, processUnreadMessages);
             };
             $.connection.hub.reconnecting(function () {
                 console.log("socket reconnecting...");
@@ -54,23 +82,24 @@
                     type: "GET",
                     url: "@Url.Action("ThreadMessages", new { threadId = Model.Id })",
                     success: function (data) {
-                        $("#messages").prepend(data).show();
                         $("#loading").hide();
-                        processUnreadMessages();
+                        $("#messages").append(data).show();
+                        $(".messages").animate({ scrollTop: $('.messages').prop("scrollHeight") }, 1000, function() {
+                            processUnreadMessages();
+                            $(".messages").scroll(function () {
+                                processUnreadMessages();
+                            });
+                        });
                     }
                 });
         });
-
-        $(window).scroll(function () {
-            processUnreadMessages();
-        });
-
+        
         $("#reply-form").submit(function (e) {
             e.preventDefault();
 
             var content = $("#@(Html.IdFor(x => Model.Content).ToString())");
 
-            if (content.val().length < 1) {
+            if (content.val().trim().length < 1) {
                 return;
             }
             $("input[type=submit]").attr("disabled", "disabled");
@@ -85,7 +114,8 @@
                     $("input[type=submit]").removeAttr("disabled");
                     $(content).val("");
                     $.connection.messagesHub.server.sendMessage("@(Model.Id)", data.toString());
-                    $("#messages").prepend("<li>" + data + "</li>");
+                    $("#messages").append("<li>" + data + "</li>");
+                    $(".messages").animate({ scrollTop: $('.messages').prop("scrollHeight") }, 1000);
                 }
             });
         });
@@ -101,20 +131,30 @@
         }
 
         function processUnreadMessages() {
-            $.each($('.message-item[data-status="Unread"]'),
-                function (key, value) {
-                    var item = $(value);
-                    if (isInView(item)) {
-                        item.attr("data-status", "Read");
-                        markAsRead(item);
-                    }
-                });
+            var msj = $('.message-item.ToMe[data-status="Unread"]');
+            if (msj.length === 0) {
+                $("#more-messages").hide();
+            } else {
+                $.each(msj,
+                    function (key, value) {
+                        var item = $(value);
+                        if (isInView(item)) {
+                            item.attr("data-status", "Read");
+                            markAsRead(item);
+                        } else {
+                            $("#more-messages").show();
+                        }
+                    });
+            }
         }
 
         function isInView(elem) {
             var rf = $(window).scrollTop();
             var rt = $(window).scrollTop() + $(window).height();
             var ip = $(elem).offset().top + $(elem).height();
+
+            console.log("A: " + rf + " - B: " + rt + " - C: " + ip);
+
             return rf < ip && ip < rt;
         }
 

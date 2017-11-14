@@ -9,39 +9,8 @@
     @Html.Hidden(Html.NameFor(x => x.To.Id).ToString(), Model.To.Id)
 
     <div>
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div>
-            @Html.LabelFor(model => model.From)
-            <div>
-                @Html.DisplayFor(x => x.From)
-            </div>
-        </div>
-
-        <div>
-            @Html.LabelFor(model => model.To)
-            <div>
-                @Html.DisplayFor(x => x.To)
-            </div>
-        </div>
-
-        <div>
-            @Html.LabelFor(model => model.Priority)
-            <div>
-                @Html.EnumDropDownListFor(model => model.Priority)
-                @Html.ValidationMessageFor(model => model.Priority, "")
-            </div>
-        </div>
-
-        <div>
-            @Html.LabelFor(model => model.Content)
-            <div>
-                @Html.EditorFor(model => (new MessageModel()).Content)
-                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div>
-            <input type="submit" value="Enviar" />
-        </div>
+        @Html.EditorFor(model => (new MessageModel()).Content)
+        <input type="submit" value="Enviar" />
+        @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
     </div>
 }

@@ -13,11 +13,11 @@
         cll = "ToMe";
     }
 }
-<dl class="message-item @cl @cll" data-status="@Model.Status" data-id="@Model.Id">
-    <dd>
-        @Html.DisplayFor(model => model.Time, "ToFriendlyDateString")
-    </dd>
-    <dd>
+<dl class="message-item card @cl @cll" data-status="@Model.Status" data-id="@Model.Id">
+    <dd class="content">
         @Html.DisplayFor(model => model.Content)
+    </dd>
+    <dd class="date">
+        @Html.DisplayFor(model => model.Time, "ToFriendlyDateString")
     </dd>
 </dl>

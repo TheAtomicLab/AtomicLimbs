@@ -107,7 +107,7 @@ namespace Limbs.Web.Services
 
             return await Db.Messages.Include(x => x.From).Include(x => x.To)
                 .Where(x => x.Status != MessageStatus.Deleted && x.PreviousMessage.Id == mainMessage.Id)
-                .OrderByDescending(x => x.Time)
+                .OrderBy(x => x.Time)
                 .ToListAsync();
         }
 
