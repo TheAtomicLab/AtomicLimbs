@@ -58,7 +58,7 @@ namespace Limbs.Web.Controllers
         // GET: Messages/Create
         public async Task<ActionResult> Create(int orderId)
         {
-            var orderMessage = await Db.Messages.FirstOrDefaultAsync(x => x.Order.Id == orderId);
+            var orderMessage = await Db.Messages.FirstOrDefaultAsync(x => x.Order.Id == orderId && x.Status != MessageStatus.Deleted);
             if (orderMessage != null) return RedirectToAction("Details", new {id = orderMessage.Id});
 
             var messageModel = await GetMessageModelForCreation(orderId);

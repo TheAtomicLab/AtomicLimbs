@@ -157,7 +157,7 @@ namespace Limbs.Web.Services
 
         public async Task<MessageModel> View(IPrincipal user, Guid id)
         {
-            var message = await Db.Messages.Include(x => x.To).Include(x => x.From)
+            var message = await Db.Messages.Include(x => x.To).Include(x => x.From).Include(x => x.Order)
                 .FirstOrDefaultAsync(x => x.Id == id);
             
             if (user.IsInMessage(message))

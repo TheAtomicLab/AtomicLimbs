@@ -14,6 +14,10 @@
     ViewBag.Title = "Mensajes";
 }
 <h2>@(to)</h2>
+@if (Model.Order != null)
+{
+    <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
+}
 <div class="messages-details">
     <div class="messages">
         <p id="loading">Cargando mensajes...</p>

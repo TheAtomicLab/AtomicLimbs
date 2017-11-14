@@ -1,32 +1,54 @@
-﻿@model Limbs.Web.Entities.Models.MessageModel
-
-@{ 
+﻿@using Limbs.Web.Entities.Models
+@using Microsoft.AspNet.Identity
+@model MessageModel
+@{
+    var to = Model.To.Email;
+    if (User.IsInRole(AppRoles.Administrator))
+    {
+        to += $" - {Model.From.Email}";
+    }
+    if (to != User.Identity.GetUserName())
+    {
+        to = Model.From.Email;
+    }
     ViewBag.Title = "Mensajes";
 }
-    
-
-@using (Html.BeginForm()) 
+<h2>@(to)</h2>
+@if (Model.Order != null)
 {
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(x => x.Order.Id)
+    <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
+}
+<div class="messages-details">
+    <div class="messages">
+        <ul id="messages" style="display: none;"></ul>
+    </div>
 
-    <div class="form-horizontal">
-        <h4>MessageModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="reply">
+        
+        @using (Html.BeginForm("Create", "Messages", FormMethod.Post, new { id = "reply-form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.Order.Id)
+            @Html.Hidden(Html.NameFor(x => x.From.Id).ToString(), Model.From.Id)
+            @Html.Hidden(Html.NameFor(x => x.To.Id).ToString(), Model.To.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+            <div>
+                @Html.EditorFor(model => (new MessageModel()).Content)
+                <input type="submit" value="Enviar" />
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+        }
     </div>
+</div>
+
+@section styles
+{
+    <style type="text/css">
+        .cont-wr {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+    </style>
 }
