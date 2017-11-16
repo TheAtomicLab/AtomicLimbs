@@ -240,6 +240,7 @@
     <Compile Include="Controllers\MessagesController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
     <Compile Include="Controllers\AmbassadorController.cs" />
+    <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Extensions\ApplicationUserExtensions.cs" />
     <Compile Include="Global.asax.cs">
@@ -339,6 +340,7 @@
     <Content Include="Content\img\ej_no002.jpg" />
     <Content Include="Content\img\ej_si001.jpg" />
     <Content Include="Content\img\ej_si002.jpg" />
+    <Content Include="Content\img\Error\404.svg" />
     <Content Include="Content\img\fondo_manoton.jpg" />
     <Content Include="Content\img\foto01.jpg" />
     <Content Include="Content\img\icon_embajador.svg" />
@@ -555,6 +557,7 @@
     <Content Include="Views\Orders\Details\_Messages.cshtml" />
     <Content Include="Views\Messages\Create.cshtml" />
     <Content Include="Views\Orders\Details\_Header.cshtml" />
+    <Content Include="Views\StaticContent\PageNotFound.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
