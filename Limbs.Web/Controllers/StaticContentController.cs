@@ -21,5 +21,13 @@ namespace Limbs.Web.Controllers
                 return new HttpStatusCodeResult(500);
             return View("Error");
         }
+
+        // GET: StaticContent/Redirect
+        public ActionResult Redirect()
+        {
+            Response.StatusCode = 200;
+            return new HttpStatusCodeResult(200);
+        }
+
     }
 }

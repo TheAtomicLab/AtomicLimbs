@@ -137,6 +137,12 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RouteMagic, Version=0.2.2.1, Culture=neutral, PublicKeyToken=84b59be021aa4cee, processorArchitecture=MSIL">
+      <HintPath>..\packages\RouteMagic.0.2.2.1\lib\net40\RouteMagic.dll</HintPath>
+    </Reference>
+    <Reference Include="RouteMagic.Mvc, Version=1.2.0.0, Culture=neutral, PublicKeyToken=84b59be021aa4cee, processorArchitecture=MSIL">
+      <HintPath>..\packages\RouteMagic.Mvc.1.2\lib\net40\RouteMagic.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
