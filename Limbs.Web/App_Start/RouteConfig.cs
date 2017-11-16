@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
+using Limbs.Web.Common.Extensions;
 
 namespace Limbs.Web
 {
@@ -8,6 +9,14 @@ namespace Limbs.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+            routes.Redirect("libre", "/");
+            routes.Redirect("donations/limbs", "/");
+            routes.Redirect("faq", "/");
+            routes.Redirect("manoton", "/");
+            routes.Redirect("dar", "/");
+            routes.Redirect("embajador-atomico", "/");
+            routes.Redirect("pedir-una-mano", "/");
 
             routes.MapRoute(
                 "Default",

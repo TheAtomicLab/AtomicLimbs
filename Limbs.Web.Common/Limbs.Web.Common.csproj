@@ -83,6 +83,7 @@
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
+    <Compile Include="Extensions\RouteExtensions.cs" />
     <Compile Include="Geocoder\Address.cs" />
     <Compile Include="Geocoder\Bounds.cs" />
     <Compile Include="Geocoder\Distance.cs" />
