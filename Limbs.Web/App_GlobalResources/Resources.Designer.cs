@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Limbs.Web.Properties {
+namespace Limbs.Web.App_GlobalResources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Limbs.Web.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Limbs.Web.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Limbs.Web.App_GlobalResources.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -93,6 +93,15 @@ namespace Limbs.Web.Properties {
         internal static string ExternalLoginExists {
             get {
                 return ResourceManager.GetString("ExternalLoginExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} debe ser una fecha.
+        /// </summary>
+        internal static string FieldMustBeDate {
+            get {
+                return ResourceManager.GetString("FieldMustBeDate", resourceCulture);
             }
         }
         
@@ -210,6 +219,15 @@ namespace Limbs.Web.Properties {
         internal static string PropertyTooShort {
             get {
                 return ResourceManager.GetString("PropertyTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El valor ‘{0}’ no es válido para el campo &apos;{1}&apos;.
+        /// </summary>
+        internal static string PropertyValueInvalid {
+            get {
+                return ResourceManager.GetString("PropertyValueInvalid", resourceCulture);
             }
         }
         

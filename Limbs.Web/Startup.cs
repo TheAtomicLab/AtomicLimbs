@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Web.Mvc;
 using LightInject;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Repositories;
@@ -9,6 +10,7 @@ using Limbs.Web.Services;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Storage.Azure;
 using Microsoft.AspNet.SignalR;
+using Limbs.Web.App_GlobalResources;
 
 [assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
 namespace Limbs.Web
@@ -31,7 +33,9 @@ namespace Limbs.Web
             Type hack = ass.GetType("Microsoft.AspNet.Identity.Resources");
             var field = hack.GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
             //This is where you set your own local resource manager that will read resource files from your own assembly
-            field.SetValue(null, new global::System.Resources.ResourceManager("Limbs.Web.Properties.Resources", typeof(Limbs.Web.Properties.Resources).Assembly));
+            field.SetValue(null, new global::System.Resources.ResourceManager(typeof(Resources).AssemblyQualifiedName, typeof(Resources).Assembly));
+
+            DefaultModelBinder.ResourceClassKey = nameof(Resources);
         }
 
         public void ConfigureServices(IAppBuilder app)

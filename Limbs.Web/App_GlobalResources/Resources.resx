@@ -222,4 +222,10 @@
   <data name="NoTwoFactorProvider" xml:space="preserve">
     <value>NoTwoFactorProvider {0} </value>
   </data>
+  <data name="PropertyValueInvalid" xml:space="preserve">
+    <value>El valor ‘{0}’ no es válido para el campo '{1}'</value>
+  </data>
+  <data name="FieldMustBeDate" xml:space="preserve">
+    <value>{0} debe ser una fecha</value>
+  </data>
 </root>
