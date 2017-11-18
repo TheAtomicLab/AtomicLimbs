@@ -125,6 +125,28 @@ namespace Limbs.Web.Entities.Models
 
     public class Pieces
     {
+        public Pieces() { }
+
+        public Pieces(bool all)
+        {
+            AtomicLabCover = all;
+            FingerMechanismHolder = all;
+            Fingers = all;
+            FingerStopper = all;
+            FingersX1 = all;
+            FingersX2P = all;
+            Palm = all;
+            ThumbConnector = all;
+            ThumbClip = all;
+            Thumb = all;
+            ThumbScrew = all;
+            UpperArm_FingerConnector = all;
+            UpperArm_PalmConnector = all;
+            UpperArm_ThumbShortConnector = all;
+            UpperArm_FingerSlider = all;
+            UpperArm = all;
+        }
+
         public bool AtomicLabCover { get; set; }
         public bool FingerMechanismHolder { get; set; }
         public bool Fingers { get; set; }
@@ -160,6 +182,11 @@ namespace Limbs.Web.Entities.Models
                    && UpperArm_ThumbShortConnector
                    && UpperArm_FingerSlider
                    && UpperArm;
+        }
+
+        public bool AllSet()
+        {
+            return Ready();
         }
 
         public int GetPercentage()

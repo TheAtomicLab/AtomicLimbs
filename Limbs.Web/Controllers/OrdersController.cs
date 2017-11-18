@@ -12,6 +12,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 
 namespace Limbs.Web.Controllers
 {
@@ -171,6 +173,13 @@ namespace Limbs.Web.Controllers
 
             Db.OrderModels.Add(orderModel);
             await Db.SaveChangesAsync();
+
+            await AzureQueue.EnqueueAsync(new OrderProductGenerator
+            {
+                OrderId = orderModel.Id,
+                Pieces = orderModel.Pieces,
+                ProductSizes = orderModel.Sizes,
+            });
 
             return RedirectToAction("Index", "Users");
         }
