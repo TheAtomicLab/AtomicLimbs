@@ -90,6 +90,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DbContext\IdentityModels.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
     <Compile Include="Models\AmbassadorModel.cs" />
     <Compile Include="Models\AmputationType.cs" />
@@ -117,5 +118,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

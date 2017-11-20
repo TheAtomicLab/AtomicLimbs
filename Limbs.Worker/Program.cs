@@ -22,7 +22,9 @@ namespace Limbs.Worker
 
             while (true)
             {
-                host.CallAsync(typeof(Functions).GetMethod("ProcessMethod"));
+                host.CallAsync(typeof(Functions).GetMethod("MailsMessagesSender"));
+
+                host.CallAsync(typeof(Functions).GetMethod("ProductGeneratorResult"));
                 // The following code ensures that the WebJob will be running continuously
 
                 Console.WriteLine("host.RunAndBlock();");

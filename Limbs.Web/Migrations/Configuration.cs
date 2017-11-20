@@ -1,5 +1,6 @@
 using System;
 using System.Data.Entity.Validation;
+using Limbs.Web.Entities.DbContext;
 using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Migrations

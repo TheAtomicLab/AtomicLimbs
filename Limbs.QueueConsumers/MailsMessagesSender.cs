@@ -10,8 +10,8 @@ namespace Limbs.QueueConsumers
     public class MailsMessagesSender : IQueueMessageConsumer<MailMessage>
     {
         public static readonly TimeSpan EstimatedTime = TimeSpan.FromSeconds(5);
-
-        public TimeSpan? EstimatedTimeToProcessMessageBlock { get; private set; }
+        
+        public TimeSpan? EstimatedTimeToProcessMessageBlock { get; }
 
         public void ProcessMessages(QueueMessage<MailMessage> message)
         {

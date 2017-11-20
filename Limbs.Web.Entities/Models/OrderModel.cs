@@ -108,7 +108,18 @@ namespace Limbs.Web.Entities.Models
             });
         }
 
+        public void LogMessage(string message)
+        {
+            Log.Add(new OrderLogItem
+            {
+                User = "__SYSTEM__",
+                Message = message
+            });
+        }
+
         public Pieces Pieces { get; set; }
+
+        public string FileUrl { get; set; }
 
         public bool CanView(IPrincipal user)
         {

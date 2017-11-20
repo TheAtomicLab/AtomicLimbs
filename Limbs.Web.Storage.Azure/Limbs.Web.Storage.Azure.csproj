@@ -79,6 +79,7 @@
     <Compile Include="QueueStorage\MessageBlockPoolQueueConsumer.cs" />
     <Compile Include="QueueStorage\MessagePoolQueueConsumer.cs" />
     <Compile Include="QueueStorage\Messages\AppException.cs" />
+    <Compile Include="QueueStorage\Messages\OrderProductGeneratorResult.cs" />
     <Compile Include="QueueStorage\Messages\OrderProductGenerator.cs" />
     <Compile Include="QueueStorage\PoolingFrequencer.cs" />
     <Compile Include="QueueStorage\QueueConsumerFor.cs" />
