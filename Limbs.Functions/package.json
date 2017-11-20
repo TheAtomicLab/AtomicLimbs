@@ -1,0 +1,15 @@
+{
+  "name": "limbs-functions",
+  "version": "1.0.0",
+  "description": "Limbs.Functions",
+  "main": "local.js",
+  "author": {
+    "name": "Alejandro Banzas"
+  },
+  "dependencies": {
+    "@jscad/openjscad": "^1.3.0",
+    "azure-functions-core-tools": "^1.0.7",
+    "azure-storage": "^2.6.0",
+    "dotenv": "^4.0.0"
+  }
+}
