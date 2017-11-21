@@ -2,7 +2,7 @@
 using Limbs.Web.Entities.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Limbs.Web.Models
+namespace Limbs.Web.Entities.DbContext
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     // TODO (ale): refactor dbContext as Interface

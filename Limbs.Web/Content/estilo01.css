@@ -541,10 +541,22 @@ button[name="recoverPassword"] {
         display: block;
     }
 
-.field-validation-error, .validation-summary-errors ul li {
+.field-validation-error, .validation-summary-errors ul li, label.error {
     color: red;
     font-size: 12px;
     list-style-type: none;
+}
+
+.address-selector {
+    display: none;
+    padding: 15px 10px;
+    text-align: left;
+}
+.address-selector ul {
+    margin-left: 15px;
+}
+.address-selector ul li {
+    margin-top: 7px;
 }
 
 #cont_login input {
@@ -583,23 +595,6 @@ button[name="recoverPassword"] {
     display: block !important;
 }
 /*forms*/
-.form_solicitud {
-    width: calc(100% - 40px);
-    padding: 60px 20px 20px 20px;
-    max-width: 600px;
-    display: block;
-    position: relative;
-    text-align: left;
-    margin: 0px auto;
-}
-
-    .form_solicitud h2 {
-        text-align: left;
-        color: #4772b2;
-        font-size: 1.2em;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
 
 #medidas_mano {
     display: inline-block;
@@ -982,13 +977,13 @@ button[name="recoverPassword"] {
 
 
 /*info solicitud*/
-#head_info {
+.head_info {
     border-bottom: solid 1px #4772b2;
     padding: 5px;
     box-sizing: border-box;
     position: relative;
 }
-    #head_info h1 {
+    .head_info h1 {
         font-size: 3em;
         font-weight: 200;
         color: #4772B2;
@@ -1278,6 +1273,10 @@ button[name="recoverPassword"] {
         padding-bottom: 0px;
     }
 
+.input-validation-error, .f-campo.error {
+    border-bottom-color: red;
+}
+
 #post-form-ini {
     max-width: 300px;
 }
@@ -1309,10 +1308,75 @@ button[name="recoverPassword"] {
     margin-bottom: 25px;
 }
 
+
+.messages-details {
+    height: calc(100vh - 70px - 255px);
+}
+
+.messages-details #more-messages {
+    display: none;
+    font-weight: bold;
+    position: absolute;
+    left: 32vw;
+}
+
+.messages-details .messages {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    min-height: 170px;
+    height: calc(100vh - 70px - 255px - 100px);
+}
+
+.messages-details .reply {
+    height: 100px;
+}
+
+.messages-details .reply input[type=text] {
+    width: calc(100% - 150px);
+    height: 60px;
+    font-size: 20px;
+}
+
+.messages-details .reply input[type=submit] {
+    width: 140px;
+    height: 75px;
+    font-size: 20px;
+}
+
+.messages-details ul {
+    list-style-type:none;
+}
+
+.messages-details .message-item.card {
+    width: 47%;
+    clear: both;
+    margin-bottom: 12px;
+    padding-bottom: 5px;
+}
+
+.messages-details .message-item.card .content {
+    font-size: 17px;
+}
+
+.messages-details .message-item.card .date {
+    float: right;
+    font-size: 12px;
+}
+
+
+.messages-details .message-item.card.ToMe {
+    float: left;
+}
+
+.messages-details .message-item.card.ToHim {
+    float: right;
+}
+    
 .message.unread {
     font-weight: bold;
 }
+
 .message-item.Unread {
-    background-color: #f3f3f3;
-    font-weight: bold;
+    background-color: #4772b2;
+    color: white;
 }

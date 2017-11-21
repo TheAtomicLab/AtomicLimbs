@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Diagnostics;
 using Limbs.Web.Common.Extensions;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Storage.Azure.QueueStorage;
@@ -10,9 +9,9 @@ namespace Limbs.QueueConsumers
 {
     public class MailsMessagesSender : IQueueMessageConsumer<MailMessage>
     {
-        public static readonly TimeSpan EstimatedTime = TimeSpan.FromSeconds(40);
-
-        public TimeSpan? EstimatedTimeToProcessMessageBlock { get; private set; }
+        public static readonly TimeSpan EstimatedTime = TimeSpan.FromSeconds(5);
+        
+        public TimeSpan? EstimatedTimeToProcessMessageBlock { get; }
 
         public void ProcessMessages(QueueMessage<MailMessage> message)
         {
@@ -29,12 +28,13 @@ namespace Limbs.QueueConsumers
                 // si el mensaje es null significa que el maker controló algunas situaciones y no hay nada para enviar y el mensaje se puede remover de la queue
                 mailSender.Send(mailMessage);
 
+                Console.WriteLine($"Email sent ({message.Data.Subject}) to: {message.Data.To}");
             }
             catch (Exception e)
             {
                 e.Log(null, "Enviando mail key GeneralMailSender");
                 var exmsg = $"Enviando mail : {e.Message}\nStackTrace:{e.StackTrace}";
-                Trace.WriteLine(exmsg, "Error");
+                Console.WriteLine(exmsg, "Error");
                 if (message.DequeueCount < 20)
                 {
                     throw;

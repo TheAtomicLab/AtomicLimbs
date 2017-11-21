@@ -1,23 +1,31 @@
 ﻿@using System.Configuration
 @model Limbs.Web.Entities.Models.UserModel
 @{
-    bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool) ViewBag.IsAdultCheck;
-    bool selectUser = ViewBag.SelectUser != null && (bool) ViewBag.SelectUser;
+    var isEdit = Model != null && Model?.Id != 0;
     var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
+
+    bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool)ViewBag.IsAdultCheck;
+    bool termsAndConditions = ViewBag.TermsAndConditions != null && (bool)ViewBag.TermsAndConditions;
+    
+    ViewBag.Title = isEdit ? "Editar datos" : "Registro";
 }
+
 @section scripts
 {
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)">
     </script>
     <script src="~/Scripts/geo.js"></script>
     <script src="~/Scripts/pages/users.js"></script>
-    <script src="~/Scripts/register.js"></script>
-    @if (selectUser)
+    @if (!isEdit)
+        {
+        <script src="~/Scripts/register.js"></script>
+    }
+    @if (Model != null && Model.IsProductUser)
     {
         <script type="text/javascript">
             $(document).ready(function() {
-                $("select[name='selectUser'").val("true");
-                selectUser("true");
+                $("select[name='@Html.NameFor(x => x.IsProductUser)'").val("true");
+                isProductUser("true");
             });
         </script>
     }
@@ -26,20 +34,16 @@
 <div id="cont" class="min_full">
 
     <div id="registro">
-        @using (Html.BeginForm("Create", "Users",
-                     FormMethod.Post, new { @class = "form" }))
+        @using (Html.BeginForm("Create", "Users", FormMethod.Post, new { @class = "form" }))
         {
+            @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.Email)
+            @Html.HiddenFor(x => x.UserId)
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Tus datos</h2>
             <div class="f-seccion">
-                <div class="f-campo-mitad">
-                    @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
-                    @Html.ValidationMessageFor(x => x.ResponsableName)
-                    @Html.EditorFor(model => model.ResponsableLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
-                    @Html.ValidationMessageFor(x => x.ResponsableLastName)
-                </div>
                 <h3>¿Sos el usuario de la mano?</h3>
-                <select class="f-drop bn_blue" name="selectUser">
+                <select class="f-drop bn_blue" name="@Html.NameFor(model => model.IsProductUser)">
                     <option value="false">NO</option>
                     <option value="true">SI</option>
                 </select>
@@ -48,41 +52,47 @@
                     @Html.CheckBox("isAdultCheck", isAdultCheck, new { id = "isAdultCheck" })
                     ¿Declara que es mayor de 18 años?
                 </label><br>
+                <div class="f-campo-mitad">
+                    @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
+                    @Html.EditorFor(model => model.ResponsableLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
+                </div>
             </div>
             <h2 class="f-titulo" name="titleDateUser">Datos del usuario de la mano</h2>
             <div class="f-seccion">
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
-                    @Html.ValidationMessageFor(x => x.UserName)
                     @Html.EditorFor(model => model.UserLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
-                    @Html.ValidationMessageFor(x => x.UserLastName)
                 </div>
                 @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte" } })
-                @Html.ValidationMessageFor(x => x.Dni)
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
-                @Html.ValidationMessageFor(x => x.Phone)
                 <label class="f-label">Fecha de nacimiento</label>
-                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("dd/MM/yyyy") } })
+                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
                 <label class="f-label">Sexo</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" }})
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = "País" } })
-                    @Html.ValidationMessageFor(x => x.Country)
                     @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ciudad" } })
-                    @Html.ValidationMessageFor(x => x.City)
                 </div>
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = "Dirección" } })
-                @Html.ValidationMessageFor(x => x.Address)
-                <button class="bn_blue" style="margin-top: 10px;" id="checkAddress">Ver dirección en mapa</button>
-                <div id="map"></div>
+                <div class="address-selector">
+                    <p>¿Cuál de las siguientes es su dirección?:</p>
+                    <ul></ul>
+                </div>
             </div>
             <div>
-                <p style="margin-top: 20px;">
-                    <label for="termsandconditions">
-                        <input type="checkbox" id="termsandconditions"/> acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
-                    </label>
+                @if (!isEdit)
+                {
+                    <p style="margin-top: 20px;">
+                        <label for="termsAndConditions">
+                            @Html.CheckBox("termsAndConditions", termsAndConditions, new { id = "termsAndConditions" })
+                            acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
+                        </label>
+                    </p>
+                }
+                <p>
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <button type="submit" class="bn_blue" name="register">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
-                <p><button type="submit" class="bn_blue" name="register">Registrarse</button></p>
             </div>
         }
     </div>

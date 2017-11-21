@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Data.Entity;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
@@ -28,11 +26,9 @@ namespace Limbs.Web.Controllers
         }
 
         // GET: Messages/Inbox
-        public async Task<ActionResult> Inbox()
+        public ActionResult Inbox()
         {
-            var messages = await _ms.GetInboxMessages(User);
-
-            return View(messages);
+            return View();
         }
 
         // GET: Messages/InboxPartial
@@ -62,6 +58,9 @@ namespace Limbs.Web.Controllers
         // GET: Messages/Create
         public async Task<ActionResult> Create(int orderId)
         {
+            var orderMessage = await Db.Messages.FirstOrDefaultAsync(x => x.Order.Id == orderId && x.Status != MessageStatus.Deleted);
+            if (orderMessage != null) return RedirectToAction("Details", new {id = orderMessage.Id});
+
             var messageModel = await GetMessageModelForCreation(orderId);
             if (messageModel == null) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 

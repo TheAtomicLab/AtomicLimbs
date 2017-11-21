@@ -79,6 +79,8 @@
     <Compile Include="QueueStorage\MessageBlockPoolQueueConsumer.cs" />
     <Compile Include="QueueStorage\MessagePoolQueueConsumer.cs" />
     <Compile Include="QueueStorage\Messages\AppException.cs" />
+    <Compile Include="QueueStorage\Messages\OrderProductGeneratorResult.cs" />
+    <Compile Include="QueueStorage\Messages\OrderProductGenerator.cs" />
     <Compile Include="QueueStorage\PoolingFrequencer.cs" />
     <Compile Include="QueueStorage\QueueConsumerFor.cs" />
     <Compile Include="QueueStorage\QueueMessageBlockConsumer.cs" />
@@ -88,7 +90,12 @@
     <Compile Include="QueueStorage\Messages\MailMessage.cs" />
     <Compile Include="QueueStorage\QueueMessage.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Limbs.Web.Entities\Limbs.Web.Entities.csproj">
+      <Project>{01F5EA69-77A2-470A-B5D9-F4B614DB37B0}</Project>
+      <Name>Limbs.Web.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />

@@ -223,7 +223,7 @@
         text-overflow: ellipsis;
         max-width: calc(100vw - 190px);
     }
-    /*info solicitud*/
+    /*info pedido*/
     #estado_pedido {
         position: relative;
         padding-top: 50px;
@@ -302,3 +302,59 @@
     }
 }
 /*--------------------------------------Loader---------------------------------------------*/
+
+.fontFileUpload {
+    font-size: 6em;
+    color: #2a2a56;
+}
+
+.dropzone {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1em;
+}
+
+.fontUploadFile{
+    font-family: Roboto,sans-serif;
+}
+
+
+.dropzone .dz-preview.dz-file-preview .dz-imageMano {
+    border-radius: 20px;
+    background: #999;
+    background: linear-gradient(to bottom, #eee, #ddd);
+}
+
+.dropzone .dz-preview.dz-file-preview .dz-details {
+    opacity: 1;
+}
+
+.dropzone .dz-preview:hover .dz-imageMano img {
+    -webkit-transform: scale(1.05, 1.05);
+    -moz-transform: scale(1.05, 1.05);
+    -ms-transform: scale(1.05, 1.05);
+    -o-transform: scale(1.05, 1.05);
+    transform: scale(1.05, 1.05);
+    -webkit-filter: blur(8px);
+    filter: blur(8px);
+}
+
+.dropzone .dz-preview .dz-imageMano {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 120px;
+    height: 100px;
+    position: relative;
+    display: block;
+    z-index: 10;
+}
+
+    .dropzone .dz-preview .dz-imageMano img {
+        display: block;
+    }
+
+#formManoMedidas:hover {
+    border: 3px solid #4772b2;
+    background: #d6d6d6;
+}

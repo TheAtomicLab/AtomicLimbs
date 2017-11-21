@@ -1,13 +1,22 @@
-﻿@using System.Web.Services.Protocols
-@model Limbs.Web.Entities.Models.OrderModel
-    
+﻿@model Limbs.Web.Entities.Models.OrderModel
+
+@{
+    ViewBag.Title = "Pedido";
+}
+
 @section scripts
 {
-<script src="~/Scripts/pages/orders.js"></script>
+    <script src="~/Scripts/pages/orders.js"></script>
+    <script src="~/Scripts/pages/uploadImage.js"></script>
+    <script src="~/Scripts/dropzone.js"></script>
+    <link rel="stylesheet" href="~/Content/basic.css">
+    <link rel="stylesheet" href="~/Content/dropzone.css">
 }
+
+
 <div class="min_full" id="cuerpo_pedir">
     <article id="exp_inicial">
-        <h1>Nueva solicitud:</h1>
+        <h1>Nuevo pedido:</h1>
         
         <p id="bajada_exp">Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación <b>de lo contrario, la mano no podrá ser otorgada.</b></p>
         <div id="recomendaciones_foto">
@@ -36,19 +45,14 @@
             </ul>
         </div>
         <div>
-            @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", @id = "formManoMedidas" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary()
-
                 @Html.HiddenFor(x => x.AmputationType)
                 @Html.HiddenFor(x => x.ProductType)
-
-                <input id="fileUpload" class="bn_upload" type="file" name="file" accept="image/*" />
-                <div>
-                    <input id="enviar" type="submit" name="enviar" value="Continuar" class="bn_blue">
-                </div>
             }
+            <button id="enviar" name="enviar" class="bn_blue">Continuar</button>
        </div>
     </article>
 </div>

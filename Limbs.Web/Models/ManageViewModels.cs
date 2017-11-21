@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -19,8 +18,8 @@ namespace Limbs.Web.Models
 
     public class UserViewModel
     {
-        public string ResponsableName { get; set; }
-        public string ResponsableLastName { get; set; }
+        public string UserName { get; set; }
+        public string UserLastName { get; set; }
         public string Email { get; set; }
         public DateTime Birth { get; set; }
         public string Country { get; set; }
@@ -43,14 +42,14 @@ namespace Limbs.Web.Models
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "El {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "Nuevo password")]
+        [Display(Name = "Nueva contraseña")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmá el nuevo password")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "El password no coincide.")]
+        [Display(Name = "Confirmá la nueva contraseña")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "La contraseña no coincide.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -58,18 +57,18 @@ namespace Limbs.Web.Models
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Password actual")]
+        [Display(Name = "Contraseña actual")]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "El {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 8)]
         [DataType(DataType.Password)]
-        [Display(Name = "Nuevo password")]
+        [Display(Name = "Nueva contraseña")]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmá el nuevo password")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "El password no coincide.")]
+        [Display(Name = "Confirmá la nueva contraseña")]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "La contraseña no coincide.")]
         public string ConfirmPassword { get; set; }
     }
 

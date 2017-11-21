@@ -1,21 +1,19 @@
-﻿@using Limbs.Web.Common.Extensions
-@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Entities.Models
 @model OrderModel
 @{
     ViewBag.Title = "Detalles de pedido";
 }
 
 <article id="info_pedido">
-    <div id="head_info">
-        <h1>Solicitud:</h1>
-        <div id="estado_pedido">
-            <p>Estado:</p>
-            <h2>@Model.Status.ToDescription()</h2>
-        </div>
+    
+    <div id="Header" class="head_info">
+        @Html.Partial("Details/_Header", Model)
     </div>
-    <div>
+
+    <div id="Actions">
         @Html.Partial("Details/_Actions", Model)
     </div>
+
     <div class="flex_info">
         <div class="card card-l">
             @Html.Partial("Details/_OrderInfo", Model)
@@ -25,21 +23,21 @@
             @Html.Partial("Details/_UserInfo", Model)
         </div>
 
-        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.Delivered)
+        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
         {
-            <div class="info_bloque">
+            <div class="card card-l">
                 @Html.Partial("Details/_Messages", Model)
             </div>
         }
-        
-        @if (!User.IsInRole(AppRoles.Requester))
+
+        @if (!User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Pending)
         {
-            <div class="info_bloque">
+            <div id="PrintedPieces" class="card card-l">
                 @Html.Partial("Details/_PrintedPieces", Model)
-            </div>   
+            </div>
         }
 
-        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.Ready)
+        @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Ready)
         {
             <div class="card card-l">
                 @Html.Partial("Details/_DeliveryInfo", Model)
@@ -47,10 +45,58 @@
         }
         @if (User.IsInRole(AppRoles.Administrator))
         {
-            <div class="card card-l">
+            <div class="card card-l" style="width: auto;">
                 @Html.Partial("Details/_AdminInfo", Model)
             </div>
         }
     </div>
 
 </article>
+
+<div id="loadingModal" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+@section scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $('form', $("#PrintedPieces")).submit(function (e) {
+                e.preventDefault();
+                if ($(this).valid()) {
+                    $.ajax({
+                        url: this.action,
+                        type: this.method,
+                        data: $(this).serialize(),
+                        beforeSend: function () {
+                            $('#loadingModal').fadeIn();
+                        },
+                        success: function () {
+                            $("#loadingModal").fadeOut();
+                            updatePartial("Header");
+                            updatePartial("Actions");
+                        },
+                        error: function () {
+                            alert("error al guardar la información.");
+                        }
+                    });
+                }
+            });
+        });
+
+        function updatePartial(name) {
+            var $dummy = $("<div>");
+            $dummy.load("@Url.Action("GetPartial", "Orders", new { orderId = Model.Id })&partialName=" + name, function(response, status) {
+                var $container = $("#" + name);
+                if (status !== "success") {
+                    //location.reload();
+                }
+                else
+                {
+                    $container.html($dummy.html());
+                }
+                $dummy.remove();
+            });
+        }
+    </script>
+}

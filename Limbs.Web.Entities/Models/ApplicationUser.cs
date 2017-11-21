@@ -21,6 +21,20 @@ namespace Limbs.Web.Entities.Models
             return userIdentity;
         }
 
+        public static ApplicationUser AdminAlias()
+        {
+            return new ApplicationUser
+            {
+                Id = "12345678-1234-1234-1234-123456789012",
+                Email = SuperAdminEmail,
+                EmailConfirmed = true,
+                PasswordHash = "-",
+                UserName = SuperAdminEmail
+            };
+        }
+
+        public static string SuperAdminEmail = "limbs-admin@atomiclab.org";
+
         private static bool CheckIfAdmin(string email)
         {
             var admins = ConfigurationManager.AppSettings["AdminEmails"].Split(',').ToList();

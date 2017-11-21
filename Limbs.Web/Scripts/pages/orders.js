@@ -3,7 +3,7 @@ $(document).ready(function () {
     $("#fileUpload").bind("change",
         function () {
             if (this.files[0].size > 1000000 * 5) {
-                alertAtomic("Seleccione un archivo menor a 5 MB.","#alertAtomic");
+                alertAtomic("Seleccione un archivo menor a 5 MB.", "#alertAtomic");
                 this.value = null;
             }
         });
@@ -16,7 +16,7 @@ $(document).ready(function () {
 
 function validateImg() {
     if ($("#fileUpload").val() == "") {
-        disabledRegister()      
+        disabledRegister()
     } else {
         enableRegister()
     }

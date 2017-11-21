@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using Limbs.QueueConsumers;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
@@ -10,34 +9,42 @@ namespace Limbs.Worker
 {
     public class Functions
     {
-        // This function will get triggered/executed when a new message is written 
-        // on an Azure Queue called queue.
-        public static void ProcessQueueMessage([QueueTrigger("queue")] string message, TextWriter log)
-        {
-            log.WriteLine(message);
-        }
-
         [NoAutomaticTrigger]
-        public static async Task ProcessMethod(TextWriter log)
+        public static void MailsMessagesSender(TextWriter log)
         {
             try
             {
-                Console.WriteLine("ProcessMethod");
+                Console.WriteLine("MailsMessagesSender");
 
-                QueueConsumerFor<MailMessage>.WithinCurrentThread.Using(new MailsMessagesSender())
-                    .With(PoolingFrequencer.For(MailsMessagesSender.EstimatedTime))
+                QueueConsumerFor<MailMessage>.WithStandaloneThread.Using(new MailsMessagesSender())
+                    .With(PoolingFrequencer.For(QueueConsumers.MailsMessagesSender.EstimatedTime))
                     .StartConsimung();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("ProcessMethod error");
+                Console.WriteLine("MailsMessagesSender error");
                 Console.WriteLine(ex);
-                log.WriteLine("Error occurred in processing pending altapay requests. Error : {0}", ex.Message);
+                log.WriteLine("Error occurred in processing pending requests. Error : {0}", ex.Message);
             }
+        }
 
-            while (true)
+
+        [NoAutomaticTrigger]
+        public static void ProductGeneratorResult(TextWriter log)
+        {
+            try
             {
-                await Task.Delay(TimeSpan.FromMinutes(3));
+                Console.WriteLine("ProductGeneratorResult");
+
+                QueueConsumerFor<OrderProductGeneratorResult>.WithStandaloneThread.Using(new ProductGeneratorResult())
+                    .With(PoolingFrequencer.For(QueueConsumers.ProductGeneratorResult.EstimatedTime))
+                    .StartConsimung();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("ProductGeneratorResult error");
+                Console.WriteLine(ex);
+                log.WriteLine("Error occurred in processing pending requests. Error : {0}", ex.Message);
             }
         }
     }

@@ -12,6 +12,7 @@ namespace Limbs.Web.Storage.Azure
 
 		    new QueueStorageInitializer<MailMessage>(account).Initialize();
 		    new QueueStorageInitializer<AppException>(account).Initialize();
+		    new QueueStorageInitializer<OrderProductGenerator>(account).Initialize();
 
             new DocumentStorageInitializer(account, AzureStorageContainer.UserFiles).Initialize(BlobContainerPublicAccessType.Container);
 

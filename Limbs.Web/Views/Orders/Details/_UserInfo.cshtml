@@ -1,15 +1,11 @@
 ﻿@using Limbs.Web.Entities.Models
-@model Limbs.Web.Entities.Models.OrderModel
+@model OrderModel
 
 <h3>Datos del usuario</h3>
 <table class="tabla_datos">
     <tr>
         <td>Nombre:</td>
-        <td>@Model.OrderRequestor.ResponsableName</td>
-    </tr>
-    <tr>
-        <td>Apellido:</td>
-        <td>@Model.OrderRequestor.ResponsableLastName</td>
+        <td>@Model.OrderRequestor.FullName()</td>
     </tr>
     @if (!User.IsInRole(AppRoles.Ambassador))
     {
@@ -34,7 +30,7 @@
     {
         <tr>
             <td>Dirección:</td>
-            <td>@Model.OrderRequestor.Address</td>
+            <td>@Model.OrderRequestor.FullAddress()</td>
         </tr>
         <tr>
             <td>Teléfono:</td>

@@ -251,6 +251,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             order.LogMessage(User, $"Change delivery from {order.DeliveryCourier} to {orderModel.DeliveryCourier}");
             order.DeliveryCourier = orderModel.DeliveryCourier;
             order.DeliveryTrackingCode = orderModel.DeliveryTrackingCode;
+            order.Status = OrderStatus.Ready;
 
             await Db.SaveChangesAsync();
             await _ns.SendProofOfDeliveryNotification(order);

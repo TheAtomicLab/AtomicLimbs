@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Limbs.Web.Entities.DbContext;
 using Limbs.Web.Entities.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;

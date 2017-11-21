@@ -8,6 +8,8 @@ namespace Limbs.Web.Common.Mail
     {
         public static void Initialize()
         {
+            CompiledTemplateEngine.Add<string>("Mails.EmailConfirmation", GetStringTemplate("Limbs.Web.Common.Mail.Templates.EmailConfirmation.cshtml"));
+            CompiledTemplateEngine.Add<string>("Mails.EmailPasswordChange", GetStringTemplate("Limbs.Web.Common.Mail.Templates.EmailPasswordChange.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderAcceptedToAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderAcceptedToAmbassador.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderAcceptedToRequestor", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderAcceptedToRequestor.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderReadyToAdmin", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderReadyToAdmin.cshtml"));
@@ -16,7 +18,8 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderNewAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderNewAmbassador.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderNewAmbassadorToOldAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderNewAmbassadorToOldAmbassador.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderDeliveryInformation", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderDeliveryInformation.cshtml"));
-            CompiledTemplateEngine.Add<OrderModel>("Mails.OrderProofOfDeliveryInfo", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderProofOfDeliveryInfo.cshtml"));
+            CompiledTemplateEngine.Add<OrderModel>("Mails.OrderProofOfDeliveryInfoToRequestor", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderProofOfDeliveryInfoToRequestor.cshtml"));
+            CompiledTemplateEngine.Add<OrderModel>("Mails.OrderProofOfDeliveryInfoToAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderProofOfDeliveryInfoToAmbassador.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.Generic", GetStringTemplate("Limbs.Web.Common.Mail.Templates.Generic.cshtml"));
         }
 

@@ -38,13 +38,21 @@
                 </a>
             </td>
             <td class="@item.Status">
-                @item.Status.ToDescription()
-                @if (item.Status == OrderStatus.Ready)
+                @if (string.IsNullOrWhiteSpace(item.FileUrl))
                 {
-                    <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
+                    <text>[ARCHIVO NO GENERADO!]</text><br/>
                 }
-                @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) && 
-                    (item.Status == OrderStatus.Ready || item.Status == OrderStatus.Delivered))
+                @item.Status.ToDescription()
+                @if (item.Status == OrderStatus.Pending)
+                {
+                    <text>(</text>@(item.Pieces.GetPercentage())<text>%)</text>
+                }
+                @if (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery)
+                {
+                    <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new {idOrder = item.Id}))</span>
+                }
+                @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) &&
+                     (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery || item.Status == OrderStatus.Delivered))
                 {
                     <span>(sin prueba de entrega)</span>
                 }
@@ -59,7 +67,7 @@
                 @if (item.OrderAmbassador != null)
                 {
                     @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
-                    if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.Delivered)
+                    if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.ArrangeDelivery && item.Status != OrderStatus.Delivered)
                     {
                         <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
                     }

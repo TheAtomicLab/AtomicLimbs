@@ -12,6 +12,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 
 namespace Limbs.Web.Controllers
 {
@@ -74,13 +76,20 @@ namespace Limbs.Web.Controllers
         // GET: Orders/ManoImagen
         public ActionResult ManoImagen()
         {
+            var amputationType =  TempData["AmputationType"];
+            var productType = TempData["ProductType"];
+            if (amputationType == null || productType == null)
+            {
+                return RedirectToAction("ManoPedir");
+            }
+
             return View("ManoImagen", new OrderModel
             {
-                AmputationType = (AmputationType)TempData["AmputationType"],
-                ProductType = (ProductType)TempData["ProductType"],
+                AmputationType = (AmputationType)amputationType,
+                ProductType = (ProductType)productType,
             });
         }
-
+        
         // POST: Orders/UploadImageUser
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -101,7 +110,7 @@ namespace Limbs.Web.Controllers
                     ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
             }
-            if (!ModelState.IsValid) return View("ManoPedir", new OrderModel());
+            if (!ModelState.IsValid) return View("ManoImagen", orderModel);
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
@@ -110,8 +119,9 @@ namespace Limbs.Web.Controllers
             TempData["AmputationType"] = orderModel.AmputationType;
             TempData["ProductType"] = orderModel.ProductType;
 
-            return RedirectToAction("ManoMedidas");
-        }
+            return Json(new { Action = "ManoMedidas" });
+                //return RedirectToAction("ManoMedidas");
+            }
 
         // GET: Orders/ManoMedidas
         public ActionResult ManoMedidas()
@@ -163,6 +173,13 @@ namespace Limbs.Web.Controllers
 
             Db.OrderModels.Add(orderModel);
             await Db.SaveChangesAsync();
+
+            await AzureQueue.EnqueueAsync(new OrderProductGenerator
+            {
+                OrderId = orderModel.Id,
+                Pieces = orderModel.Pieces,
+                ProductSizes = orderModel.Sizes,
+            });
 
             return RedirectToAction("Index", "Users");
         }
@@ -222,30 +239,77 @@ namespace Limbs.Web.Controllers
 
         [HttpPost]
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
-        public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces,int orderId)
+        public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces, int orderId)
         {
             var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
+            if(!order.CanView(User)) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+
             order.Pieces = pieces;
+            order.StatusLastUpdated = DateTime.UtcNow;
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
+            if (Request.IsAjaxRequest())
+                return new HttpStatusCodeResult(HttpStatusCode.OK);
             return RedirectToAction("Details", "Orders", new { id = orderId });
         }
-
-        /*
+        
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
-        public ActionResult PrintedPieces(int orderId)
+        public async Task<ActionResult> GetPartial(int orderId, string partialName)
         {
-            var order = Db.OrderModels.Where(o => o.Id == orderId).Single();
-            return View(order);
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
+            if (order.CanView(User))
+            {
+                return PartialView("Details/_" + partialName, order);
+            }
+            return new HttpUnauthorizedResult();
         }
-        */
-
+        
         [AllowAnonymous]
         public ActionResult PublicOrders()
         {
             var orders = Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToList();
             return View(orders);
+        }
+
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        public async Task<ActionResult> ProductGenerate(int id)
+        {
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (order == null || !order.CanView(User))
+            {
+                return HttpNotFound();
+            }
+
+            await AzureQueue.EnqueueAsync(new OrderProductGenerator
+            {
+                OrderId = order.Id,
+                Pieces = order.Pieces,
+                ProductSizes = order.Sizes,
+            });
+
+            order.FileUrl = null;
+            await Db.SaveChangesAsync();
+
+            TempData["Generating"] = true;
+
+            return RedirectToAction("Details", new { id });
+        }
+
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        public async Task<ActionResult> ProductGenerated(int id, string fileurl)
+        {
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (order == null || !order.CanView(User))
+            {
+                return HttpNotFound();
+            }
+
+            return order.FileUrl != fileurl ? 
+                new HttpStatusCodeResult(HttpStatusCode.Created) : 
+                new HttpStatusCodeResult(HttpStatusCode.NotModified);
         }
     }
 }

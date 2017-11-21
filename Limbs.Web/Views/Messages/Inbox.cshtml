@@ -4,24 +4,31 @@
     ViewBag.Title = "Mensajes";
 }
 
-<div id="inbox" class="card">
-    @Html.Partial("_InboxPartial", Model)    
+<div class="card">
+    <div id="inbox-status"><p>Cargando mensajes...</p></div>
+    <div id="inbox"></div>
 </div>
 
 @section scripts
 {
     <script type="text/javascript">
         $(document).ready(getInbox);
-        
+        var neverLoaded = true;
         function getInbox() {
             var $dummy = $("<div>");
             $dummy.load("@Url.Action("InboxPartial", "Messages")", function(response, status, xhr) {
                 var $container = $("#inbox");
+                var $status = $("#inbox-status");
                 if (status !== "success") {
-                    //location.reload();
+                    if (neverLoaded) {
+                        $status.html("<p>Error al cargar los mensajes. Pruebe refrescando la página.</p>");
+                    } else {
+                        $status.html("<p>Hubo un error al actualizar los mensajes. Si el error continua, refresque la página.</p>");
+                    }
                 }
-                else
-                {
+                else {
+                    $status.empty();
+                    neverLoaded = false;
                     $container.html($dummy.html());
                 }
                 $dummy.remove();

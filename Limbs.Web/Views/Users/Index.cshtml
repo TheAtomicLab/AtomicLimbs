@@ -1,8 +1,8 @@
 ﻿@using Limbs.Web.Common.Extensions
 @using Limbs.Web.Entities.Models
 @model Limbs.Web.ViewModels.UserPanelViewModel
-
 @{
+    var o = new OrderModel();
     ViewBag.Title = "Panel usuario";
 }
 
@@ -23,10 +23,11 @@
                 <h2>Tus pedidos:</h2>
                 <table>
                     <tr>
-                        <th>Id</th>
-                        <th>Fecha de solicitud</th>
-                        <th>Embajador</th>
-                        <th>Estado</th>
+                        <th>@Html.DisplayNameFor(x => o.Id)</th>
+                        <th>@Html.DisplayNameFor(x => o.OrderAmbassador.AmbassadorName) embajador</th>
+                        <th>@Html.DisplayNameFor(x => o.Date)</th>
+                        <th>@Html.DisplayNameFor(x => o.StatusLastUpdated)</th>
+                        <th>@Html.DisplayNameFor(x => o.Status)</th>
                     </tr>
                     @foreach (var order in Model.Order)
                     {
@@ -35,13 +36,9 @@
                                 @Html.ActionLink(order.Id.ToString(), "Details", new { controller = "Orders", id = order.Id })
                             </td>
                             <td>
-                                <span title="@order.Date.ToString("f")">
-                                    @order.Date.ToFriendlyDateString()
-                                </span>
-                            </td>
-                            <td>
                                 @if (OrderStatus.Pending.Equals(order.Status)
                                      || OrderStatus.Ready.Equals(order.Status)
+                                     || OrderStatus.ArrangeDelivery.Equals(order.Status)
                                      || OrderStatus.Delivered.Equals(order.Status))
                                 {
                                     @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
@@ -52,7 +49,17 @@
                                 }
                             </td>
                             <td>
+                                @Html.DisplayFor(x => order.Date, "ToFriendlyDateString")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(x => order.StatusLastUpdated, "ToFriendlyDateString")
+                            </td>
+                            <td>
                                 @order.Status.ToDescription()
+                                @if (order.Status == OrderStatus.Pending)
+                                {
+                                    <text>(</text>@(order.Pieces.GetPercentage())<text>%)</text>
+                                }
                             </td>
                         </tr>
                     }
