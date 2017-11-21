@@ -5,10 +5,9 @@ var fs = require('fs');
 var AzureFunction = function (context, myQueueItem) {
 
     try {
-
         var messageData = JSON.parse(JSON.stringify(myQueueItem));
         var fileName = "product-" + messageData.OrderId + "-file-" + new Date().getMilliseconds() + ".stl";
-        messageData.FileUrl = fileName;
+        context.log(fileName);
 
         //RENDER JSCAD MODEL//////////////////////////////////////////////////////////
         var script = 'function main() { return [ torus() ] }';
@@ -23,7 +22,7 @@ var AzureFunction = function (context, myQueueItem) {
             context.log("OK generating output with JSCad");
 
             //TEMPORAL COMPILED FILE//////////////////////////////////////////////////////
-
+            
             context.log("saving temp file lo local fs");
             fs.writeFileSync(getUserHome() + fileName, outputData.asBuffer());
             context.log("OK saving temp file lo local fs");
@@ -39,6 +38,17 @@ var AzureFunction = function (context, myQueueItem) {
             bs.createBlockBlobFromText("orderproductgenerated", fileName, data, function (e) { return e; });
             context.log("OK uploading file to Azure");
 
+            //SET BLOB URL TO ORDER///////////////////////////////////////////////////////
+
+            var sharedAccessPolicy = {
+                AccessPolicy: {
+                    Permissions: azure.BlobUtilities.SharedAccessPermissions.READ,
+                }
+            };
+            var sasToken = bs.generateSharedAccessSignature("orderproductgenerated", fileName, sharedAccessPolicy);
+            var sasUrl = bs.getUrl("orderproductgenerated", fileName, sasToken);
+            messageData.FileUrl = sasUrl;
+            
             //NOTIFY THE NEW COMPILED FILE////////////////////////////////////////////////
 
             context.log("sending message to queue");
