@@ -48,7 +48,7 @@
             }
             else
             {
-                <a href="@Model.FileUrl" target="_blank" class="bn_download">Descargar archivos</a>
+                <a href="@Model.FileUrl" target="_blank" data-method="get" class="bn_download">Descargar archivos</a>
             }
             if (Model.Pieces.Ready())
             {
@@ -61,7 +61,7 @@
             <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery})" class="bn_blue">Solicitar envío</a>
         }
         <script type="text/javascript">
-            $("#accion_pedido a").click(function(e) {
+            $("#accion_pedido a").not("a[data-method='get']").click(function(e) {
                 e.stopPropagation();
                 e.preventDefault();
 
