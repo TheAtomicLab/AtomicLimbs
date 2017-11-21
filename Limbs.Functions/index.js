@@ -39,10 +39,15 @@ var AzureFunction = function (context, myQueueItem) {
             context.log("OK uploading file to Azure");
 
             //SET BLOB URL TO ORDER///////////////////////////////////////////////////////
-
+            var startDate = new Date();
+            var expiryDate = new Date(startDate);
+            expiryDate.setMinutes(startDate.getYear() + 10);
+            startDate.setMinutes(startDate.getDay() - 1);
             var sharedAccessPolicy = {
                 AccessPolicy: {
                     Permissions: azure.BlobUtilities.SharedAccessPermissions.READ,
+                    Start: startDate,
+                    Expiry: expiryDate
                 }
             };
             var sasToken = bs.generateSharedAccessSignature("orderproductgenerated", fileName, sharedAccessPolicy);
