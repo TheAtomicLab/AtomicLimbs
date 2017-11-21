@@ -271,5 +271,45 @@ namespace Limbs.Web.Controllers
             var orders = Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToList();
             return View(orders);
         }
+
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        public async Task<ActionResult> ProductGenerate(int id)
+        {
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (order == null || !order.CanView(User))
+            {
+                return HttpNotFound();
+            }
+
+            await AzureQueue.EnqueueAsync(new OrderProductGenerator
+            {
+                OrderId = order.Id,
+                Pieces = order.Pieces,
+                ProductSizes = order.Sizes,
+            });
+
+            order.FileUrl = null;
+            await Db.SaveChangesAsync();
+
+            TempData["Generating"] = true;
+
+            return RedirectToAction("Details", new { id });
+        }
+
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        public async Task<ActionResult> ProductGenerated(int id, string fileurl)
+        {
+            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (order == null || !order.CanView(User))
+            {
+                return HttpNotFound();
+            }
+
+            return order.FileUrl != fileurl ? 
+                new HttpStatusCodeResult(HttpStatusCode.Created) : 
+                new HttpStatusCodeResult(HttpStatusCode.NotModified);
+        }
     }
 }

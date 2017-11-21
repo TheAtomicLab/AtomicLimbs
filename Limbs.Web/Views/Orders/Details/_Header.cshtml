@@ -5,11 +5,22 @@
 <h1>Pedido:</h1>
 <div id="estado_pedido">
     <p>Estado:</p>
-    <h2>
-        @Model.Status.ToDescription()
-        @if (Model.Status == OrderStatus.Pending)
-        {
-            <text>(</text>@(Model.Pieces.GetPercentage())<text>%)</text>
-        }
-    </h2>
+    @if (TempData["Generating"] == null)
+    {
+        <h2>
+
+            @Model.Status.ToDescription()
+            @if (Model.Status == OrderStatus.Pending)
+            {
+            <text>(</text>
+            @(Model.Pieces.GetPercentage())<text>%)</text>
+            }
+        </h2>
+    }
+    else
+    {
+        <h2>Generando archivos</h2>
+        <p style="color: red; font-size: 11px;">Aguarde, esta operación puede durar hasta 2 minutos.</p>
+        <p style="color: red; font-size: 11px;">No refresque la página.</p>
+    }
 </div>

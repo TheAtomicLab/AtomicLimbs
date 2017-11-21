@@ -11,7 +11,45 @@
         }
         else if (Model.Status == OrderStatus.Pending)
         {
-            <a href="#" class="bn_blue">Descargar archivos</a>
+            if (string.IsNullOrWhiteSpace(Model.FileUrl))
+            {
+                if (TempData["Generating"] == null)
+                {
+                    <a href="@Url.Action("ProductGenerate", new { area = "", id = Model.Id })" class="bn_add">Generar archivos</a>
+                }
+                else
+                {
+                    <p class="bn_blue">
+                        <img src="/Content/img/ajax-loader.gif" />
+                        Generando archivos
+                    </p>
+                    <script type="text/javascript">
+                        function updateAction() {
+                            $.ajax("@Url.Action("ProductGenerated", new { id = Model.Id, fileurl = Model.FileUrl })", {
+                                type: "GET",
+                                statusCode: {
+                                    201: function () {
+                                        updatePartial("Actions");
+                                        updatePartial("Header");
+                                        alert("Archivos generados!");
+                                    },
+                                    304: function () {
+                                        setTimeout(updateAction, 3000);
+                                    }
+                                }
+                            });
+                        }
+                        setTimeout(updateAction, 3000);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 300000);
+                    </script>
+                }
+            }
+            else
+            {
+                <a href="@Model.FileUrl" target="_blank" class="bn_download">Descargar archivos</a>
+            }
             if (Model.Pieces.Ready())
             {
                 <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="bn_blue">Terminé de imprimir</a>

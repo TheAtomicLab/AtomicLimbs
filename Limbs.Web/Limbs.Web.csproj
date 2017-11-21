@@ -336,6 +336,7 @@
     <Content Include="Content\images\ui-icons_777777_256x240.png" />
     <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
     <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\img\ajax-loader.gif" />
     <Content Include="Content\img\amputaciones_tipo\a.png" />
     <Content Include="Content\img\amputaciones_tipo\b.png" />
     <Content Include="Content\img\amputaciones_tipo\c.png" />
