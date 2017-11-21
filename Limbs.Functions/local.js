@@ -3,7 +3,7 @@ require('dotenv').config({ path: 'config.env' });
 var AzureFunction = require('./index');
 
 // Local development queue message
-var myQueueItem = '{"ProductSizes":{"Id":0,"A":0.2,"B":0.3,"C":0.4,"D":0},"OrderId":94,"Pieces":{"AtomicLabCover":true,"FingerMechanismHolder":true,"Fingers":true,"FingerStopper":true,"FingersX1":true,"FingersX2P":true,"Palm":true,"ThumbConnector":true,"Thumb":true,"ThumbClip":true,"ThumbScrew":true,"UpperArm_FingerConnector":true,"UpperArm_PalmConnector":true,"UpperArm_ThumbShortConnector":true,"UpperArm_FingerSlider":true,"UpperArm":true}}';
+var myQueueItem = '{"ProductSizes":{"Id":0,"A":4.32,"B":6.19,"C":5.0,"D":0},"OrderId":13,"Pieces":{"AtomicLabCover":false,"FingerMechanismHolder":false,"Fingers":false,"FingerStopper":false,"FingersX1":false,"FingersX2P":false,"Palm":false,"ThumbConnector":false,"Thumb":false,"ThumbClip":false,"ThumbScrew":false,"UpperArm_FingerConnector":false,"UpperArm_PalmConnector":false,"UpperArm_ThumbShortConnector":false,"UpperArm_FingerSlider":false,"UpperArm":false}}';
 
 // Local development context
 var debugContext = {

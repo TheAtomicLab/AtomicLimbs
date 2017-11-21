@@ -7,6 +7,7 @@
     "name": "Alejandro Banzas"
   },
   "dependencies": {
+    "@jscad/csg": "^0.3.7",
     "@jscad/openjscad": "^1.3.0",
     "azure-functions-core-tools": "^1.0.7",
     "azure-storage": "^2.6.0",
