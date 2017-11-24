@@ -16,8 +16,17 @@
     @Scripts.Render("~/scripts/functions.js")
     @if (User.IsInRole(AppRoles.Administrator)) { <link href="/Content/admin.css" rel="stylesheet" type="text/css" /> }
     <script src="~/Scripts/menu.js"></script>
+
+
     <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/Scripts/menu-login.js"></script>
+    <meta property="og:title" content="Limbs - Atomic Lab">
+    <meta property="og:type" content="Website">
+    <meta property="og:image" content="~/Content/img/fondo_ini.jpg">
+    <meta property="og:site_name" content="Limbs">
+    <meta property="og:description" content="Desde Limbs - un proyecto de Atomic Lab- creemos que todos deben tener su mano impresa en 3D.">
+    <!--end social meta-->
+    <meta name="description" content="Desde Limbs, una plataforma de Atomic Lab, creemos que todos deben tener su mano impresa en 3D.">
 </head>
 <body>
 @RenderPage("Header.cshtml")

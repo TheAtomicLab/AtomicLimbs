@@ -4,6 +4,7 @@
 @{
     var cl = MessageStatus.Read;
     var cll = "ToHim";
+
     if (Model.To.Id == User.Identity.GetUserId() && Model.Status == MessageStatus.Unread)
     {
         cl = MessageStatus.Unread;
@@ -13,11 +14,15 @@
         cll = "ToMe";
     }
 }
-<dl class="message-item card @cl @cll" data-status="@Model.Status" data-id="@Model.Id">
-    <dd class="content">
-        @Html.DisplayFor(model => model.Content)
-    </dd>
-    <dd class="date">
-        @Html.DisplayFor(model => model.Time, "ToFriendlyDateString")
-    </dd>
-</dl>
+<div class="message-item card @cl @cll" data-status="@Model.Status" data-id="@Model.Id">
+    <div class="msg-content">
+        <div class="content">
+            <span>
+                @Html.DisplayFor(model => model.Content)
+            </span>
+        </div>
+        <span class="date">
+            @Html.DisplayFor(model => model.Time, "ToFriendlyDateString")
+        </span>
+    </div>
+</div>

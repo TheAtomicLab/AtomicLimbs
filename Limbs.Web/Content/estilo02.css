@@ -249,7 +249,7 @@
 /*--------------------------------------Loader---------------------------------------------*/
 #loadingModal {
     position: fixed;
-    background: rgba(142, 141, 141,0.5);
+    background: rgba(0, 0, 0, 0.85);
     top: 0;
     left: 0;
     width: 100%;
@@ -258,15 +258,16 @@
 }
 
 .loader {
-    border: 16px solid #3498db;
+    border: 16px solid #4772b2;
     border-radius: 50%;
     border-top: 16px solid #E1E1E1;
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     animation: spin 1.8s linear infinite;
     position: fixed;
-    left: 45%;
-    top: 45%;
+    top: calc(50% - 60px);
+    left: calc(50% - 60px);
+    box-sizing: border-box;
 }
 
 .loader {

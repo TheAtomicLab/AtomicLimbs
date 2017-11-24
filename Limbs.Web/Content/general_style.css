@@ -9,7 +9,53 @@
     position: relative;
     margin: 0px auto;
 }
-
+.cont-1, .cont-2, .cont-3, .cont-4, .cont-5, .cont-6, .cont-7, .cont-8, .cont-9, .cont-10, .cont-11, .cont-12 {
+    padding: 10px;
+    box-sizing: border-box;
+    position: relative;
+}
+.cont-1 {
+    width: 8.333333333333%;
+}
+.cont-2 {
+    width: 16.6666666666%;
+}
+.cont-3 {
+    width: 25%;
+}
+.cont-4 {
+    width: 33.333333333%;
+}
+.cont-5 {
+    width: 41.666666666%;
+}
+.cont-6 {
+    width: 50%;
+}
+.cont-7 {
+    width: 58.3333333333%;
+}
+.cont-8 {
+    width: 66.666666666%;
+}
+.cont-9 {
+    width:75%;
+}
+.cont-10 {
+    width: 83.3333333333%;
+}
+.cont-11 {
+    width: 91.6666666666%;
+}
+.cont-12 {
+    width: 100%;
+}
+.cont-flex {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
 /*cards*/
 .card {
     color: rgba(0,0,0,0.87);
@@ -257,5 +303,31 @@ button, .bn, .bn_valid, .bn_delete, .bn_edit, .bn_add, .bn_blue, .bn_upload, .bn
         min-width: initial;
         width: 100%;
         margin: 0px 0px 20px;
+    }
+    .cont-1 {
+        width: 16.6666666666%;
+    }
+
+    .cont-2 {
+        width: 33.333333333%;
+    }
+
+    .cont-3 {
+        width: 50%;
+    }
+
+    .cont-4 {
+        width: 66.666666666%;
+    }
+
+    .cont-5 {
+        width: 83.3333333333%;
+    }
+
+    .cont-6 {
+        width: 100%;
+    }
+    .cont-7, .cont-8, .cont-9, .cont-10, .cont-11, .cont-12 {
+        width: 100%;
     }
 }

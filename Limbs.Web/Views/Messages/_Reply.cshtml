@@ -8,9 +8,9 @@
     @Html.Hidden(Html.NameFor(x => x.From.Id).ToString(), Model.From.Id)
     @Html.Hidden(Html.NameFor(x => x.To.Id).ToString(), Model.To.Id)
 
-    <div>
+    <div class="ch_action_cont">
         @Html.EditorFor(model => (new MessageModel()).Content)
-        <input type="submit" value="Enviar" />
+        <button type="submit" value="Enviar"></button>
         @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
     </div>
 }

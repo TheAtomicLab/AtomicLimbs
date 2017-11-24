@@ -13,46 +13,44 @@
     }
     ViewBag.Title = "Mensajes";
 }
-<h2>@(to)</h2>
-@if (Model.Order != null)
-{
-    <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
-}
-<div class="messages-details">
-    <div class="messages">
-        <p id="loading">Cargando mensajes...</p>
-        <p id="more-messages" class="card">Tenés más mensajes sin leer...</p>
+<div class="chatbox min_full">
+    <div class="ch_header">
+        <div class="ch_header_cont">
+            <h2 class="ch_to">@(to)</h2>
+            @if (Model.Order != null)
+            {
+                <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
+            }
+        </div>
+    </div>
+    <div class="messages-details">
+        <div class="messages">
+            <p id="loading">Cargando mensajes...</p>
+            <p id="more-messages" class="card">Tenés más mensajes sin leer...</p>
 
-        <ul id="messages" style="display: none;">
-            <li>
-                @Html.Partial("_Detail", Model)
-            </li>
-        </ul>
+            <ul id="messages" style="display: none;">
+                <li>
+                    @Html.Partial("_Detail", Model)
+                </li>
+            </ul>
+        </div>
+
+        <div class="reply">
+            @Html.Partial("_Reply", Model)
+        </div>
     </div>
 
-    <div class="reply">
-        @Html.Partial("_Reply", Model)
-    </div>
-</div>
-
-@section styles
+    @section styles
 {
-    <style type="text/css">
-        .cont-wr {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-    </style>
-}
+        <link href="/Content/chatbox.css" rel="stylesheet" type="text/css" />
+    }
 
-@section scripts
+    @section scripts
 {
-    <script src="~/Scripts/jquery.signalR-2.2.2.min.js" type="text/javascript"></script>
-    <script src="~/signalr/hubs" type="text/javascript"></script>
+        <script src="~/Scripts/jquery.signalR-2.2.2.min.js" type="text/javascript"></script>
+        <script src="~/signalr/hubs" type="text/javascript"></script>
 
-    <script type="text/javascript">
+        <script type="text/javascript">
 
         $(document).ready(function () {
             $("#more-messages").click(function() {
@@ -97,7 +95,7 @@
                     }
                 });
         });
-        
+
         $("#reply-form").submit(function (e) {
             e.preventDefault();
 
@@ -106,7 +104,7 @@
             if (content.val().trim().length < 1) {
                 return;
             }
-            $("input[type=submit]").attr("disabled", "disabled");
+            $("button[type=submit]").addClass("sending");
             var form = $("#reply-form");
             $.ajax({
                 cache: false,
@@ -115,7 +113,7 @@
                 url: form.prop('action'),
                 data: form.serialize(),
                 success: function (data) {
-                    $("input[type=submit]").removeAttr("disabled");
+                    $("button[type=submit]").removeClass("sending");
                     $(content).val("");
                     $.connection.messagesHub.server.sendMessage("@(Model.Id)", data.toString());
                     $("#messages").append("<li>" + data + "</li>");
@@ -174,5 +172,6 @@
                 }
             });
         }
-    </script>
-}
+        </script>
+    }
+</div>

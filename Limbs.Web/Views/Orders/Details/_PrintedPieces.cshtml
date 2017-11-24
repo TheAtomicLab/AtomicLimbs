@@ -1,20 +1,126 @@
 ﻿@using Limbs.Web.Entities.Models
 @model OrderModel
 
-<h2>Piezas impresas</h2>
+<h3>Piezas impresas</h3>
 
 
 @using (Html.BeginForm("PrintedPiecesUpdate", "Orders", new { orderId = Model.Id }, FormMethod.Post))
 {
-    <table>
-        <tr>
-            <th>
-                Pieza
-            </th>
-            <th>
-                Impresa
-            </th>
-        </tr>
+
+    <button type="submit" class="bn_blue">Actualizar</button>
+
+    <div class="pieces_row">
+        <div class="cl_l">
+            <ul>
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.UpperArm)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.UpperArm)">@Html.DisplayNameFor(model => model.Pieces.UpperArm)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.UpperArm_FingerSlider)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.UpperArm_FingerSlider)">@Html.DisplayNameFor(model => model.Pieces.UpperArm_FingerSlider)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.FingersX2P)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.FingersX2P)">@Html.DisplayNameFor(model => model.Pieces.FingersX2P)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.ThumbConnector)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.ThumbConnector)">@Html.DisplayNameFor(model => model.Pieces.ThumbConnector)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.Thumb)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.Thumb)">@Html.DisplayNameFor(model => model.Pieces.Thumb)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.FingersX1)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.FingersX1)">@Html.DisplayNameFor(model => model.Pieces.FingersX1)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.Fingers)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.Fingers)">@Html.DisplayNameFor(model => model.Pieces.Fingers)</label></p>
+                </li>
+
+            </ul>
+        </div>
+        <div class="cl_r">
+            <img src="/Content/img/PrintedPieces/PrintedPieces1.png">
+        </div>
+    </div>
+
+
+    <div class="pieces_row">
+        <div class="cl_l">
+            <ul>
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.Palm)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.Palm)">@Html.DisplayNameFor(model => model.Pieces.Palm)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.AtomicLabCover)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.AtomicLabCover)">@Html.DisplayNameFor(model => model.Pieces.AtomicLabCover)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.FingerStopper)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.FingerStopper)">@Html.DisplayNameFor(model => model.Pieces.FingerStopper)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.FingerMechanismHolder)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.FingerMechanismHolder)">@Html.DisplayNameFor(model => model.Pieces.FingerMechanismHolder)</label></p>
+                </li>
+
+            </ul>
+        </div>
+        <div class="cl_r">
+            <img src="/Content/img/PrintedPieces/PrintedPieces2.png">
+        </div>
+    </div>
+
+
+    <div class="pieces_row">
+        <div class="cl_l">
+            <ul>
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.UpperArm_FingerConnector)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.UpperArm_FingerConnector)">@Html.DisplayNameFor(model => model.Pieces.UpperArm_FingerConnector)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.UpperArm_PalmConnector)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.UpperArm_PalmConnector)">@Html.DisplayNameFor(model => model.Pieces.UpperArm_PalmConnector)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.UpperArm_ThumbShortConnector)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.UpperArm_ThumbShortConnector)">@Html.DisplayNameFor(model => model.Pieces.UpperArm_ThumbShortConnector)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.ThumbClip)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.ThumbClip)">@Html.DisplayNameFor(model => model.Pieces.ThumbClip)</label></p>
+                </li>
+
+                <li>
+                    <div class="cl_check">@Html.CheckBoxFor(model => model.Pieces.ThumbScrew)</div>
+                    <p><label for="Pieces_@Html.DisplayNameFor(model => model.Pieces.ThumbScrew)">@Html.DisplayNameFor(model => model.Pieces.ThumbScrew)</label></p>
+                </li>
+
+            </ul>
+        </div>
+        <div class="cl_r">
+            <img src="/Content/img/PrintedPieces/PrintedPieces3.png">
+        </div>
+    </div>
+    @*<table>
         <tr>
             <td colspan="2">
                 <img src="/Content/img/PrintedPieces/PrintedPieces1.png" style="max-height: inherit;max-width: 94%;" />
@@ -159,5 +265,5 @@
             </td>
         </tr>
     </table>
-    <button type="submit" class="bn_blue">Actualizar</button>
+        *@
 }
