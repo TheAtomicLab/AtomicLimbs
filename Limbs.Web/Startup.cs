@@ -33,7 +33,7 @@ namespace Limbs.Web
             Type hack = ass.GetType("Microsoft.AspNet.Identity.Resources");
             var field = hack.GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
             //This is where you set your own local resource manager that will read resource files from your own assembly
-            field.SetValue(null, new global::System.Resources.ResourceManager(typeof(Resources).AssemblyQualifiedName, typeof(Resources).Assembly));
+            field.SetValue(null, new global::System.Resources.ResourceManager(typeof(Resources).FullName, typeof(Resources).Assembly));
 
             DefaultModelBinder.ResourceClassKey = nameof(Resources);
         }
