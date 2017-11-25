@@ -3,5 +3,6 @@
     public sealed class AzureStorageContainer
     {
         public static readonly string UserFiles = "userfiles";
+        public static readonly string ProductGenerated = "orderproductgenerated";
     }
 }

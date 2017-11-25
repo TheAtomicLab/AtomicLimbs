@@ -15,7 +15,8 @@ namespace Limbs.Web.Storage.Azure
 		    new QueueStorageInitializer<OrderProductGenerator>(account).Initialize();
 		    new QueueStorageInitializer<OrderProductGeneratorResult>(account).Initialize();
 
-            new DocumentStorageInitializer(account, AzureStorageContainer.UserFiles).Initialize(BlobContainerPublicAccessType.Container);
+		    new DocumentStorageInitializer(account, AzureStorageContainer.UserFiles).Initialize(BlobContainerPublicAccessType.Container);
+		    new DocumentStorageInitializer(account, AzureStorageContainer.ProductGenerated).Initialize(BlobContainerPublicAccessType.Container);
 
         }
     }
