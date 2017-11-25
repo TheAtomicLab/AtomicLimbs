@@ -9,15 +9,21 @@ namespace Limbs.Web
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
-            var targetRoute = routes.MapRoute("new", "Home/{action}", new { controller = "Home", action = "Index" });
-            routes.Redirect(r => r.MapRoute("faq", "faq")).To(targetRoute);
-            routes.Redirect(r => r.MapRoute("dar", "dar")).To(targetRoute);
-            routes.Redirect(r => r.MapRoute("libre", "libre")).To(targetRoute);
-            routes.Redirect(r => r.MapRoute("manoton", "manoton")).To(targetRoute);
-            routes.Redirect(r => r.MapRoute("pedir-una-mano", "pedir-una-mano")).To(targetRoute);
-            routes.Redirect(r => r.MapRoute("embajador-atomico", "embajador-atomico")).To(targetRoute);
-            routes.Redirect(r => r.MapRoute("donations/limbs", "donations/limbs")).To(targetRoute);
+
+            var targetRoute = routes.MapRoute("", "Home/Index", new { controller = "Home", action = "Index" });
+            var donar = routes.MapRoute("", "StaticContent/Donar", new { controller = "StaticContent", action = "Donar" });
+            var faq = routes.MapRoute("", "StaticContent/Faq", new { controller = "StaticContent", action = "Faq" });
+            var libre = routes.MapRoute("", "StaticContent/Libre", new { controller = "StaticContent", action = "Libre" });
+            var manoton = routes.MapRoute("", "StaticContent/Manoton", new { controller = "StaticContent", action = "Manoton" });
+            var embajadores = routes.MapRoute("", "StaticContent/Embajadores", new { controller = "StaticContent", action = "Embajadores" });
+
+            routes.Redirect(r => r.MapRoute("", "faq")).To(faq);
+            routes.Redirect(r => r.MapRoute("", "dar")).To(donar);
+            routes.Redirect(r => r.MapRoute("", "libre")).To(libre);
+            routes.Redirect(r => r.MapRoute("", "manoton")).To(manoton);
+            routes.Redirect(r => r.MapRoute("", "pedir-una-mano")).To(targetRoute);
+            routes.Redirect(r => r.MapRoute("", "embajador-atomico")).To(embajadores);
+            routes.Redirect(r => r.MapRoute("", "donations/limbs")).To(donar);
             
             routes.MapRoute(
                 "Default",

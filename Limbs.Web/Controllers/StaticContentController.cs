@@ -29,5 +29,35 @@ namespace Limbs.Web.Controllers
             return new HttpStatusCodeResult(200);
         }
 
+        // GET: StaticContent/Donar
+        public ActionResult Donar()
+        {
+            return RedirectPermanent("http://AtomicLab.org/donar");
+        }
+
+        // GET: StaticContent/Faq
+        public ActionResult Faq()
+        {
+            return RedirectPermanent("http://AtomicLab.org/faq");
+        }
+
+        // GET: StaticContent/Libre
+        public ActionResult Libre()
+        {
+            return RedirectPermanent("http://AtomicLab.org/libre");
+        }
+
+        // GET: StaticContent/Manoton
+        public ActionResult Manoton()
+        {
+            return RedirectPermanent("http://AtomicLab.org/manoton");
+        }
+
+        // GET: StaticContent/Embajadores
+        public ActionResult Embajadores()
+        {
+            return RedirectPermanent("http://AtomicLab.org/Embajadores");
+        }
+
     }
 }
