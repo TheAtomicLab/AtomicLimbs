@@ -163,10 +163,11 @@ footer {
     padding: 20px 0px 30px;
     position: relative;
 }
-    .messages-details .reply .ch_action_cont {
-        position: relative;
-    }
-.messages-details .reply input[type=text] {
+.messages-details .reply .ch_action_cont {
+    position: relative;
+}
+.messages-details .reply input[type=text],
+.messages-details .reply textarea {
     width: calc(100% - 70px);
     height: 62px;
     font-size: 20px;

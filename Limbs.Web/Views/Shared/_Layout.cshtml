@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : $" - {ViewBag.Title}") Limbs - Atomic Lab</title>
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : $"{ViewBag.Title} - ") Limbs - Atomic Lab</title>
     <meta charset="utf-8">
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")
@@ -16,8 +16,7 @@
     @Scripts.Render("~/scripts/functions.js")
     @if (User.IsInRole(AppRoles.Administrator)) { <link href="/Content/admin.css" rel="stylesheet" type="text/css" /> }
     <script src="~/Scripts/menu.js"></script>
-
-
+    
     <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico"/>
     <script src="/Scripts/menu-login.js"></script>
     <meta property="og:title" content="Limbs - Atomic Lab">

@@ -32,6 +32,20 @@
     }
 }
 
+@section styles
+{
+    <style>
+        .cont-wr {
+            max-width: initial;
+            padding: 0px;
+        }
+
+        .min-full {
+            background-color: white;
+        }
+    </style>
+}
+
 <div id="cont" class="min_full">
     <div id="registro">
         @using (Html.BeginForm("Create", "Ambassador", FormMethod.Post, new { @class = "form" }))
@@ -65,7 +79,7 @@
             <div>
                 @if (!isEdit)
                 {
-                    <p style="margin-top: 20px;">
+                    <p style="margin: 20px;">
                         <label for="termsAndConditions">
                             @Html.CheckBox("termsAndConditions", termsAndConditions, new { id = "termsAndConditions" })
                             acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).

@@ -40,12 +40,12 @@
         </div>
     </div>
 
-    @section styles
+@section styles
 {
-        <link href="/Content/chatbox.css" rel="stylesheet" type="text/css" />
-    }
+    <link href="/Content/chatbox.css" rel="stylesheet" type="text/css" />
+}
 
-    @section scripts
+@section scripts
 {
         <script src="~/Scripts/jquery.signalR-2.2.2.min.js" type="text/javascript"></script>
         <script src="~/signalr/hubs" type="text/javascript"></script>
@@ -104,7 +104,7 @@
             if (content.val().trim().length < 1) {
                 return;
             }
-            $("button[type=submit]").addClass("sending");
+            $("button[type=submit]").addClass("sending").attr("disabled", "disabled");
             var form = $("#reply-form");
             $.ajax({
                 cache: false,
@@ -113,7 +113,7 @@
                 url: form.prop('action'),
                 data: form.serialize(),
                 success: function (data) {
-                    $("button[type=submit]").removeClass("sending");
+                    $("button[type=submit]").removeClass("sending").removeAttr("disabled");
                     $(content).val("");
                     $.connection.messagesHub.server.sendMessage("@(Model.Id)", data.toString());
                     $("#messages").append("<li>" + data + "</li>");

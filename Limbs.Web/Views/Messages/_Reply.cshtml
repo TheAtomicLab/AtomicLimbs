@@ -9,7 +9,7 @@
     @Html.Hidden(Html.NameFor(x => x.To.Id).ToString(), Model.To.Id)
 
     <div class="ch_action_cont">
-        @Html.EditorFor(model => (new MessageModel()).Content)
+        @Html.TextBoxFor(model => (new MessageModel()).Content, null, new { autocomplete = "off" })
         <button type="submit" value="Enviar"></button>
         @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
     </div>

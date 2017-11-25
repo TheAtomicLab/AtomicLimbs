@@ -79,9 +79,7 @@ namespace Limbs.Web.Controllers
             messageModel.Content = model.Content;
             
             await _ms.Send(User, messageModel);
-            return messageModel.Order != null ? 
-                RedirectToAction("Details", "Orders", new { id = messageModel.Order.Id }) : 
-                RedirectToAction("Index");
+            return RedirectToAction("Details", "Messages", new {id = messageModel.Id});
         }
 
         private async Task<MessageModel> GetMessageModelForCreation(int orderId)
@@ -134,17 +132,20 @@ namespace Limbs.Web.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ReturnUrl = Request.UrlReferrer?.PathAndQuery;
             return View(messageModel);
         }
 
         // POST: Messages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(Guid id)
+        public async Task<ActionResult> DeleteConfirmed(Guid id, string returnUrl)
         {
             await _ms.Delete(User, id);
 
-            return RedirectToAction("Index");
+            return string.IsNullOrWhiteSpace(returnUrl) ? 
+                            (ActionResult) RedirectToAction("Index") :
+                            Redirect(returnUrl);
         }
 
         // POST: Messages/Reply/5

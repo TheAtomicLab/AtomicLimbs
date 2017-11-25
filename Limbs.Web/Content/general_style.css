@@ -281,19 +281,20 @@ button, .bn, .bn_valid, .bn_delete, .bn_edit, .bn_add, .bn_blue, .bn_upload, .bn
     position: relative;
 }
 
-    .bn_cross2:after {
-        font: normal normal normal 14px/1 FontAwesome;
-        font-size: inherit;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        font-weight: 400;
-        content: "\f00d";
-        position: absolute;
-        left: 50%;
-        top: calc(50% - 1px);
-        transform: translate(-50%, -50%);
-    }
+.bn_cross2:after {
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    content: "\f00d";
+    position: absolute;
+    left: 50%;
+    top: calc(50% - 1px);
+    transform: translate(-50%, -50%);
+}
 
+#inbox .unread { font-weight: bold; }
 
 @media only screen and (max-width: 760px) {
     .cont-wr {

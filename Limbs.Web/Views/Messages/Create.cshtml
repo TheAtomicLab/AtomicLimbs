@@ -7,24 +7,29 @@
     {
         to += $" - {Model.From.Email}";
     }
-    if (to != User.Identity.GetUserName())
+    if (to == User.Identity.GetUserName())
     {
         to = Model.From.Email;
     }
     ViewBag.Title = "Mensajes";
 }
-<h2>@(to)</h2>
-@if (Model.Order != null)
-{
-    <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
-}
+
+<div class="chatbox min_full">
+<div class="ch_header">
+    <div class="ch_header_cont">
+        <h2 class="ch_to">@(to)</h2>
+        @if (Model.Order != null)
+        {
+            <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
+        }
+    </div>
+</div>
 <div class="messages-details">
     <div class="messages">
         <ul id="messages" style="display: none;"></ul>
     </div>
 
     <div class="reply">
-        
         @using (Html.BeginForm("Create", "Messages", FormMethod.Post, new { id = "reply-form" }))
         {
             @Html.AntiForgeryToken()
@@ -33,8 +38,8 @@
             @Html.Hidden(Html.NameFor(x => x.To.Id).ToString(), Model.To.Id)
 
             <div>
-                @Html.EditorFor(model => (new MessageModel()).Content)
-                <input type="submit" value="Enviar" />
+                @Html.TextBoxFor(model => (new MessageModel()).Content, null, new { autocomplete = "off" })
+                <button type="submit" value="Enviar"></button>
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         }
@@ -43,12 +48,13 @@
 
 @section styles
 {
-    <style type="text/css">
-        .cont-wr {
-            margin-top: 0;
-            margin-bottom: 0;
-            padding-top: 0;
-            padding-bottom: 0;
-        }
-    </style>
+    <link href="/Content/chatbox.css" rel="stylesheet" type="text/css" />
+}
+@section scripts
+{
+    <script type="text/javascript">
+        $("form#reply-form").submit(function () {
+            $("button[type=submit]").addClass("sending").attr("disabled", "disabled");
+        });
+    </script>
 }
