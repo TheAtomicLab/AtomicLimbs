@@ -328,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin.css" />
+    <Content Include="Content\chatbox.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\general_style.css" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
@@ -365,6 +366,8 @@
     <Content Include="Content\img\PrintedPieces\PrintedPieces1.png" />
     <Content Include="Content\img\PrintedPieces\PrintedPieces2.png" />
     <Content Include="Content\img\PrintedPieces\PrintedPieces3.png" />
+    <Content Include="Content\img\tail-message-a.svg" />
+    <Content Include="Content\img\tail-message-b.svg" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui.structure.css" />
     <Content Include="Content\jquery-ui.structure.min.css" />
