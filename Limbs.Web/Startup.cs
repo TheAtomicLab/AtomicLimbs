@@ -23,7 +23,7 @@ namespace Limbs.Web
             ConfigureAuth(app);
             ConfigureServices(app);
 
-            //FullStorageInitializer.Initialize();
+            FullStorageInitializer.Initialize();
             MailTemplatesRegistration.Initialize();
         }
 
