@@ -1,7 +1,7 @@
 ﻿@using Limbs.Web.Models
 @model LoginViewModel
 @{ 
-    ViewBag.Title = "Home";
+    ViewBag.Title = "";
 }
     <head>
         <link rel="stylesheet" href="~/Content/style.css">
@@ -25,12 +25,15 @@
             <div>
                 <img src="~/Content/img/limbs_white.svg" alt="logo atomic lab">
             </div>
-            <div>
-                <a href="@Url.Action("Login", "Account")" class="bn_blue">Iniciar sesión</a>
-            </div>
-            <div>
-                <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>
-            </div>
+            @if (!Request.IsAuthenticated)
+            {
+                <div>
+                    <a href="@Url.Action("Login", "Account")" class="bn_blue">Iniciar sesión</a>
+                </div>
+                <div>
+                    <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>
+                </div>
+            }
         </div>
     </div>
 

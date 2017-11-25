@@ -4,6 +4,16 @@ namespace Limbs.Web.Controllers
 {
     public class StaticContentController : Controller
     {
+        // GET: StaticContent/QueEsLimbs
+        public ActionResult QueEsLimbs()
+        {
+            if (Request.IsAuthenticated)
+            {
+                return View("QueEsLimbs");
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         // GET: StaticContent/PageNotFound
         public ActionResult PageNotFound()
         {

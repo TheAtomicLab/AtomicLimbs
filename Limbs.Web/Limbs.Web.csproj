@@ -425,6 +425,7 @@
     <Content Include="Content\dropzone.min.css" />
     <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\functions.js" />
+    <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
     <Content Include="Scripts\jquery-3.2.1.slim.js" />
@@ -482,7 +483,7 @@
     </Content>
     <Content Include="Views\Account\SelectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\QueEsLimbs.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

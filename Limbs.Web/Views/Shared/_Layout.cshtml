@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Limbs - Atomic Lab</title>
+    <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : $" - {ViewBag.Title}") Limbs - Atomic Lab</title>
     <meta charset="utf-8">
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/jqueryui")

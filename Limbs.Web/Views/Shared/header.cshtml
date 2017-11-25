@@ -1,8 +1,11 @@
-﻿@using Limbs.Web.Entities.Models
+﻿@using System.Configuration
+@using Limbs.Web.Entities.Models
 <header>
     <div id="main_head">
         <a href="/">
             <img id="logo_head" src="/Content/img/limbs_white.svg">
+            @if (Request.IsLocal) { <span style="position: absolute; left: 0; color: burlywood;">DEV</span> }
+            @if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Environment"])){ <span style="position: absolute; left: 0; color: burlywood; top: 15px;">@ConfigurationManager.AppSettings["Environment"]</span> }
         </a>
         <nav>
             <ul>
@@ -16,10 +19,10 @@
                     </li>
                 }
                 <li>
-                    <a onclick="cerrarmenu()" href="http://www.limbs.earth/" target="_blank">¿Qué es Limbs?</a>
+                    <a onclick="cerrarmenu()" href="@Url.Action("QueEsLimbs", "StaticContent")" target="_blank">¿Qué es Limbs?</a>
                 </li>
                 <li>
-                    <a onclick="cerrarmenu()" href="http://atomiclab.org/donar/" target="_blank">Donar</a>
+                    <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">Donar</a>
                 </li>
                 
                 @Html.Partial("AdminMenu")
