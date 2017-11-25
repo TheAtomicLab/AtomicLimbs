@@ -104,7 +104,7 @@ namespace Limbs.Web.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirmá contraseña")]
-        [Compare("Confirma contraseña", ErrorMessage = "La contraseña no coincide.")]
+        [Compare("Password", ErrorMessage = "La contraseña no coincide.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
