@@ -14,7 +14,7 @@
         @Html.Partial("Details/_Actions", Model)
     </div>
 
-    <div class="flex_info">
+    <div class="grid_pedidos">
         <div class="card card-l">
             @Html.Partial("Details/_OrderInfo", Model)
         </div>
@@ -27,13 +27,6 @@
         {
             <div class="card card-l">
                 @Html.Partial("Details/_Messages", Model)
-            </div>
-        }
-
-        @if (!User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Pending)
-        {
-            <div id="PrintedPieces" class="card card-l">
-                @Html.Partial("Details/_PrintedPieces", Model)
             </div>
         }
 
@@ -50,6 +43,18 @@
             </div>
         }
     </div>
+    @if (!User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Pending)
+    {
+        <div class="cont-flex">
+            <div class="cont-12">
+                <div id="PrintedPieces" class="card printed_pieces_box">
+                    @Html.Partial("Details/_PrintedPieces", Model)
+                </div>
+            </div>
+        </div>
+
+
+    }
 
 </article>
 
@@ -59,6 +64,8 @@
 
 @section scripts
 {
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script type="text/javascript">
         $(function () {
             $('form', $("#PrintedPieces")).submit(function (e) {
@@ -81,6 +88,13 @@
                         }
                     });
                 }
+            });
+            let grid_pedidos = $(".grid_pedidos").masonry({
+                itemSelector: '.card'
+            });
+            $(".grid_pedidos .card").bind("DOMSubtreeModified", function () { $(grid_pedidos).masonry(); });
+            grid_pedidos.imagesLoaded().progress(function () {
+                $(grid_pedidos).masonry();
             });
         });
 

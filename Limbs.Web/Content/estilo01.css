@@ -278,7 +278,6 @@ nav {
     font-weight: 600;
     margin: 20px auto;
     position: relative;
-    ;
 }
 
 .f-seccion {
@@ -993,19 +992,10 @@ button[name="recoverPassword"] {
     right: 5px;
     bottom: 5px;
 }
-.flex_info {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-#info_pedido .card img {
+.grid_pedidos .card img {
     max-height: 200px;
     max-width: 200px;
 }
-
-
-
 #info_solicitud {
     max-width: 900px;
     width: 100%;
@@ -1022,11 +1012,9 @@ button[name="recoverPassword"] {
         color: #4772B2;
         padding: 10vh 0px 10px 0px;
     }
-
-#accion_solicitud {
+#accion_pedido{
     padding: 20px 0px;
 }
-
 .tabla_datos {
     padding: 3px;
     text-align: left;
@@ -1050,17 +1038,66 @@ button[name="recoverPassword"] {
     max-width: 50vw;
     word-wrap: break-word;
 }
-/**FOOOOOTEEEERRRR**/
-.footer-distributed {
-    background-color: #292c2f;
-    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-    box-sizing: border-box;
-    width: 100%;
-    text-align: left;
-    font: bold 16px sans-serif;
-    padding: 55px 50px 20px;
-    min-height: 255px;
+.printed_pieces_box button[type="submit"] {
+    margin-top: 10px;
 }
+.printed_pieces_box .pieces_row {
+    width: 100%;
+    padding: 20px 0px;
+    border-bottom: solid #dadada 1px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+    .printed_pieces_box .pieces_row:last-of-type {
+        border-bottom: none;
+    }
+.printed_pieces_box .pieces_row .cl_l, .printed_pieces_box .pieces_row .cl_r {
+    box-sizing: border-box;
+}
+.printed_pieces_box .pieces_row .cl_l {
+    width: 40%;
+    padding-left: 20px;
+    font-size: 17px;
+    min-width: 340px;
+}
+.pieces_row .cl_l ul li {
+    list-style-type: none;
+    margin: 6px 0px;
+}
+.pieces_row .cl_l .cl_check, .pieces_row .cl_l p {
+    display: inline-block;
+    margin-right: 5px;
+    vertical-align: middle
+}
+.pieces_row .cl_l .cl_check input{
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+}
+.printed_pieces_box .pieces_row .cl_r {
+    width: 50%;
+    padding: 10px 20px;
+    min-width: 320px;
+    margin: 0px auto;
+}
+    .printed_pieces_box .pieces_row .cl_r img {
+        width: 100%;
+        max-height: initial;
+        max-width: initial;
+    }
+    /**FOOOOOTEEEERRRR**/
+    .footer-distributed {
+        background-color: #292c2f;
+        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+        box-sizing: border-box;
+        width: 100%;
+        text-align: left;
+        font: bold 16px sans-serif;
+        padding: 55px 50px 20px;
+        min-height: 255px;
+    }
 
 .footer-distributed .footer-left,
 .footer-distributed .footer-center,
@@ -1150,7 +1187,6 @@ button[name="recoverPassword"] {
         .footer-distributed .footer-center p a {
             color: #0172c1;
             text-decoration: none;
-            ;
         }
 
 
@@ -1306,77 +1342,4 @@ button[name="recoverPassword"] {
 .ing-facebook {
     background-color: #395697;
     margin-bottom: 25px;
-}
-
-
-.messages-details {
-    height: calc(100vh - 70px - 255px);
-}
-
-.messages-details #more-messages {
-    display: none;
-    font-weight: bold;
-    position: absolute;
-    left: 32vw;
-}
-
-.messages-details .messages {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    min-height: 170px;
-    height: calc(100vh - 70px - 255px - 100px);
-}
-
-.messages-details .reply {
-    height: 100px;
-}
-
-.messages-details .reply input[type=text] {
-    width: calc(100% - 150px);
-    height: 60px;
-    font-size: 20px;
-}
-
-.messages-details .reply input[type=submit] {
-    width: 140px;
-    height: 75px;
-    font-size: 20px;
-}
-
-.messages-details ul {
-    list-style-type:none;
-}
-
-.messages-details .message-item.card {
-    width: 47%;
-    clear: both;
-    margin-bottom: 12px;
-    padding-bottom: 5px;
-}
-
-.messages-details .message-item.card .content {
-    font-size: 17px;
-}
-
-.messages-details .message-item.card .date {
-    float: right;
-    font-size: 12px;
-}
-
-
-.messages-details .message-item.card.ToMe {
-    float: left;
-}
-
-.messages-details .message-item.card.ToHim {
-    float: right;
-}
-    
-.message.unread {
-    font-weight: bold;
-}
-
-.message-item.Unread {
-    background-color: #4772b2;
-    color: white;
 }
