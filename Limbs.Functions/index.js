@@ -8,7 +8,7 @@ var AzureFunction = function (context, myQueueItem) {
         var messageData = JSON.parse(JSON.stringify(myQueueItem));
         var fileName = "product-" + messageData.OrderId + "-file-" + new Date().getMilliseconds() + ".stl";
         context.log(fileName);
-
+        
         //RENDER JSCAD MODEL//////////////////////////////////////////////////////////
         var script = 'function main() { return [ torus() ] }';
         var params = {}
@@ -41,8 +41,8 @@ var AzureFunction = function (context, myQueueItem) {
             //SET BLOB URL TO ORDER///////////////////////////////////////////////////////
             var startDate = new Date();
             var expiryDate = new Date(startDate);
-            expiryDate.setMinutes(startDate.getYear() + 10);
-            startDate.setMinutes(startDate.getDay() - 1);
+            expiryDate.setYear(startDate.getFullYear() + 100);
+            startDate.setDate(startDate.getDate() - 1);
             var sharedAccessPolicy = {
                 AccessPolicy: {
                     Permissions: azure.BlobUtilities.SharedAccessPermissions.READ,
