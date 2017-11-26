@@ -254,7 +254,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             order.Status = OrderStatus.Ready;
 
             await Db.SaveChangesAsync();
-            await _ns.SendProofOfDeliveryNotification(order);
+            await _ns.SendDeliveryInformationNotification(order);
 
             return RedirectToAction("Index");
         }
