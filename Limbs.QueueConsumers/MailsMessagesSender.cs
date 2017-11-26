@@ -25,6 +25,7 @@ namespace Limbs.QueueConsumers
                 var mailMessage = new System.Net.Mail.MailMessage(
                     message.Data.From, message.Data.To,
                     message.Data.Subject, message.Data.Body) {IsBodyHtml = true};
+                if(!string.IsNullOrWhiteSpace(message.Data.Cc)) mailMessage.CC.Add(message.Data.Cc);
                 // si el mensaje es null significa que el maker controló algunas situaciones y no hay nada para enviar y el mensaje se puede remover de la queue
                 mailSender.Send(mailMessage);
 
