@@ -688,27 +688,27 @@ button[name="recoverPassword"] {
     }
 
         #color_mano input[value=A] {
-            background-image: url(../Content/img/mano_a.jpg);
+            background-image: url(/Content/img/Mano/mano_a.png);
         }
 
         #color_mano input[value=B] {
-            background-image: url(../Content/img/mano_b.jpg);
+            background-image: url(/Content/img/Mano/mano_b.png);
         }
 
         #color_mano input[value=C] {
-            background-image: url(../Content/img/mano_c.jpg);
+            background-image: url(/Content/img/Mano/mano_c.png);
         }
 
         #color_mano input[value=D] {
-            background-image: url(../Content/img/mano_d.jpg);
+            background-image: url(/Content/img/Mano/mano_d.png);
         }
 
         #color_mano input[value=E] {
-            background-image: url(../Content/img/mano_e.jpg);
+            background-image: url(/Content/img/Mano/mano_e.png);
         }
 
         #color_mano input[value=F] {
-            background-image: url(../Content/img/mano_f.jpg);
+            background-image: url(/Content/img/Mano/mano_f.png);
         }
 
         #color_mano input:checked {

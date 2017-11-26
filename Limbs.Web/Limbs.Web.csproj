@@ -361,6 +361,12 @@
     <Content Include="Content\img\ManoMedidas\Paso1.gif" />
     <Content Include="Content\img\ManoMedidas\Paso2.gif" />
     <Content Include="Content\img\ManoMedidas\Paso3.gif" />
+    <Content Include="Content\img\Mano\mano_a.png" />
+    <Content Include="Content\img\Mano\mano_b.png" />
+    <Content Include="Content\img\Mano\mano_c.png" />
+    <Content Include="Content\img\Mano\mano_d.png" />
+    <Content Include="Content\img\Mano\mano_e.png" />
+    <Content Include="Content\img\Mano\mano_f.png" />
     <Content Include="Content\img\mockup.jpg" />
     <Content Include="Content\img\piezas.jpg" />
     <Content Include="Content\img\PrintedPieces\PrintedPieces1.png" />
@@ -386,12 +392,6 @@
     <Content Include="Content\img\fondo_ini.jpg" />
     <Content Include="Content\img\fondo_ini_max.jpg" />
     <Content Include="Content\img\limbs_white.svg" />
-    <Content Include="Content\img\mano_a.jpg" />
-    <Content Include="Content\img\mano_b.jpg" />
-    <Content Include="Content\img\mano_c.jpg" />
-    <Content Include="Content\img\mano_d.jpg" />
-    <Content Include="Content\img\mano_e.jpg" />
-    <Content Include="Content\img\mano_f.jpg" />
     <Content Include="Content\img\menu.svg" />
     <Content Include="Content\img\menu_item_form.svg" />
     <Content Include="Content\img\menu_item_mano.svg" />
