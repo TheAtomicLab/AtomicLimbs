@@ -41,6 +41,18 @@ namespace Limbs.Web.Controllers
         }
 
         //
+        // GET: /Account/
+        [AllowAnonymous]
+        public ActionResult Index()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectUser();
+            }
+            return RedirectToAction("Index", "Manage");
+        }
+
+        //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
