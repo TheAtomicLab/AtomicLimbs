@@ -223,6 +223,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_GlobalResources\LimbsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>LimbsResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -301,11 +306,6 @@
     <Compile Include="Models\GoogleGeoModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="App_GlobalResources\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
     <Compile Include="Repositories\IUsersRepository.cs" />
     <Compile Include="Repositories\IAmbassadorsRepository.cs" />
@@ -428,6 +428,7 @@
     <Content Include="Content\dropzone.min.css" />
     <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\functions.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1-vsdoc.js" />
     <Content Include="Scripts\jquery-3.2.1.min.js" />
@@ -586,6 +587,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_GlobalResources\LimbsResources.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>LimbsResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <EmbeddedResource Include="Migrations\201709210349189_OrderSizesAsFloat.resx">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
     </EmbeddedResource>
@@ -615,11 +622,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711130201004_PiecesNew.resx">
       <DependentUpon>201711130201004_PiecesNew.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="App_GlobalResources\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711201958532_ProductFileUrl.resx">
       <DependentUpon>201711201958532_ProductFileUrl.cs</DependentUpon>

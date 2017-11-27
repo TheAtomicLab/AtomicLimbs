@@ -121,7 +121,7 @@
     <value>UserAlreadyInRole</value>
   </data>
   <data name="UserNotInRole" xml:space="preserve">
-    <value>UserNotInRole</value>
+    <value>{0} debe ser un número</value>
   </data>
   <data name="RoleNotFound" xml:space="preserve">
     <value>RoleNotFound {0}</value>
@@ -227,5 +227,8 @@
   </data>
   <data name="FieldMustBeDate" xml:space="preserve">
     <value>{0} debe ser una fecha</value>
+  </data>
+  <data name="PropertyValueRequired" xml:space="preserve">
+    <value>Campo requerido</value>
   </data>
 </root>

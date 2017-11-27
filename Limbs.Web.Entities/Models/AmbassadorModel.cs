@@ -32,9 +32,10 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string AmbassadorLastName { get; set; }
 
-        [DataType("datetime2")]
+        [DataType("datetime2", ErrorMessage = "Fecha inválida")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
         [Required(ErrorMessage = " ")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
         [Display(Name = "Sexo", Description = "")]

@@ -59,7 +59,7 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Phone { get; set; }
 
-        [DataType("datetime2")]
+        [DataType("datetime2", ErrorMessage = "Fecha inválida")]
         [Display(Name = "Fecha de nacimiento", Description = "")]
         [Required(ErrorMessage = " ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
