@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
@@ -6,7 +7,7 @@ using Limbs.Web.Common.Extensions;
 
 namespace Limbs.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -24,7 +25,18 @@ namespace Limbs.Web
             {
                 var exception  = Server.GetLastError();
 
-                exception.Log(Context, ExceptionAction.SendMailAndEnqueue);
+                var action = ExceptionAction.SendMailAndEnqueue;
+
+                if (typeof(HttpException) == exception.GetType())
+                {
+                    var url = Context.Request.Url.ToString();
+                    if (url.Contains("activity") || url.Contains("show") || url.Contains("members") || url.Contains("ogShow") || url.Contains("wp-admin"))
+                    {
+                        action = ExceptionAction.Enqueue;
+                    }
+                }
+
+                exception.Log(Context, action);
             }
             catch (Exception ex)
             {

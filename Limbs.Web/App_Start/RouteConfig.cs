@@ -25,6 +25,8 @@ namespace Limbs.Web
             routes.Redirect(r => r.MapRoute("", "pedir")).To(targetRoute);
             routes.Redirect(r => r.MapRoute("", "pedir-una-mano")).To(targetRoute);
             routes.Redirect(r => r.MapRoute("", "embajador-atomico")).To(embajadores);
+            routes.Redirect(r => r.MapRoute("", "SerEmbajador")).To(embajadores);
+            routes.Redirect(r => r.MapRoute("", "SerVoluntario")).To(embajadores);
             routes.Redirect(r => r.MapRoute("", "donations/limbs")).To(donar);
             
             routes.MapRoute(
