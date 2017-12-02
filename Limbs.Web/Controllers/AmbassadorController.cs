@@ -117,7 +117,7 @@ namespace Limbs.Web.Controllers
             }
             if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
 
-            var ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
+            var ambassador = await Db.AmbassadorModels.AsNoTracking().FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
             if (!ambassador.CanViewOrEdit(User))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

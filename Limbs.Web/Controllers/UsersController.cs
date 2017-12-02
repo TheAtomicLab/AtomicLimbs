@@ -100,12 +100,13 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("Index");
             }
             if (!userModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
-            var user = await Db.UserModelsT.FirstOrDefaultAsync(x => x.Id == userModel.Id);
+
+            var user = await Db.UserModelsT.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userModel.Id);
             if (!user.CanViewOrEdit(User))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-
+            
             //EDIT
             Db.Entry(userModel).State = EntityState.Modified;
             await Db.SaveChangesAsync();
