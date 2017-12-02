@@ -93,11 +93,6 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {
-            var ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
-            if (!ambassador.CanViewOrEdit(User))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
-            }
             if (!User.IsInRole(AppRoles.Administrator))
             {
                 ambassadorModel.Email = User.Identity.GetUserName();
@@ -121,6 +116,12 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("Index");
             }
             if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+
+            var ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
+            if (!ambassador.CanViewOrEdit(User))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
 
             //EDIT
             Db.Entry(ambassadorModel).State = EntityState.Modified;
