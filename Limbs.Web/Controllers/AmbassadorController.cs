@@ -93,6 +93,11 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {
+            var ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
+            if (!ambassador.CanViewOrEdit(User))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (!User.IsInRole(AppRoles.Administrator))
             {
                 ambassadorModel.Email = User.Identity.GetUserName();

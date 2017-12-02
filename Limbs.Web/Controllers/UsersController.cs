@@ -76,6 +76,11 @@ namespace Limbs.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(UserModel userModel, bool isAdultCheck, bool? termsAndConditions)
         {
+            var user = await Db.UserModelsT.FirstOrDefaultAsync(x => x.Id == userModel.Id);
+            if (!user.CanViewOrEdit(User))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
             if (!User.IsInRole(AppRoles.Administrator))
             {
                 userModel.Email = User.Identity.GetUserName();
