@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Storage.Azure;
+using Limbs.Web.Storage.Azure.TableStorage.Queries;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -31,6 +34,30 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 DaysBefore = daysBefore,
                 List = result,
+            });
+        }
+
+        /// <summary>
+        /// errores por fecha
+        /// </summary>
+        /// <returns></returns>
+        // GET: Admin/Report/Errors
+        public ActionResult Errors(DateTime? date)
+        {
+            var dateFrom = date ?? DateTime.UtcNow;
+
+            var result = new AppExceptionQuery(AzureStorageAccount.DefaultAccount).GetExceptions(dateFrom);
+            
+            return View(new AppExceptionViewModel
+            {
+                Date = dateFrom,
+                List = result.ToList().Select(x => new AppExeptionItemViewModel
+                {
+                    DateTime = x.Date,
+                    Message = x.Message,
+                    StackTrace = x.StackTrace,
+                    Url = x.Url,
+                }).ToList(),
             });
         }
     }

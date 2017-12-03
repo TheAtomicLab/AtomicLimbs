@@ -91,6 +91,7 @@
     <Compile Include="QueueStorage\QueueMessage.cs" />
     <Compile Include="TableStorage\AppExceptionData.cs" />
     <Compile Include="TableStorage\IPersister.cs" />
+    <Compile Include="TableStorage\Queries\AppExceptionQuery.cs" />
     <Compile Include="TableStorage\TablePersister.cs" />
     <Compile Include="TableStorage\TableStorageExtensions.cs" />
     <Compile Include="TableStorage\TableStorageInitializer.cs" />
@@ -105,8 +106,6 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TableStorage\Queries\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
