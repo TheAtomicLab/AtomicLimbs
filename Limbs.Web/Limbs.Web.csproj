@@ -244,6 +244,7 @@
     <Compile Include="Areas\Admin\Models\AssignOrderAmbassadorViewModel.cs" />
     <Compile Include="Areas\Admin\Models\DelayedOrdersViewModel.cs" />
     <Compile Include="Areas\Admin\Models\MessageViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -428,6 +429,7 @@
     <Content Include="Content\dropzone.min.css" />
     <Content Include="Scripts\dropzone.min.js" />
     <Content Include="Scripts\functions.js" />
+    <Content Include="Areas\Admin\Views\Users\Registered.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.2.1-vsdoc.js" />

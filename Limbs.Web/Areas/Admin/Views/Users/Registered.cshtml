@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Limbs.Web.Areas.Admin.Models.UserViewModel>
+
+@{
+
+    ViewBag.Title = "Usuarios";
+
+}
+
+<h2>Usuarios</h2>
+
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IsEmailConfirmed)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Roles)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoginProviders)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+
+    {
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsEmailConfirmed)
+            </td>
+            <td>
+                @string.Join(", ", item.Roles)
+            </td>
+            <td>
+                @string.Join(", ", item.LoginProviders)
+            </td>
+            <td>
+            </td>
+        </tr>
+
+    }
+
+</table>
