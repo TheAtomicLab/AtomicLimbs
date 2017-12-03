@@ -4,48 +4,36 @@ using Limbs.QueueConsumers;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.Azure.WebJobs;
+using Microsoft.WindowsAzure.Storage;
+using Newtonsoft.Json;
 
 namespace Limbs.Worker
 {
     public class Functions
     {
-        [NoAutomaticTrigger]
-        public static void MailsMessagesSender(TextWriter log)
+        public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, TextWriter logger)
         {
-            try
-            {
-                Console.WriteLine("MailsMessagesSender");
+            var message = JsonConvert.DeserializeObject<AppException>(queueMessage);
 
-                QueueConsumerFor<MailMessage>.WithStandaloneThread.Using(new MailsMessagesSender())
-                    .With(PoolingFrequencer.For(QueueConsumers.MailsMessagesSender.EstimatedTime))
-                    .StartConsimung();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("MailsMessagesSender error");
-                Console.WriteLine(ex);
-                log.WriteLine("Error occurred in processing pending requests. Error : {0}", ex.Message);
-            }
+            logger.WriteLine(message);
         }
 
-
-        [NoAutomaticTrigger]
-        public static void ProductGeneratorResult(TextWriter log)
+        public static void MailsMessagesSender([QueueTrigger(nameof(MailMessage))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
         {
-            try
-            {
-                Console.WriteLine("ProductGeneratorResult");
+            var queueM = MessageQueue<MailMessage>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
 
-                QueueConsumerFor<OrderProductGeneratorResult>.WithStandaloneThread.Using(new ProductGeneratorResult())
-                    .With(PoolingFrequencer.For(QueueConsumers.ProductGeneratorResult.EstimatedTime))
-                    .StartConsimung();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("ProductGeneratorResult error");
-                Console.WriteLine(ex);
-                log.WriteLine("Error occurred in processing pending requests. Error : {0}", ex.Message);
-            }
+            new MailsMessagesSender().ProcessMessages(queueM);
+
+            logger.WriteLine($"MailsMessagesSender: {queueM.Data.Subject} (f: {queueM.Data.From} |t: {queueM.Data.To})");
+        }
+        
+        public static void ProductGeneratorResult([QueueTrigger(nameof(OrderProductGeneratorResult))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
+        {
+            var queueM = MessageQueue<OrderProductGeneratorResult>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
+
+            new ProductGeneratorResult().ProcessMessages(queueM);
+
+            logger.WriteLine($"ProductGeneratorResult: {queueM.Data.OrderId} (f: {queueM.Data.FileUrl})");
         }
     }
 }
