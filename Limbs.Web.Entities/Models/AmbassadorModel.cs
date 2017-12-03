@@ -14,7 +14,7 @@ namespace Limbs.Web.Entities.Models
 
         public AmbassadorModel()
         {
-            Gender = Gender.Otro;
+            Gender = Gender.NoDeclara;
         }
 
         [Key]
@@ -38,7 +38,7 @@ namespace Limbs.Web.Entities.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Sexo", Description = "")]
+        [Display(Name = "Género", Description = "")]
         [Required(ErrorMessage = " ")]
         public Gender Gender { get; set; }
 

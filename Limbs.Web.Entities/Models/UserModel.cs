@@ -65,7 +65,7 @@ namespace Limbs.Web.Entities.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Genero", Description = "")]
+        [Display(Name = "Género", Description = "")]
         [Required(ErrorMessage = " ")]
         public Gender Gender { get; set; }
 
@@ -128,10 +128,12 @@ namespace Limbs.Web.Entities.Models
     public enum Gender
     {
         [Description("Femenino")]
-        Mujer,
+        Mujer = 0,
         [Description("Masculino")]
-        Hombre,
+        Hombre = 1,
+        [Description("Otro")]
+        Otro = 2,
         [Description("No Declara")]
-        Otro
+        NoDeclara = 3,
     }
 }
