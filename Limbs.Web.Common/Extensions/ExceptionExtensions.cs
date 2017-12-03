@@ -76,7 +76,7 @@ return;
                     var adminmail = ConfigurationManager.AppSettings["AdminEmails"];
 
                     var mailSender = new GeneralMailSender(mailserver, username, password);
-                    var mailMessage = new System.Net.Mail.MailMessage(from, adminmail?.Split(',')[0] ?? throw new InvalidOperationException(), message.CustomMessage, message.Url + "\n\n" + message.UrlReferrer + "\n\n" + message.Exception + "\n\n" + message.LogMessage + "\n\n" + message.Message + "\n\n" + message.StackTrace + "\n\n" + message.InnerExceptionMessage);
+                    var mailMessage = new System.Net.Mail.MailMessage(from, adminmail?.Split(',')[0] ?? throw new InvalidOperationException(), message.CustomMessage, message.Url + "\n\n" + message.UrlReferrer + "\n\n" + message.Exception);
 
                     // si el mensaje es null significa que el maker controló algunas situaciones y no hay nada para enviar y el mensaje se puede remover de la queue
                     mailSender.Send(mailMessage);

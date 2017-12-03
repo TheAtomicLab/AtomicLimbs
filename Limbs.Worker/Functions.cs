@@ -5,17 +5,18 @@ using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.Azure.WebJobs;
 using Microsoft.WindowsAzure.Storage;
-using Newtonsoft.Json;
 
 namespace Limbs.Worker
 {
     public class Functions
     {
-        public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, TextWriter logger)
+        public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
         {
-            var message = JsonConvert.DeserializeObject<AppException>(queueMessage);
+            var queueM = MessageQueue<AppException>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
 
-            logger.WriteLine(message);
+            new AppExceptionsSaver().ProcessMessages(queueM);
+
+            logger.WriteLine($"AppExceptionsSaver: {queueM.Data.CustomMessage}");
         }
 
         public static void MailsMessagesSender([QueueTrigger(nameof(MailMessage))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)

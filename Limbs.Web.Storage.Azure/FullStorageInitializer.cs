@@ -1,5 +1,6 @@
 ﻿using Limbs.Web.Storage.Azure.BlobStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
+using Limbs.Web.Storage.Azure.TableStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace Limbs.Web.Storage.Azure
@@ -15,7 +16,9 @@ namespace Limbs.Web.Storage.Azure
 		    new QueueStorageInitializer<OrderProductGenerator>(account).Initialize();
 		    new QueueStorageInitializer<OrderProductGeneratorResult>(account).Initialize();
 
-		    new DocumentStorageInitializer(account, AzureStorageContainer.UserFiles).Initialize(BlobContainerPublicAccessType.Container);
+		    new TableStorageInitializer<AppExceptionData>(account).Initialize();
+
+            new DocumentStorageInitializer(account, AzureStorageContainer.UserFiles).Initialize(BlobContainerPublicAccessType.Container);
 		    new DocumentStorageInitializer(account, AzureStorageContainer.ProductGenerated).Initialize(BlobContainerPublicAccessType.Container);
 
         }
