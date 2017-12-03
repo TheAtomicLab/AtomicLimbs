@@ -10,7 +10,6 @@ using Limbs.Web.Services;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Storage.Azure;
 using Microsoft.AspNet.SignalR;
-using Resources;
 
 [assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
 namespace Limbs.Web
@@ -29,15 +28,15 @@ namespace Limbs.Web
 
         private void ConfigureLocalization()
         {
-            DefaultModelBinder.ResourceClassKey = typeof(LimbsResources).Name;
-            ClientDataTypeModelValidatorProvider.ResourceClassKey = typeof(LimbsResources).Name;
+            DefaultModelBinder.ResourceClassKey = "Resources.LimbsResources";
+            ClientDataTypeModelValidatorProvider.ResourceClassKey = "Resources.LimbsResources";
 
             var ass = Assembly.Load("Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
             var hack = ass.GetType("Microsoft.AspNet.Identity.Resources");
             var field = hack.GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
             if (field == null) return;
 
-            field.SetValue(null, new System.Resources.ResourceManager(typeof(LimbsResources).FullName ?? throw new InvalidOperationException(), typeof(LimbsResources).Assembly));
+            field.SetValue(null, new System.Resources.ResourceManager("Resources.LimbsResources", global::System.Reflection.Assembly.Load("App_GlobalResources")));
         }
 
         public void ConfigureServices(IAppBuilder app)
