@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 
 namespace Limbs.Web.Controllers
 {
@@ -30,6 +31,12 @@ namespace Limbs.Web.Controllers
             if(Request.IsAjaxRequest())
                 return new HttpStatusCodeResult(500);
             return View("Error");
+        }
+
+        // GET: StaticContent/TestError
+        public ActionResult TestError()
+        {
+            throw new EntryPointNotFoundException("TestException", new Exception("Inner TestException"));
         }
 
         // GET: StaticContent/Redirect

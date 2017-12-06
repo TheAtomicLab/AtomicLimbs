@@ -1,0 +1,62 @@
+﻿@using Limbs.Web.Common.Extensions
+@model Limbs.Web.Areas.Admin.Models.AppExceptionViewModel
+
+@{
+    ViewBag.Title = "Errors";
+}
+
+<h2>Errors</h2>
+
+<h4>Errores de x día</h4>
+
+<div>
+    @using (Html.BeginForm("Errors", "Report", FormMethod.Get))
+    {
+        @Html.LabelFor(x => x.Date)
+        @Html.EditorFor(x => x.Date)
+        <input type="submit" value="VER"/>
+    }
+</div>
+
+<table>
+    <tr>
+        <th>
+            Fecha/hora
+        </th>
+        <th>
+            Message
+        </th>
+        <th>
+            Stacktrace
+        </th>
+        <th>
+            Url
+        </th>
+    </tr>
+    @if (!Model.List.Any())
+    {
+        <tr>
+            <td colspan="4">
+                No hay errores!
+            </td>
+        </tr>
+    }
+    @foreach (var item in Model.List)
+    {
+        <tr>
+            <td>
+                @item.DateTime.ToFriendlyDateString()
+            </td>
+            <td>
+                @item.Message
+            </td>
+            <td>
+                @item.StackTrace
+            </td>
+            <td>
+                @item.Url
+            </td>
+        </tr>
+    }
+
+</table>

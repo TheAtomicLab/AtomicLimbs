@@ -29,7 +29,7 @@ namespace Limbs.Web
         private void ConfigureLocalization()
         {
             DefaultModelBinder.ResourceClassKey = "Resources.LimbsResources";
-            ClientDataTypeModelValidatorProvider.ResourceClassKey = "Resources.LimbsResources";
+            //ClientDataTypeModelValidatorProvider.ResourceClassKey = "Resources.LimbsResources";
 
             var ass = Assembly.Load("Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
             var hack = ass.GetType("Microsoft.AspNet.Identity.Resources");
