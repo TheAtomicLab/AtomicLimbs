@@ -1,30 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.WindowsAzure.Storage;
-using Microsoft.WindowsAzure.Storage.Table.DataServices;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace Limbs.Web.Storage.Azure.TableStorage.Queries
 {
 	public class AppExceptionQuery
 	{
-		private readonly TableServiceContext _tableContext;
+		private readonly CloudTable _table;
 
 		public AppExceptionQuery(CloudStorageAccount account)
 		{
-		    var client = account.CreateCloudTableClient();
-            _tableContext = new TableServiceContext(client);
-		}
+		    var tableClient = account.CreateCloudTableClient();
+            _table = tableClient.GetTableReference(nameof(AppException));
+        }
         
 		public IEnumerable<AppExceptionData> GetExceptions(DateTime date)
 		{
-            var queryable = _tableContext.CreateQuery<AppExceptionData>(typeof(AppExceptionData).AsTableStorageName());
+           var query = new TableQuery<AppExceptionData>().Where(
+                TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, date.ToString("yyyyMMdd")));
 
-		    var query = queryable.Where(x => x.PartitionKey == date.ToString("yyyyMMdd"));
 
-			var result = query.AsTableServiceQuery(_tableContext).Execute();
-
-		    return result;
+            return _table.ExecuteQuery(query);
 		}
 	}
 }

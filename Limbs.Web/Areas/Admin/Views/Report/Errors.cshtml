@@ -27,10 +27,13 @@
             Message
         </th>
         <th>
-            Stacktrace
+            Url
         </th>
         <th>
-            Url
+            CustomMessage
+        </th>
+        <th>
+            Stacktrace
         </th>
     </tr>
     @if (!Model.List.Any())
@@ -45,16 +48,24 @@
     {
         <tr>
             <td>
-                @item.DateTime.ToFriendlyDateString()
+                @item.DateTime
             </td>
             <td>
                 @item.Message
             </td>
             <td>
-                @item.StackTrace
+                @{
+                    Uri u = new Uri(item.Url);
+                }
+                <span title="@item.Url">
+                    @u.PathAndQuery
+                </span>
             </td>
             <td>
-                @item.Url
+                @item.CustomMessage
+            </td>
+            <td style="font-size: 8px;">
+                @item.StackTrace
             </td>
         </tr>
     }

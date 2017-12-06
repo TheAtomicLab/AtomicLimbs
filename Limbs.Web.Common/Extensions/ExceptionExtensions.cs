@@ -27,7 +27,7 @@ namespace Limbs.Web.Common.Extensions
             Log(exception, context, string.Empty, action);
         }
 
-        public static void Log(this Exception exception, HttpContext context, string customMessage = "", ExceptionAction action = ExceptionAction.Enqueue)
+        public static void Log(this Exception exception, HttpContext context, string customMessage = "AtomicLimbs.Error", ExceptionAction action = ExceptionAction.Enqueue)
         {
 
             var url = "Not available";
@@ -51,7 +51,7 @@ namespace Limbs.Web.Common.Extensions
 
             var message = new AppException
             {
-                CustomMessage = string.IsNullOrWhiteSpace(customMessage) ? "AtomicLimbs.Error" : customMessage,
+                CustomMessage = customMessage,
                 Exception = exception,
                 Url = url,
                 UrlReferrer = urlreferer,

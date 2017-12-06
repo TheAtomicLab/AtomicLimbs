@@ -57,6 +57,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
                     Message = x.Message,
                     StackTrace = x.StackTrace,
                     Url = x.Url,
+                    CustomMessage = x.CustomMessage,
                 }).ToList(),
             });
         }

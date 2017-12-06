@@ -19,5 +19,7 @@ namespace Limbs.Web.Areas.Admin.Models
         public string StackTrace { get; set; }
 
         public string Url { get; set; }
+
+        public string CustomMessage { get; set; }
     }
 }

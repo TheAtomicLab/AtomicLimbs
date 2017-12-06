@@ -15,7 +15,7 @@ namespace Limbs.Web.Storage.Azure.TableStorage
 		{
             if (tableClient == null)
 			{
-                throw new ArgumentNullException("cloudTableClient");
+                throw new ArgumentNullException(nameof(tableClient));
 			}
             table = tableClient.GetTableReference(entityTableName);
 		}

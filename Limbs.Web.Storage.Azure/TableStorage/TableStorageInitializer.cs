@@ -13,11 +13,7 @@ namespace Limbs.Web.Storage.Azure.TableStorage
 
 		public TableStorageInitializer(CloudStorageAccount account)
 		{
-			if (account == null)
-			{
-				throw new ArgumentNullException("account");
-			}
-			this.account = account;
+            this.account = account ?? throw new ArgumentNullException(nameof(account));
 			var properties =
 				typeof (TTableEntity).GetProperties(BindingFlags.Public | BindingFlags.Instance).Select(pi => pi.Name).
 					ToList();
