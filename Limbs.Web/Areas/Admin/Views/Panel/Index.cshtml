@@ -13,7 +13,10 @@
         @Html.ActionLink("Reportes", "Index", new {controller = "Report", area = "Admin"})
         <ul>
             <li>
-                @Html.ActionLink("DelayedOrders", "DelayedOrders", new {controller = "Report", area = "Admin"})
+                @Html.ActionLink("DelayedOrders", "DelayedOrders", new { controller = "Report", area = "Admin" })
+            </li>
+            <li>
+                @Html.ActionLink("Errors", "Errors", new { controller = "Report", area = "Admin" })
             </li>
         </ul>
     </li>
