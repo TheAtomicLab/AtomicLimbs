@@ -27,17 +27,21 @@ namespace Limbs.Web.Common.Extensions
             Log(exception, context, string.Empty, action);
         }
 
-        public static void Log(this Exception exception, HttpContext context, string customMessage, ExceptionAction action = ExceptionAction.Enqueue)
+        public static void Log(this Exception exception, HttpContext context, string customMessage = "", ExceptionAction action = ExceptionAction.Enqueue)
         {
-#if DEBUG
-return;
-#endif
+
             var url = "Not available";
             var urlreferer = "Not available";
 
             if (context != null)
             {
-                url = context.Request.Url.ToString();
+                url = context.Request.Url?.ToString();
+
+                if (context.User?.Identity != null && context.User.Identity.IsAuthenticated)
+                {
+                    customMessage += $"| LoggedUser: {context.User.Identity.Name}";
+                }
+
             }
 
             if (context != null && context.Request.UrlReferrer != null)
