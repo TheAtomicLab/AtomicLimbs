@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Reflection;
 using System.Web.Mvc;
+using System.Web.Mvc.Html;
 using LightInject;
+using Limbs.Web;
 using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Resources;
 using Limbs.Web.Repositories;
-using Microsoft.Owin;
-using Owin;
-using Limbs.Web.Services;
 using Limbs.Web.Repositories.Interfaces;
+using Limbs.Web.Services;
 using Limbs.Web.Storage.Azure;
 using Microsoft.AspNet.SignalR;
+using Microsoft.Owin;
+using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Limbs.Web.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
+
 namespace Limbs.Web
 {
     public partial class Startup
@@ -28,21 +32,21 @@ namespace Limbs.Web
 
         private void ConfigureLocalization()
         {
-            DefaultModelBinder.ResourceClassKey = "Resources.LimbsResources";
-            //ClientDataTypeModelValidatorProvider.ResourceClassKey = "Resources.LimbsResources";
+            var resourcesClass = typeof(LimbsResources).FullName;
+            DefaultModelBinder.ResourceClassKey = resourcesClass;
+            ValidationExtensions.ResourceClassKey = resourcesClass;
 
-            var ass = Assembly.Load("Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35");
-            var hack = ass.GetType("Microsoft.AspNet.Identity.Resources");
-            var field = hack.GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
-            if (field == null) return;
-
-            field.SetValue(null, new System.Resources.ResourceManager("Resources.LimbsResources", global::System.Reflection.Assembly.Load("App_GlobalResources")));
+            var field = Assembly.Load("Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")
+                .GetType("Microsoft.AspNet.Identity.Resources")
+                .GetField("resourceMan", BindingFlags.Static | BindingFlags.NonPublic);
+            if (field == null) throw new InvalidOperationException(nameof(field));
+            field.SetValue(null, LimbsResources.ResourceManager);
         }
 
         public void ConfigureServices(IAppBuilder app)
         {
             var container = new ServiceContainer();
-            
+
             container.Register<IOrdersRepository, OrdersRepository>();
             container.Register<IUsersRepository, UsersRepository>();
             container.Register<IAmbassadorsRepository, AmbassadorsRepository>();
