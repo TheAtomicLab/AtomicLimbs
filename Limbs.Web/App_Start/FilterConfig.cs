@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using Limbs.Web.Common.Extensions;
 
 namespace Limbs.Web
 {
@@ -6,7 +7,17 @@ namespace Limbs.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new CustomHandleErrorAttribute());
+        }
+    }
+
+    public class CustomHandleErrorAttribute : HandleErrorAttribute
+    {
+        public override void OnException(ExceptionContext filterContext)
+        {
+            filterContext.Exception.Log(filterContext.HttpContext.ApplicationInstance.Context, ExceptionAction.SendMailAndEnqueue);
+
+            base.OnException(filterContext);
         }
     }
 }
