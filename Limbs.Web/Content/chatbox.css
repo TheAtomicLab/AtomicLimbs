@@ -10,17 +10,30 @@ footer {
 }
 
 .min_full {
-    height: calc(100vh - 70px);
+    position: fixed;
+    top: 70px;
+    left: 0px;
+    width: 100%;
+    height: calc(100% - 70px);
+}
+.cont-wr {
+    height: 100%;
 }
 @media only screen and (max-width: 760px) {
     .min_full {
-        height: calc(100vh - 55px);
+        top: 55px;
+        height: calc(100% - 55px);
     }
 }
 /*reset*/
 
 
 /*chat header*/
+.chatbox {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 .ch_header {
     height: 80px;
     position: relative;
@@ -34,11 +47,15 @@ footer {
         color: #525252;
         margin-bottom: 3px;
     }
+    .ch_header a {
+        margin: 0px;
+        font-size: 14px;
+    }
 
 
 .messages-details {
-    height: calc(100% - 80px);
     display: flex;
+    flex-grow:2;
     flex-direction: column;
 }
 
@@ -175,6 +192,11 @@ footer {
     border-radius: 20px;
     border: solid 1px #6d6d6d;
 }
+    .messages-details .reply input[type=text]:focus {
+        outline: none;
+        border-color: #4772b2;
+        box-shadow: 0px 0px 2px #4772b2;
+    }
 
 .messages-details .reply button[type=submit] {
     width: 50px;
@@ -221,6 +243,17 @@ footer {
         }
     }
 @media only screen and (max-width: 760px) {
+    .ch_header {
+        height: 68px;
+        padding: 0px 10px;
+    }
+    .ch_header h2 {
+        font-size: 16px;
+    }
+    .ch_header a {
+        padding: 5px;
+        font-size: 12px;
+    }
     .messages-details .message-item.card {
         max-width: 95%;
     }
@@ -232,8 +265,11 @@ footer {
             font-size: 17px;
             width: calc(100% - 60px);
         }
-        .messages-details .reply button[type=submit]{
+        .messages-details .reply button[type=submit] {
             margin: 0px;
+            height: 44px;
+            width: 44px;
+            right: 3px;
         }
     .messages-details .messages{
         padding: 20px 15px;

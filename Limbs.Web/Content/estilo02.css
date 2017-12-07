@@ -207,27 +207,40 @@
         height: 100%;
     }
 
-    /*Embajadores*/
+    /*panel embajadores*/
     .panel_emb {
         padding: 5px;
         width: 100%;
         min-width: initial;
         margin: 20px 0px;
     }
-    #paneles_embajador table tr td:nth-of-type(1) {
-        display: none;
-    }
-    #paneles_embajador table tr td {
+    #panele_embajadores table tr td {
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: calc(100vw - 190px);
     }
-    /*info pedido*/
-    #estado_pedido {
-        position: relative;
-        padding-top: 50px;
+    #paneles_embajador .card {
+        padding: 20px 10px;
+        max-width: 550px;
+        margin-left: auto;
+        margin-right: auto;
     }
+        #paneles_embajador .card h2 {
+            font-size: 16px;
+        }
+        /*info pedido*/
+        #estado_pedido {
+            position: relative;
+            padding-top: 50px;
+        }
+    .table-pedidos > * {
+        color: #434343;
+    }
+    .table-pedidos > * > div:nth-child(2) {
+        color: #4772b2;
+    }
+
     .flex_info {
         display: block;
     }

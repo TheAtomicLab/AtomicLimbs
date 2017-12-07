@@ -328,6 +328,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\admin.css" />
+    <Content Include="Content\chatbox.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\general_style.css" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
