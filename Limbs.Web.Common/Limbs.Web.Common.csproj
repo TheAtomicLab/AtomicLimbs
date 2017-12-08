@@ -80,6 +80,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Captcha\InvisibleRecaptchaValidationService.cs" />
+    <Compile Include="Captcha\ValidateRecaptchaAttribute.cs" />
     <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Extensions\FileExtensions.cs" />
@@ -106,6 +108,7 @@
     <Compile Include="Mail\MailTemplatesRegistration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RazorGeneratorBase.cs" />
+    <Compile Include="Captcha\ICaptchaValidationService.cs" />
     <Compile Include="Resources\LimbsResources.Designer.cs">
       <DependentUpon>LimbsResources.resx</DependentUpon>
       <AutoGen>True</AutoGen>

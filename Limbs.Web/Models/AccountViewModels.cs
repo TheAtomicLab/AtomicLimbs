@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 
 namespace Limbs.Web.Models
 {
@@ -64,6 +65,11 @@ namespace Limbs.Web.Models
 
     public class RegisterViewModel
     {
+        public RegisterViewModel()
+        {
+            RecaptchaPublicKey = ConfigurationManager.AppSettings["Google.Recaptcha.PublicKey"];
+        }
+
         [Required(ErrorMessage = " ")]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -79,6 +85,8 @@ namespace Limbs.Web.Models
         [Display(Name = "Confirma contraseña")]
         [Compare("Password", ErrorMessage = "La contraseña no coincide.")]
         public string ConfirmPassword { get; set; }
+
+        public string RecaptchaPublicKey { get; }
     }
 
     public class SelectUserOrAmbassador

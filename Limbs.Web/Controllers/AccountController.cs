@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -170,13 +172,14 @@ namespace Limbs.Web.Controllers
                 return RedirectUser();
             }
 
-            return View();
+            return View(new RegisterViewModel());
         }
 
         //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
+        [ValidateRecaptcha]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {

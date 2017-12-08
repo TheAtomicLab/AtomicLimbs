@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using LightInject;
 using Limbs.Web;
+using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Resources;
 using Limbs.Web.Repositories;
@@ -47,6 +48,7 @@ namespace Limbs.Web
         {
             var container = new ServiceContainer();
 
+            container.Register<ICaptchaValidationService, InvisibleRecaptchaValidationService>();
             container.Register<IOrdersRepository, OrdersRepository>();
             container.Register<IUsersRepository, UsersRepository>();
             container.Register<IAmbassadorsRepository, AmbassadorsRepository>();
