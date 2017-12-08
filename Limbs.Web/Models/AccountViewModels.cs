@@ -48,12 +48,12 @@ namespace Limbs.Web.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = " ")]
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = " ")]
         [DataType(DataType.Password)]
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
