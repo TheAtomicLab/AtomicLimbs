@@ -76,5 +76,10 @@ namespace Limbs.Web.Controllers
             return RedirectPermanent("http://AtomicLab.org/Embajadores");
         }
 
+        // GET: StaticContent/Animales
+        public ActionResult Animales()
+        {
+            return RedirectPermanent("http://AtomicLab.org/animales");
+        }
     }
 }

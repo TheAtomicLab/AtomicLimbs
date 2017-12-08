@@ -16,6 +16,8 @@ namespace Limbs.Web
             var libre = routes.MapRoute("", "StaticContent/Libre", new { controller = "StaticContent", action = "Libre" });
             var manoton = routes.MapRoute("", "StaticContent/Manoton", new { controller = "StaticContent", action = "Manoton" });
             var embajadores = routes.MapRoute("", "StaticContent/Embajadores", new { controller = "StaticContent", action = "Embajadores" });
+            var animales = routes.MapRoute("", "StaticContent/Animales", new { controller = "StaticContent", action = "Animales" });
+            var lista = routes.MapRoute("", "Orders/PublicOrders", new { controller = "Orders", action = "PublicOrders", area = "" }, new[] { "Limbs.Web.Controllers" });
 
             routes.Redirect(r => r.MapRoute("", "faq")).To(faq);
             routes.Redirect(r => r.MapRoute("", "dar")).To(donar);
@@ -28,7 +30,10 @@ namespace Limbs.Web
             routes.Redirect(r => r.MapRoute("", "SerEmbajador")).To(embajadores);
             routes.Redirect(r => r.MapRoute("", "SerVoluntario")).To(embajadores);
             routes.Redirect(r => r.MapRoute("", "donations/limbs")).To(donar);
-            
+            routes.Redirect(r => r.MapRoute("", "animales")).To(animales);
+            routes.Redirect(r => r.MapRoute("", "ListaDeEspera")).To(lista);
+
+
             routes.MapRoute(
                 "Default",
                 "{controller}/{action}/{id}",
