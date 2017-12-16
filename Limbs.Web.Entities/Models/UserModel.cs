@@ -19,6 +19,7 @@ namespace Limbs.Web.Entities.Models
         public UserModel()
         {
             Gender = Gender.Otro;
+            RegisteredAt = DateTime.UtcNow;
         }
 
         [Key]
@@ -29,6 +30,8 @@ namespace Limbs.Web.Entities.Models
 
         [Required]
         public string Email { get; set; }
+
+        public DateTime? RegisteredAt { get; set; }
 
         /// <summary>
         /// If the responsable = product user
@@ -75,6 +78,10 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
+        [Display(Name = "Provincia", Description = "")]
+        [Required(ErrorMessage = " ")]
+        public string State { get; set; }
+
         [Display(Name = "Ciudad", Description = "")]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
@@ -82,6 +89,10 @@ namespace Limbs.Web.Entities.Models
         [Display(Name = "Dirección", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Address { get; set; }
+
+        [Display(Name = "Dirección 2", Description = "")]
+        [Required(ErrorMessage = " ")]
+        public string Address2 { get; set; }
 
         [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
         [Required(ErrorMessage = " ")]
@@ -120,7 +131,7 @@ namespace Limbs.Web.Entities.Models
 
         public string FullAddress()
         {
-            return $"{Address}, {City}, {Country}";
+            return $"{Address} {Address2}, {City} {State}, {Country}";
         }
 
         public bool CanViewOrEdit(IPrincipal user)

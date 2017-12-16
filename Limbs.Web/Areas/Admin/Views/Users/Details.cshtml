@@ -71,6 +71,15 @@
 
         <dd>
             @Html.DisplayFor(model => model.Location)
+            <a href="https://maps.google.com/maps?q=@Model.LatLng" target="_blank">MAPA</a>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegisteredAt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegisteredAt)
         </dd>
         
     </dl>

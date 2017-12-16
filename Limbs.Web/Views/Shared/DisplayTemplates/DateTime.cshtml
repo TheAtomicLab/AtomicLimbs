@@ -1,5 +1,7 @@
 ﻿@model DateTime?
 @if (Model.HasValue)
 {
-    @Model.Value.ToString("dd/MM/yyyy")
+    <span title="@Model.Value.ToString("G")">
+        @Model.Value.ToString("dd/MM/yyyy")
+    </span>
 }
