@@ -1,6 +1,7 @@
 var form = $("form.form");
 var errorContainer = form.find("[data-valmsg-summary=true]"),
     errorList = errorContainer.find("ul");
+var latlng = $("#LatLng", form);
 var country = $("#Country", form);
 var city = $("#City", form);
 var address = $("#Address", form);
@@ -21,13 +22,15 @@ function geocodeAddress() {
                     console.log(results);
 
                     var addressSelector = $(".address-selector").show().find("ul").empty();
-                    var template = $($.parseHTML('<li><a href="#" data-country="" data-city="" data-address="" onclick="selectAddress(this); return false;">Ecuador 1419, CABA, Argentina</a></li>'));
+                    var template = $($.parseHTML('<li><a href="#" data-lat="" data-lng="" data-country="" data-city="" data-address="" onclick="selectAddress(this); return false;">Ecuador 1419, CABA, Argentina</a></li>'));
                     var itemCount = 0;
                     for (var i = 0; i < results.length; i++) {
                         var item = template.clone();
                         var itemLink = item.find("a");
                         var cityStr = "", addressStr = "", addressNumber = "";
                         var addressComponents = results[i].address_components;
+                        itemLink.attr("data-lat", results[i].geometry.location.lat());
+                        itemLink.attr("data-lng", results[i].geometry.location.lng());
                         for (var j = 0; j < addressComponents.length; ++j) {
                             var types = addressComponents[j].types;
                             for (var k = 0; k < types.length; ++k) {
@@ -114,6 +117,7 @@ function selectAddress(e) {
     country.val(item.attr("data-country"));
     city.val(item.attr("data-city"));
     address.val(item.attr("data-address"));
+    latlng.val(item.attr("data-lat") + "," + item.attr("data-lng"));
 
     $(".address-selector").hide();
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
+using System.Globalization;
 using System.Security.Principal;
 using Microsoft.AspNet.Identity;
 
@@ -63,7 +65,14 @@ namespace Limbs.Web.Entities.Models
         public string Dni { get; set; }
 
         public DbGeography Location { get; set; }
-        
+
+        [NotMapped]
+        public string LatLng
+        {
+            get => $"{Location.Latitude},{Location.Longitude}";
+            set => GeneratePoint(value.Split(','));
+        }
+
         public virtual ICollection<OrderModel> OrderModel { get; set; } = new List<OrderModel>();
 
         public string FullName()
@@ -79,6 +88,16 @@ namespace Limbs.Web.Entities.Models
             }
 
             return UserId == user.Identity.GetUserId();
+        }
+
+        private DbGeography GeneratePoint(string[] point)
+        {
+            return (point == null || point.Length != 2) ? null : GeneratePoint(double.Parse(point[0]), double.Parse(point[1]));
+        }
+
+        private DbGeography GeneratePoint(double lat, double lng)
+        {
+            return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);
         }
     }
 }

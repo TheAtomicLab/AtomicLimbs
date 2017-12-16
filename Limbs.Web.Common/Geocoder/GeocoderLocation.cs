@@ -14,8 +14,8 @@ namespace Limbs.Web.Common.Geocoder
             var geocoder = new GoogleGeocoder { ApiKey = ConfigurationManager.AppSettings["Google.Maps.Key"] };
             var addresses = await geocoder.GeocodeAsync(pointAddress);
             var addressesArray = addresses as GoogleAddress[] ?? addresses.ToArray();
-            
-            return addressesArray.Length != 1 ? null : addressesArray.First();
+
+            return addressesArray.Length == 0 ? null : addressesArray.First();
         }
 
         public static async Task<DbGeography> GeneratePointAsync(string pointAddress)
@@ -24,10 +24,15 @@ namespace Limbs.Web.Common.Geocoder
 
             return address == null ? null : GeneratePoint(address);
         }
-        
+
         public static DbGeography GeneratePoint(Address address)
         {
             return address == null ? null : GeneratePoint(address.Coordinates.Latitude, address.Coordinates.Longitude);
+        }
+
+        public static DbGeography GeneratePoint(string[] point)
+        {
+            return (point == null || point.Length != 2 ) ? null : GeneratePoint(double.Parse(point[0]), double.Parse(point[1]));
         }
 
         public static DbGeography GeneratePoint(double lat, double lng)
