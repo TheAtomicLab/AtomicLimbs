@@ -18,9 +18,16 @@
     <tr>
         <td>@Html.DisplayNameFor(x => x.Sizes)</td>
         <td>
-            <p>A: @(Model.Sizes.A)cm</p>
-            <p>B: @(Model.Sizes.B)cm</p>
-            <p>C: @(Model.Sizes.C)cm</p>
+            @if (Model.Sizes != null)
+            {
+                <p>A: @(Model.Sizes.A)cm</p>
+                <p>B: @(Model.Sizes.B)cm</p>
+                <p>C: @(Model.Sizes.C)cm</p>
+            }
+            else
+            {
+                <p>No medido</p>
+            }
         </td>
     </tr>
 

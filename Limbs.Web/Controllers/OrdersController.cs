@@ -119,41 +119,54 @@ namespace Limbs.Web.Controllers
             TempData["AmputationType"] = orderModel.AmputationType;
             TempData["ProductType"] = orderModel.ProductType;
 
-            return Json(new { Action = "ManoMedidas" });
-                //return RedirectToAction("ManoMedidas");
-            }
-
-        // GET: Orders/ManoMedidas
-        public ActionResult ManoMedidas()
-        {
-            if (TempData["fileUrl"] == null)
-            {
-                return RedirectToAction("ManoPedir", "Orders");
-            }
-            
-            return View("ManoMedidas", new OrderModel
-            {
-                IdImage = TempData["fileUrl"].ToString(),
-                AmputationType = (AmputationType)TempData["AmputationType"],
-                ProductType = (ProductType)TempData["ProductType"],
-            });
+            //AB 20171216: las medidas las toma el embajador
+            //return Json(new { Action = "ManoMedidas" });
+            return Json(new { Action = "ManoOrden" });
         }
 
-        // POST: Orders/ManoOrden
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult ManoOrden(OrderModel orderModel)
+        // GET: Orders/ManoOrden
+        public ActionResult ManoOrden()
         {
-            ModelState.Clear();
-            if (string.IsNullOrWhiteSpace(orderModel.IdImage))
-                ModelState.AddModelError("noimage", @"Error desconocido, vuelva a comenzar.");
-            if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0)
-                ModelState.AddModelError("nodistance", @"Seleccione las medidas.");
-
-            if (!ModelState.IsValid) return View("ManoMedidas", orderModel);
-
-            return View("ManoOrden", orderModel);
+            return View("ManoOrden", new OrderModel
+                {
+                    IdImage = TempData["fileUrl"].ToString(),
+                    AmputationType = (AmputationType)TempData["AmputationType"],
+                    ProductType = (ProductType)TempData["ProductType"],
+                });
         }
+
+        //AB 20171216: las medidas las toma el embajador
+        //// GET: Orders/ManoMedidas
+        //public ActionResult ManoMedidas()
+        //{
+        //    if (TempData["fileUrl"] == null)
+        //    {
+        //        return RedirectToAction("ManoPedir", "Orders");
+        //    }
+        //    
+        //    return View("ManoMedidas", new OrderModel
+        //    {
+        //        IdImage = TempData["fileUrl"].ToString(),
+        //        AmputationType = (AmputationType)TempData["AmputationType"],
+        //        ProductType = (ProductType)TempData["ProductType"],
+        //    });
+        //}
+
+        //// POST: Orders/ManoOrden
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ManoOrden(OrderModel orderModel)
+        //{
+        //    ModelState.Clear();
+        //    if (string.IsNullOrWhiteSpace(orderModel.IdImage))
+        //        ModelState.AddModelError("noimage", @"Error desconocido, vuelva a comenzar.");
+        //    if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0)
+        //        ModelState.AddModelError("nodistance", @"Seleccione las medidas.");
+        //
+        //    if (!ModelState.IsValid) return View("ManoMedidas", orderModel);
+        //
+        //    return View("ManoOrden", orderModel);
+        //}
 
         // POST: Orders/Create
         [HttpPost]
@@ -174,12 +187,13 @@ namespace Limbs.Web.Controllers
             Db.OrderModels.Add(orderModel);
             await Db.SaveChangesAsync();
 
-            await AzureQueue.EnqueueAsync(new OrderProductGenerator
-            {
-                OrderId = orderModel.Id,
-                Pieces = orderModel.Pieces,
-                ProductSizes = orderModel.Sizes,
-            });
+            //AB 20171216: las medidas las toma el embajador
+            //await AzureQueue.EnqueueAsync(new OrderProductGenerator
+            //{
+            //    OrderId = orderModel.Id,
+            //    Pieces = orderModel.Pieces,
+            //    ProductSizes = orderModel.Sizes,
+            //});
 
             return RedirectToAction("Index", "Users");
         }

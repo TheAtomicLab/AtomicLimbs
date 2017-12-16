@@ -19,12 +19,12 @@
     {
         @Html.AntiForgeryToken()
 
-        @Html.HiddenFor(model => model.AmputationType);
-        @Html.HiddenFor(model => model.ProductType);
-        @Html.HiddenFor(model => model.IdImage);
-        @Html.HiddenFor(model => model.Sizes.A);
-        @Html.HiddenFor(model => model.Sizes.B);
-        @Html.HiddenFor(model => model.Sizes.C);
+        @Html.HiddenFor(model => model.AmputationType)
+        @Html.HiddenFor(model => model.ProductType)
+        @Html.HiddenFor(model => model.IdImage)
+        @*Html.HiddenFor(model => model.Sizes.A)
+        @Html.HiddenFor(model => model.Sizes.B)
+        @Html.HiddenFor(model => model.Sizes.C)*@
 
         <div class="form-horizontal">
             <div id="color_mano">
