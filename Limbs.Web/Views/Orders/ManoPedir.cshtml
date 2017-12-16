@@ -2,7 +2,16 @@
 
 @section scripts
 {
-    <script src="~/Scripts/pages/orders.js"></script>
+    <script src="~/Scripts/pages/orders.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $('input[type=radio][name=AmputationType]').change(function () {
+            if (this.value === "A" || this.value === "B" || this.value === "G" || this.value === "H") {
+                $(".no-design").show();
+            } else {
+                $(".no-design").hide();
+            }
+        });
+    </script>
 }
 @{ 
     ViewBag.Title = "Pedido";
@@ -23,9 +32,16 @@
             </p>
             <div id="tipo_de_amp">
                 @Html.EditorFor(x => x.AmputationType)
+                
+                <div class="no-design" style="display: none;">
+                    <h2 class="f-titulo" style="background: red;">Importante</h2>
+                    <p style="color: red;text-align: center; margin: 10px 20px;">
+                        No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos. 
+                    </p>
+                </div>
             </div>
             <p>
-                @Html.ValidationMessageFor(x => x.AmputationType, "Por favor, elegí tu amputación")
+                @Html.ValidationMessageFor(x => x.AmputationType)
             </p>
             <div>
                 <input id="enviar" type="submit" value="Siguiente" class="bn_blue">
