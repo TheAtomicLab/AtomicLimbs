@@ -298,6 +298,10 @@
     <Compile Include="Migrations\201711201958532_ProductFileUrl.Designer.cs">
       <DependentUpon>201711201958532_ProductFileUrl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712162052413_moreuserdata.cs" />
+    <Compile Include="Migrations\201712162052413_moreuserdata.Designer.cs">
+      <DependentUpon>201712162052413_moreuserdata.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -345,9 +349,13 @@
     <Content Include="Content\img\amputaciones_tipo\h.png" />
     <Content Include="Content\img\default_messages.svg" />
     <Content Include="Content\img\ej_no001.jpg" />
+    <Content Include="Content\img\ej_no001br.jpg" />
     <Content Include="Content\img\ej_no002.jpg" />
+    <Content Include="Content\img\ej_no002br.jpg" />
     <Content Include="Content\img\ej_si001.jpg" />
+    <Content Include="Content\img\ej_si001br.jpg" />
     <Content Include="Content\img\ej_si002.jpg" />
+    <Content Include="Content\img\ej_si002br.jpg" />
     <Content Include="Content\img\Error\404.svg" />
     <Content Include="Content\img\fondo_manoton.jpg" />
     <Content Include="Content\img\foto01.jpg" />
@@ -572,6 +580,7 @@
     <Content Include="Views\Messages\Create.cshtml" />
     <Content Include="Views\Orders\Details\_Header.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
+    <Content Include="Views\Orders\BrazoImagen.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -618,6 +627,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201711201958532_ProductFileUrl.resx">
       <DependentUpon>201711201958532_ProductFileUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712162052413_moreuserdata.resx">
+      <DependentUpon>201712162052413_moreuserdata.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

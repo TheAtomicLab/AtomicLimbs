@@ -70,13 +70,18 @@ namespace Limbs.Web.Controllers
             TempData["AmputationType"] = orderModel.AmputationType;
             TempData["ProductType"] = orderModel.ProductType;
 
-            return RedirectToAction("ManoImagen");
+            var viewName = "ManoImagen";
+            if (orderModel.AmputationType.EsBrazo())
+            {
+                viewName = "BrazoImagen";
+            }
+            return RedirectToAction(viewName);
         }
 
         // GET: Orders/ManoImagen
         public ActionResult ManoImagen()
         {
-            var amputationType =  TempData["AmputationType"];
+            var amputationType = TempData["AmputationType"];
             var productType = TempData["ProductType"];
             if (amputationType == null || productType == null)
             {
@@ -89,7 +94,25 @@ namespace Limbs.Web.Controllers
                 ProductType = (ProductType)productType,
             });
         }
-        
+
+
+        // GET: Orders/BrazoImagen
+        public ActionResult BrazoImagen()
+        {
+            var amputationType = TempData["AmputationType"];
+            var productType = TempData["ProductType"];
+            if (amputationType == null || productType == null)
+            {
+                return RedirectToAction("ManoPedir");
+            }
+
+            return View("BrazoImagen", new OrderModel
+            {
+                AmputationType = (AmputationType)amputationType,
+                ProductType = (ProductType)productType,
+            });
+        }
+
         // POST: Orders/UploadImageUser
         [HttpPost]
         [ValidateAntiForgeryToken]

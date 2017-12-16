@@ -79,20 +79,37 @@
     background-color: #0172c1;
 }
 
-#ej_si ul li:nth-of-type(1) {
+.mano #ej_si ul li:nth-of-type(1) {
     background-image: url(/Content/img/ej_si001.jpg);
 }
 
-#ej_si ul li:nth-of-type(2) {
+.mano #ej_si ul li:nth-of-type(2) {
     background-image: url(/Content/img/ej_si002.jpg);
 }
 
-#ej_no ul li:nth-of-type(1) {
+.mano #ej_no ul li:nth-of-type(1) {
     background-image: url(/Content/img/ej_no001.jpg);
 }
 
-#ej_no ul li:nth-of-type(2) {
+.mano #ej_no ul li:nth-of-type(2) {
     background-image: url(/Content/img/ej_no002.jpg);
+}
+
+
+.brazo #ej_si ul li:nth-of-type(1) {
+    background-image: url(/Content/img/ej_si001br.jpg);
+}
+
+.brazo #ej_si ul li:nth-of-type(2) {
+    background-image: url(/Content/img/ej_si002br.jpg);
+}
+
+.brazo #ej_no ul li:nth-of-type(1) {
+    background-image: url(/Content/img/ej_no001br.jpg);
+}
+
+.brazo #ej_no ul li:nth-of-type(2) {
+    background-image: url(/Content/img/ej_no002br.jpg);
 }
 
 .ej_exp ul li:before {
