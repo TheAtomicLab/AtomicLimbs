@@ -3,12 +3,13 @@ var errorContainer = form.find("[data-valmsg-summary=true]"),
     errorList = errorContainer.find("ul");
 var latlng = $("#LatLng", form);
 var country = $("#Country", form);
+var state = $("#State", form);
 var city = $("#City", form);
 var address = $("#Address", form);
 
 function geocodeAddress() {
     var geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ "address": country.val() + "," + city.val() + "," + address.val() },
+    geocoder.geocode({ "address": country.val() + "," + state.val() + "," + city.val() + "," + address.val() },
         function (results, status) {
             $(".address-selector").hide();
             if (status === "OK") {
@@ -22,12 +23,12 @@ function geocodeAddress() {
                     console.log(results);
 
                     var addressSelector = $(".address-selector").show().find("ul").empty();
-                    var template = $($.parseHTML('<li><a href="#" data-lat="" data-lng="" data-country="" data-city="" data-address="" onclick="selectAddress(this); return false;">Ecuador 1419, CABA, Argentina</a></li>'));
+                    var template = $($.parseHTML('<li><a href="#" data-lat="" data-lng="" data-country="" data-state="" data-city="" data-address="" onclick="selectAddress(this); return false;">Ecuador 1419, CABA, Argentina</a></li>'));
                     var itemCount = 0;
                     for (var i = 0; i < results.length; i++) {
                         var item = template.clone();
                         var itemLink = item.find("a");
-                        var cityStr = "", addressStr = "", addressNumber = "";
+                        var stateStr = "", cityStr = "", addressStr = "", addressNumber = "";
                         var addressComponents = results[i].address_components;
                         itemLink.attr("data-lat", results[i].geometry.location.lat());
                         itemLink.attr("data-lng", results[i].geometry.location.lng());
@@ -54,10 +55,10 @@ function geocodeAddress() {
                                     }
                                 }
                                 if (types[k] === "administrative_area_level_1") {
-                                    if (cityStr === "") {
-                                        cityStr = addressComponents[j].long_name;
+                                    if (stateStr === "") {
+                                        stateStr = addressComponents[j].long_name;
                                     } else {
-                                        cityStr += ", " + addressComponents[j].long_name;
+                                        stateStr += ", " + addressComponents[j].long_name;
                                     }
                                 }
 
@@ -70,6 +71,7 @@ function geocodeAddress() {
                             }
                         }
                         itemLink.attr("data-city", cityStr);
+                        itemLink.attr("data-state", stateStr);
                         itemLink.attr("data-address", addressStr + " " + addressNumber);
                         itemLink.text(results[i].formatted_address);
                         if (addressNumber !== "") {
@@ -115,6 +117,7 @@ function selectAddress(e) {
     var item = $(e);
     console.log(e);
     country.val(item.attr("data-country"));
+    state.val(item.attr("data-state"));
     city.val(item.attr("data-city"));
     address.val(item.attr("data-address"));
     latlng.val(item.attr("data-lat") + "," + item.attr("data-lng"));

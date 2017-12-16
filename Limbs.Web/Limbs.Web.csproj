@@ -302,6 +302,10 @@
     <Compile Include="Migrations\201712162052413_moreuserdata.Designer.cs">
       <DependentUpon>201712162052413_moreuserdata.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201712162209350_ambssadormoreinfo.cs" />
+    <Compile Include="Migrations\201712162209350_ambssadormoreinfo.Designer.cs">
+      <DependentUpon>201712162209350_ambssadormoreinfo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -630,6 +634,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201712162052413_moreuserdata.resx">
       <DependentUpon>201712162052413_moreuserdata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712162209350_ambssadormoreinfo.resx">
+      <DependentUpon>201712162209350_ambssadormoreinfo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

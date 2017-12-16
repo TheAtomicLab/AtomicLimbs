@@ -67,11 +67,13 @@
                 @Html.EditorFor(model => model.Birth, new {htmlAttributes = new {@class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") }})
                 <label class="f-label">Sexo</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new {@class = "f-campo f-post-l"}})
+                @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Country).ToHtmlString()) } })
                 <div class="f-campo-mitad">
-                    @Html.EditorFor(model => model.Country, new {htmlAttributes = new {@class = "f-campo", placeholder = "País"}})
-                    @Html.EditorFor(model => model.City, new {htmlAttributes = new {@class = "f-campo", placeholder = "Ciudad"}})
+                    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.State).ToHtmlString()) } })
+                    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.City).ToHtmlString()) } })
                 </div>
-                @Html.EditorFor(model => model.Address, new {htmlAttributes = new {@class = "f-campo", placeholder = "Dirección"}})
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address).ToHtmlString()) } })
+                @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address2).ToHtmlString()) } })
                 <div class="address-selector">
                     <p>¿Cuál de las siguientes es su dirección?:</p>
                     <ul></ul>

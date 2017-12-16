@@ -18,7 +18,7 @@ namespace Limbs.Web.Entities.Models
 
         public UserModel()
         {
-            Gender = Gender.Otro;
+            Gender = Gender.NoDeclara;
             RegisteredAt = DateTime.UtcNow;
         }
 
@@ -86,11 +86,11 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
-        [Display(Name = "Dirección", Description = "")]
+        [Display(Name = "Dirección (solo calle y altura)", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Address { get; set; }
 
-        [Display(Name = "Dirección 2", Description = "")]
+        [Display(Name = "Dirección (otros datos)", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Address2 { get; set; }
 
@@ -103,7 +103,7 @@ namespace Limbs.Web.Entities.Models
         [NotMapped]
         public string LatLng
         {
-            get => $"{Location.Latitude},{Location.Longitude}";
+            get => $"{Location?.Latitude},{Location?.Longitude}";
             set => GeneratePoint(value.Split(','));
         }
 

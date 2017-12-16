@@ -110,6 +110,8 @@ namespace Limbs.Web.Controllers
                 await userManager.RemoveFromRoleAsync(ambassadorModel.UserId, AppRoles.Unassigned);
                 await userManager.AddToRoleAsync(ambassadorModel.UserId, AppRoles.Ambassador);
 
+                ambassadorModel.RegisteredAt = DateTime.UtcNow;
+
                 Db.AmbassadorModels.Add(ambassadorModel);
                 await Db.SaveChangesAsync();
 
@@ -137,7 +139,7 @@ namespace Limbs.Web.Controllers
             ModelState[nameof(ambassadorModel.Email)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.Location)]?.Errors.Clear();
 
-            var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
+            var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.State + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
             var address = await GeocoderLocation.GetAddressAsync(pointAddress) as GoogleAddress;
             ambassadorModel.Location = GeocoderLocation.GeneratePoint(address);
 

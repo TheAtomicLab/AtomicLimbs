@@ -17,6 +17,7 @@ namespace Limbs.Web.Entities.Models
         public AmbassadorModel()
         {
             Gender = Gender.NoDeclara;
+            RegisteredAt = DateTime.UtcNow;
         }
 
         [Key]
@@ -25,6 +26,8 @@ namespace Limbs.Web.Entities.Models
         public string UserId { get; set; }
 
         public string Email { get; set; }
+
+        public DateTime? RegisteredAt { get; set; }
 
         [Display(Name = "Nombre", Description = "")]
         [Required(ErrorMessage = " ")]
@@ -48,13 +51,21 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
+        [Display(Name = "Provincia", Description = "")]
+        [Required(ErrorMessage = " ")]
+        public string State { get; set; }
+
         [Display(Name = "Ciudad", Description = "")]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
-        [Display(Name = "Dirección", Description = "")]
+        [Display(Name = "Dirección (solo calle y altura)", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Address { get; set; }
+
+        [Display(Name = "Dirección (otros datos)", Description = "")]
+        [Required(ErrorMessage = " ")]
+        public string Address2 { get; set; }
 
         [Display(Name = "Teléfono", Description = "")]
         [Required(ErrorMessage = " ")]
@@ -69,7 +80,7 @@ namespace Limbs.Web.Entities.Models
         [NotMapped]
         public string LatLng
         {
-            get => $"{Location.Latitude},{Location.Longitude}";
+            get => $"{Location?.Latitude},{Location?.Longitude}";
             set => GeneratePoint(value.Split(','));
         }
 

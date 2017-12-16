@@ -94,6 +94,8 @@ namespace Limbs.Web.Controllers
                 await userManager.RemoveFromRoleAsync(userModel.UserId, AppRoles.Unassigned);
                 await userManager.AddToRoleAsync(userModel.UserId, AppRoles.Requester);
 
+                userModel.RegisteredAt = DateTime.UtcNow;
+
                 Db.UserModelsT.Add(userModel);
                 await Db.SaveChangesAsync();
 
@@ -121,7 +123,7 @@ namespace Limbs.Web.Controllers
             ModelState[nameof(userModel.Email)]?.Errors.Clear();
             ModelState[nameof(userModel.Location)]?.Errors.Clear();
             
-            var pointAddress = userModel.Country + ", " + userModel.City + ", " + userModel.Address;
+            var pointAddress = userModel.Country + ", " + userModel.State + ", " + userModel.City + ", " + userModel.Address;
             var address = await GeocoderLocation.GetAddressAsync(pointAddress) as GoogleAddress;
             userModel.Location = GeocoderLocation.GeneratePoint(address);
 
