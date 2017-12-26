@@ -1,8 +1,8 @@
-﻿using System.Configuration;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity;
@@ -15,6 +15,7 @@ using Limbs.Web.Entities.Models;
 namespace Limbs.Web.Controllers
 {
     [Authorize]
+    [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
