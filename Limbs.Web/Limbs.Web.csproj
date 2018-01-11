@@ -372,6 +372,7 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\ManoMedidas.css" />
+    <Content Include="Content\manualembajador.css" />
     <Content Include="Content\publicOrders.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style2.css" />
@@ -569,6 +570,8 @@
     <Content Include="Views\Messages\Create.cshtml" />
     <Content Include="Views\Orders\Details\_Header.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
+    <Content Include="Views\StaticContent\ManualEmbajador.cshtml" />
+    <Content Include="Views\StaticContent\faq.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
