@@ -9,6 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Limbs.Web.Tests
 {
+    [TestClass]
     public class ProductGeneratorTests
     {
         [TestMethod]

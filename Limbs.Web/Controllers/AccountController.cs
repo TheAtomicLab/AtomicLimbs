@@ -1,8 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.UI;
 using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity;
@@ -15,7 +16,7 @@ using Limbs.Web.Entities.Models;
 namespace Limbs.Web.Controllers
 {
     [Authorize]
-    [OutputCache(NoStore = true, Location = OutputCacheLocation.None)]
+    [NoCache]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -394,7 +395,16 @@ namespace Limbs.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var user = await UserManager.FindAsync(loginInfo.Login);
+
+                    if (user == null || await UserManager.IsEmailConfirmedAsync(user.Id))
+                        return RedirectToLocal(returnUrl);
+
+                    await SendEmailConfirmation(user);
+
+                    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                    return View("DisplayEmail");
+
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -405,7 +415,7 @@ namespace Limbs.Web.Controllers
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
 
-                    return await ExternalLoginConfirmationAction(new ExternalLoginConfirmationViewModel { Email = loginInfo.Email }, returnUrl);
+                    return await ExternalLoginConfirmationAction(new ExternalLoginConfirmationViewModel { Email = loginInfo.Email, EmailConfirmed = true }, returnUrl);
             }
         }
 
@@ -426,33 +436,52 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("Index", "Manage");
             }
 
+            if (string.IsNullOrWhiteSpace(model.Email))
+            {
+                ModelState.AddModelError(nameof(model.Email), @"Email requerido");
+            }
+
             if (ModelState.IsValid)
             {
                 // Get the information about the user from the external login provider
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    return View("ExternalLoginFailure");
+                    ModelState.AddModelError(nameof(model), @"Intenta nuevamente.");
+
+                    return View("Login");
                 }
-                var user = new ApplicationUser {UserName = model.Email, Email = model.Email};
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    EmailConfirmed = model.EmailConfirmed,
+                };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
-
+                    
                     if (result.Succeeded)
                     {
                         await UserManager.AddToRoleAsync(user.Id, AppRoles.Unassigned);
 
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+                        if (await UserManager.IsEmailConfirmedAsync(user.Id))
+                        {
+                            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                            return RedirectToLocal(returnUrl);
+                        }
+                        
+                        await SendEmailConfirmation(user);
+
+                        return View("DisplayEmail");
                     }
                 }
                 AddErrors(result);
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View("ExternalLoginFailure", model);
+            return View("ExternalLoginConfirmation", model);
         }
 
         //
@@ -555,5 +584,24 @@ namespace Limbs.Web.Controllers
             }
         }
         #endregion
+    }
+
+    /// <inheritdoc />
+    /// <summary>
+    /// Prevent a controller or specific action from being cached in the web browser.
+    /// For example - sign in, go to a secure page, sign out, click the back button.
+    /// <seealso cref="!:https://stackoverflow.com/questions/6656476/mvc-back-button-issue/6656539#6656539" />
+    /// </summary>
+    public class NoCacheAttribute : ActionFilterAttribute
+    {
+        public override void OnResultExecuting(ResultExecutingContext filterContext)
+        {
+            var response = filterContext.HttpContext.Response;
+            response.Cache.SetExpires(DateTime.UtcNow.AddDays(-1));
+            response.Cache.SetValidUntilExpires(false);
+            response.Cache.SetRevalidation(HttpCacheRevalidation.AllCaches);
+            response.Cache.SetCacheability(HttpCacheability.NoCache);
+            response.Cache.SetNoStore();
+        }
     }
 }

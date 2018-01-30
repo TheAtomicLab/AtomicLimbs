@@ -149,6 +149,7 @@
     <EmbeddedResource Include="Mail\Templates\EmailConfirmation.cshtml" />
     <EmbeddedResource Include="Mail\Templates\EmailPasswordChange.cshtml" />
     <EmbeddedResource Include="Mail\Templates\OrderProofOfDeliveryInfoToRequestor.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\EmailPasswordChangeImport.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -6,9 +6,16 @@ namespace Limbs.Web.Models
 {
     public class ExternalLoginConfirmationViewModel
     {
-        [Required]
+        public ExternalLoginConfirmationViewModel()
+        {
+            EmailConfirmed = false;
+        }
+
+        [Required(ErrorMessage = " ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        public bool EmailConfirmed { get; set; }
     }
 
     public class ExternalLoginListViewModel

@@ -1,0 +1,73 @@
+﻿@using System.Configuration
+@model Limbs.Web.Entities.Models.AmbassadorModel
+
+@Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", onFocus = "geolocate()", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address).ToHtmlString()) } })
+@Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address2).ToHtmlString()) } })
+<div class="f-campo-mitad">
+    @Html.EditorFor(model => model.State, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.State).ToHtmlString()) } })
+    @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.City).ToHtmlString()) } })
+</div>
+@Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Country).ToHtmlString()) } })
+<div class="address-selector">
+    <p>¿Cuál de las siguientes es su dirección?:</p>
+    <ul></ul>
+</div>
+
+<script>
+
+        var placeSearch, autocomplete;
+        var componentForm = {
+            street_number: ['short_name', '@Html.IdFor(x => x.Address)'],
+            route: ['long_name', '@Html.IdFor(x => x.Address)'],
+            locality: ['long_name', '@Html.IdFor(x => x.City)'],
+            administrative_area_level_1: ['short_name', '@Html.IdFor(x => x.State)'],
+            country: ['long_name', '@Html.IdFor(x => x.Country)'],
+        };
+
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete((document.getElementById('@Html.IdFor(x => x.Address)')),{types: ['geocode']});
+            autocomplete.addListener('place_changed', fillInAddress);
+        }
+
+        function fillInAddress() {
+            var place = autocomplete.getPlace();
+
+            for (var component in componentForm) {
+                document.getElementById(componentForm[component][1]).value = '';
+            }
+
+            for (var i = 0; i < place.address_components.length; i++) {
+                var addressType = place.address_components[i].types[0];
+                if (componentForm[addressType]) {
+                    var val = place.address_components[i][componentForm[addressType][0]];
+
+                    console.log(addressType);
+                    console.log(val);
+                    if (document.getElementById(componentForm[addressType][1]).value !== '') {
+                        var cVal = document.getElementById(componentForm[addressType][1]).value;
+                        document.getElementById(componentForm[addressType][1]).value = cVal + " " + val;
+                    }
+                    else {
+                        document.getElementById(componentForm[addressType][1]).value = val;
+                    }
+                }
+            }
+        }
+
+        function geolocate() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+                    var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                    });
+                    autocomplete.setBounds(circle.getBounds());
+                });
+            }
+        }
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@(ConfigurationManager.AppSettings["Google.Maps.Key"])&libraries=places&callback=initAutocomplete" async defer></script>

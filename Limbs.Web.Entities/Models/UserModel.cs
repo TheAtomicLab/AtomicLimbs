@@ -104,7 +104,7 @@ namespace Limbs.Web.Entities.Models
         public string LatLng
         {
             get => $"{Location?.Latitude},{Location?.Longitude}";
-            set => GeneratePoint(value.Split(','));
+            set => Location = GeneratePoint(value?.Split(','));
         }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; }
