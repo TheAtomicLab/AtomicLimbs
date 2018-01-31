@@ -342,6 +342,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\chatbox.css" />
+    <Content Include="Content\chatbox.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\general_style.css" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
@@ -397,6 +398,7 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\ManoMedidas.css" />
+    <Content Include="Content\manualembajador.css" />
     <Content Include="Content\publicOrders.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style2.css" />
@@ -615,6 +617,8 @@
     <Content Include="Views\Messages\Create.cshtml" />
     <Content Include="Views\Orders\Details\_Header.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
+    <Content Include="Views\StaticContent\ManualEmbajador.cshtml" />
+    <Content Include="Views\StaticContent\faq.cshtml" />
     <Content Include="Views\Orders\BrazoImagen.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />

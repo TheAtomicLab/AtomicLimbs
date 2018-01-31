@@ -43,88 +43,6 @@ h3 {
     color: #444444;
 }
 
-/*inicio*/
-#body_inicio {
-    padding-top: 0px;
-}
-
-#inicio {
-    position: relative;
-    width: 100%;
-    background-color: #4772B2;
-    color: white;
-    background-position: center;
-    background-size: cover;
-}
-
-#cont_inicio {
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-}
-#cont_inicio div:nth-child(2) {
-    padding: 40px 0px 20px 0px;
-}
-
-#proyecto_inicio {
-    position: absolute;
-    height: 40px;
-    top: 31px;
-    left: 0px;
-    animation: subtitulo_inicio 1s ease-in-out;
-}
-
-#logo_inicio {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    height: 80px;
-    animation: titulo_inicio 1s ease-in-out;
-}
-
-@keyframes titulo_inicio {
-    0% {
-        right: calc(50% - 107px);
-    }
-
-    50% {
-        right: calc(50% - 107px);
-    }
-
-    100% {
-        right: 0px;
-    }
-}
-
-@keyframes subtitulo_inicio {
-    0% {
-        opacity: 0;
-        left: 30px;
-    }
-
-    50% {
-        opacity: 0;
-        left: 30px;
-    }
-
-    100% {
-        opacity: 1;
-        left: 0px;
-    }
-}
-
-#inicio .bn_blue {
-    position: relative;
-    background-color: white;
-    color: #4772B2;
-}
-
-#registrarse_button {
-    position: relative;
-    color: white;
-    text-shadow: rgba(0,0,0,0.7) 1px 1px 2px;
-}
-
 /*header*/
 header {
     height: 70px;
@@ -255,9 +173,6 @@ nav {
     display: none;
 }
 /*registro*/
-#registro {
-    background-color: #dcdcdc;
-}
 
 .form {
     box-sizing: border-box;
@@ -943,19 +858,11 @@ button[name="recoverPassword"] {
 
 #paneles_embajador {
     margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-    #paneles_embajador table tr:first-child {
-        cursor: inherit !important;
-        background-color: inherit !important;
-        color: inherit !important;
-    }
 
-    #paneles_embajador table tr:hover {
-        cursor: pointer;
-        background-color: #4772B2;
-        color: white;
-    }
 
 .panel_emb {
     width: calc(48% - 2px);
@@ -973,6 +880,71 @@ button[name="recoverPassword"] {
     .panel_emb h2 {
         text-align: left;
     }
+
+
+.table-pedidos > *:hover {
+    cursor: pointer;
+    background-color: #4772B2;
+    color: white;
+}
+.table-pedidos {
+    display: block
+}
+
+    .table-pedidos > * {
+        color: #4772b2;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        height: 80px;
+        position: relative;
+        padding-left: 7px;
+    }
+
+
+        .table-pedidos > * > div:nth-child(1) {
+            position: absolute;
+            bottom: 22px;
+            right: 5px;
+        }
+
+            .table-pedidos > * > div:nth-child(1) > div {
+                margin: auto 0px;
+            }
+
+        .table-pedidos > * > div:nth-child(2) {
+            padding: 0px;
+            font-size: 17px;
+            font-weight: 700;
+            height: 34px;
+            flex-grow: 1;
+            display: flex;
+            width: calc(100% - 34px);
+        }
+
+            .table-pedidos > * > div:nth-child(2) > div {
+                margin-top: auto;
+            }
+
+        .table-pedidos > * > div:nth-child(3) {
+            position: absolute;
+            right: 3px;
+            color: #777777;
+            padding: 0px;
+            font-size: 14px;
+            width: calc(100% - 147px);
+            text-align: right;
+            line-height: 12px;
+            bottom: 7px;
+        }
+        .table-pedidos > *:hover > * {
+            color: #ffffff !important;
+        }
+
+        .table-pedidos > * > div:nth-child(4) {
+            padding: 0px;
+            flex-grow: 2;
+        }
 
 
 /*info solicitud*/

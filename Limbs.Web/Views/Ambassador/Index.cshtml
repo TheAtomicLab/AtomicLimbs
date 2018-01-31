@@ -24,73 +24,70 @@
             </div>
         </div>
         <div id="paneles_embajador">
-            @if (Model.PendingToAssignOrders.Count > 0)
-            {
+
+
+
                 <article class="card card-l">
                     <h2>Pedidos entrantes:</h2>
-                    <table class="table-items">
-                        <tr>
-                            <td>@Html.DisplayNameFor(x => o.Id)</td>
-                            <td>@Html.DisplayNameFor(x => o.OrderRequestor.UserName)</td>
-                            <td>@Html.DisplayNameFor(x => o.Date)</td>
-                        </tr>
+                    @if (Model.PendingToAssignOrders.Count > 0)
+                    {
+                    <div class="table-items table-pedidos">
                         @foreach (var order in Model.PendingToAssignOrders)
                         {
-                            <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
-                                <td>#@order.Id</td>
-                                <td>@order.OrderRequestor.FullNameWithoutLastName()</td>
-                                <td>@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</td>
-                            </tr>
+                            <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
+                                <div class="info_id">#@order.Id</div>
+                                <div class="info_name">@order.OrderRequestor.FullNameWithoutLastName()</div>
+                                <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
+                            </a>
                         }
-                    </table>
+                    </div>
+                    } else {
+                        <div>No tienes nuevos pedidos asignados</div>
+                    }
                 </article>
-            }
-            
-
+ @*          
+     <div>
+        <div>@Html.DisplayNameFor(x => o.Id)</div>
+        <div>@Html.DisplayNameFor(x => o.OrderRequestor.UserName)</div>
+        <div>@Html.DisplayNameFor(x => o.Date)</div>
+        <div>@Html.DisplayNameFor(x => o.Status)</div>
+    </div>
+*@
             <article class="card card-l">
                 <h2>Tus pedidos:</h2>
-                <table class="table-items">
-                    <tr>
-                        <td>@Html.DisplayNameFor(x => o.Id)</td>
-                        <td>@Html.DisplayNameFor(x => o.OrderRequestor.UserName)</td>
-                        <td>@Html.DisplayNameFor(x => o.Date)</td>
-                        <td>@Html.DisplayNameFor(x => o.Status)</td>
-                    </tr>
+                <div class="table-items table-pedidos">
                     @foreach (var order in Model.PendingOrders)
                     {
-                        <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
-                            <td>#@order.Id</td>
-                            <td>@order.OrderRequestor.FullNameWithoutLastName()</td>
-                            <td>@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</td>
-                            <td>@order.Status.ToDescription()</td>
-                        </tr>
+                        <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
+                            <div class="info_id"><div>#@order.Id</div></div>
+                            <div class="info_name"><div>@order.OrderRequestor.FullNameWithoutLastName()</div></div>
+                            <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
+                            <div class="info_description">@order.Status.ToDescription()</div>
+                        </a>
                     }
-                </table>
+                </div>
             </article>
 
-            @if (Model.DeliveredOrders.Count > 0)
-            {
+
                 <article id="terminadas" class="card card-l">
                     <h2>Terminadas:</h2>
-                    <table class="table-items">
-                        <tr>
-                            <td>@Html.DisplayNameFor(x => o.Id)</td>
-                            <td>@Html.DisplayNameFor(x => o.OrderRequestor.UserName)</td>
-                            <td>@Html.DisplayNameFor(x => o.Date)</td>
-                            <td>@Html.DisplayNameFor(x => o.Status)</td>
-                        </tr>
-                        @foreach (var order in Model.DeliveredOrders)
-                        {
-                            <tr onclick="location.href = '@(Url.Action("Details", "Orders", new { id = order.Id }))'">
-                                <td>#@order.Id</td>
-                                <td>@order.OrderRequestor.FullNameWithoutLastName()</td>
-                                <td>@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</td>
-                                <td>@order.Status.ToDescription()</td>
-                            </tr>
-                        }
-                    </table>
+                    @if (Model.DeliveredOrders.Count > 0) {
+                        <div class="table-items table-pedidos">
+                            @foreach (var order in Model.DeliveredOrders)
+                            {
+                                <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
+                                    <div class="info_id"><div>#@order.Id</div></div>
+                                    <div class="info_name">@order.OrderRequestor.FullNameWithoutLastName()</div>
+                                    <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
+                                    <div class="info_description">@order.Status.ToDescription()</div>
+                                </a>
+                            }
+                        </div>
+                    } else {
+                        <div>¡Aún no has entregado ninguna mano!</div>
+                    }
                 </article>
-            }
+
 
         </div>
     </article>
