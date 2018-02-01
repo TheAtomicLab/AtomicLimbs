@@ -130,8 +130,10 @@ namespace Limbs.Web.Controllers
             if (address == null)
                 ModelState.AddModelError(nameof(userModel.Address), @"Dirección inválida.");
 
+            /*
             if (address != null && address[GoogleAddressType.StreetNumber] == null)
                 ModelState.AddModelError(nameof(userModel.Address), @"La dirección debe tener altura en la calle.");
+            */
 
             if (termsAndConditions.HasValue && !termsAndConditions.Value)
                 ModelState.AddModelError(nameof(termsAndConditions), @"Debe aceptar terminos y condiciones.");

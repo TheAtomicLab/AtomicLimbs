@@ -146,8 +146,10 @@ namespace Limbs.Web.Controllers
             if (address == null)
                 ModelState.AddModelError(nameof(ambassadorModel.Address), @"Dirección inválida.");
 
+            /*
             if (address != null && address[GoogleAddressType.StreetNumber] == null)
                 ModelState.AddModelError(nameof(ambassadorModel.Address), @"La dirección debe tener altura en la calle.");
+            */
 
             if (ambassadorModel.Birth > DateTime.UtcNow.AddYears(-AmbassadorModel.MinYear))
                 ModelState.AddModelError(nameof(ambassadorModel.Birth), $@"Debes ser mayor de {AmbassadorModel.MinYear} años.");
