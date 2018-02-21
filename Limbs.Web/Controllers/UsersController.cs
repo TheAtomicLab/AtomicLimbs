@@ -121,6 +121,9 @@ namespace Limbs.Web.Controllers
             ModelState[nameof(userModel.Id)]?.Errors.Clear();
             ModelState[nameof(userModel.UserId)]?.Errors.Clear();
             ModelState[nameof(userModel.Email)]?.Errors.Clear();
+
+            userModel.Location = GeocoderLocation.GeneratePoint(userModel.LatLng.Split(','));
+            /*
             ModelState[nameof(userModel.Location)]?.Errors.Clear();
             
             var pointAddress = userModel.Country + ", " + userModel.State + ", " + userModel.City + ", " + userModel.Address;
@@ -130,7 +133,6 @@ namespace Limbs.Web.Controllers
             if (address == null)
                 ModelState.AddModelError(nameof(userModel.Address), @"Dirección inválida.");
 
-            /*
             if (address != null && address[GoogleAddressType.StreetNumber] == null)
                 ModelState.AddModelError(nameof(userModel.Address), @"La dirección debe tener altura en la calle.");
             */

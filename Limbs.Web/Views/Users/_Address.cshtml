@@ -1,5 +1,8 @@
 ﻿@using System.Configuration
 @model Limbs.Web.Entities.Models.UserModel
+@{
+    var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
+}
 
 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", onFocus = "geolocate()", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address).ToHtmlString()) } })
 @Html.EditorFor(model => model.Address2, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address2).ToHtmlString()) } })
@@ -8,9 +11,14 @@
     @Html.EditorFor(model => model.City, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.City).ToHtmlString()) } })
 </div>
 @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Country).ToHtmlString()) } })
-<div class="address-selector">
-    <p>¿Cuál de las siguientes es su dirección?:</p>
-    <ul></ul>
+
+<div style="margin-bottom: 20px;">
+    <h3>¿Ésta es tu dirección?</h3>
+    <h4 style="margin: 0 -50px;">Buscá en el mapa, y hacé click en la ubicación correcta.</h4>
+    <div id="map" style="height: 400px; width: 400px; margin-left: -50px;margin-top: 10px;"></div>
+    <h5 style="margin: 0 -50px;">Es importante que ubiques tu dirección correctamente para gestionar tu pedido.</h5>
+    @Html.HiddenFor(x => x.LatLng)
+    <br />
 </div>
 
 <script>
@@ -27,10 +35,42 @@
         function initAutocomplete() {
             autocomplete = new google.maps.places.Autocomplete((document.getElementById('@Html.IdFor(x => x.Address)')),{types: ['geocode']});
             autocomplete.addListener('place_changed', fillInAddress);
+
+            var myLatLng = {lat: @(Model.Location.Latitude), lng: @(Model.Location.Longitude)};
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 17,
+                center: myLatLng
+            });
+
+            addMarker(myLatLng, map);
+
+            google.maps.event.addListener(map, 'click', function(event) {
+                addMarker(event.latLng, map);
+            });
+
+        }
+
+        var map;
+        var marker;
+
+        function addMarker(location, map) {
+            if(marker){ marker.setMap(null); }
+            marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            marker.setMap(map);
+            var latlng = marker.getPosition().lat() + "," + marker.getPosition().lng();
+            console.log(latlng);
+            $("#@Html.IdFor(x => x.LatLng)").val(latlng);
         }
 
         function fillInAddress() {
             var place = autocomplete.getPlace();
+
+            addMarker(place.geometry.location, map);
+            map.setCenter(place.geometry.location);
 
             for (var component in componentForm) {
                 document.getElementById(componentForm[component][1]).value = '';
@@ -41,11 +81,9 @@
                 if (componentForm[addressType]) {
                     var val = place.address_components[i][componentForm[addressType][0]];
 
-                    console.log(addressType);
-                    console.log(val);
                     if (document.getElementById(componentForm[addressType][1]).value !== '') {
                         var cVal = document.getElementById(componentForm[addressType][1]).value;
-                        document.getElementById(componentForm[addressType][1]).value = cVal + " " + val;
+                        document.getElementById(componentForm[addressType][1]).value = val + " " + cVal;
                     }
                     else {
                         document.getElementById(componentForm[addressType][1]).value = val;
@@ -56,7 +94,7 @@
 
         function geolocate() {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
+                navigator.geolocation.getCurrentPosition(function (position) {
                     var geolocation = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
@@ -70,4 +108,4 @@
             }
         }
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=@(ConfigurationManager.AppSettings["Google.Maps.Key"])&libraries=places&callback=initAutocomplete" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&libraries=places&callback=initAutocomplete" async defer></script>

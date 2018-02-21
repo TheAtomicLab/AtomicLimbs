@@ -7,11 +7,9 @@
     bool termsAndConditions = ViewBag.TermsAndConditions != null && (bool)ViewBag.TermsAndConditions;
 
     ViewBag.Title = isEdit ? "Editar datos" : "Registro";
-    var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
 }
 
 @section scripts{
-    <script src="~/Scripts/geo.js"></script>
     <script type="text/javascript">
         $("#@Html.IdFor(model => model.Birth)").datepicker(
             {
@@ -51,7 +49,6 @@
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.Email)
             @Html.HiddenFor(x => x.UserId)
-            @Html.HiddenFor(x => x.LatLng)
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Tus datos</h2>
             <div class="f-seccion">

@@ -3,7 +3,6 @@
 @model Limbs.Web.Entities.Models.UserModel
 @{
     var isEdit = Model != null && Model?.Id != 0;
-    var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
 
     bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool)ViewBag.IsAdultCheck;
     bool termsAndConditions = ViewBag.TermsAndConditions != null && (bool)ViewBag.TermsAndConditions;
@@ -13,7 +12,6 @@
 
 @section scripts
 {
-    <script src="~/Scripts/geo.js"></script>
     <script src="~/Scripts/pages/users.js"></script>
     @if (!isEdit)
         {
@@ -52,7 +50,6 @@
             @Html.HiddenFor(x => x.Id)
             @Html.HiddenFor(x => x.Email)
             @Html.HiddenFor(x => x.UserId)
-            @Html.HiddenFor(x => x.LatLng)
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Tus datos</h2>
             <div class="f-seccion">

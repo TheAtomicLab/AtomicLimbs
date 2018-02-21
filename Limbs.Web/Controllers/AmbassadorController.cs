@@ -137,6 +137,9 @@ namespace Limbs.Web.Controllers
             ModelState[nameof(ambassadorModel.Id)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.UserId)]?.Errors.Clear();
             ModelState[nameof(ambassadorModel.Email)]?.Errors.Clear();
+
+            ambassadorModel.Location = GeocoderLocation.GeneratePoint(ambassadorModel.LatLng.Split(','));
+            /*
             ModelState[nameof(ambassadorModel.Location)]?.Errors.Clear();
 
             var pointAddress = ambassadorModel.Country + ", " + ambassadorModel.State + ", " + ambassadorModel.City + ", " + ambassadorModel.Address;
@@ -145,8 +148,7 @@ namespace Limbs.Web.Controllers
 
             if (address == null)
                 ModelState.AddModelError(nameof(ambassadorModel.Address), @"Dirección inválida.");
-
-            /*
+                
             if (address != null && address[GoogleAddressType.StreetNumber] == null)
                 ModelState.AddModelError(nameof(ambassadorModel.Address), @"La dirección debe tener altura en la calle.");
             */

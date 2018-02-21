@@ -76,12 +76,12 @@ namespace Limbs.Web.Entities.Models
         public string Dni { get; set; }
 
         public DbGeography Location { get; set; }
-
+        
         [NotMapped]
         public string LatLng
         {
             get => $"{Location?.Latitude},{Location?.Longitude}";
-            set => GeneratePoint(value?.Split(','));
+            set => Location = GeneratePoint(value?.Split(','));
         }
 
         public virtual ICollection<OrderModel> OrderModel { get; set; } = new List<OrderModel>();
