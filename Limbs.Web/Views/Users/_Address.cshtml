@@ -2,6 +2,9 @@
 @model Limbs.Web.Entities.Models.UserModel
 @{
     var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
+
+    var locationLatitude = Model?.Location == null ? -34.6338038 : Model.Location.Latitude;
+    var locationLongitude = Model?.Location == null ? -58.4107765 : Model.Location.Longitude;
 }
 
 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "f-campo", onFocus = "geolocate()", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Address).ToHtmlString()) } })
@@ -33,10 +36,14 @@
         };
 
         function initAutocomplete() {
-            autocomplete = new google.maps.places.Autocomplete((document.getElementById('@Html.IdFor(x => x.Address)')),{types: ['geocode']});
+            autocomplete = new google.maps.places.Autocomplete((document.getElementById('@Html.IdFor(x => x.Address)')),
+                { types: ['geocode'] });
             autocomplete.addListener('place_changed', fillInAddress);
 
-            var myLatLng = {lat: @(Model.Location.Latitude), lng: @(Model.Location.Longitude)};
+            var myLatLng = {
+                lat: @locationLatitude,
+                lng: @locationLongitude
+            };
 
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 17,
