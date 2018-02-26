@@ -31,6 +31,8 @@ namespace Limbs.Web
     {
         public override void OnException(ExceptionContext filterContext)
         {
+            if (!(filterContext.Exception is HttpAntiForgeryException)) return;
+
             filterContext.ExceptionHandled = true;
             filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new { action = "Login", controller = "Account", _t = DateTime.UtcNow.Millisecond }));
         }
