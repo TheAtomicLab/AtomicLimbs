@@ -17,9 +17,9 @@ namespace Limbs.Web
                 "~/Scripts/jquery-ui-{version}.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/general_style.css",
                 "~/Content/estilo01.css",
                 "~/Content/estilo02.css",
-                "~/Content/general_style.css",
                 "~/Content/estiloatomchoose.css"));
 
             bundles.Add(new StyleBundle("~/Content/jqueryui").Include(

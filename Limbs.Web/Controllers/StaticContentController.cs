@@ -5,6 +5,17 @@ namespace Limbs.Web.Controllers
 {
     public class StaticContentController : Controller
     {
+        // GET: StaticContent/faq
+        public ActionResult faq()
+        {
+            return View();
+        }
+        // GET: StaticContent/ManualEmbajador
+        public ActionResult ManualEmbajador()
+        {
+            return View();
+        }
+
         // GET: StaticContent/QueEsLimbs
         public ActionResult QueEsLimbs()
         {
