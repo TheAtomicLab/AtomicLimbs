@@ -1,0 +1,72 @@
+﻿@using Limbs.Web.ViewModels
+
+@{
+    ViewBag.Title = "UserMigration";
+}
+
+<h2>UserMigration</h2>
+
+@model IEnumerable<MigrateUsersViewModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+            table th {
+                background-color: #B8DBFD;
+                color: #333;
+                font-weight: bold;
+            }
+
+            table th, table td {
+                padding: 5px;
+                border: 1px solid #ccc;
+            }
+
+            table, table table td {
+                border: 0px solid #ccc;
+            }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("MigrateUsers", "DataMigration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="postedFile" />
+        <input type="submit" value="Importar" />
+    }
+    @if (Model.Count() > 0)
+    {
+        <hr />
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Email</th>
+                <th>Password</th>
+            </tr>
+            @foreach (MigrateUsersViewModel user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.Password</td>
+                </tr>
+            }
+        </table>
+    }
+</body>
+</html>  
