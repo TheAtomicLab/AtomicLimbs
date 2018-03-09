@@ -15,7 +15,7 @@
                 @if (User.IsInRole(AppRoles.Requester))
                 {
                     <li>
-                        <a onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
+                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
                     </li>
                 }
                 <li>
