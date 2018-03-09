@@ -7,12 +7,12 @@ $(window).load(function () {
 
 //TODO (Lucas): Listar alerts en li
 function alertAtomic(text, div = "#alertAtomic") {
-/*
-    if (call) {
-        $(div).find('li').remove();
-        call = false;
-    }
-*/
+    /*
+        if (call) {
+            $(div).find('li').remove();
+            call = false;
+        }
+    */
 
     $(div).find('p').remove();
     var p = "<p>" + text + "</p>";

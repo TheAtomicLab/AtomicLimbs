@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    setDatePicker(4);
+    setDatePicker(0);
 
     $('[name="IsProductUser"]').on("change", function () {
         isProductUser($(this).val());
@@ -32,7 +32,7 @@ function isProductUser(value) {
         $("#isAdultCheckContainer").hide();
     } else {
         //no es usuario
-        setDatePicker(4);
+        setDatePicker(0);
         $("#ResponsableName").show();
         $("#ResponsableLastName").show();
         $("[name='titleDateUser']").show();

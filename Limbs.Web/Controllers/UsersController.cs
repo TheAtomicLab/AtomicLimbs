@@ -21,11 +21,13 @@ namespace Limbs.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
+            var userBirth = Db.UserModelsT.Where(u => u.UserId == userId).Select(x => x.Birth).SingleOrDefault();
 
             var viewModel = new UserPanelViewModel
             {
                 Order = orderList.ToList(),
-                Message = message
+                Message = message,
+                UserBirth = userBirth
 
             };
 
@@ -152,8 +154,8 @@ namespace Limbs.Web.Controllers
             if (!isAdultCheck)
                 ModelState.AddModelError("BirthDeclaration", @"Debe ser mayor de 18 años.");
 
-            if (userModel.Birth >= DateTime.UtcNow.AddYears(-4))
-                ModelState.AddModelError(nameof(userModel.Birth), @"El usuario de la mano debe ser mayor de 4 años.");
+            //if (userModel.Birth >= DateTime.UtcNow.AddYears(-4))
+            //    ModelState.AddModelError(nameof(userModel.Birth), @"El usuario de la mano debe ser mayor de 4 años.");
 
             if (string.IsNullOrWhiteSpace(userModel.ResponsableName))
                 ModelState.AddModelError(nameof(userModel.ResponsableName), @" ");

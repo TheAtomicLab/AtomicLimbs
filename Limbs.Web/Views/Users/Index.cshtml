@@ -8,11 +8,20 @@
 
 <div id="cont" class="min_full">
     <article id="home">
-        
+
         <h1>Hola @User.Identity.Name</h1>
 
-        <a class="bn_blue" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
-        
+        <a name="btn_pedir" class="bn_blue" @(Model.UserBirth >= DateTime.UtcNow.AddYears(-4) ? "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'" : "") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
+
+        <div class="no-design"   @(Model.UserBirth >= DateTime.UtcNow.AddYears(-4) ? "style=display:block;" : "style=display:none;" )>
+            <h2 class="f-titulo" style="background: red;">    Podrás pedir la mano recién cuando el usuario cumpla 4 años de edad</h2>
+            <p style="color: red;text-align: center; margin: 10px 20px;">
+                Nuestra experiencia luego de varios años diseñando, imprimiendo y probando manos mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
+                Por diferentes motivos, las personas no tienen el desarrollo mínimo para usar y ser conscientes de la mano mecánica, la misma requiere de un aprendizaje que no es posible lograr a esa edad, y genera más frustraciones que alegrías.
+            </p>
+        </div>
+
+
         @if (Model.Message != null)
         {
             <p>@Html.DisplayFor(modelOrder => Model.Message)</p>
@@ -37,9 +46,9 @@
                             </td>
                             <td>
                                 @if (OrderStatus.Pending.Equals(order.Status)
-                                     || OrderStatus.Ready.Equals(order.Status)
-                                     || OrderStatus.ArrangeDelivery.Equals(order.Status)
-                                     || OrderStatus.Delivered.Equals(order.Status))
+                         || OrderStatus.Ready.Equals(order.Status)
+                         || OrderStatus.ArrangeDelivery.Equals(order.Status)
+                         || OrderStatus.Delivered.Equals(order.Status))
                                 {
                                     @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
                                 }
@@ -71,5 +80,6 @@
             <p>No tienes pedidos asignados</p>
         }
     </article>
+    
 
 </div>
