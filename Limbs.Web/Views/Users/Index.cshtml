@@ -11,9 +11,9 @@
 
         <h1>Hola @User.Identity.Name</h1>
 
-        <a name="btn_pedir" class="bn_blue" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
+        <a name="btn_pedir" class="bn_blue" @(Model.UserBirth >= DateTime.UtcNow.AddYears(-4) ? "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'" : "") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
 
-        <div class="no-design"  style="display: none;">
+        <div class="no-design"   @(Model.UserBirth >= DateTime.UtcNow.AddYears(-4) ? "style=display:block;" : "style=display:none;" )>
             <h2 class="f-titulo" style="background: red;">    Podrás pedir la mano recién cuando el usuario cumpla 4 años de edad</h2>
             <p style="color: red;text-align: center; margin: 10px 20px;">
                 Nuestra experiencia luego de varios años diseñando, imprimiendo y probando manos mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
@@ -80,14 +80,6 @@
             <p>No tienes pedidos asignados</p>
         }
     </article>
-
-    @if (Model.UserBirth >= DateTime.UtcNow.AddYears(-4))
-    {
-        <script>    enableButtonbyAge(false)</script>
-    }
-    else
-    {
-        <script>    enableButtonbyAge(true)</script>
-    }
+    
 
 </div>

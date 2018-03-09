@@ -28,21 +28,6 @@ function alertAtomic(text, div = "#alertAtomic") {
     return false;
 };
 
-function enableButtonbyAge(value) {
-    if (value) {
-        $(".no-design").hide();
-    }
-    else
-    {
-        $(".no-design").show();
-        $('.bn_blue').removeAttr("href");
-        $("[name='btn_pedir']").css('pointer-events', 'none');
-        $("[name='btn_pedir']").css('background', '#cad4e2');
-        $("[name='btn_pedir']").css('border-color', '#cad4e2');
-        $("[name='manoPedir']").css('pointer-events', 'none');
-    }
-};
-
 /*
 function alertAtomic(text) {
     $("#alertAtomic").find('p').remove();

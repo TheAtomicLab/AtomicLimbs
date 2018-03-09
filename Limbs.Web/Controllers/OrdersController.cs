@@ -58,6 +58,12 @@ namespace Limbs.Web.Controllers
         // GET: Orders/ManoPedir
         public ActionResult ManoPedir()
         {
+            var userId = User.Identity.GetUserId();
+            var userBirth = Db.UserModelsT.Where(x => x.UserId == userId).Select(u => u.Birth).SingleOrDefault();
+            if(userBirth >= DateTime.UtcNow.AddYears(-4))
+            {
+                return RedirectToAction("Index", "Users");
+            }
             return View("ManoPedir", new OrderModel());
         }
 
