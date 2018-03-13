@@ -1,4 +1,5 @@
 ﻿@using Limbs.Web.ViewModels
+@using Limbs.Web.Entities.Models
 
 @{
     ViewBag.Title = "UserMigration";
@@ -6,7 +7,7 @@
 
 <h2>UserMigration</h2>
 
-@model IEnumerable<MigrateUsersViewModel>
+@model IEnumerable<UserModel>
 @{
     Layout = null;
 }
@@ -57,14 +58,44 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <th>Email</th>
-                <th>Password</th>
+                <th>Name</th>
+                <th>LastName</th>
+                <th>IsProductUser</th>
+                <th>ResponsableName</th>
+                <th>ResponsableLastName</th>
+                <th>Phone</th>
+                <th>Birth</th>
+                <th>Gender</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Dni</th>
+                <th>RegisteredAt</th>
+                <th>State</th>
+                <th>UserId</th>
+                <th>Location</th>
             </tr>
-            @foreach (MigrateUsersViewModel user in Model)
+            @foreach (UserModel user in Model)
             {
-                <tr>
-                    <td>@user.Email</td>
-                    <td>@user.Password</td>
-                </tr>
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.Name</td>
+                <td>@user.LastName</td>
+                <td>@user.IsProductUser</td>
+                <td>@user.ResponsableName</td>
+                <td>@user.ResponsableLastName</td>
+                <td>@user.Phone</td>
+                <td>@user.Birth</td>
+                <td>@user.Gender</td>
+                <td>@user.Country</td>
+                <td>@user.City</td>
+                <td>@user.Address</td>
+                <td>@user.Dni</td>
+                <td>@user.RegisteredAt</td>
+                <td>@user.State</td>
+                <td>@user.UserId</td>
+                <td>@user.Location</td>
+            </tr>
             }
         </table>
     }
