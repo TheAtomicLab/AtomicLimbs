@@ -1,0 +1,103 @@
+﻿@using Limbs.Web.ViewModels
+@using Limbs.Web.Entities.Models
+
+@{
+    ViewBag.Title = "UserMigration";
+}
+
+<h2>UserMigration</h2>
+
+@model IEnumerable<UserModel>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+            table th {
+                background-color: #B8DBFD;
+                color: #333;
+                font-weight: bold;
+            }
+
+            table th, table td {
+                padding: 5px;
+                border: 1px solid #ccc;
+            }
+
+            table, table table td {
+                border: 0px solid #ccc;
+            }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("MigrateUsers", "DataMigration", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="postedFile" />
+        <input type="submit" value="Importar" />
+    }
+    @if (Model.Count() > 0)
+    {
+        <hr />
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <th>Email</th>
+                <th>Name</th>
+                <th>LastName</th>
+                <th>IsProductUser</th>
+                <th>ResponsableName</th>
+                <th>ResponsableLastName</th>
+                <th>Phone</th>
+                <th>Birth</th>
+                <th>Gender</th>
+                <th>Country</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Dni</th>
+                <th>RegisteredAt</th>
+                <th>State</th>
+                <th>UserId</th>
+                <th>Location</th>
+            </tr>
+            @foreach (UserModel user in Model)
+            {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.Name</td>
+                <td>@user.LastName</td>
+                <td>@user.IsProductUser</td>
+                <td>@user.ResponsableName</td>
+                <td>@user.ResponsableLastName</td>
+                <td>@user.Phone</td>
+                <td>@user.Birth</td>
+                <td>@user.Gender</td>
+                <td>@user.Country</td>
+                <td>@user.City</td>
+                <td>@user.Address</td>
+                <td>@user.Dni</td>
+                <td>@user.RegisteredAt</td>
+                <td>@user.State</td>
+                <td>@user.UserId</td>
+                <td>@user.Location</td>
+            </tr>
+            }
+        </table>
+    }
+</body>
+</html>  

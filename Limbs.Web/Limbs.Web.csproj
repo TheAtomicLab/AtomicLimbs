@@ -244,6 +244,7 @@
     <Compile Include="Areas\Admin\Models\MessageViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\DataMigrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -631,6 +632,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Users\_Address.cshtml" />
     <Content Include="Views\Ambassador\_Address.cshtml" />
+    <Content Include="Views\DataMigration\UserMigration.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
