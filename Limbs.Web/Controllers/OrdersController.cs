@@ -14,6 +14,8 @@ using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
+using Limbs.Web.Common.Mail;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Limbs.Web.Controllers
 {
@@ -22,6 +24,13 @@ namespace Limbs.Web.Controllers
     {
         private readonly IUserFiles _userFiles;
         private readonly IOrderNotificationService _ns;
+
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
+        }
 
         public OrdersController(IUserFiles userFiles, IOrderNotificationService notificationService)
         {
@@ -54,13 +63,13 @@ namespace Limbs.Web.Controllers
             }
             return View(orderModel);
         }
-        
+
         // GET: Orders/ManoPedir
         public ActionResult ManoPedir()
         {
             var userId = User.Identity.GetUserId();
             var userBirth = Db.UserModelsT.Where(x => x.UserId == userId).Select(u => u.Birth).SingleOrDefault();
-            if(userBirth >= DateTime.UtcNow.AddYears(-4))
+            if (userBirth >= DateTime.UtcNow.AddYears(-4))
             {
                 return RedirectToAction("Index", "Users");
             }
@@ -157,11 +166,11 @@ namespace Limbs.Web.Controllers
         public ActionResult ManoOrden()
         {
             return View("ManoOrden", new OrderModel
-                {
-                    IdImage = TempData["fileUrl"].ToString(),
-                    AmputationType = (AmputationType)TempData["AmputationType"],
-                    ProductType = (ProductType)TempData["ProductType"],
-                });
+            {
+                IdImage = TempData["fileUrl"].ToString(),
+                AmputationType = (AmputationType)TempData["AmputationType"],
+                ProductType = (ProductType)TempData["ProductType"],
+            });
         }
 
         //AB 20171216: las medidas las toma el embajador
@@ -203,7 +212,7 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> Create(OrderModel orderModel)
         {
             if (!ModelState.IsValid) return View("ManoOrden", orderModel);
-            
+
             var currentUserId = User.Identity.GetUserId();
             var userModel = await Db.UserModelsT.Where(c => c.UserId == currentUserId).SingleAsync();
 
@@ -224,8 +233,18 @@ namespace Limbs.Web.Controllers
             //    ProductSizes = orderModel.Sizes,
             //});
 
+            await SendEmailConfirmation(orderModel);
+
             return RedirectToAction("Index", "Users");
         }
+
+        private async Task SendEmailConfirmation(OrderModel orderModel)
+        {
+            var userId = User.Identity.GetUserId();
+            var body = CompiledTemplateEngine.Render("Mails.NewOrderRequestor", orderModel);
+            await UserManager.SendEmailAsync(userId, "[Atomic Limbs] Tu pedido de mano fue realizado con éxito", body);
+        }
+
 
         // GET: Orders/GetUserImage
         [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
@@ -285,7 +304,7 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces, int orderId)
         {
             var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
-            if(!order.CanView(User)) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            if (!order.CanView(User)) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
             order.Pieces = pieces;
             order.StatusLastUpdated = DateTime.UtcNow;
@@ -296,7 +315,7 @@ namespace Limbs.Web.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
             return RedirectToAction("Details", "Orders", new { id = orderId });
         }
-        
+
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> GetPartial(int orderId, string partialName)
         {
@@ -307,7 +326,7 @@ namespace Limbs.Web.Controllers
             }
             return new HttpUnauthorizedResult();
         }
-        
+
         [AllowAnonymous]
         public ActionResult PublicOrders()
         {
@@ -350,8 +369,8 @@ namespace Limbs.Web.Controllers
                 return HttpNotFound();
             }
 
-            return order.FileUrl != fileurl ? 
-                new HttpStatusCodeResult(HttpStatusCode.Created) : 
+            return order.FileUrl != fileurl ?
+                new HttpStatusCodeResult(HttpStatusCode.Created) :
                 new HttpStatusCodeResult(HttpStatusCode.NotModified);
         }
     }

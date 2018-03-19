@@ -21,7 +21,9 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderDeliveryInformation", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderDeliveryInformation.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderProofOfDeliveryInfoToRequestor", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderProofOfDeliveryInfoToRequestor.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.OrderProofOfDeliveryInfoToAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.OrderProofOfDeliveryInfoToAmbassador.cshtml"));
+            CompiledTemplateEngine.Add<OrderModel>("Mails.NewOrderRequestor", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NewOrderRequestor.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.Generic", GetStringTemplate("Limbs.Web.Common.Mail.Templates.Generic.cshtml"));
+
         }
 
 
