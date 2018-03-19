@@ -1,0 +1,46 @@
+@using System.Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AtomicLab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div style="background-color: #fafafa;">
+        <div style="box-sizing: border-box; display: block; font-family: 'Roboto', helvetica, sans-serif; margin: 0px auto; max-width: 800px; padding-bottom: 50px; padding-left: 2px; padding-right: 2px; position: relative; width: 100%;">
+            <div style="background-color: #4772b2; padding: 30px 0px 20px 0px; position: relative; text-align: center;">
+                <img src="http://limbs.earth/content/img/logoatomicmail.png" style="max-width: 200px; min-width: 100px; position: relative; text-align: center; width: 50%;">
+            </div>
+            <div style="margin: 0px auto; max-width: 475px; position: relative; width: 94%;">
+
+                <!-- Caja 1 -->
+                <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
+                    <p>
+                        ¡Hola @(Model.OrderRequestor.FullName())! El pedido de mano que realizaste en Atomic Limbs fue realizado con éxito y su número es @Model.Id
+
+                    <p>
+                        Te recordamos que somos un equipo de voluntarios que trabajamos muy duro para que de manera gratuita, toda persona que lo necesite pueda tener su mano mecánica.
+                        </br> No tenemos un tiempo estimado de entrega pero te prometemos que haremos lo mejor que podamos, somos un grupo de apasionados que hacemos esto en nuestro tiempo libre;
+                        puede ser que a veces tardemos más de lo deseado en responder, te pedimos que nos tengas paciencia, estaremos dando lo mejor de nosotros para poder entregarla lo antes posible.
+                        </br>
+                        </br> La vía de contacto será este correo electrónico al cual te estamos escribiendo, te pedimos que lo revises con cierta periodicidad.
+                        Si tenés dudas te invitamos a leer las preguntas frecuentes en http://atomiclab.org/faq
+                        </br>
+                        </br> Muchas gracias por confiar en nosotros.
+                        </br> Equipo de Atomic Lab.
+                    </p>
+                </div>
+
+            </div>
+
+            <div style="background: #232323; color: #bbbbbb; padding: 40px; text-align: center;">
+                <p>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</p>
+                <p>
+                    <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">Limbs, Atomic Lab © @DateTime.UtcNow.Year - AtomicLab.org</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
