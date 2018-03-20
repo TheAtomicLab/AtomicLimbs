@@ -4,8 +4,10 @@
     <div id="main_head">
         <a href="/">
             <img id="logo_head" src="/Content/img/limbs_white.svg">
-            @if (Request.IsLocal) { <span style="position: absolute; left: 0; color: burlywood;">DEV</span> }
-            @if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Environment"])){ <span style="position: absolute; left: 0; color: burlywood; top: 15px;">@ConfigurationManager.AppSettings["Environment"]</span> }
+            @if (Request.IsLocal)
+            {<span style="position: absolute; left: 0; color: burlywood;">DEV</span>}
+            @if (!string.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["Environment"]))
+            {<span style="position: absolute; left: 0; color: burlywood; top: 15px;">@ConfigurationManager.AppSettings["Environment"]</span>}
         </a>
         <nav>
             <ul>
@@ -19,12 +21,12 @@
                     </li>
                 }
                 <li>
-                    <a onclick="cerrarmenu()" href="@Url.Action("QueEsLimbs", "StaticContent")" target="_blank">¿Qué es Limbs?</a>
+                    @Html.ActionLink("¿Qué es Limbs?", "QueEsLimbs", "StaticContent", null, null, "pedir", null, null)
                 </li>
                 <li>
                     <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">Donar</a>
                 </li>
-                
+
                 @Html.Partial("AdminMenu")
             </ul>
         </nav>
