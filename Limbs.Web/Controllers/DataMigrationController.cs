@@ -9,6 +9,10 @@ using System;
 using Limbs.Web.Common.Mail;
 using System.Linq;
 using System.Web.Security;
+using System.Configuration;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Common.Mail;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 
 namespace Limbs.Web.Controllers
 {
@@ -53,27 +57,35 @@ namespace Limbs.Web.Controllers
                         var pUser = Db.UserModelsT.FirstOrDefault(x => x.Email.Equals(email));
                         if (pUser != null) continue;
 
-                        users.Add(new UserModel
+                        try
                         {
-                            Email = row.Split(';')[0].Clean(),
-                            IsProductUser = bool.Parse(row.Split(';')[1].Clean()),
-                            UserName = row.Split(';')[2].Clean(),
-                            UserLastName = row.Split(';')[3].Clean(),
-                            ResponsableName = row.Split(';')[4].Clean(),
-                            ResponsableLastName = row.Split(';')[5].Clean(),
-                            Phone = string.IsNullOrWhiteSpace(row.Split(';')[6].Clean()) ? "-" : row.Split(';')[6].Clean(),
-                            Birth = DateTime.Parse(row.Split(';')[7].Clean()),
-                            Gender = "hombre".Equals(row.Split(';')[8].Clean()) ? Gender.Hombre : Gender.Mujer,
-                            Country = row.Split(';')[9].Clean(),
-                            City = string.IsNullOrWhiteSpace(row.Split(';')[10].Clean()) ? "-" : row.Split(';')[10].Clean(),
-                            Address = string.IsNullOrWhiteSpace(row.Split(';')[11].Clean()) ? "-" : row.Split(';')[11].Clean(),
-                            Dni = string.IsNullOrWhiteSpace(row.Split(';')[12].Clean()) ? "-" : row.Split(';')[12].Clean(),
-                            RegisteredAt = DateTime.Parse(row.Split(';')[13].Clean()),
-                            UserId = row.Split(';')[0].Clean(),
-                            State = "-",
-                            Address2 = "-",
-                            LatLng = "0.1,0.1",
-                        });
+                            users.Add(new UserModel
+                            {
+                                Email = row.Split(';')[0].Clean(),
+                                IsProductUser = bool.Parse(row.Split(';')[1].Clean()),
+                                UserName = row.Split(';')[2].Clean(),
+                                UserLastName = row.Split(';')[3].Clean(),
+                                ResponsableName = row.Split(';')[4].Clean(),
+                                ResponsableLastName = row.Split(';')[5].Clean(),
+                                Phone = string.IsNullOrWhiteSpace(row.Split(';')[6].Clean()) ? "-" : row.Split(';')[6].Clean(),
+                                Birth = DateTime.Parse(row.Split(';')[7].Clean()),
+                                Gender = "hombre".Equals(row.Split(';')[8].Clean()) ? Gender.Hombre : Gender.Mujer,
+                                Country = row.Split(';')[9].Clean(),
+                                City = string.IsNullOrWhiteSpace(row.Split(';')[10].Clean()) ? "-" : row.Split(';')[10].Clean(),
+                                Address = string.IsNullOrWhiteSpace(row.Split(';')[11].Clean()) ? "-" : row.Split(';')[11].Clean(),
+                                Dni = string.IsNullOrWhiteSpace(row.Split(';')[12].Clean()) ? "-" : row.Split(';')[12].Clean(),
+                                RegisteredAt = DateTime.Parse(row.Split(';')[13].Clean()),
+                                UserId = row.Split(';')[0].Clean(),
+                                State = "-",
+                                Address2 = "-",
+                                LatLng = "0.1,0.1",
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            await SendAdminEmail(email, ex.Message);
+                            continue;
+                        }
                     }
                 }
 
@@ -88,7 +100,7 @@ namespace Limbs.Web.Controllers
                     }
 
                     user.UserId = newUser.Id;
-                    
+
                     Db.UserModelsT.Add(user);
                     await Db.SaveChangesAsync();
 
@@ -112,6 +124,24 @@ namespace Limbs.Web.Controllers
 
                 await UserManager.SendEmailAsync(user.Id, "[Acción Requerida] ¡Te presentamos la nueva plataforma! Continuá con tu pedido ahora para obtener tu mano 3D", body);
             }
+        }
+
+        private async Task SendAdminEmail(string email, string exeptionMessage)
+        {
+            string _adminEmails = ConfigurationManager.AppSettings["AdminEmails"];
+            string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
+       
+            var mailMessage = new MailMessage
+            {
+                From = _fromEmail,
+                Subject = $"[Migración de usuarios] Error en migración de usuario",
+                To = _adminEmails,
+                Body = "User Email: " + email + "Message: " + exeptionMessage
+            };
+
+            await AzureQueue.EnqueueAsync(mailMessage);
+
+
         }
 
     }
