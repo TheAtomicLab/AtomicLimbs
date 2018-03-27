@@ -4,20 +4,29 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Common.Geocoder.Google;
+using Limbs.Web.Common.Mail;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Limbs.Web.Controllers
 {
     [DefaultAuthorize(Roles = AppRoles.Ambassador)]
     public class AmbassadorController : BaseController
     {
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            private set => _userManager = value;
+        }
+
         // GET: /Ambassador/
         public ActionResult Index()
         {
@@ -115,6 +124,8 @@ namespace Limbs.Web.Controllers
                 Db.AmbassadorModels.Add(ambassadorModel);
                 await Db.SaveChangesAsync();
 
+                await SendWelcomeEmail(ambassadorModel);
+
                 return RedirectToAction("Index");
             }
             if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
@@ -158,6 +169,13 @@ namespace Limbs.Web.Controllers
 
             if (termsAndConditions.HasValue && !termsAndConditions.Value)
                 ModelState.AddModelError(nameof(termsAndConditions), @"Debe aceptar terminos y condiciones.");
+        }
+
+        private async Task SendWelcomeEmail(AmbassadorModel ambassadorModel)
+        {
+            var userId = User.Identity.GetUserId();
+            var body = CompiledTemplateEngine.Render("Mails.NewAmbassador", ambassadorModel);
+            await UserManager.SendEmailAsync(userId, "¡Hola "+ ambassadorModel.AmbassadorName+"! Ya sos un #EmbajadorAtómico del proyecto Limbs, leé esto para conocer los próximos pasos.", body);
         }
     }
 }
