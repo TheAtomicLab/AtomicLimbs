@@ -22,12 +22,14 @@ namespace Limbs.Web.Controllers
             var userId = User.Identity.GetUserId();
             var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
             var userBirth = Db.UserModelsT.Where(u => u.UserId == userId).Select(x => x.Birth).SingleOrDefault();
+            var userName = Db.UserModelsT.Where(u => u.UserId == userId).Select(x => x.UserName).SingleOrDefault();
 
             var viewModel = new UserPanelViewModel
             {
                 Order = orderList.ToList(),
                 Message = message,
-                UserBirth = userBirth
+                UserBirth = userBirth,
+                UserName = userName
 
             };
 
