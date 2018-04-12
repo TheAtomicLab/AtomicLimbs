@@ -12,7 +12,7 @@ using System.Web.Security;
 
 namespace Limbs.Web.Controllers
 {
-    [DefaultAuthorize(Roles = AppRoles.Administrator)]
+    //[DefaultAuthorize(Roles = AppRoles.Administrator)]
     public class DataMigrationController : BaseController
     {
         private ApplicationUserManager _userManager;
@@ -28,7 +28,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> MigrateUsers(HttpPostedFileBase postedFile)
+        public async Task<string> MigrateUsers(HttpPostedFileBase postedFile)
         {
             List<UserModel> users = new List<UserModel>();
             string filePath = string.Empty;
@@ -44,61 +44,85 @@ namespace Limbs.Web.Controllers
                 string extension = Path.GetExtension(postedFile.FileName);
                 postedFile.SaveAs(filePath);
 
-                string csvData = System.IO.File.ReadAllText(filePath);
-                foreach (string row in csvData.Split('\r').Skip(1))
+                Response.Write(" \n<br />DATA VALIDATION \n");
+
+                foreach (string row in System.IO.File.ReadLines(filePath).Skip(1))
                 {
                     if (!string.IsNullOrEmpty(row))
                     {
-                        var email = row.Split(';')[0].Clean();
-                        var pUser = Db.UserModelsT.FirstOrDefault(x => x.Email.Equals(email));
-                        if (pUser != null) continue;
-
-                        users.Add(new UserModel
+                        try
                         {
-                            Email = row.Split(';')[0].Clean(),
-                            IsProductUser = bool.Parse(row.Split(';')[1].Clean()),
-                            UserName = row.Split(';')[2].Clean(),
-                            UserLastName = row.Split(';')[3].Clean(),
-                            ResponsableName = row.Split(';')[4].Clean(),
-                            ResponsableLastName = row.Split(';')[5].Clean(),
-                            Phone = string.IsNullOrWhiteSpace(row.Split(';')[6].Clean()) ? "-" : row.Split(';')[6].Clean(),
-                            Birth = DateTime.Parse(row.Split(';')[7].Clean()),
-                            Gender = "hombre".Equals(row.Split(';')[8].Clean()) ? Gender.Hombre : Gender.Mujer,
-                            Country = row.Split(';')[9].Clean(),
-                            City = string.IsNullOrWhiteSpace(row.Split(';')[10].Clean()) ? "-" : row.Split(';')[10].Clean(),
-                            Address = string.IsNullOrWhiteSpace(row.Split(';')[11].Clean()) ? "-" : row.Split(';')[11].Clean(),
-                            Dni = string.IsNullOrWhiteSpace(row.Split(';')[12].Clean()) ? "-" : row.Split(';')[12].Clean(),
-                            RegisteredAt = DateTime.Parse(row.Split(';')[13].Clean()),
-                            UserId = row.Split(';')[0].Clean(),
-                            State = "-",
-                            Address2 = "-",
-                            LatLng = "0.1,0.1",
-                        });
+                            var strings = row.Split('\t');
+                            var email = strings[0].Clean();
+                            var pUser = Db.UserModelsT.FirstOrDefault(x => x.Email.Equals(email));
+                            if (pUser != null) continue;
+
+                            var userModel = new UserModel
+                            {
+                                Email = strings[0].Clean(),
+                                IsProductUser = bool.Parse(strings[1].Clean()),
+                                UserName = strings[2].Clean(),
+                                UserLastName = strings[3].Clean(),
+                                ResponsableName = strings[4].Clean(),
+                                ResponsableLastName = strings[5].Clean(),
+                                Phone = string.IsNullOrWhiteSpace(strings[6].Clean()) ? "-" : strings[6].Clean(),
+                                Birth = DateTime.Parse(strings[7].Clean()),
+                                Gender = "hombre".Equals(strings[8].Clean()) ? Gender.Hombre : Gender.Mujer,
+                                Country = strings[9].Clean(),
+                                City = string.IsNullOrWhiteSpace(strings[10].Clean()) ? "-" : strings[10].Clean(),
+                                Address = string.IsNullOrWhiteSpace(strings[11].Clean()) ? "-" : strings[11].Clean(),
+                                Dni = string.IsNullOrWhiteSpace(strings[12].Clean()) ? "-" : strings[12].Clean(),
+                                RegisteredAt = DateTime.Parse(strings[13].Clean()),
+                                UserId = strings[0].Clean(),
+                                State = "-",
+                                Address2 = "-",
+                                LatLng = "0.1,0.1",
+                            };
+
+                            users.Add(userModel);
+                        }
+                        catch (Exception e)
+                        {
+                            Response.Write(" \n<br />ER: " + row);
+                            Response.Write(e.Message);
+                        }
                     }
                 }
+
+                Response.Write(" \n<br />-------------- \n");
+                Response.Write(" \n<br />DATA MIGRATION \n");
 
                 foreach (var user in users)
                 {
-                    var password = Membership.GeneratePassword(8, 1) + "1";
-                    var newUser = new ApplicationUser { UserName = user.Email, Email = user.Email };
-                    var result = await UserManager.CreateAsync(newUser, password);
-                    if (result.Succeeded)
+                    try
                     {
-                        await UserManager.AddToRoleAsync(newUser.Id, AppRoles.Requester);
+                        var password = Membership.GeneratePassword(8, 1) + "1";
+                        var newUser = new ApplicationUser { UserName = user.Email, Email = user.Email };
+                        var result = await UserManager.CreateAsync(newUser, password);
+                        if (result.Succeeded)
+                        {
+                            await UserManager.AddToRoleAsync(newUser.Id, AppRoles.Requester);
+                        }
+
+                        user.UserId = newUser.Id;
+                        newUser.EmailConfirmed = true;
+                        Db.UserModelsT.Add(user);
+                        await Db.SaveChangesAsync();
+
+                        await SendEmailConfirmation(newUser);
+
+                        Response.Write(" \n<br />OK: " + user.Email);
                     }
-
-                    user.UserId = newUser.Id;
-                    
-                    Db.UserModelsT.Add(user);
-                    await Db.SaveChangesAsync();
-
-                    await SendEmailConfirmation(newUser);
+                    catch (Exception e)
+                    {
+                        Response.Write(" \n<br />ER: " + user.Email);
+                        Response.Write(e.Message);
+                    }
                 }
-
-
             }
             System.IO.File.Delete(filePath);
-            return View("UserMigration", users);
+            Response.End();
+            return string.Empty;
         }
 
         private async Task SendEmailConfirmation(ApplicationUser user)
