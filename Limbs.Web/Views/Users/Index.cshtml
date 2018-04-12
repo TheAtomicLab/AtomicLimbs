@@ -9,7 +9,7 @@
 <div id="cont" class="min_full">
     <article id="home">
 
-        <h1>Hola @User.Identity.Name</h1>
+        <h1>Hola @Model.UserName</h1>
 
         <a name="btn_pedir" class="bn_blue" @(Model.UserBirth >= DateTime.UtcNow.AddYears(-4) ? "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'" : "") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
 
