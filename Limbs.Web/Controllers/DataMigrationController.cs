@@ -57,7 +57,10 @@ namespace Limbs.Web.Controllers
                             var email = strings[0].Clean();
                             var pUser = Db.UserModelsT.FirstOrDefault(x => x.Email.Equals(email));
                             if (pUser != null) continue;
-                        
+
+                            var birth = GetDateTimeFromText(strings[7].Clean());
+                            var registeredAt = GetDateTimeFromText(strings[13].Clean());
+
                             var userModel = new UserModel
                             {
                                 Email = strings[0].Clean(),
@@ -67,13 +70,13 @@ namespace Limbs.Web.Controllers
                                 ResponsableName = strings[4].Clean(),
                                 ResponsableLastName = strings[5].Clean(),
                                 Phone = string.IsNullOrWhiteSpace(strings[6].Clean()) ? "-" : strings[6].Clean(),
-                                Birth = DateTime.ParseExact(strings[7].Clean(), "d/M/yyyy", CultureInfo.InvariantCulture),
+                                Birth = birth,
                                 Gender = "hombre".Equals(strings[8].Clean()) ? Gender.Hombre : Gender.Mujer,
                                 Country = strings[9].Clean(),
                                 City = string.IsNullOrWhiteSpace(strings[10].Clean()) ? "-" : strings[10].Clean(),
                                 Address = string.IsNullOrWhiteSpace(strings[11].Clean()) ? "-" : strings[11].Clean(),
                                 Dni = string.IsNullOrWhiteSpace(strings[12].Clean()) ? "-" : strings[12].Clean(),
-                                RegisteredAt = DateTime.ParseExact(strings[13].Clean(), "d/M/yyyy H:mm:ss", CultureInfo.InvariantCulture),
+                                RegisteredAt = registeredAt,
                                 UserId = strings[0].Clean(),
                                 State = "-",
                                 Address2 = "-",
@@ -99,7 +102,7 @@ namespace Limbs.Web.Controllers
                     {
                         var password = Membership.GeneratePassword(8, 1) + "1";
                         var newUser = new ApplicationUser { UserName = user.Email, Email = user.Email };
-                        var result = await UserManager.CreateAsync(newUser, password);
+                        var result = UserManager.CreateAsync(newUser, password).Result;
                         if (result.Succeeded)
                         {
                             await UserManager.AddToRoleAsync(newUser.Id, AppRoles.Requester);
@@ -108,7 +111,7 @@ namespace Limbs.Web.Controllers
                         user.UserId = newUser.Id;
                         newUser.EmailConfirmed = true;
                         Db.UserModelsT.Add(user);
-                        await Db.SaveChangesAsync();
+                        Db.SaveChanges();
 
                         await SendEmailConfirmation(newUser);
 
@@ -126,17 +129,26 @@ namespace Limbs.Web.Controllers
             return string.Empty;
         }
 
-        private async Task SendEmailConfirmation(ApplicationUser user)
+        private static DateTime GetDateTimeFromText(string input)
+        {
+            if (DateTime.TryParseExact(input, "d/M/yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var r)) return r;
+            return DateTime.TryParseExact(input, "M/d/yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out r) 
+                ? r 
+                : new DateTime(2000, 1, 1);
+        }
+
+        private Task SendEmailConfirmation(ApplicationUser user)
         {
             if (Request.Url != null)
             {
                 //TODO: token time.
-                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var code = UserManager.GeneratePasswordResetTokenAsync(user.Id).Result;
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
                 var body = CompiledTemplateEngine.Render("Mails.EmailPasswordChangeImport", callbackUrl);
 
-                await UserManager.SendEmailAsync(user.Id, "[Acción Requerida] ¡Te presentamos la nueva plataforma! Continuá con tu pedido ahora para obtener tu mano 3D", body);
+                return UserManager.SendEmailAsync(user.Id, "[Acción Requerida] ¡Te presentamos la nueva plataforma! Continuá con tu pedido ahora para obtener tu mano 3D", body);
             }
+            return Task.CompletedTask;
         }
 
     }
