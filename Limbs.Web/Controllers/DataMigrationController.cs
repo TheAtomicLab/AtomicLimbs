@@ -13,7 +13,7 @@ using System.Globalization;
 
 namespace Limbs.Web.Controllers
 {
-    //[DefaultAuthorize(Roles = AppRoles.Administrator)]
+    [DefaultAuthorize(Roles = AppRoles.Administrator)]
     public class DataMigrationController : BaseController
     {
         private ApplicationUserManager _userManager;
@@ -63,7 +63,7 @@ namespace Limbs.Web.Controllers
                                 Email = strings[0].Clean(),
                                 IsProductUser = bool.Parse(strings[1].Clean()),
                                 UserName = strings[2].Clean(),
-                                UserLastName = strings[3].Clean(),
+                                UserLastName = string.IsNullOrWhiteSpace(strings[3].Clean()) ? "-" : strings[3].Clean(),
                                 ResponsableName = strings[4].Clean(),
                                 ResponsableLastName = strings[5].Clean(),
                                 Phone = string.IsNullOrWhiteSpace(strings[6].Clean()) ? "-" : strings[6].Clean(),
@@ -103,16 +103,23 @@ namespace Limbs.Web.Controllers
                         if (result.Succeeded)
                         {
                             await UserManager.AddToRoleAsync(newUser.Id, AppRoles.Requester);
+
+                            user.UserId = newUser.Id;
+                            Db.UserModelsT.Add(user);
+                            await Db.SaveChangesAsync();
+
+                            var token = await UserManager.GenerateEmailConfirmationTokenAsync(user.UserId);
+                            await UserManager.ConfirmEmailAsync(user.UserId, token);
+                            await Db.SaveChangesAsync();
+                 
+                            await SendEmailConfirmation(newUser);
+
+                            Response.Write(" \n<br />OK: " + user.Email);
                         }
-
-                        user.UserId = newUser.Id;
-                        newUser.EmailConfirmed = true;
-                        Db.UserModelsT.Add(user);
-                        await Db.SaveChangesAsync();
-
-                        await SendEmailConfirmation(newUser);
-
-                        Response.Write(" \n<br />OK: " + user.Email);
+                        else
+                        {
+                            Response.Write(" \n<br />ER: " + user.Email);
+                        }
                     }
                     catch (Exception e)
                     {
