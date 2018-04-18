@@ -9,6 +9,7 @@ using System;
 using Limbs.Web.Common.Mail;
 using System.Linq;
 using System.Web.Security;
+using System.Globalization;
 
 namespace Limbs.Web.Controllers
 {
@@ -56,7 +57,7 @@ namespace Limbs.Web.Controllers
                             var email = strings[0].Clean();
                             var pUser = Db.UserModelsT.FirstOrDefault(x => x.Email.Equals(email));
                             if (pUser != null) continue;
-
+                        
                             var userModel = new UserModel
                             {
                                 Email = strings[0].Clean(),
@@ -66,13 +67,13 @@ namespace Limbs.Web.Controllers
                                 ResponsableName = strings[4].Clean(),
                                 ResponsableLastName = strings[5].Clean(),
                                 Phone = string.IsNullOrWhiteSpace(strings[6].Clean()) ? "-" : strings[6].Clean(),
-                                Birth = DateTime.Parse(strings[7].Clean()),
+                                Birth = DateTime.ParseExact(strings[7].Clean(), "d/M/yyyy", CultureInfo.InvariantCulture),
                                 Gender = "hombre".Equals(strings[8].Clean()) ? Gender.Hombre : Gender.Mujer,
                                 Country = strings[9].Clean(),
                                 City = string.IsNullOrWhiteSpace(strings[10].Clean()) ? "-" : strings[10].Clean(),
                                 Address = string.IsNullOrWhiteSpace(strings[11].Clean()) ? "-" : strings[11].Clean(),
                                 Dni = string.IsNullOrWhiteSpace(strings[12].Clean()) ? "-" : strings[12].Clean(),
-                                RegisteredAt = DateTime.Parse(strings[13].Clean()),
+                                RegisteredAt = DateTime.ParseExact(strings[13].Clean(), "d/M/yyyy H:mm:ss", CultureInfo.InvariantCulture),
                                 UserId = strings[0].Clean(),
                                 State = "-",
                                 Address2 = "-",
