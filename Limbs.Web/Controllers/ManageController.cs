@@ -251,28 +251,47 @@ namespace Limbs.Web.Controllers
             return View();
         }
 
+        public async Task ValidChangePassword(ApplicationUser user, ChangePasswordViewModel model)
+        {
+            var isValidPsw = await UserManager.CheckPasswordAsync(user, model.OldPassword);
+
+            var isValidConfirmPsw = model.NewPassword == model.ConfirmPassword;
+
+            if (!isValidPsw)
+                ModelState.AddModelError("InvalidPassword", "Contraseña incorrecta");
+
+            if (!isValidConfirmPsw)
+                ModelState.AddModelError("InvalidConfirmPassword", "La contraseña no coincide");
+        }
+
         //
         // POST: /Manage/ChangePassword
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+            if (user == null)
+                return RedirectToAction("Index", new { Message = ManageMessageId.Error });
+
+            await ValidChangePassword(user, model);
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
+            
+            user.PasswordHash = UserManager.PasswordHasher.HashPassword(model.NewPassword);
+            var result = await UserManager.UpdateAsync(user);
+
+            if (!result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                AddErrors(result);
+                return View(model);
             }
-            AddErrors(result);
-            return View(model);
+
+            return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
         }
 
         //
