@@ -90,7 +90,7 @@ namespace Limbs.Web.Controllers
             ViewBag.IsAdultCheck = isAdultCheck;
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", userModel);
-            
+
             if (userModel.Id == 0)
             {
                 //CREATE
@@ -112,11 +112,11 @@ namespace Limbs.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
-            
+
             //EDIT
             Db.Entry(userModel).State = EntityState.Modified;
             await Db.SaveChangesAsync();
-            
+
             return RedirectToAction("Index", "Manage");
         }
 
@@ -143,7 +143,7 @@ namespace Limbs.Web.Controllers
 
             if (termsAndConditions.HasValue && !termsAndConditions.Value)
                 ModelState.AddModelError(nameof(termsAndConditions), @"Debe aceptar terminos y condiciones.");
-            
+
             if (userModel.IsProductUser)
             {
                 ModelState[nameof(userModel.ResponsableName)].Errors.Clear();

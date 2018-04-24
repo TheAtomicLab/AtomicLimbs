@@ -31,6 +31,9 @@ namespace Limbs.Web.Entities.Models
         [Required]
         public string Email { get; set; }
 
+        [Display(Name = "Email Alternativo", Description = "")]
+        public string AlternativeEmail { get; set; }
+
         public DateTime? RegisteredAt { get; set; }
 
         /// <summary>
