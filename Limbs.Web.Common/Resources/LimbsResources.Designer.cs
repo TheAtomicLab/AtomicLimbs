@@ -39,7 +39,7 @@ namespace Limbs.Web.Common.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager(typeof(LimbsResources));
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Limbs.Web.Common.Resources.LimbsResources", typeof(LimbsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -160,7 +160,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PasswordMismatch.
+        ///   Looks up a localized string similar to La contraseña actual es incorrecta.
         /// </summary>
         public static string PasswordMismatch {
             get {
