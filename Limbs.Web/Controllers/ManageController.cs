@@ -45,7 +45,7 @@ namespace Limbs.Web.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Tu contraseña fué modificada."
+                message == ManageMessageId.ChangePasswordSuccess ? "Tu contraseña fue modificada."
                 : message == ManageMessageId.SetPasswordSuccess ? "Creaste tu nueva contraseña."
                 : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
                 : message == ManageMessageId.Error ? "Ocurrió un error."
