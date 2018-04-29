@@ -7,6 +7,13 @@
         <td>Nombre:</td>
         <td>@Model.OrderRequestor.FullName()</td>
     </tr>
+    @if (User.IsInRole(AppRoles.Administrator))
+    {
+        <tr>
+            <td>DNI o Pasaporte:</td>
+            <td>@Model.OrderRequestor.Dni</td>
+        </tr>
+    }
     @if (!User.IsInRole(AppRoles.Ambassador))
     {
         <tr>
