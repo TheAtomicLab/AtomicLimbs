@@ -62,8 +62,9 @@
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
                 <label class="f-label">Sexo</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
-                <label class="f-label">Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado </label>
-                @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo (opcional)" } })
+                <label class="f-label">Email Alternativo</label>
+                <label class="f-label" style="font-style: italic; font-size: 12px;">Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado </label>
+                @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo" } })
 
                 @Html.Partial("_Address", Model)
             </div>
