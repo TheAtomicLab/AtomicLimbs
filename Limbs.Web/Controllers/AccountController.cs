@@ -181,7 +181,7 @@ namespace Limbs.Web.Controllers
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
-       // [ValidateRecaptcha]
+        [ValidateRecaptcha]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
