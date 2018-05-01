@@ -7,7 +7,7 @@
     {
         to += $" - {Model.From.Email}";
     }
-    if (to != User.Identity.GetUserName())
+    if (to == User.Identity.GetUserName())
     {
         to = Model.From.Email;
     }

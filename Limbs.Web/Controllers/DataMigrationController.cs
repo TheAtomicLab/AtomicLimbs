@@ -10,10 +10,12 @@ using Limbs.Web.Common.Mail;
 using System.Linq;
 using System.Web.Security;
 using System.Globalization;
+using System.Text;
+using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Controllers
 {
-    //[DefaultAuthorize(Roles = AppRoles.Administrator)]
+    [DefaultAuthorize(Roles = AppRoles.Administrator)]
     public class DataMigrationController : BaseController
     {
         private ApplicationUserManager _userManager;
@@ -29,7 +31,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<string> MigrateUsers(HttpPostedFileBase postedFile)
+        public string MigrateUsers(HttpPostedFileBase postedFile)
         {
             List<UserModel> users = new List<UserModel>();
             string filePath = string.Empty;
@@ -42,21 +44,24 @@ namespace Limbs.Web.Controllers
                 }
 
                 filePath = path + Path.GetFileName(postedFile.FileName);
-                string extension = Path.GetExtension(postedFile.FileName);
                 postedFile.SaveAs(filePath);
 
                 Response.Write(" \n<br />DATA VALIDATION \n");
 
-                foreach (string row in System.IO.File.ReadLines(filePath).Skip(1))
+                foreach (string row in System.IO.File.ReadLines(filePath, Encoding.ASCII).Skip(1))
                 {
-                    if (!string.IsNullOrEmpty(row))
+                    if (!string.IsNullOrWhiteSpace(row))
                     {
+                        var strings = row.Split('\t');
                         try
                         {
-                            var strings = row.Split('\t');
                             var email = strings[0].Clean();
                             var pUser = Db.UserModelsT.FirstOrDefault(x => x.Email.Equals(email));
-                            if (pUser != null) continue;
+                            if (pUser != null)
+                            {
+                                Response.Write(" \n<br />SKIP: " + pUser.Email);
+                                continue;
+                            }
 
                             var birth = GetDateTimeFromText(strings[7].Clean());
                             var registeredAt = GetDateTimeFromText(strings[13].Clean());
@@ -84,10 +89,12 @@ namespace Limbs.Web.Controllers
                             };
 
                             users.Add(userModel);
+                            Response.Write(" \n<br />OK: " + userModel.Email);
                         }
                         catch (Exception e)
                         {
                             Response.Write(" \n<br />ER: " + row);
+                            Response.Write(strings[1]);
                             Response.Write(e.Message);
                         }
                     }
@@ -105,22 +112,30 @@ namespace Limbs.Web.Controllers
                         var result = UserManager.CreateAsync(newUser, password).Result;
                         if (result.Succeeded)
                         {
-                            await UserManager.AddToRoleAsync(newUser.Id, AppRoles.Requester);
+                            UserManager.AddToRoleAsync(newUser.Id, AppRoles.Requester).Wait();
+
+                            var code = UserManager.GenerateEmailConfirmationTokenAsync(newUser.Id).Result;
+                            UserManager.ConfirmEmailAsync(newUser.Id, code).Wait();
+
+
+                            user.UserId = newUser.Id;
+                            newUser.EmailConfirmed = true;
+                            Db.UserModelsT.Add(user);
+                            Db.SaveChanges();
+
+                            SendEmailConfirmation(newUser).Wait();
+                            Response.Write(" \n<br />OK: " + user.Email);
                         }
-
-                        user.UserId = newUser.Id;
-                        newUser.EmailConfirmed = true;
-                        Db.UserModelsT.Add(user);
-                        Db.SaveChanges();
-
-                        await SendEmailConfirmation(newUser);
-
-                        Response.Write(" \n<br />OK: " + user.Email);
+                        else
+                        {
+                            Response.Write(" \n<br />ER: " + user.Email);
+                        }
                     }
                     catch (Exception e)
                     {
                         Response.Write(" \n<br />ER: " + user.Email);
-                        Response.Write(e.Message);
+                        Response.Write($"{e.Message} {e.InnerException?.Message} {e.InnerException?.InnerException?.Message}");
+                        Response.Write("||");
                     }
                 }
             }
@@ -131,7 +146,9 @@ namespace Limbs.Web.Controllers
 
         private static DateTime GetDateTimeFromText(string input)
         {
-            if (DateTime.TryParseExact(input, "d/M/yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var r)) return r;
+            if (DateTime.TryParseExact(input, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var r)) return r;
+            if (DateTime.TryParseExact(input, "d/M/yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out var t)) return t;
+            if (DateTime.TryParseExact(input, "M/d/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out var q)) return q;
             return DateTime.TryParseExact(input, "M/d/yyyy H:mm:ss", CultureInfo.InvariantCulture, DateTimeStyles.None, out r) 
                 ? r 
                 : new DateTime(2000, 1, 1);

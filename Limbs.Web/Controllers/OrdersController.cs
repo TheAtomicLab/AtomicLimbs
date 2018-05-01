@@ -296,7 +296,8 @@ namespace Limbs.Web.Controllers
 
             await _ns.SendProofOfDeliveryNotification(orderModel);
 
-            return Redirect(Request.UrlReferrer?.PathAndQuery);
+            //return Redirect(Request.UrlReferrer?.PathAndQuery);
+            return RedirectToAction("Details",new { orderModel.Id });
         }
 
         [HttpPost]
