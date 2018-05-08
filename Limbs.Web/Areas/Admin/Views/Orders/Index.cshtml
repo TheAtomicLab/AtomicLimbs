@@ -7,7 +7,7 @@
 }
 
 <h2>Pedidos</h2>
-
+@Html.ActionLink("Exportar listado a CSV", "CsvExport")
 <table>
     <tr>
         <th>
@@ -40,7 +40,7 @@
             <td class="@item.Status">
                 @if (string.IsNullOrWhiteSpace(item.FileUrl))
                 {
-                    <text>[ARCHIVO NO GENERADO!]</text><br/>
+                    <text>[ARCHIVO NO GENERADO!]</text><br />
                 }
                 @item.Status.ToDescription()
                 @if (item.Status == OrderStatus.Pending)
@@ -49,7 +49,7 @@
                 }
                 @if (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery)
                 {
-                    <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new {idOrder = item.Id}))</span>
+                    <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
                 }
                 @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) &&
                      (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery || item.Status == OrderStatus.Delivered))
