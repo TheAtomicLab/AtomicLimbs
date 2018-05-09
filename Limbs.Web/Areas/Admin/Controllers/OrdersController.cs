@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -33,6 +35,29 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return View(orderList);
         }
 
+        // GET: Admin/Orders/CsvExport
+        public async Task<FileContentResult> CsvExport()
+        {
+
+            var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
+            var sb = new StringBuilder();
+
+            foreach (var data in dataList)
+            {
+
+                sb.AppendLine("Pedido Nro: " + data.Id + "," + "Estado: " + data.Status + ", " + "Porcentaje: " + data.Pieces.GetPercentage() + ", " + "Creado: " + data.Date + ", " + "Email del solicitante: " + data.OrderRequestor.Email + ", " +
+                              "Pais: " + data.OrderRequestor.Country + ", " + "Nombre del solicitante: " + data.OrderRequestor.FullName() + ", " + "Genero del solicitante: " + data.OrderRequestor.Gender + ", " +
+                              "Telefono del solicitante: " + data.OrderRequestor.Phone + ", " + "Localizacion del solicitante: " + data.OrderRequestor.LatLng.Replace(',', ' ') + ", " + "Direccion del solicitante: " + data.OrderRequestor.FullAddress().Replace(',', ' ') + ", " +
+                              "Amputacion: " + data.AmputationType + ", " + "Color: " + data.Color + ", " + "Comentarios: " + data.Comments.Replace(',', ' ') + ", " + "Foto: " + data.IdImage + ", " + "Courier: " + data.DeliveryCourier + ", " +
+                              "Etiqueta postal: " + data.DeliveryPostalLabel + ", " + "Traking: " + data.DeliveryTrackingCode + ", " + "Prueba de envio: " + data.ProofOfDelivery + ", " + "Tamaños: " + data.SizesData + ", " +
+                              "Ultima actualizacion de estado: " + data.StatusLastUpdated + ", " + "Id Embajador: " + data.OrderAmbassador.Id + ", " + "Email Embajador: " + data.OrderAmbassador.Email);
+
+            }
+
+            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", "pedidos" + Timestamp + ".csv");
+
+        }
         // GET: Admin/Orders/Details/5
         public ActionResult Details(int id)
         {
@@ -94,7 +119,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             order.Status = newStatus;
             order.StatusLastUpdated = DateTime.UtcNow;
             order.LogMessage(User, $"Change status from {oldStatus} to {newStatus}");
-            
+
             Db.OrderModels.AddOrUpdate(order);
             await Db.SaveChangesAsync();
 
@@ -114,8 +139,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return User.IsInRole(AppRoles.Administrator) ? 
-                RedirectToAction("Index", "Home") : 
+            return User.IsInRole(AppRoles.Administrator) ?
+                RedirectToAction("Index", "Home") :
                 RedirectToAction("RedirectUser", "Account");
         }
 
@@ -143,7 +168,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             return View(orderModel);
         }
 
@@ -158,13 +183,13 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            
+
             Db.OrderModels.Remove(orderModel);
             await Db.SaveChangesAsync();
 
             return RedirectToAction("Index");
         }
-        
+
         // GET: Admin/Orders/SelectAmbassador/5
         public async Task<ActionResult> SelectAmbassador(int idOrder)
         {
