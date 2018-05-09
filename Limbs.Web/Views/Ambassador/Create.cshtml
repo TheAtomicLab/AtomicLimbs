@@ -53,15 +53,19 @@
             <h2 class="f-titulo">Tus datos</h2>
             <div class="f-seccion">
                 <div class="f-campo-mitad">
-                    @Html.EditorFor(model => model.AmbassadorName, new {htmlAttributes = new {@class = "f-campo", placeholder = "Nombre"}})
-                    @Html.EditorFor(model => model.AmbassadorLastName, new {htmlAttributes = new {@class = "f-campo", placeholder = "Apellido"}})
+                    @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
+                    @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
                 </div>
-                @Html.EditorFor(model => model.Dni, new {htmlAttributes = new {@class = "f-campo", placeholder = "DNI o Pasaporte"}})
-                @Html.EditorFor(model => model.Phone, new {htmlAttributes = new {@class = "f-campo", placeholder = "Teléfono"}})
+                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte" } })
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
                 <label class="f-label">Fecha de nacimiento</label>
-                @Html.EditorFor(model => model.Birth, new {htmlAttributes = new {@class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") }})
+                @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
                 <label class="f-label">Sexo</label>
-                @Html.EditorFor(m => m.Gender, new { htmlAttributes = new {@class = "f-campo f-post-l"}})
+                @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+                <label class="f-label">Email Alternativo</label>
+                <label class="f-label" style="font-style: italic; font-size: 12px;">Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado </label>
+                @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo" } })
+
                 @Html.Partial("_Address", Model)
             </div>
             <div>
