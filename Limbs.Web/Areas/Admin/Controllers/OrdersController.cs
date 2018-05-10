@@ -13,6 +13,7 @@ using Limbs.Web.Entities.Models;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
+using Limbs.Web.Common.Extensions;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -86,18 +87,82 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // POST: Admin/Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(OrderModel orderModel)
+        public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto)
         {
             //TODO (ale): implementar segun los campos que tengan sentido editarse
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
 
-            //if (!ModelState.IsValid) return View(orderModel);
+            if (!ModelState.IsValid) return View(orderModel);
+
+            var isOk = await UpdateOrder(orderModel, orderPhoto);
+
+            if (!isOk) return HttpNotFound();
+
+            return RedirectToAction("Index");
+        }
+
+        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file)
+        {
+            var oldOrder = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderModel.Id);
+
+            if (oldOrder == null) return false;
+
+            if (!CanEditOrder(oldOrder)) return false;
+            
+            //Campos a editar
+            oldOrder.AmputationType = orderModel.AmputationType;
+            oldOrder.ProductType = orderModel.ProductType;
+            if (file != null) UpdateOrderFile(oldOrder, file);
+            //oldOrder.Sizes = orderModel.Sizes;
+            oldOrder.Color = orderModel.Color;
+            oldOrder.Comments = orderModel.Comments;
+            oldOrder.StatusLastUpdated = DateTime.UtcNow;
+
+            // TODO: ¿Send notification when changing status? 
+            //var oldStatus = oldOrder.Status;
+            //var newStatus = orderModel.Status;
             //
-            //orderModel.LogMessage(User, "Edited order");
+            //if (oldStatus != newStatus) oldOrder.Status = newStatus;
+            //
+
+
+            //TODO: Add Order to log
+
+            //Db.OrderModels_h.Add(orderLog);
+            Db.OrderModels.AddOrUpdate(oldOrder);
+            oldOrder.LogMessage(User, "Edited order");
+            //oldOrder.LogMessage(User, "Edited order", orderLog.OrderId_H);
+
+            await Db.SaveChangesAsync();
+
+            return true;
+        }
+
+        private void UpdateOrderFile(OrderModel orderModel, HttpPostedFileBase file)
+        {
+            if (file == null || file.ContentLength == 0)
+            {
+                ModelState.AddModelError("nofile", @"Seleccione una foto.");
+            }
+            else
+            {
+                if (file.ContentLength > 1000000 * 5)
+                {
+                    ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
+                }
+                if (!file.IsImage())
+                {
+                    ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
+                }
+            }
+
+            var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+            var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
+
+            orderModel.IdImage = fileUrl.ToString();
+
             //Db.OrderModels.AddOrUpdate(orderModel);
             //await Db.SaveChangesAsync();
-            //
-            //return RedirectToAction("Index");
         }
 
         // POST: Admin/Orders/EditStatus/5
