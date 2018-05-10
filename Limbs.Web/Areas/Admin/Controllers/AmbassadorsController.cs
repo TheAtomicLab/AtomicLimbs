@@ -22,14 +22,15 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var dataList = Db.AmbassadorModels.ToList();
             var sb = new StringBuilder();
 
+            sb.AppendLine("Id, " + "Email, " + "Nombre, " + "DNI, " + "Pais, " + "Ciudad, " + "Domicilio, " + "Datos extra domicilio, " + "Estado, " + "Localizacion, " + "Telefono, " + "Fecha de registro, " + "Fecha de nacimiento, " + "Genero");
             foreach (var data in dataList)
             {
 
-                sb.AppendLine("Id: " + data.Id + "," + "Email: " + data.Email + ", " + "Nombre: " + data.FullName() + ", " + "DNI: " + data.Dni + ", " +
-                              "Pais: " + data.Country + ", " + "Ciudad: " + data.City + ", " + "Domicilio: " + data.Address + ", " +
-                              "Datos extra domicilio: " + data.Address2.Replace(',', ' ') + ", " + "Estado: " + data.State +  ", " + "Localizacion: " + data.LatLng.Replace(',', ' ') + ", " +
-                              "Telefono: " + data.Phone + ", " + "Fecha de registro: " + data.RegisteredAt + ", " + "Fecha de nacimiento: " + data.Birth + ", " +
-                              "Genero: " + data.Gender);
+                sb.AppendLine(data.Id + "," + data.Email + ", " + data.FullName() + ", " + data.Dni + ", " +
+                              data.Country + ", " + data.City + ", " + data.Address + ", " +
+                              data.Address2.Replace(',', ' ') + ", " + data.State +  ", " + data.LatLng.Replace(',', ' ') + ", " +
+                              data.Phone + ", " + data.RegisteredAt + ", " + data.Birth + ", " +
+                              data.Gender);
 
             }
 
