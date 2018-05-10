@@ -21,15 +21,18 @@ namespace Limbs.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
-            var userBirth = Db.UserModelsT.Where(u => u.UserId == userId).Select(x => x.Birth).SingleOrDefault();
-            var userName = Db.UserModelsT.Where(u => u.UserId == userId).Select(x => x.UserName).SingleOrDefault();
+            var user = Db.UserModelsT.SingleOrDefault(u => u.UserId == userId);
+
+            if (user == null) return RedirectToAction("Login", "Account");
+
+            if (!orderList.Any() && user.IsValidAge()) return RedirectToAction("ManoPedir", "Orders");
 
             var viewModel = new UserPanelViewModel
             {
                 Order = orderList.ToList(),
                 Message = message,
-                UserBirth = userBirth,
-                UserName = userName
+                IsValidAge = user.IsValidAge(),
+                UserName = user.UserName,
 
             };
 

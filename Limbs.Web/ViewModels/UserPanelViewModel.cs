@@ -10,7 +10,7 @@ namespace Limbs.Web.ViewModels
 
         public string Message { get; set; }
 
-        public DateTime UserBirth { get; set; }
+        public bool IsValidAge { get; set; }
 
         public string UserName { get; set; }
     }

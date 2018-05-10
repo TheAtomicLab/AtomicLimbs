@@ -68,8 +68,11 @@ namespace Limbs.Web.Controllers
         public ActionResult ManoPedir()
         {
             var userId = User.Identity.GetUserId();
-            var userBirth = Db.UserModelsT.Where(x => x.UserId == userId).Select(u => u.Birth).SingleOrDefault();
-            if (userBirth >= DateTime.UtcNow.AddYears(-4))
+            var userModel = Db.UserModelsT.SingleOrDefault(x => x.UserId == userId);
+
+            if (userModel == null) return RedirectToAction("Login", "Account");
+
+            if (!userModel.IsValidAge())
             {
                 return RedirectToAction("Index", "Users");
             }

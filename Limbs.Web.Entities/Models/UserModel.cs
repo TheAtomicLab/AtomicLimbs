@@ -157,6 +157,11 @@ namespace Limbs.Web.Entities.Models
         {
             return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);
         }
+
+        public bool IsValidAge()
+        {
+            return Birth <= DateTime.UtcNow.AddYears(-4);
+        }
     }
     
     public enum Gender
