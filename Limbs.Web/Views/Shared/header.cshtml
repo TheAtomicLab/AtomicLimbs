@@ -20,6 +20,16 @@
                         <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
                     </li>
                 }
+                @if (User.IsInRole(AppRoles.Ambassador))
+                {
+                    <li>
+                        <a name="comunidad" onclick="cerrarmenu()" href="http://facebook.com/groups/AtomicLabEmbajadores" target="_blank">Comunidad de Embajadores</a>
+                    </li>
+
+                    <li>
+                        <a name="manual" onclick="cerrarmenu()" href="http://atomiclab.org/limbs/ambassadors/manual" target="_blank">Manual</a>
+                    </li>
+                }
                 <li>
                     @Html.ActionLink("¿Qué es Limbs?", "QueEsLimbs", "StaticContent", null, null, "pedir", null, null)
                 </li>

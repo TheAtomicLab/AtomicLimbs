@@ -43,15 +43,17 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
             var sb = new StringBuilder();
 
+            sb.AppendLine("Pedido Nro, " + "Estado, " + "Porcentaje, " + "Creado, " + "Email del Solicitante, " + "Pais, "+ "Nombre del solicitante, "+ "Genero, "+ "Fecha de nacimiento, " + "Telefono, "+ "Localizacion, "+ "Direccion, "+ "Amputacion, "+ "Color, "+ "Comentarios, "+ "Foto, "+ "Courier, "+ "Etiqueta Postal, "+ "Traking, "+ "Prueba de envio, "+ "Tamaños, "+ "Ultima Actualizacion de Estado, "+ "ID Embajador, "+ "Email embajador");
+
             foreach (var data in dataList)
             {
 
-                sb.AppendLine("Pedido Nro: " + data.Id + "," + "Estado: " + data.Status + ", " + "Porcentaje: " + data.Pieces.GetPercentage() + ", " + "Creado: " + data.Date + ", " + "Email del solicitante: " + data.OrderRequestor.Email + ", " +
-                              "Pais: " + data.OrderRequestor.Country + ", " + "Nombre del solicitante: " + data.OrderRequestor.FullName() + ", " + "Genero del solicitante: " + data.OrderRequestor.Gender + ", " +
-                              "Telefono del solicitante: " + data.OrderRequestor.Phone + ", " + "Localizacion del solicitante: " + data.OrderRequestor.LatLng.Replace(',', ' ') + ", " + "Direccion del solicitante: " + data.OrderRequestor.FullAddress().Replace(',', ' ') + ", " +
-                              "Amputacion: " + data.AmputationType + ", " + "Color: " + data.Color + ", " + "Comentarios: " + data.Comments.Replace(',', ' ') + ", " + "Foto: " + data.IdImage + ", " + "Courier: " + data.DeliveryCourier + ", " +
-                              "Etiqueta postal: " + data.DeliveryPostalLabel + ", " + "Traking: " + data.DeliveryTrackingCode + ", " + "Prueba de envio: " + data.ProofOfDelivery + ", " + "Tamaños: " + data.SizesData + ", " +
-                              "Ultima actualizacion de estado: " + data.StatusLastUpdated + ", " + "Id Embajador: " + data.OrderAmbassador.Id + ", " + "Email Embajador: " + data.OrderAmbassador.Email);
+                sb.AppendLine(data.Id + "," + data.Status + ", " + data.Pieces.GetPercentage() + ", " + data.Date + ", " + data.OrderRequestor.Email + ", " +
+                              data.OrderRequestor.Country + ", " + data.OrderRequestor.FullName() + ", " + data.OrderRequestor.Gender + ", " + data.OrderRequestor.Birth + ", " + 
+                              data.OrderRequestor.Phone + ", " + data.OrderRequestor.LatLng.Replace(',', ' ') + ", " + data.OrderRequestor.FullAddress().Replace(',', ' ') + ", " +
+                              data.AmputationType + ", " + data.Color + ", " + data.Comments?.Replace(',', ' ') + ", " + data.IdImage + ", " + data.DeliveryCourier + ", " +
+                              data.DeliveryPostalLabel + ", " + data.DeliveryTrackingCode + ", " + data.ProofOfDelivery + ", " + data.SizesData + ", " +
+                              data.StatusLastUpdated + ", " + data.OrderAmbassador?.Id + ", " + data.OrderAmbassador?.Email);
 
             }
 
