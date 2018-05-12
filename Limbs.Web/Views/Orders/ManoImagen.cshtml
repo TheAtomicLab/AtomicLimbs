@@ -47,6 +47,8 @@
         <div>
             @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", @id = "formManoMedidas" }))
             {
+                <span id="msgManoImagen" style="color:blue;"></span>
+                <ul id="msgErrorManoImagen" style="color:red;"></ul>
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary()
                 @Html.HiddenFor(x => x.AmputationType)
