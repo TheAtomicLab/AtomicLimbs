@@ -2,7 +2,7 @@
         disabledRegister();
 
         var typeFileAccepted = "image/*";
-        var maxFileSizeImage = 5; //MB
+        var maxFileSizeImage = 6; //MB
         var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
         var invalidFileTypeMsg = "Tipo de archivo inválido";
 
@@ -10,8 +10,8 @@
         //Documentation: http://www.dropzonejs.com/
         var formManoMedidas = $("#formManoMedidas").dropzone({
             url: null,
-            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n  <div class=\"dz-error-message\"><span data-dz-errormessage></span></div>\n</div>",
-            maxFilesize: 5,
+            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+            maxFilesize: maxFileSizeImage,
             maxFiles: 1,
             uploadMultiple: false,
             maxThumbnailFilesize: 1,
@@ -41,7 +41,13 @@
                     //procesa los archivos que estan en la cola (en este caso 1)
                     dropZoneManoMedidas.processQueue();
                 });
-                
+
+                this.on("processing", function (file) {
+                    //console.log("Subiendo imagen");
+                    $('#msgManoImagen').empty();
+                    $('#msgManoImagen').html("Subiendo imágen");
+                });
+
                 this.on("addedfile", function (file) {
 
                     if (dropZoneManoMedidas.files.length > 1) {
@@ -59,22 +65,25 @@
                     } else {
                         enableRegister();
                     }
+
                 });
                 this.on("removedfile", function (file) {
                     $('#msgErrorManoImagen').empty();
                     disabledRegister()
                 });
 
-                this.on("error", function (file) {
+                this.on("error", function (file, errormessage, xhr) {
+                    var t = xhr.response.responseText;
+
                     disabledRegister();
                 });
 
-                this.on("processing", function (file) {
-                    console.log("Subiendo imagen");
-                    $('#msgManoImagen').empty();
-                    $('#errorMessages').html("Subiendo imágen");
+                //TODO: Barra cargando
+                this.on("uploadprogress", function (file, progress) {
+                    //$('#msgManoImagen').html("Subiendo imágen: " + progress);
+                    //$('#msgManoImagen').html("Subiendo imágen: " + progress);
                 });
-
+                
                 this.on("success", function (file, response) {
                     window.location = response.Action;
                 });
@@ -93,22 +102,22 @@
 
         function showErrors(file) {
             var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            Dropzone.sizeFile
             var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
 
             if (!ConditionSizeImage) {
-                $('#msgErrorManoImagen').append("<li>"+fileTooBigMsg+"</li>");
+                showError(fileTooBigMsg);
             }
 
             if (!ConditionTypeImage) {
-                $('#msgErrorManoImagen').append("<li>"+invalidFileTypeMsg + "</li>");
+                showError(invalidFileTypeMsg);
             }
         }
 });
-
     
-
     function isValidSizeImage(file, nro) {
-        var sizeFile = file.size / 1024 / 1024;
+        //var sizeFile = file.size / 1024 / 1024;
+        sizeFile = file.size / 1000000 // -> Dropzone calculate size
         return sizeFile <= nro;
     }
 
@@ -118,6 +127,12 @@
         } else {
             enableRegister()
         }
+    }
+
+    function showError(msg) {
+        var ErrorMsg = "<li>" + msg + "</li>";
+
+        $('#msgErrorManoImagen').append(ErrorMsg);
     }
 
     function disabledRegister() {
