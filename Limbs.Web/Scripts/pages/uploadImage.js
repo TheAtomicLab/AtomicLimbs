@@ -2,9 +2,10 @@
         disabledRegister();
 
         var typeFileAccepted = "image/*";
-        var maxFileSizeImage = 6; //MB
+        var maxFileSizeImage = 5; //MB
         var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
         var invalidFileTypeMsg = "Tipo de archivo inválido";
+        var msgWhileUploadFile = "Subiendo imágen, por favor espere"
 
 
         //Documentation: http://www.dropzonejs.com/
@@ -43,9 +44,10 @@
                 });
 
                 this.on("processing", function (file) {
-                    //console.log("Subiendo imagen");
+
                     $('#msgManoImagen').empty();
-                    $('#msgManoImagen').html("Subiendo imágen");
+                    $('#msgManoImagen').html(msgWhileUploadFile);
+
                 });
 
                 this.on("addedfile", function (file) {
@@ -75,13 +77,17 @@
                 this.on("error", function (file, errormessage, xhr) {
                     var t = xhr.response.responseText;
 
+                    $('#msgManoImagen').empty();
+                    $('#msgErrorManoImagen').empty();
+                    showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
+                    console.log($(errormessage)[1].textContent);
+
                     disabledRegister();
                 });
 
                 //TODO: Barra cargando
                 this.on("uploadprogress", function (file, progress) {
-                    //$('#msgManoImagen').html("Subiendo imágen: " + progress);
-                    //$('#msgManoImagen').html("Subiendo imágen: " + progress);
+                    //Progress -> Progress file upload
                 });
                 
                 this.on("success", function (file, response) {
