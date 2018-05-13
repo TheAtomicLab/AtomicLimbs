@@ -14,7 +14,7 @@
     </style>
 }
 
-<div style="text-align: center; min-height: calc(100vh - 390px);">
+<div class="card center-card-l">
     @using (Html.BeginForm("Create", "Orders"))
     {
         @Html.AntiForgeryToken()
@@ -27,17 +27,29 @@
         @Html.HiddenFor(model => model.Sizes.C)*@
 
         <div class="form-horizontal">
-            <div id="color_mano">
-                <h2>Color</h2>
-                @Html.RadioButtonFor(model => model.Color, "A")
-                @Html.RadioButtonFor(model => model.Color, "B")
-                @Html.RadioButtonFor(model => model.Color, "C")
-                @Html.RadioButtonFor(model => model.Color, "D")
-                @Html.RadioButtonFor(model => model.Color, "E")
-                @Html.RadioButtonFor(model => model.Color, "F")
+            <div class="">
+                <p class="form_title">Color</p>
+                <div class="sel_color_container">
+                    <div class="sel_color_mano" onclick="select_color(this)" js_value="A">@Html.RadioButtonFor(model => model.Color, "A", new { @class = "selector_color_input"})</div>
+                    <div class="sel_color_mano" onclick="select_color(this)" js_value="B">@Html.RadioButtonFor(model => model.Color, "B", new { @class = "selector_color_input"})</div>
+                    <div class="sel_color_mano" onclick="select_color(this)" js_value="C">@Html.RadioButtonFor(model => model.Color, "C", new { @class = "selector_color_input"})</div>
+                    <div class="sel_color_mano" onclick="select_color(this)" js_value="D">@Html.RadioButtonFor(model => model.Color, "D", new { @class = "selector_color_input"})</div>
+                    <div class="sel_color_mano" onclick="select_color(this)" js_value="E">@Html.RadioButtonFor(model => model.Color, "E", new { @class = "selector_color_input"})</div>
+                    <div class="sel_color_mano" onclick="select_color(this)" js_value="F">@Html.RadioButtonFor(model => model.Color, "F", new { @class = "selector_color_input"})</div>
+                </div>
             </div>
+            <script>
+                function select_color(obj) {
+                    var $obj = $(obj);
+                    $('.sel_color_mano').removeClass('color_selected');
+                    $obj.addClass('color_selected');
+                    var radio = $obj.find('input')[0];
+                    $(radio).prop('checked', true);
+                }
+                $('.sel_color_mano input[checked]').closest('.sel_color_mano').addClass('color_selected');
+            </script>
             <div class="form-group">
-                @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-2" })
+                <p class="form_title">@Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label" })</p>
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
@@ -45,7 +57,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Enviar pedido" class="bn_blue" onclick="this.form.submit(); this.disabled=true;" />
+                    <input type="submit" value="Enviar pedido" class="bn_blue atomForm-send" onclick="this.form.submit(); this.disabled=true;" />
                 </div>
             </div>
         </div>
