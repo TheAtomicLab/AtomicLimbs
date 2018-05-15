@@ -32,7 +32,7 @@ namespace Limbs.Web.Controllers
                 Order = orderList.ToList(),
                 Message = message,
                 IsValidAge = user.IsValidAge(),
-                UserName = user.UserName,
+                UserName = user.FullNameWithoutLastName(),
 
             };
 
