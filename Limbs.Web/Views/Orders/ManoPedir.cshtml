@@ -44,7 +44,7 @@
                 @Html.ValidationMessageFor(x => x.AmputationType)
             </p>
             <div>
-                <input id="enviar" type="submit" value="Siguiente" class="bn_blue">
+                <input id="enviar" type="submit" value="Siguiente" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">
             </div>
         }
     </article>

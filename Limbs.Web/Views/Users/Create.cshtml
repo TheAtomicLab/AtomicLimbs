@@ -98,7 +98,7 @@
                 }
                 <p>
                     @Html.ValidationSummary("", new { @class = "text-danger" })
-                    <button type="submit" class="bn_blue" name="register">@(isEdit ? "Editar datos" : "Registrarse")</button>
+                    <button type="submit" class="bn_blue" name="register" onclick="this.form.submit(); this.disabled=true;">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
             </div>
         }
