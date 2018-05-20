@@ -70,7 +70,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El usuario {0} ya está registrado..
+        ///   Looks up a localized string similar to ¡Ups! Al parecer ya tenías una cuenta. Te acabamos de mandar un correo a {0} para que puedas crear una nueva contraseña..
         /// </summary>
         public static string DuplicateEmail {
             get {
@@ -79,7 +79,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Nombre duplicado..
         /// </summary>
         public static string DuplicateName {
             get {
@@ -115,7 +115,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to InvalidToken.
+        ///   Looks up a localized string similar to Ocurrio un error. Vuelva a Iniciar Sesion y seleccione &quot;olvide contraseña&quot; para intentarlo nuevamente..
         /// </summary>
         public static string InvalidToken {
             get {
@@ -160,7 +160,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La contraseña actual es incorrecta.
+        ///   Looks up a localized string similar to La contraseña actual es incorrecta. Si no la recuerda, haga click en &quot;olvide contraseña&quot;.
         /// </summary>
         public static string PasswordMismatch {
             get {
