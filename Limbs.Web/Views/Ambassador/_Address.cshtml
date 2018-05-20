@@ -114,5 +114,66 @@
                 });
             }
         }
+
+        function codeAddress() {
+            var geocoder = new google.maps.Geocoder();
+
+            var country = $("#Country").val();
+            var state = $("#State").val();
+            var address = $("#Address").val();
+            var addressMap = country + "," + state + "," + address;
+            geocoder.geocode({ 'address': addressMap }, function (results, status) {
+                if (status == 'OK') {
+
+                    addMarker(results[0].geometry.location, map);
+                    map.setCenter(results[0].geometry.location);
+
+                } else {
+                    console.log('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        function markIsAtomic() {
+
+            var distance = getDistanceFromLatLonInKm(@locationLatitude,@locationLongitude, marker.getPosition().lat(), marker.getPosition().lng())
+
+            //si es menor a 0.5km pregunto si su dirección esta correcta en el mapa
+            if (distance < 0.5) {
+
+                //seteo nuevo mark en el mapa
+                codeAddress();
+
+                var result = confirm("¿Está seguro que su dirección en el mapa es correcta?");
+                if (result == false) {
+                    return false;
+                }
+            }
+        }
+
+        /*
+        En caso de que se ejecute un autocompletar del navegador, o no hayan hecho click en el autocompletado de google
+        me fijo si tiene una direccion cercana a atomic y le cambio el mark
+        */
+        $("#Country").blur(function () {
+                var distance = getDistanceFromLatLonInKm(@locationLatitude,@locationLongitude, marker.getPosition().lat(), marker.getPosition().lng())
+
+                if (distance < 0.5)
+                    codeAddress();
+        });
+
+        function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+            var R = 6371;
+            var dLat = (lat2 - lat1) * (Math.PI / 180);
+            var dLon = (lon2 - lon1) * (Math.PI / 180);
+            var a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2)
+                ;
+            var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            var d = R * c;
+            return d;
+        }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=@(googleKey)&libraries=places&callback=initAutocomplete" async defer></script>
