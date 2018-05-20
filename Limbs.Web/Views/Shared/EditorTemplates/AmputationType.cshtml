@@ -12,7 +12,7 @@
 }
 @foreach (var item in values)
 {
-    <div class="selector_amp" js_value="@item.Value" onclick="select_amp(this)">
+    <div class="selector_amp" title="@item.Text" js_value="@item.Value" onclick="select_amp(this)">
         <div class="selector_size"></div>
         @Html.RadioButtonFor(b => Model, item.Value, new { @class = "tipo_amp", title = item.Text, })
     </div>
