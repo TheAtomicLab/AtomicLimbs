@@ -79,7 +79,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre duplicado..
+        ///   Looks up a localized string similar to .
         /// </summary>
         public static string DuplicateName {
             get {

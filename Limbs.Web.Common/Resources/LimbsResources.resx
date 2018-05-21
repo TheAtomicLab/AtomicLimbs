@@ -157,7 +157,7 @@
     <value>PropertyTooShort {0}</value>
   </data>
   <data name="DuplicateName" xml:space="preserve">
-    <value>Nombre duplicado.</value>
+    <value></value>
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>UserAlreadyHasPassword</value>
