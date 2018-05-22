@@ -43,23 +43,74 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
             var sb = new StringBuilder();
 
-            sb.AppendLine("Pedido Nro, " + "Estado, " + "Porcentaje, " + "Creado, " + "Email del Solicitante, " + "Pais, "+ "Nombre del solicitante, "+ "Genero, "+ "Fecha de nacimiento, " + "Telefono, "+ "Localizacion, "+ "Direccion, "+ "Amputacion, "+ "Color, "+ "Comentarios, "+ "Foto, "+ "Courier, "+ "Etiqueta Postal, "+ "Traking, "+ "Prueba de envio, "+ "Tamaños, "+ "Ultima Actualizacion de Estado, "+ "ID Embajador, "+ "Email embajador");
+            sb.AppendLine(
+                //Order
+                "Pedido Nro, " 
+                + "Estado, " 
+                + "Porcentaje, " 
+                + "Creado, " 
+                + "Amputacion, "
+                + "Producto, "
+                + "Color, "
+                + "Tamaños, "
+                + "SizeData, "
+                + "Comentarios, "
+                + "Foto, "
+                + "Prueba de envio, "
+                + "Courier, "
+                + "Traking, "
+                + "Etiqueta Postal, "
+                + "Ultima Actualización de estado, "
+                ///
+                /// Usuario
+                + "UserId, "
+                + "UserId2, "
+                + "UserDni, "
+                + "UserEmail, "
+                + "UserEmailAlternative, "
+                + "UserName, "
+                + "UserLastName, "
+                + "ResponsableName, "
+                + "ResponsableLastName, "
+                + "UserPhone, "
+                + "UserDate, "
+                + "UserGender, "
+                + "UserCountry, "
+                + "UserState, "
+                + "UserCity, "
+                + "UserAddress, "
+                + "UserAddress2, "
+                //+ "UserLatLng, "
+                + "UserRegisteredAt, "
+
+                ///Ambassador
+                + "AmbassadorId, "
+                + "UserId,"
+                + "AmbassadorDni, "
+                + "AmbassadorEmail, "
+                + "AmbassadorEmailAlternative, "
+                + "AmbassadorName, "
+                + "AmbassadorLastName, "
+                + "AmbassadorPhone, "
+                + "AmbassadorDate, "
+                + "AmbassadorGender, "
+                + "AmbassadorCountry, "
+                + "AmbassadorState, "
+                + "AmbassadorCity, "
+                + "AmbassadorAddress, "
+                + "AmbassadorAddress2, "
+                + "AmbassadorRegisteredAt, "
+
+                );
 
             foreach (var data in dataList)
             {
-
-                sb.AppendLine(data.Id + "," + data.Status + ", " + data.Pieces.GetPercentage() + ", " + data.Date + ", " + data.OrderRequestor.Email + ", " +
-                              data.OrderRequestor.Country + ", " + data.OrderRequestor.FullName() + ", " + data.OrderRequestor.Gender + ", " + data.OrderRequestor.Birth + ", " + 
-                              data.OrderRequestor.Phone + ", " + data.OrderRequestor.LatLng.Replace(',', ' ') + ", " + data.OrderRequestor.FullAddress().Replace(',', ' ') + ", " +
-                              data.AmputationType + ", " + data.Color + ", " + data.Comments?.Replace(',', ' ') + ", " + data.IdImage + ", " + data.DeliveryCourier + ", " +
-                              data.DeliveryPostalLabel + ", " + data.DeliveryTrackingCode + ", " + data.ProofOfDelivery + ", " + data.SizesData + ", " +
-                              data.StatusLastUpdated + ", " + data.OrderAmbassador?.Id + ", " + data.OrderAmbassador?.Email);
-
+                string orderText = data.ToString();
+                sb.AppendLine(orderText);
             }
 
             var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
             return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", "pedidos" + Timestamp + ".csv");
-
         }
         // GET: Admin/Orders/Details/5
         public ActionResult Details(int id)

@@ -132,7 +132,40 @@ namespace Limbs.Web.Entities.Models
             return OrderRequestor.UserId == user.Identity.GetUserId();
         }
 
+        public override string ToString()
+        {
+            var separator = ",";
+
+            List<String> listOrder = new List<String>
+            {
+                this.Id.ToString(),
+                this.Status.ToString(),
+                String.Concat("\"",this.Pieces.GetPercentage().ToString(),"\""),
+                this.Date.ToString(),
+                this.AmputationType.ToString(),
+                this.ProductType.ToString(),
+                this.Color.ToString(),
+                //this.Extras.ToString(),
+                this.Sizes?.ToString(),
+                this.SizesData.ToString(),
+                String.Concat("\"",this.Comments,"\""),
+                this.IdImage,
+                this.ProofOfDelivery,
+                this.DeliveryCourier.ToString(),
+                this.DeliveryTrackingCode,
+                this.DeliveryPostalLabel,
+                this.StatusLastUpdated.ToString(),
+
+                this.OrderRequestor.ToString(),
+                this.OrderAmbassador?.ToString(),
+
+            };
+
+            return String.Join(separator, listOrder);
+        }
+
     }
+
 
     public class Pieces
     {

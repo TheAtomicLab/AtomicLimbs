@@ -79,6 +79,33 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
+        public override string ToString()
+        {
+            var separator = ",";
+
+            List<String> listAmbassador = new List<String>
+            {
+                this.Id.ToString(),
+                this.UserId,
+                this.Dni,
+                this.Email,
+                this.AlternativeEmail,
+                String.Concat("\"",this.AmbassadorName,"\""),
+                this.AmbassadorLastName,
+                this.Phone,
+                this.Birth.ToString(),
+                this.Gender.ToString(),
+                this.Country,
+                this.State,
+                this.City,
+                String.Concat("\"",this.Address,"\""),
+                String.Concat("\"",this.Address2,"\""),
+                this.RegisteredAt.ToString(),
+            };
+
+            return String.Join(separator, listAmbassador);
+        }
+
         public DbGeography Location { get; set; }
         
         [NotMapped]

@@ -162,6 +162,36 @@ namespace Limbs.Web.Entities.Models
         {
             return Birth <= DateTime.UtcNow.AddYears(-4);
         }
+
+        public override string ToString()
+        {
+            var separator = ",";
+
+            List<String> listUser = new List<String>
+            {
+                this.Id.ToString(),
+                this.UserId,
+                this.Dni,
+                this.Email,
+                this.AlternativeEmail,
+                String.Concat("\"",this.UserName,"\""),
+                this.UserLastName,
+                this.ResponsableName,
+                this.ResponsableLastName,
+                this.Phone,
+                this.Birth.ToString(),
+                this.Gender.ToString(),
+                this.Country,
+                this.State,
+                this.City,
+                String.Concat("\"",this.Address,"\""),
+                String.Concat("\"",this.Address2,"\""),
+                //this.LatLng,
+                this.RegisteredAt.ToString(),
+            };
+            
+            return String.Join(separator, listUser);
+        }
     }
     
     public enum Gender
