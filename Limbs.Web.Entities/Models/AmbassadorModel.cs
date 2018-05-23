@@ -114,5 +114,10 @@ namespace Limbs.Web.Entities.Models
         {
             return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);
         }
+
+        public bool HasAlternativeEmail()
+        {
+            return !string.IsNullOrWhiteSpace(AlternativeEmail);
+        }
     }
 }

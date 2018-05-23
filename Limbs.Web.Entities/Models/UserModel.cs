@@ -162,6 +162,11 @@ namespace Limbs.Web.Entities.Models
         {
             return Birth <= DateTime.UtcNow.AddYears(-4);
         }
+
+        public bool HasAlternativeEmail()
+        {
+            return !string.IsNullOrWhiteSpace(AlternativeEmail);
+        }
     }
     
     public enum Gender
