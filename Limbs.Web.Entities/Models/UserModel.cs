@@ -192,6 +192,35 @@ namespace Limbs.Web.Entities.Models
             
             return String.Join(separator, listUser);
         }
+
+        //TODO: change this
+        public List<String> GetTitles()
+        {
+            List<String> titles = new List<string>
+            {
+                "UserIdTable",
+                "UserId",
+                "UserDni",
+                "UserEmail",
+                "UserEmailAlternative",
+                "UserName",
+                "UserLastName",
+                "ResponsableName",
+                "ResponsableLastName",
+                "UserPhone",
+                "UserDate",
+                "UserGender",
+                "UserCountry",
+                "UserState",
+                "UserCity",
+                "UserAddress",
+                "UserAddress2",
+                // "UserLatLng",
+                "UserRegisteredAt",
+            };
+
+            return titles;
+        }
     }
     
     public enum Gender

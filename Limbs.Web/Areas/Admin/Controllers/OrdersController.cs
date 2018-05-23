@@ -14,6 +14,7 @@ using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Common.Extensions;
+using Newtonsoft.Json;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -39,79 +40,76 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Orders/CsvExport
         public async Task<FileContentResult> CsvExport()
         {
-
             var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
             var sb = new StringBuilder();
 
-            sb.AppendLine(
-                //Order
-                "Pedido Nro, " 
-                + "Estado, " 
-                + "Porcentaje, " 
-                + "Creado, " 
-                + "Amputacion, "
-                + "Producto, "
-                + "Color, "
-                + "Tamaños, "
-                + "SizeData, "
-                + "Comentarios, "
-                + "Foto, "
-                + "Prueba de envio, "
-                + "Courier, "
-                + "Traking, "
-                + "Etiqueta Postal, "
-                + "Ultima Actualización de estado, "
-                ///
-                /// Usuario
-                + "UserId, "
-                + "UserId2, "
-                + "UserDni, "
-                + "UserEmail, "
-                + "UserEmailAlternative, "
-                + "UserName, "
-                + "UserLastName, "
-                + "ResponsableName, "
-                + "ResponsableLastName, "
-                + "UserPhone, "
-                + "UserDate, "
-                + "UserGender, "
-                + "UserCountry, "
-                + "UserState, "
-                + "UserCity, "
-                + "UserAddress, "
-                + "UserAddress2, "
-                //+ "UserLatLng, "
-                + "UserRegisteredAt, "
+            OrderModel orderModel = new OrderModel();
 
-                ///Ambassador
-                + "AmbassadorId, "
-                + "UserId,"
-                + "AmbassadorDni, "
-                + "AmbassadorEmail, "
-                + "AmbassadorEmailAlternative, "
-                + "AmbassadorName, "
-                + "AmbassadorLastName, "
-                + "AmbassadorPhone, "
-                + "AmbassadorDate, "
-                + "AmbassadorGender, "
-                + "AmbassadorCountry, "
-                + "AmbassadorState, "
-                + "AmbassadorCity, "
-                + "AmbassadorAddress, "
-                + "AmbassadorAddress2, "
-                + "AmbassadorRegisteredAt, "
+            var titles = String.Join(",", orderModel.GetTitles());
 
-                );
+            sb.AppendLine(titles);
 
             foreach (var data in dataList)
             {
                 string orderText = data.ToString();
                 sb.AppendLine(orderText);
             }
+            
+            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
+
+            var nameCsv = String.Format("pedidos{0}.csv", Timestamp);
+            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", nameCsv);
+        }
+
+        public async Task<ActionResult> LogCsvExport(int? orderId)
+        {
+            if (orderId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var order = await Db.OrderModels.SingleAsync(x => x.Id == orderId);
+
+            if (order == null)
+            {
+                return HttpNotFound();
+            }
+
+            var orderJson = JsonConvert.DeserializeObject<List<OrderLogItem>>(order.OrderLog);
+
+            var sb = new StringBuilder();
+
+            List<String> titles = new List<string>
+            {
+                "Usuario",
+                "Accion",
+                "Fecha",
+            };
+
+            var exportTitles = titles.Union(order.GetTitles());
+
+            sb.AppendLine(String.Join(",", exportTitles));
+
+            foreach (var data in orderJson)
+            {
+                List<String> dataList = new List<String>
+                {
+                    data.User,
+                    String.Concat("\"",data.Message,"\""),
+                    data.Date.ToString(),
+                    data.OrderString,
+                };
+
+                string dataText = String.Join(",", dataList);
+                sb.AppendLine(dataText);
+            }
 
             var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", "pedidos" + Timestamp + ".csv");
+            var nameCsv = String.Format("order_{0}_{1}.csv",orderId,Timestamp);
+
+            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv",nameCsv);
         }
+
         // GET: Admin/Orders/Details/5
         public ActionResult Details(int id)
         {
@@ -156,7 +154,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
         public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file)
         {
-            var oldOrder = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderModel.Id);
+            var oldOrder = await Db.OrderModels.Include(x => x.OrderRequestor).Include(x => x.OrderAmbassador).FirstOrDefaultAsync(x => x.Id == orderModel.Id);
 
             if (oldOrder == null) return false;
 
@@ -178,13 +176,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //if (oldStatus != newStatus) oldOrder.Status = newStatus;
             //
 
-
-            //TODO: Add Order to log
-
-            //Db.OrderModels_h.Add(orderLog);
             Db.OrderModels.AddOrUpdate(oldOrder);
-            oldOrder.LogMessage(User, "Edited order");
-            //oldOrder.LogMessage(User, "Edited order", orderLog.OrderId_H);
+            oldOrder.LogMessage(User, "Edited order",oldOrder.ToString());
+            //oldOrder.LogMessage(User, "Edited order ");
 
             await Db.SaveChangesAsync();
 

@@ -106,6 +106,32 @@ namespace Limbs.Web.Entities.Models
             return String.Join(separator, listAmbassador);
         }
 
+        //TODO: change this
+        public List<String> GetTitles()
+        {
+            List<String> titles = new List<string>
+            {
+                "AmbassadorId",
+                "UserId",
+                "AmbassadorDni",
+                "AmbassadorEmail",
+                "AmbassadorEmailAlternative",
+                "AmbassadorName",
+                "AmbassadorLastName",
+                "AmbassadorPhone",
+                "AmbassadorDate",
+                "AmbassadorGender",
+                "AmbassadorCountry",
+                "AmbassadorState",
+                "AmbassadorCity",
+                "AmbassadorAddress",
+                "AmbassadorAddress2",
+                "AmbassadorRegisteredAt"
+            };
+
+            return titles;
+        }
+
         public DbGeography Location { get; set; }
         
         [NotMapped]
