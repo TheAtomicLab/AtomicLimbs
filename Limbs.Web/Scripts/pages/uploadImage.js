@@ -1,9 +1,18 @@
 ﻿    $(document).ready(function () {
         disabledRegister();
 
+        var typeFileAccepted = "image/*";
+        var maxFileSizeImage = 5; //MB
+        var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
+        var invalidFileTypeMsg = "Tipo de archivo inválido";
+        var msgWhileUploadFile = "Subiendo imágen, por favor espere"
+
+
+        //Documentation: http://www.dropzonejs.com/
         var formManoMedidas = $("#formManoMedidas").dropzone({
             url: null,
-            maxFilesize: 5,
+            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+            maxFilesize: maxFileSizeImage,
             maxFiles: 1,
             uploadMultiple: false,
             maxThumbnailFilesize: 1,
@@ -12,11 +21,13 @@
             autoQueue: true,
             addRemoveLinks: true,
             dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
-            dictFileTooBig: "La imagen es muy grande ({{filesize}}MB). Tamaño máximo: {{maxFilesize}}MB.",
-            dictInvalidFileType: "El tipo de archivo es invalido.",
+            //dictFileTooBig: fileTooBig,
+            //dictInvalidFileType: "El tipo de archivo es invalido.",
+            dictFileTooBig: null,
+            dictInvalidFileType: null,
             dictRemoveFile: "Borrar imagen",
-            dictCancelUpload: "Cancelar subida",
-            dictCancelUploadConfirmation: "¿Estas seguro de cancelar la subida de la foto?",
+            dictCancelUpload: null,
+            //dictCancelUploadConfirmation: "¿Estas seguro de cancelar la subida de la foto?",
             dictRemoveFileConfirmation: null,
             dictMaxFilesExceeded: "No puedes subir más de una imagen.",
             createImageThumbnails: false, 
@@ -31,7 +42,14 @@
                     //procesa los archivos que estan en la cola (en este caso 1)
                     dropZoneManoMedidas.processQueue();
                 });
-                
+
+                this.on("processing", function (file) {
+
+                    $('#msgManoImagen').empty();
+                    $('#msgManoImagen').html(msgWhileUploadFile);
+
+                });
+
                 this.on("addedfile", function (file) {
 
                     if (dropZoneManoMedidas.files.length > 1) {
@@ -42,14 +60,34 @@
                         dropZoneManoMedidas.removeFile(dropZoneManoMedidas.files[0]);
                     }
 
-                    enableRegister()
+                    $('#msgErrorManoImagen').empty();
+
+                    if (!isConditionsValid(file)) {
+                        showErrors(file);
+                    } else {
+                        enableRegister();
+                    }
+
                 });
                 this.on("removedfile", function (file) {
+                    $('#msgErrorManoImagen').empty();
                     disabledRegister()
                 });
 
-                this.on("error", function (file,msg) {
-                    disabledRegister()
+                this.on("error", function (file, errormessage, xhr) {
+                    var t = xhr.response.responseText;
+
+                    $('#msgManoImagen').empty();
+                    $('#msgErrorManoImagen').empty();
+                    showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
+                    console.log($(errormessage)[1].textContent);
+
+                    disabledRegister();
+                });
+
+                //TODO: Barra cargando
+                this.on("uploadprogress", function (file, progress) {
+                    //Progress -> Progress file upload
                 });
                 
                 this.on("success", function (file, response) {
@@ -60,7 +98,34 @@
         });
 
         var filesDropManoMedidas = dropZoneManoMedidas.files;
+
+        function isConditionsValid(file) {
+            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+            return ConditionTypeImage && ConditionSizeImage;
+        }
+
+        function showErrors(file) {
+            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            Dropzone.sizeFile
+            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+            if (!ConditionSizeImage) {
+                showError(fileTooBigMsg);
+            }
+
+            if (!ConditionTypeImage) {
+                showError(invalidFileTypeMsg);
+            }
+        }
 });
+    
+    function isValidSizeImage(file, nro) {
+        //var sizeFile = file.size / 1024 / 1024;
+        sizeFile = file.size / 1000000 // -> Dropzone calculate size
+        return sizeFile <= nro;
+    }
 
     function validateImg() {
         if (filesDropManoMedidas.length < 1) {
@@ -68,6 +133,12 @@
         } else {
             enableRegister()
         }
+    }
+
+    function showError(msg) {
+        var ErrorMsg = "<li>" + msg + "</li>";
+
+        $('#msgErrorManoImagen').append(ErrorMsg);
     }
 
     function disabledRegister() {
