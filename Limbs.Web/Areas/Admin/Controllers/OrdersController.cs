@@ -43,11 +43,17 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
             var sb = new StringBuilder();
 
-            OrderModel orderModel = new OrderModel();
+            var anyOrder = dataList.Where(x => x.OrderAmbassador != null).FirstOrDefault();
 
-            var titles = String.Join(",", orderModel.GetTitles());
+            anyOrder = anyOrder ?? dataList.First();
 
-            sb.AppendLine(titles);
+            var orderTitles = anyOrder.GetTitles();
+            var requestorTitles = anyOrder.OrderRequestor.GetTitles();
+            var ambassadorTitles = anyOrder.OrderAmbassador?.GetTitles();
+
+            var orderExportTitles = (ambassadorTitles != null) ? orderTitles.Union(requestorTitles.Union(ambassadorTitles)) : orderTitles.Union(requestorTitles);
+
+            sb.AppendLine(String.Join(",",orderExportTitles));
 
             foreach (var data in dataList)
             {
@@ -86,7 +92,13 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 "Fecha",
             };
 
-            var exportTitles = titles.Union(order.GetTitles());
+            var orderTitles = order.GetTitles();
+            var requestorTitles = order.OrderRequestor.GetTitles();
+            var ambassadorTitles = order.OrderAmbassador?.GetTitles();
+
+            var orderExportTitles = (ambassadorTitles != null) ? orderTitles.Union(requestorTitles.Union(ambassadorTitles)) : orderTitles.Union(requestorTitles);
+
+            var exportTitles = titles.Union(orderExportTitles);
 
             sb.AppendLine(String.Join(",", exportTitles));
 

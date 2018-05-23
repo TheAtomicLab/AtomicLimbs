@@ -197,10 +197,9 @@ namespace Limbs.Web.Entities.Models
                 "Etiqueta Postal",
                 "Ultima Actualización de estado",
             };
+            //var orderTitles = titles.Union(this.OrderRequestor.GetTitles().Union(this.OrderAmbassador?.GetTitles()));
 
-            var orderTitles = titles.Union(this.OrderRequestor.GetTitles().Union(this.OrderAmbassador?.GetTitles()));
-
-            return orderTitles.ToList();
+            return titles;
         }
 
     }
