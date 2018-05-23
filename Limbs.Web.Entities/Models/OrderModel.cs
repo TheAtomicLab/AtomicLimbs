@@ -163,7 +163,7 @@ namespace Limbs.Web.Entities.Models
                 this.IdImage,
                 this.ProofOfDelivery,
                 this.DeliveryCourier.ToString(),
-                this.DeliveryTrackingCode,
+                String.Concat("\"",this.DeliveryTrackingCode,"\""),
                 this.DeliveryPostalLabel,
                 this.StatusLastUpdated.ToString(),
 
@@ -198,7 +198,7 @@ namespace Limbs.Web.Entities.Models
                 "Ultima Actualización de estado",
             };
 
-            var orderTitles = titles.Union(this.OrderRequestor.GetTitles().Union(this.OrderAmbassador.GetTitles()));
+            var orderTitles = titles.Union(this.OrderRequestor.GetTitles().Union(this.OrderAmbassador?.GetTitles()));
 
             return orderTitles.ToList();
         }

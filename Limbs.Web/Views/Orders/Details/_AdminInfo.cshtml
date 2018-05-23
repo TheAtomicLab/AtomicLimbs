@@ -11,11 +11,11 @@
                 <ul class="log">
                     @foreach (var item in Model.Log)
                     {
-                    <li>
-                        <span>@item.Date.ToFriendlyDateString()</span> -
-                        <span>@item.User</span> -
-                        <span>@item.Message</span>
-                    </li>
+                        <li>
+                            <span>@item.Date.ToFriendlyDateString()</span> -
+                            <span>@item.User</span> -
+                            <span>@item.Message</span>
+                        </li>
                     }
                     <li>
                         @Html.ActionLink("Descargar log", "LogCsvExport", new { orderId = Model.Id, controller = "Orders", area = "Admin" })

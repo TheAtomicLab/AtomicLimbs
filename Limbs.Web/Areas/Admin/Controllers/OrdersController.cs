@@ -68,7 +68,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var order = await Db.OrderModels.SingleAsync(x => x.Id == orderId);
+            var order = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).SingleAsync(x => x.Id == orderId);
 
             if (order == null)
             {
