@@ -134,12 +134,13 @@
             });
         }
 
-        function markIsAtomic() {
+        @*function markIsAtomic() {
 
             var distance = getDistanceFromLatLonInKm(@locationLatitude,@locationLongitude, marker.getPosition().lat(), marker.getPosition().lng())
 
-            //si es menor a 0.5km pregunto si su dirección esta correcta en el mapa
-            if (distance < 0.5) {
+            //si es menor a 0.3km pregunto si su dirección esta correcta en el mapa
+            var umbral = 0.3;
+            if (distance < umbral) {
 
                 //seteo nuevo mark en el mapa
                 codeAddress();
@@ -149,7 +150,7 @@
                     return false;
                 }
             }
-        }
+        }*@
 
         /*
         En caso de que se ejecute un autocompletar del navegador, o no hayan hecho click en el autocompletado de google
@@ -158,7 +159,8 @@
         $("#Country").blur(function () {
                 var distance = getDistanceFromLatLonInKm(@locationLatitude,@locationLongitude, marker.getPosition().lat(), marker.getPosition().lng())
 
-                if (distance < 0.5)
+                var umbral = 0.3;
+                if (distance < umbral)
                     codeAddress();
         });
 

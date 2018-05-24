@@ -1396,3 +1396,61 @@ button[name="recoverPassword"] {
     background-color: #395697;
     margin-bottom: 25px;
 }
+
+
+
+/*@Mati, hice esto como workaround. Te dejo el TODO*/
+.tipo_amp2 {
+    position: relative;
+    width: 230px;
+    height: 75px;
+    border: solid 2px #c1c1c1;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    -moz-appearance: inherit;
+    -webkit-appearance: inherit;
+    transition: border 0.3s;
+    background-position: center;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+    .tipo_amp2:checked {
+        border: solid 5px #4772B2;
+    }
+
+    .tipo_amp2[value=A] {
+        background-image: url(/Content/img/amputaciones_tipo/a.png);
+    }
+
+    .tipo_amp2[value=B] {
+        background-image: url(/Content/img/amputaciones_tipo/b.png);
+    }
+
+    .tipo_amp2[value=C] {
+        background-image: url(/Content/img/amputaciones_tipo/c.png);
+    }
+
+    .tipo_amp2[value=D] {
+        background-image: url(/Content/img/amputaciones_tipo/d.png);
+    }
+
+    .tipo_amp2[value=E] {
+        background-image: url(/Content/img/amputaciones_tipo/e.png);
+    }
+
+    .tipo_amp2[value=F] {
+        background-image: url(/Content/img/amputaciones_tipo/f.png);
+    }
+
+    .tipo_amp2[value=G] {
+        background-image: url(/Content/img/amputaciones_tipo/g.png);
+    }
+
+    .tipo_amp2[value=H] {
+        background-image: url(/Content/img/amputaciones_tipo/h.png);
+    }
+
+/**/
