@@ -30,7 +30,7 @@ namespace Limbs.QueueConsumers
                     message.Data.Body)
                 {
                     IsBodyHtml = true,
-                    From = new MailAddress(message.Data.From, "Atomic Lab")
+                    From = new MailAddress(message.Data.From, "Atomic Lab"),
                 };
 
                 if (!string.IsNullOrWhiteSpace(message.Data.Cc)) mailMessage.CC.Add(message.Data.Cc);

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Configuration;
-using System.Threading;
 using Limbs.QueueConsumers;
 using Limbs.Web.Common.Mail;
-using Limbs.Web.Entities.Models;
-using Limbs.Web.Storage.Azure;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

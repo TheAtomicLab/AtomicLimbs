@@ -133,7 +133,7 @@
     <value>StoreNotIUserEmailStore</value>
   </data>
   <data name="PasswordMismatch" xml:space="preserve">
-    <value>La contraseña actual es incorrecta</value>
+    <value>La contraseña actual es incorrecta. Si no la recuerda, haga click en "olvide contraseña"</value>
   </data>
   <data name="StoreNotIUserLockoutStore" xml:space="preserve">
     <value>StoreNotIUserLockoutStore</value>
@@ -157,7 +157,7 @@
     <value>PropertyTooShort {0}</value>
   </data>
   <data name="DuplicateName" xml:space="preserve">
-    <value />
+    <value></value>
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>UserAlreadyHasPassword</value>
@@ -193,7 +193,7 @@
     <value>StoreNotIQueryableUserStore</value>
   </data>
   <data name="DuplicateEmail" xml:space="preserve">
-    <value>El usuario {0} ya está registrado.</value>
+    <value>¡Ups! Al parecer ya tenías una cuenta. Te acabamos de mandar un correo a {0} para que puedas crear una nueva contraseña.</value>
   </data>
   <data name="StoreNotIUserSecurityStampStore" xml:space="preserve">
     <value>StoreNotIUserSecurityStampStore</value>
@@ -208,7 +208,7 @@
     <value>InvalidEmail {0}</value>
   </data>
   <data name="InvalidToken" xml:space="preserve">
-    <value>InvalidToken</value>
+    <value>Ocurrio un error. Vuelva a Iniciar Sesion y seleccione "olvide contraseña" para intentarlo nuevamente.</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>InvalidUserName</value>

@@ -221,6 +221,11 @@ namespace Limbs.Web.Entities.Models
 
             return titles;
         }
+
+        public bool HasAlternativeEmail()
+        {
+            return !string.IsNullOrWhiteSpace(AlternativeEmail);
+        }
     }
     
     public enum Gender

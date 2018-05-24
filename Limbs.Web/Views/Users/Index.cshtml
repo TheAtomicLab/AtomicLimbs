@@ -11,8 +11,8 @@
 
         <h1>Hola @Model.UserName</h1>
 
-        <a name="btn_pedir" class="bn_blue" @(Model.IsValidAge ? "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'" : "") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
-        
+        <a name="btn_pedir" class="bn_blue" @(Model.IsValidAge ? "" : "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
+
         @if (!Model.IsValidAge)
         {
             <div class="no-design">
@@ -23,7 +23,7 @@
                 </p>
             </div>
         }
-        
+
         @if (Model.Message != null)
         {
             <p>@Html.DisplayFor(modelOrder => Model.Message)</p>
@@ -48,9 +48,9 @@
                             </td>
                             <td>
                                 @if (OrderStatus.Pending.Equals(order.Status)
-                         || OrderStatus.Ready.Equals(order.Status)
-                         || OrderStatus.ArrangeDelivery.Equals(order.Status)
-                         || OrderStatus.Delivered.Equals(order.Status))
+             || OrderStatus.Ready.Equals(order.Status)
+             || OrderStatus.ArrangeDelivery.Equals(order.Status)
+             || OrderStatus.Delivered.Equals(order.Status))
                                 {
                                     @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
                                 }
@@ -82,6 +82,6 @@
             <p>No tienes pedidos asignados</p>
         }
     </article>
-    
+
 
 </div>
