@@ -148,16 +148,29 @@ namespace Limbs.Web.Services
 
         public async Task SendDeliveryInformationNotification(OrderModel order)
         {
-            var mailMessage = new MailMessage
+            var ambassadorMailMessage = new MailMessage
             {
                 From = _fromEmail,
                 Subject = $"[Atomic Limbs] Información de envío (pedido #{order.Id})",
                 To = order.OrderAmbassador.Email,
-                Cc = order.OrderRequestor.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderDeliveryInformation", order),
             };
+            if (order.OrderAmbassador.HasAlternativeEmail())
+                ambassadorMailMessage.Cc = order.OrderAmbassador.AlternativeEmail;
 
-            await AzureQueue.EnqueueAsync(mailMessage);
+            await AzureQueue.EnqueueAsync(ambassadorMailMessage);
+
+            var userMailMessage = new MailMessage
+            {
+                From = _fromEmail,
+                Subject = $"[Atomic Limbs] Información de envío (pedido #{order.Id})",
+                To = order.OrderRequestor.Email,
+                Body = CompiledTemplateEngine.Render("Mails.OrderDeliveryInformation", order),
+            };
+            if (order.OrderRequestor.HasAlternativeEmail())
+                userMailMessage.Cc = order.OrderRequestor.AlternativeEmail;
+
+            await AzureQueue.EnqueueAsync(userMailMessage);
         }
 
         public async Task SendProofOfDeliveryNotification(OrderModel order)
