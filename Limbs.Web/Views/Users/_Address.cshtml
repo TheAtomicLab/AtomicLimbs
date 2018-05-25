@@ -121,8 +121,9 @@
 
             var country = $("#Country").val();
             var state = $("#State").val();
+            var city = $("#City").val();
             var address = $("#Address").val();
-            var addressMap = country + "," + state + "," + address;
+            var addressMap = address + ", " + city + ", " + state + country;
             geocoder.geocode({ 'address': addressMap }, function (results, status) {
                 if (status == 'OK') {
 
@@ -153,16 +154,20 @@
             }
         }*@
 
-        /*
-        En caso de que se ejecute un autocompletar del navegador, o no hayan hecho click en el autocompletado de google
-        me fijo si tiene una direccion cercana a atomic y le cambio el mark
-        */
-        $("#Country").blur(function () {
-            var distance = getDistanceFromLatLonInKm(@locationLatitude,@locationLongitude, marker.getPosition().lat(), marker.getPosition().lng())
+        $("#Address").blur(function () {
+            codeAddress();
+        });
 
-            var umbral = 0.3;
-            if (distance < umbral)
-                codeAddress();
+        $("#City").blur(function () {
+            codeAddress();
+        });
+        
+        $("#State").blur(function () {
+            codeAddress();
+        });
+
+        $("#Country").blur(function () {
+            codeAddress();
         });
 
         function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
