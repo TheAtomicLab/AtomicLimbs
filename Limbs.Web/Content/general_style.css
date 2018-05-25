@@ -130,6 +130,11 @@
     width: 100%;
     border-collapse: collapse;
     text-align: left;
+    table-layout: fixed;
+}
+.table-mensajes td > * {
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .table-items tr, .table-items > * {
     color: #4772b2;
