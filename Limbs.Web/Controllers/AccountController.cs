@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Resources;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -109,8 +109,8 @@ namespace Limbs.Web.Controllers
                     return RedirectToAction("RedirectUser");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
+                //case SignInStatus.RequiresVerification:
+                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 //case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("loginfail", @"Usuario o contraseña incorrectos");
@@ -189,24 +189,37 @@ namespace Limbs.Web.Controllers
             {
                 return RedirectUser();
             }
+            if (!ModelState.IsValid) return View(model);
 
-            if (ModelState.IsValid)
+            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+            var result = await UserManager.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-                    await UserManager.AddToRoleAsync(user.Id, AppRoles.Unassigned);
-
-                    await SendEmailConfirmation(user);
-                    
-                    return View("DisplayEmail");
-                }
                 AddErrors(result);
+
+                // ReSharper disable once InvertIf
+                if (IsUserExistError(user, result))
+                {
+                    var u = await UserManager.FindByNameAsync(model.Email);
+                    await SendResetPasswordEmail(u);
+                }
+
+                // If we got this far, something failed, redisplay form
+                return View(model);
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            await UserManager.AddToRoleAsync(user.Id, AppRoles.Unassigned);
+            await SendEmailConfirmation(user);
+
+            return View("DisplayEmail");
+        }
+
+        private bool IsUserExistError(ApplicationUser user, IdentityResult result)
+        {
+            var os = string.Format(LimbsResources.DuplicateEmail, user.UserName);
+
+            return result.Errors.Any(error => os.Equals(error));
         }
 
         private async Task SendEmailConfirmation(ApplicationUser user)
@@ -273,16 +286,10 @@ namespace Limbs.Web.Controllers
 
             if (Request.Url != null)
             {
-                //TODO: token time.
-                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
-                var body = CompiledTemplateEngine.Render("Mails.EmailPasswordChange", callbackUrl);
-
-                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Restablecer contraseña", body);
+                await SendResetPasswordEmail(user);
             }
             return RedirectToAction("ForgotPasswordConfirmation", "Account");
         }
-        
 
         //
         // GET: /Account/ForgotPasswordConfirmation
@@ -346,41 +353,6 @@ namespace Limbs.Web.Controllers
         }
 
         //
-        // GET: /Account/SendCode
-        [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-        {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-        //
-        // POST: /Account/SendCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            // Generate the token and send it
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-            {
-                return View("Error");
-            }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
-        }
-
-        //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
@@ -408,8 +380,8 @@ namespace Limbs.Web.Controllers
 
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                //case SignInStatus.RequiresVerification:
+                //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 //case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
@@ -510,6 +482,18 @@ namespace Limbs.Web.Controllers
             if (User.IsInRole(AppRoles.Requester)) return RedirectToAction("Index", "Users");
             if (User.IsInRole(AppRoles.Ambassador)) return RedirectToAction("Index", "Ambassador");
             return RedirectToAction("SelectUserOrAmbassador");
+        }
+
+        private async Task SendResetPasswordEmail(ApplicationUser user)
+        {
+            if (Request == null || Request.Url == null) throw new InvalidOperationException("No request. If you are testing this (thank you :D ), mock que Request and Request.Url.");
+
+            //TODO: token time.
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
+            var body = CompiledTemplateEngine.Render("Mails.EmailPasswordChange", callbackUrl);
+
+            await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Restablecer contraseña", body);
         }
 
 

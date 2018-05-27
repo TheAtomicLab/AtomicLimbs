@@ -5,11 +5,6 @@
     <script src="~/Scripts/pages/orders.js" type="text/javascript"></script>
     <script type="text/javascript">
         $('input[type=radio][name=AmputationType]').change(function () {
-            if (this.value === "A" || this.value === "B" || this.value === "G" || this.value === "H") {
-                $(".no-design").show();
-            } else {
-                $(".no-design").hide();
-            }
         });
     </script>
 }
@@ -17,25 +12,21 @@
     ViewBag.Title = "Pedido";
 }
 <div class="min_full" id="cuerpo_pedir">
-    <article id="exp_inicial">
+    <article id="exp_inicial" class="card center-card-l">
         <h1>Nuevo pedido:</h1>
 
         @using (Html.BeginForm("ManoPedir", "Orders", FormMethod.Post, new {enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Seleccioná tu amputación</h2>
-            <div>
-                @Html.EditorFor(x => x.ProductType)
-            </div>
-            <p>
-                @Html.ValidationMessageFor(x => x.ProductType)
-            </p>
+
+            <p class="form_title">¿Qué tipo de amputación tenés?</p>
             <div id="tipo_de_amp">
                 @Html.EditorFor(x => x.AmputationType)
                 
                 <div class="no-design" style="display: none;">
-                    <h2 class="f-titulo" style="background: red;">Importante</h2>
-                    <p style="color: red;text-align: center; margin: 10px 20px;">
+                    <h2>Importante</h2>
+                    <p>
                         No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos. 
                     </p>
                 </div>
@@ -43,9 +34,31 @@
             <p>
                 @Html.ValidationMessageFor(x => x.AmputationType)
             </p>
+
+            <p class="form_title">¿De qué lado?</p>
+            <div class="select_brazo">
+                @Html.EditorFor(x => x.ProductType)
+            </div>
+            <p>
+                @Html.ValidationMessageFor(x => x.ProductType)
+            </p>
             <div>
                 <input id="enviar" type="submit" value="Siguiente" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">
             </div>
         }
     </article>
 </div>
+<script>
+    function select_amp(obj) {
+        var $obj = $(obj);
+        $('.selector_amp').removeClass('amp_selected');
+        $obj.addClass('amp_selected');
+        var radio = $obj.find('input')[0];
+        $(radio).prop('checked', true);
+        if (radio.value === "A" || radio.value === "B" || radio.value === "G" || radio.value === "H") {
+            $(".no-design").show();
+        } else {
+            $(".no-design").hide();
+        }
+    }
+</script>

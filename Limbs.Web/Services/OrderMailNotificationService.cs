@@ -33,7 +33,7 @@ namespace Limbs.Web.Services
                         To = order.OrderAmbassador.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderAcceptedToAmbassador", order),
                     };
-                    if (!string.IsNullOrEmpty(order.OrderAmbassador.AlternativeEmail))
+                    if (order.OrderAmbassador.HasAlternativeEmail())
                         mailMessage.Cc = order.OrderAmbassador.AlternativeEmail;
 
                     await AzureQueue.EnqueueAsync(mailMessage);
@@ -45,7 +45,7 @@ namespace Limbs.Web.Services
                         To = order.OrderRequestor.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderAcceptedToRequestor", order),
                     };
-                    if (!string.IsNullOrEmpty(order.OrderRequestor.AlternativeEmail))
+                    if (order.OrderRequestor.HasAlternativeEmail())
                         mailMessage.Cc = order.OrderRequestor.AlternativeEmail;
 
                     await AzureQueue.EnqueueAsync(mailMessage);
@@ -69,7 +69,7 @@ namespace Limbs.Web.Services
                         To = order.OrderAmbassador.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderReadyToAmbassador", order),
                     };
-                    if (!string.IsNullOrEmpty(order.OrderAmbassador.AlternativeEmail))
+                    if (order.OrderAmbassador.HasAlternativeEmail())
                         mailMessage.Cc = order.OrderAmbassador.AlternativeEmail;
 
                     await AzureQueue.EnqueueAsync(mailMessage);
@@ -81,7 +81,7 @@ namespace Limbs.Web.Services
                         To = order.OrderRequestor.Email,
                         Body = CompiledTemplateEngine.Render("Mails.OrderReadyToRequestor", order),
                     };
-                    if (!string.IsNullOrEmpty(order.OrderRequestor.AlternativeEmail))
+                    if (order.OrderRequestor.HasAlternativeEmail())
                         mailMessage.Cc = order.OrderRequestor.AlternativeEmail;
 
                     await AzureQueue.EnqueueAsync(mailMessage);
@@ -105,7 +105,7 @@ namespace Limbs.Web.Services
                 To = newAmbassador.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassador", order),
             };
-            if (!string.IsNullOrEmpty(newAmbassador.AlternativeEmail))
+            if (newAmbassador.HasAlternativeEmail())
                 mailMessage.Cc = newAmbassador.AlternativeEmail;
             
             await AzureQueue.EnqueueAsync(mailMessage);
@@ -121,7 +121,7 @@ namespace Limbs.Web.Services
                     To = oldAmbassador.Email,
                     Body = CompiledTemplateEngine.Render("Mails.OrderNewAmbassadorToOldAmbassador", order),
                 };
-                if (!string.IsNullOrEmpty(oldAmbassador.AlternativeEmail))
+                if (oldAmbassador.HasAlternativeEmail())
                     mailMessage.Cc = oldAmbassador.AlternativeEmail;
 
                 await AzureQueue.EnqueueAsync(mailMessage);
@@ -131,7 +131,22 @@ namespace Limbs.Web.Services
 
         }
 
-        public async Task SendDeliveryInformationNotification(OrderModel order) 
+        public async Task SendNewOrderNotificacion(OrderModel order)
+        {
+            var mailMessage = new MailMessage()
+            {
+                From = _fromEmail,
+                To = order.OrderRequestor.Email,
+                Subject = "[Atomic Limbs] Tu pedido de mano fue realizado con éxito",
+                Body = CompiledTemplateEngine.Render("Mails.NewOrderRequestor", order),
+            };
+            if (order.OrderRequestor.HasAlternativeEmail())
+                mailMessage.Cc = order.OrderRequestor.AlternativeEmail;
+
+            await AzureQueue.EnqueueAsync(mailMessage);
+        }
+
+        public async Task SendDeliveryInformationNotification(OrderModel order)
         {
             var mailMessage = new MailMessage
             {
@@ -154,7 +169,7 @@ namespace Limbs.Web.Services
                 To = order.OrderRequestor.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfoToRequestor", order),
             };
-            if (!string.IsNullOrEmpty(order.OrderRequestor.AlternativeEmail))
+            if (order.OrderRequestor.HasAlternativeEmail())
                 mailMessage.Cc = order.OrderRequestor.AlternativeEmail;
 
             await AzureQueue.EnqueueAsync(mailMessage);
@@ -166,7 +181,7 @@ namespace Limbs.Web.Services
                 To = order.OrderAmbassador.Email,
                 Body = CompiledTemplateEngine.Render("Mails.OrderProofOfDeliveryInfoToAmbassador", order),
             };
-            if (!string.IsNullOrEmpty(order.OrderAmbassador.AlternativeEmail))
+            if (order.OrderAmbassador.HasAlternativeEmail())
                 mailMessage.Cc = order.OrderAmbassador.AlternativeEmail;
 
 

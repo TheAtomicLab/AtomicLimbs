@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -11,6 +12,8 @@ using Limbs.Web.Common.Geocoder.Google;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Services;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -173,9 +176,16 @@ namespace Limbs.Web.Controllers
 
         private async Task SendWelcomeEmail(AmbassadorModel ambassadorModel)
         {
-            var userId = User.Identity.GetUserId();
-            var body = CompiledTemplateEngine.Render("Mails.NewAmbassador", ambassadorModel);
-            await UserManager.SendEmailAsync(userId, "¡Hola "+ ambassadorModel.AmbassadorName+"! Ya sos un #EmbajadorAtómico del proyecto Limbs, leé esto para conocer los próximos pasos.", body);
+            var mailMessage = new MailMessage
+            {
+                From = ConfigurationManager.AppSettings["Mail.From"],
+                To = ambassadorModel.Email,
+                Body = CompiledTemplateEngine.Render("Mails.NewAmbassador", ambassadorModel),
+                Subject = "¡Hola " + ambassadorModel.AmbassadorName + "! Ya sos un #EmbajadorAtómico del proyecto Limbs, leé esto para conocer los próximos pasos."
+            };
+            if (ambassadorModel.HasAlternativeEmail()) mailMessage.Cc = ambassadorModel.AlternativeEmail;
+
+            await AzureQueue.EnqueueAsync(mailMessage);
         }
     }
 }

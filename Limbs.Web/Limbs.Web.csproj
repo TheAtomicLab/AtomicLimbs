@@ -245,6 +245,7 @@
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
+    <Compile Include="Controllers\HelpController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -600,7 +601,6 @@
     <Content Include="Views\Shared\DisplayTemplates\AmputationType.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ProductType.cshtml" />
     <Content Include="Views\Orders\Details\_DeliveryInfo.cshtml" />
-    <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
     <Content Include="Views\Ambassador\TermsAndConditions.cshtml" />
     <Content Include="Views\Users\TermsAndConditions.cshtml" />
     <Content Include="Views\Orders\PublicOrders.cshtml" />
@@ -623,7 +623,7 @@
     <Content Include="Views\Orders\Details\_Header.cshtml" />
     <Content Include="Views\StaticContent\PageNotFound.cshtml" />
     <Content Include="Views\StaticContent\ManualEmbajador.cshtml" />
-    <Content Include="Views\StaticContent\faq.cshtml" />
+    <Content Include="Views\StaticContent\Faq.cshtml" />
     <Content Include="Views\Orders\BrazoImagen.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
@@ -637,6 +637,8 @@
     <Content Include="Views\Users\_Address.cshtml" />
     <Content Include="Views\Ambassador\_Address.cshtml" />
     <Content Include="Views\DataMigration\UserMigration.cshtml" />
+    <Content Include="Views\Help\Index.cshtml" />
+    <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

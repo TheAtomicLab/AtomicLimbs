@@ -15,34 +15,39 @@
 
 
 <div class="min_full" id="cuerpo_pedir">
-    <article id="exp_inicial" class="brazo">
-        <h1>Nuevo pedido:</h1>
-        
+    <article id="exp_inicial" class="brazo card center-card-l">
+        <p class="form_title">Sacá una foto de la amputación</p>
         <p id="bajada_exp">Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación <b>de lo contrario, la mano no podrá ser otorgada.</b></p>
         <div id="recomendaciones_foto">
-            <div class="card center-card-m">
-                <p>Requisitos de la foto</p>
-                <ul>
-                    <li>Hoja cuadriculada de fondo</li>
-                    <li>Buena luz</li>
-                    <li>Foto sacada desde arriba</li>
-                    <li>De ser posible, colocar una regla</li>
-                </ul>
+            <div class="card requisitos">
+                <div>
+                    <p>Requisitos de la foto</p>
+                </div>
+                <div>
+                    <ul>
+                        <li>Hoja cuadriculada de fondo</li>
+                        <li>Buena luz</li>
+                        <li>Foto sacada desde arriba</li>
+                        <li>De ser posible, colocar una regla</li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div id="ej_si" class="ej_exp card">
-            <p class="azulAtomicTx">SI</p>
-            <ul>
-                <li></li>
-                <li></li>
-            </ul>
-        </div>
-        <div id="ej_no" class="ej_exp card">
-            <p>NO</p>
-            <ul>
-                <li></li>
-                <li></li>
-            </ul>
+        <div class="ejemplos_carga">
+            <div id="ej_si" class="ej_exp card">
+                <p class="azulAtomicTx">SI</p>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+            <div id="ej_no" class="ej_exp card">
+                <p>NO</p>
+                <ul>
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
         </div>
         <div>
             @using (Html.BeginForm("UploadImageUser", "Orders", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone", @id = "formManoMedidas" }))

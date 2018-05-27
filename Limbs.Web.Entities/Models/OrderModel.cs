@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Security.Principal;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
@@ -108,6 +109,16 @@ namespace Limbs.Web.Entities.Models
             });
         }
 
+        public void LogMessage(IPrincipal user, string message,string orderString)
+        {
+            Log.Add(new OrderLogItem
+            {
+                User = user.Identity.GetUserName(),
+                Message = message,
+                OrderString = orderString
+            });
+        }
+
         public void LogMessage(string message)
         {
             Log.Add(new OrderLogItem
@@ -132,7 +143,67 @@ namespace Limbs.Web.Entities.Models
             return OrderRequestor.UserId == user.Identity.GetUserId();
         }
 
+        public override string ToString()
+        {
+            var separator = ",";
+
+            List<String> listOrder = new List<String>
+            {
+                this.Id.ToString(),
+                this.Status.ToString(),
+                String.Concat("\"",this.Pieces.GetPercentage().ToString(),"\""),
+                this.Date.ToString(),
+                this.AmputationType.ToString(),
+                this.ProductType.ToString(),
+                this.Color.ToString(),
+                //this.Extras.ToString(),
+                this.Sizes?.ToString(),
+                this.SizesData.ToString(),
+                String.Concat("\"",this.Comments,"\""),
+                this.IdImage,
+                this.ProofOfDelivery,
+                this.DeliveryCourier.ToString(),
+                String.Concat("\"",this.DeliveryTrackingCode,"\""),
+                this.DeliveryPostalLabel,
+                this.StatusLastUpdated.ToString(),
+
+                this.OrderRequestor.ToString(),
+                this.OrderAmbassador?.ToString(),
+
+            };
+
+            return String.Join(separator, listOrder);
+        }
+
+        //TODO: Change this
+        public List<String> GetTitles()
+        {
+            List<String> titles = new List<string>
+            {
+                "Pedido Nro",
+                "Estado",
+                "Porcentaje",
+                "Creado",
+                "Amputacion",
+                "Producto",
+                "Color",
+                "Tamaños",
+                "SizeData",
+                "Comentarios",
+                "Foto",
+                "Prueba de envio",
+                "Courier",
+                "Traking",
+                "Etiqueta Postal",
+                "Ultima Actualización de estado",
+            };
+            //var orderTitles = titles.Union(this.OrderRequestor.GetTitles().Union(this.OrderAmbassador?.GetTitles()));
+
+            return titles;
+        }
+
     }
+
 
     public class Pieces
     {
@@ -231,6 +302,8 @@ namespace Limbs.Web.Entities.Models
         public string User { get; set; }
 
         public string Message { get; set; }
+
+        public string OrderString { get; set; }
     }
 
     public enum OrderStatus

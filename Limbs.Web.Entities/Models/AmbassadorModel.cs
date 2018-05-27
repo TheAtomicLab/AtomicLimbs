@@ -79,6 +79,59 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
+        public override string ToString()
+        {
+            var separator = ",";
+
+            List<String> listAmbassador = new List<String>
+            {
+                this.Id.ToString(),
+                this.UserId,
+                this.Dni,
+                this.Email,
+                this.AlternativeEmail,
+                String.Concat("\"",this.AmbassadorName,"\""),
+                this.AmbassadorLastName,
+                this.Phone,
+                this.Birth.ToString(),
+                this.Gender.ToString(),
+                this.Country,
+                this.State,
+                this.City,
+                String.Concat("\"",this.Address,"\""),
+                String.Concat("\"",this.Address2,"\""),
+                this.RegisteredAt.ToString(),
+            };
+
+            return String.Join(separator, listAmbassador);
+        }
+
+        //TODO: change this
+        public List<String> GetTitles()
+        {
+            List<String> titles = new List<string>
+            {
+                "AmbassadorId",
+                "UserId",
+                "AmbassadorDni",
+                "AmbassadorEmail",
+                "AmbassadorEmailAlternative",
+                "AmbassadorName",
+                "AmbassadorLastName",
+                "AmbassadorPhone",
+                "AmbassadorDate",
+                "AmbassadorGender",
+                "AmbassadorCountry",
+                "AmbassadorState",
+                "AmbassadorCity",
+                "AmbassadorAddress",
+                "AmbassadorAddress2",
+                "AmbassadorRegisteredAt"
+            };
+
+            return titles;
+        }
+
         public DbGeography Location { get; set; }
         
         [NotMapped]
@@ -113,6 +166,11 @@ namespace Limbs.Web.Entities.Models
         private DbGeography GeneratePoint(double lat, double lng)
         {
             return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);
+        }
+
+        public bool HasAlternativeEmail()
+        {
+            return !string.IsNullOrWhiteSpace(AlternativeEmail);
         }
     }
 }

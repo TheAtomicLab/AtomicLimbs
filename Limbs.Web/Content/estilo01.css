@@ -185,11 +185,10 @@ nav {
     text-align: center;
 }
 
-.f-titulo {
+.f-titulo, h2.f-titulo, card .f-titulo {
     color: white;
     background-color: #4772B2;
-    padding: 10px 0px;
-    width: 90%;
+    padding: 10px 20px;
     font-weight: 600;
     margin: 20px auto;
     position: relative;
@@ -254,54 +253,111 @@ nav {
     margin-top: 40px;
     max-height: calc(100vw - 110px);
 }
-#tipo_de_amp {
-    padding: 20px 0px;
-    max-width: 700px;
-    margin: 0px auto;
-}
-.tipo_amp {
-    position: relative;
-    width: 230px;
-    height: 75px;
-    border: solid 2px #c1c1c1;
-    display: inline-block;
-    margin-right: 10px;
-    margin-bottom: 10px;
-    -moz-appearance: inherit;
-    -webkit-appearance: inherit;
-    transition: border 0.3s;
-    background-position: center;
-    background-size: 90%;
-    background-repeat: no-repeat;
-    cursor: pointer;
+
+/*FORMS*/
+.form_title {
+    color: #4772b2;
+    font-weight: 600;
+    font-size: 18px;
+    text-align: left;
+    margin-bottom: 20px;
+    margin-top: 40px;
 }
 
-.tipo_amp:checked {
-    border: solid 5px #4772B2;
+#tipo_de_amp {
+    max-width: 700px;
 }
-    .tipo_amp[value=A] {
-        background-image: url(/Content/img/amputaciones_tipo/a.png);
+    #tipo_de_amp .selector_amp {
+        position: relative;
+        width: 280px;
+        max-width: 90%;
+        outline: solid 2px #c1c1c1;
+        display: inline-block;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        transition: border 0.3s;
+        cursor: pointer;
+        background: white;
+        overflow: hidden;
     }
-    .tipo_amp[value=B] {
-        background-image: url(/Content/img/amputaciones_tipo/b.png);
+        #tipo_de_amp .selector_amp:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            background-position: center;
+            background-size: 75%;
+            background-repeat: no-repeat;
+            transition: transform 0.2s ease;
+        }
+        #tipo_de_amp .selector_amp:hover:before {
+            transform: scale(1.15);
+        }
+        #tipo_de_amp .selector_amp .selector_size {
+            position: relative;
+            width: 100%;
+            padding-top: 36%;
+        }
+    #tipo_de_amp .amp_selected.selector_amp:before {
+        transform: scale(1.15);
     }
-    .tipo_amp[value=C] {
-        background-image: url(/Content/img/amputaciones_tipo/c.png);
+
+    #tipo_de_amp .amp_selected.selector_amp {
+        outline: solid 3px #4772B2;
     }
-    .tipo_amp[value=D] {
-        background-image: url(/Content/img/amputaciones_tipo/d.png);
+    #tipo_de_amp .selector_amp .tipo_amp {
+        position: absolute;
+        visibility: hidden;
     }
-    .tipo_amp[value=E] {
-        background-image: url(/Content/img/amputaciones_tipo/e.png);
-    }
-    .tipo_amp[value=F] {
-        background-image: url(/Content/img/amputaciones_tipo/f.png);
-    }
-    .tipo_amp[value=G] {
-        background-image: url(/Content/img/amputaciones_tipo/g.png);
-    }
-    .tipo_amp[value=H] {
-        background-image: url(/Content/img/amputaciones_tipo/h.png);
+
+.selector_amp[js_value=A]:before, .edit_type_amp .tipo_amp[value=A] {
+    background-image: url(/Content/img/amputaciones_tipo/a.png);
+}
+.selector_amp[js_value=B]:before, .edit_type_amp .tipo_amp[value=B] {
+    background-image: url(/Content/img/amputaciones_tipo/b.png);
+}
+.selector_amp[js_value=C]:before, .edit_type_amp .tipo_amp[value=C] {
+    background-image: url(/Content/img/amputaciones_tipo/c.png);
+}
+.selector_amp[js_value=D]:before, .edit_type_amp .tipo_amp[value=D] {
+    background-image: url(/Content/img/amputaciones_tipo/d.png);
+}
+.selector_amp[js_value=E]:before, .edit_type_amp .tipo_amp[value=E] {
+    background-image: url(/Content/img/amputaciones_tipo/e.png);
+}
+.selector_amp[js_value=F]:before, .edit_type_amp .tipo_amp[value=F] {
+    background-image: url(/Content/img/amputaciones_tipo/f.png);
+}
+.selector_amp[js_value=G]:before, .edit_type_amp .tipo_amp[value=G] {
+    background-image: url(/Content/img/amputaciones_tipo/g.png);
+}
+.selector_amp[js_value=H]:before, .edit_type_amp .tipo_amp[value=H] {
+    background-image: url(/Content/img/amputaciones_tipo/h.png);
+}
+.no-design {
+    color: red;
+}
+.no-design h2 {
+    font-size: 18px;
+    color: red;
+}
+.select_brazo select {
+    padding: 10px;
+}
+
+.edit_type_amp .tipo_amp {
+    width: 220px;
+    height: 72px;
+    background-size: contain;
+    background-position: center;
+    -moz-appearance: initial;
+    margin: 10px;
+    background-repeat: no-repeat;
+}
+    .edit_type_amp .tipo_amp:checked {
+        outline: solid 4px #4772b2;
     }
 
 /*inicio form*/
@@ -457,8 +513,8 @@ button[name="recoverPassword"] {
 
 .field-validation-error, .validation-summary-errors ul li, label.error {
     color: red;
-    font-size: 12px;
-    list-style-type: none;
+    font-size: 14px;
+    list-style-type: none;`
 }
 
 .address-selector {
@@ -574,16 +630,36 @@ button[name="recoverPassword"] {
             top: 10px;
         }
 
-#color_mano {
-    position: relative;
-    clear: both;
-    padding: 20px 0px;
-    margin: 20px 0px;
-    overflow: auto;
-    width: 100%;
+.color_mano {
 }
+.sel_color_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+    .sel_color_container .sel_color_mano {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        transition: outline 0.2s ease;
+        outline: solid 0px #4772B2;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+    }
+    .sel_color_container .sel_color_mano input {
+        visibility: hidden;
+        cursor: pointer;
+        pointer-events: none;
+    }
+        .sel_color_container .sel_color_mano.color_selected {
+            outline: solid 5px #4772b2;
+        }
 
-    #color_mano input {
+    .color_mano input {
         position: relative;
         width: 140px;
         height: 140px;
@@ -602,37 +678,41 @@ button[name="recoverPassword"] {
         cursor: pointer;
     }
 
-        #color_mano input[value=A] {
-            background-image: url(/Content/img/Mano/mano_a.png);
-        }
+.color_mano input[value=A], .sel_color_container .sel_color_mano[js_value=A] {
+    background-image: url(/Content/img/Mano/mano_a.png);
+}
 
-        #color_mano input[value=B] {
-            background-image: url(/Content/img/Mano/mano_b.png);
-        }
+.color_mano input[value=B], .sel_color_container .sel_color_mano[js_value=B] {
+    background-image: url(/Content/img/Mano/mano_b.png);
+}
 
-        #color_mano input[value=C] {
-            background-image: url(/Content/img/Mano/mano_c.png);
-        }
+.color_mano input[value=C], .sel_color_container .sel_color_mano[js_value=C] {
+    background-image: url(/Content/img/Mano/mano_c.png);
+}
 
-        #color_mano input[value=D] {
-            background-image: url(/Content/img/Mano/mano_d.png);
-        }
+.color_mano input[value=D], .sel_color_container .sel_color_mano[js_value=D] {
+    background-image: url(/Content/img/Mano/mano_d.png);
+}
 
-        #color_mano input[value=E] {
-            background-image: url(/Content/img/Mano/mano_e.png);
-        }
+.color_mano input[value=E], .sel_color_container .sel_color_mano[js_value=E] {
+    background-image: url(/Content/img/Mano/mano_e.png);
+}
 
-        #color_mano input[value=F] {
-            background-image: url(/Content/img/Mano/mano_f.png);
-        }
+.color_mano input[value=F], .sel_color_container .sel_color_mano[js_value=F] {
+    background-image: url(/Content/img/Mano/mano_f.png);
+}
 
-        #color_mano input:checked {
+        .color_mano input:checked {
             border: solid 5px #4772B2;
         }
 
-        #color_mano input:focus {
+        .color_mano input:focus {
             outline: none;
         }
+
+.atomForm-send {
+    margin-top: 60px;
+}
 
 /*home2*/
 #home2 {
@@ -920,6 +1000,7 @@ button[name="recoverPassword"] {
             flex-grow: 1;
             display: flex;
             width: calc(100% - 34px);
+            align-items: center;
         }
 
             .table-pedidos > * > div:nth-child(2) > div {
@@ -1315,3 +1396,61 @@ button[name="recoverPassword"] {
     background-color: #395697;
     margin-bottom: 25px;
 }
+
+
+
+/*@Mati, hice esto como workaround. Te dejo el TODO*/
+.tipo_amp2 {
+    position: relative;
+    width: 230px;
+    height: 75px;
+    border: solid 2px #c1c1c1;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    -moz-appearance: inherit;
+    -webkit-appearance: inherit;
+    transition: border 0.3s;
+    background-position: center;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+    .tipo_amp2:checked {
+        border: solid 5px #4772B2;
+    }
+
+    .tipo_amp2[value=A] {
+        background-image: url(/Content/img/amputaciones_tipo/a.png);
+    }
+
+    .tipo_amp2[value=B] {
+        background-image: url(/Content/img/amputaciones_tipo/b.png);
+    }
+
+    .tipo_amp2[value=C] {
+        background-image: url(/Content/img/amputaciones_tipo/c.png);
+    }
+
+    .tipo_amp2[value=D] {
+        background-image: url(/Content/img/amputaciones_tipo/d.png);
+    }
+
+    .tipo_amp2[value=E] {
+        background-image: url(/Content/img/amputaciones_tipo/e.png);
+    }
+
+    .tipo_amp2[value=F] {
+        background-image: url(/Content/img/amputaciones_tipo/f.png);
+    }
+
+    .tipo_amp2[value=G] {
+        background-image: url(/Content/img/amputaciones_tipo/g.png);
+    }
+
+    .tipo_amp2[value=H] {
+        background-image: url(/Content/img/amputaciones_tipo/h.png);
+    }
+
+/**/

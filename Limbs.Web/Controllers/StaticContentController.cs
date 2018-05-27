@@ -6,10 +6,11 @@ namespace Limbs.Web.Controllers
     public class StaticContentController : Controller
     {
         // GET: StaticContent/faq
-        public ActionResult faq()
+        public ActionResult Faq()
         {
             return View();
         }
+
         // GET: StaticContent/ManualEmbajador
         public ActionResult ManualEmbajador()
         {
@@ -63,11 +64,11 @@ namespace Limbs.Web.Controllers
             return RedirectPermanent("http://AtomicLab.org/donar");
         }
 
-        // GET: StaticContent/Faq
-        public ActionResult Faq()
-        {
-            return RedirectPermanent("http://AtomicLab.org/faq");
-        }
+        //// GET: StaticContent/Faq
+        //public ActionResult Faq()
+        //{
+        //    return RedirectPermanent("http://AtomicLab.org/faq");
+        //}
 
         // GET: StaticContent/Libre
         public ActionResult Libre()
