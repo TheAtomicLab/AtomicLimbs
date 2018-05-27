@@ -236,19 +236,11 @@ namespace Limbs.Web.Controllers
             //    ProductSizes = orderModel.Sizes,
             //});
 
-            await SendEmailConfirmation(orderModel);
+            await _ns.SendNewOrderNotificacion(orderModel);
 
             return RedirectToAction("Index", "Users");
         }
-
-        private async Task SendEmailConfirmation(OrderModel orderModel)
-        {
-            var userId = User.Identity.GetUserId();
-            var body = CompiledTemplateEngine.Render("Mails.NewOrderRequestor", orderModel);
-            await UserManager.SendEmailAsync(userId, "[Atomic Limbs] Tu pedido de mano fue realizado con éxito", body);
-        }
-
-
+        
         // GET: Orders/GetUserImage
         [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public ActionResult GetUserImage(string url)

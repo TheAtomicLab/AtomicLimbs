@@ -13,5 +13,7 @@ namespace Limbs.Web.Services
 
         Task SendProofOfDeliveryNotification(OrderModel order);
 
+        Task SendNewOrderNotificacion(OrderModel order);
+
     }
 }

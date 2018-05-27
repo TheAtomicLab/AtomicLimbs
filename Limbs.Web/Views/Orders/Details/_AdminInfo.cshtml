@@ -17,6 +17,9 @@
                             <span>@item.Message</span>
                         </li>
                     }
+                    <li>
+                        @Html.ActionLink("Descargar log", "LogCsvExport", new { orderId = Model.Id, controller = "Orders", area = "Admin" })
+                    </li>
                 </ul>
             </td>
         </tr>
