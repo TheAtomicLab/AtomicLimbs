@@ -157,7 +157,7 @@
     <value>PropertyTooShort {0}</value>
   </data>
   <data name="DuplicateName" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>UserAlreadyHasPassword</value>
@@ -230,5 +230,8 @@
   </data>
   <data name="PropertyValueRequired" xml:space="preserve">
     <value>Campo requerido</value>
+  </data>
+  <data name="TextoInicioContent" xml:space="preserve">
+    <value>Desde Limbs -un proyecto de Atomic Lab- queremos que todas las personas que lo necesiten tengan su mano impresa en 3D, sin que el dinero sea una barrera. Por eso,&lt;br&gt;&lt;b&gt; las entregamos de manera GRATUITA.&lt;/b&gt;</value>
   </data>
 </root>

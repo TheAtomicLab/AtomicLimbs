@@ -358,6 +358,15 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Desde Limbs -un proyecto de Atomic Lab- queremos que todas las personas que lo necesiten tengan su mano impresa en 3D, sin que el dinero sea una barrera. Por eso,&lt;br&gt;&lt;b&gt; las entregamos de manera GRATUITA.&lt;/b&gt;.
+        /// </summary>
+        public static string TextoInicioContent {
+            get {
+                return ResourceManager.GetString("TextoInicioContent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UserAlreadyHasPassword.
         /// </summary>
         public static string UserAlreadyHasPassword {
