@@ -5,7 +5,7 @@
         var maxFileSizeImage = 5; //MB
         var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
         var invalidFileTypeMsg = "Tipo de archivo inválido";
-        var msgWhileUploadFile = "Subiendo imágen, por favor espere"
+        var msgWhileUploadFile = "Subiendo imagen, por favor espere"
 
 
         //Documentation: http://www.dropzonejs.com/
