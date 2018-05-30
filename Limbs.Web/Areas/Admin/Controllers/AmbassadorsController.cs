@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -16,27 +17,26 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Ambassadors/CsvExport
-        public FileContentResult CsvExport()
+        public async Task<FileContentResult> CsvExport()
         {
 
-            var dataList = Db.AmbassadorModels.ToList();
+            var dataList = await Db.AmbassadorModels.ToListAsync();
             var sb = new StringBuilder();
 
-            sb.AppendLine("Id, " + "Email, " + "Nombre, " + "DNI, " + "Pais, " + "Ciudad, " + "Domicilio, " + "Datos extra domicilio, " + "Estado, " + "Localizacion, " + "Telefono, " + "Fecha de registro, " + "Fecha de nacimiento, " + "Genero");
+            var firstAmbassador = dataList.FirstOrDefault();
+            var ambassadorExportTitles = firstAmbassador.GetTitles();
+            sb.AppendLine(String.Join(",", ambassadorExportTitles));
+
             foreach (var data in dataList)
             {
-
-                sb.AppendLine(data.Id + "," + data.Email + ", " + data.FullName() + ", " + data.Dni + ", " +
-                              data.Country + ", " + data.City + ", " + data.Address + ", " +
-                              data.Address2.Replace(',', ' ') + ", " + data.State +  ", " + data.LatLng.Replace(',', ' ') + ", " +
-                              data.Phone + ", " + data.RegisteredAt + ", " + data.Birth + ", " +
-                              data.Gender);
-
+                string ambassadorText = data.ToString();
+                sb.AppendLine(ambassadorText);
             }
 
             var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", "embajadores" + Timestamp + ".csv");
-
+            var nameCsv = String.Format("embajadores{0}.csv", Timestamp);
+            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", nameCsv);
+                    
         }
 
         // GET: Admin/Ambassador/Details/5
