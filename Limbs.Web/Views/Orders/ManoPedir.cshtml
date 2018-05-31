@@ -13,42 +13,75 @@
 }
 <div class="min_full" id="cuerpo_pedir">
     <article id="exp_inicial" class="card center-card-l">
-        <h1>Nuevo pedido:</h1>
 
         @using (Html.BeginForm("ManoPedir", "Orders", FormMethod.Post, new {enctype = "multipart/form-data"}))
         {
             @Html.AntiForgeryToken()
-            <h2 class="f-titulo">Seleccioná tu amputación</h2>
-
-            <p class="form_title">¿Qué tipo de amputación tenés?</p>
-            <div id="tipo_de_amp">
-                @Html.EditorFor(x => x.AmputationType)
-                
-                <div class="no-design" style="display: none;">
-                    <h2>Importante</h2>
-                    <p>
-                        No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos. 
-                    </p>
+            <div id="form_parte_1">
+                <div class="form_main_title">
+                    <p class="step">1</p>
+                    <div>
+                        <p class="title">
+                            ¿En qué brazo necesitás la prótesis?
+                        </p>
+                        <p class="subtitle">Si necesitás en ambos lados, deberás hacer dos pedidos.</p>
+                    </div>
+                </div>
+                <div class="sel_lado">
+                    <div class="selector_lado" onclick="select_lado(this, 'Left')" js_val="Left">
+                        <div class="sq_sizer"></div>
+                        <p>Izquierdo</p>
+                    </div>
+                    <div class="selector_lado" onclick="select_lado(this, 'Right')" js_val="Right">
+                        <div class="sq_sizer"></div>
+                        <p>Derecho</p>
+                    </div>
+                </div>
+                <div class="select_brazo">
+                    @Html.EditorFor(x => x.ProductType)
                 </div>
             </div>
-            <p>
-                @Html.ValidationMessageFor(x => x.AmputationType)
-            </p>
-
-            <p class="form_title">¿De qué lado?</p>
-            <div class="select_brazo">
-                @Html.EditorFor(x => x.ProductType)
-            </div>
-            <p>
-                @Html.ValidationMessageFor(x => x.ProductType)
-            </p>
-            <div>
-                <input id="enviar" type="submit" value="Siguiente" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">
+            <!--PARTE 2-->
+            <div id="form_parte_2">
+                <div class="form_main_title">
+                    <p class="step">2</p>
+                    <div>
+                        <p class="title">
+                            ¿Qué tipo de amputación tenés?
+                        </p>
+                    </div>
+                </div>
+                <div id="tipo_de_amp">
+                    @Html.EditorFor(x => x.AmputationType)
+                
+                    <div class="no-design" style="display: none;">
+                        <h2>Importante</h2>
+                        <p>
+                            No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos. 
+                        </p>
+                    </div>
+                </div>
+                <p>
+                    @Html.ValidationMessageFor(x => x.AmputationType)
+                </p>
+                <div>
+                    <input id="enviar" disabled type="submit" value="Siguiente" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">
+                </div>
             </div>
         }
     </article>
 </div>
 <script>
+    function select_lado(obj, lado) {
+        if (lado !== 'Right' && lado !== 'Left') {
+            alert('Error al seleccionar lado.');
+            return false;
+        }
+        $('#ProductType').val(lado);
+        $('#form_parte_1').css('display', 'none');
+        $('#form_parte_2').css('display', 'block');
+    }
+    $('.selector_amp input').attr('required', true);
     function select_amp(obj) {
         var $obj = $(obj);
         $('.selector_amp').removeClass('amp_selected');
@@ -60,5 +93,6 @@
         } else {
             $(".no-design").hide();
         }
+        $('#enviar').prop('disabled', false);
     }
 </script>
