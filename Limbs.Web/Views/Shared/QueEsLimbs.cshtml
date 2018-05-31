@@ -41,27 +41,27 @@
     </div>
 
     <div class="texto_inicio">
-        <h1>¡Bienvenido a Limbs!</h1>
-        <p>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.TextoInicioContent)</p>
+        <h1>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexTitle1)</h1>
+        <p>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexContent1)</p>
     </div>
 </div>
 <div id="pedir">
     <div class="cont_pedir">
         <div class="imagen_pedir">
             <div class="cuadrado azulAtomicBG">
-                <h1>TRES SIMPLES PASOS</h1>
+                <h1>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexTitle2)</h1>
             </div>
             <img src="/Content/img/foto01.jpg" height="400" width="300" />
         </div>
 
         <center>
 
-            <p class="text">Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D.</p>
+            <p class="text">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexContent2)</p>
             <div class="link">
-                <a href="@Url.Action("Register", "Account")" class="boton">Pedir una mano</a>
+                <a href="@Url.Action("Register", "Account")" class="boton">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexAction1)</a>
             </div>
             <div class="link">
-                <a class="azulAtomicTx" href="http://atomiclab.org/faq" target="_blank">Más Información</a>
+                <a class="azulAtomicTx" href="http://atomiclab.org/faq" target="_blank">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexFaq)</a>
             </div>
         </center>
     </div>
@@ -74,31 +74,28 @@
         <div class="half-right">
             <div class="texto_embajadores">
                 <h1>
-                    EMBAJADORES<br>
-                    ATÓMICOS
+                    @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexAmbassadors1)
                 </h1>
             </div>
         </div>
     </section>
     <div class="body-embajadores">
         <p>
-            ¿Tenés una impresora 3D y querés ayudar? ¡Inscribite!<br>
-            Un "Embajador Atómico" puede ser cualquier persona mayor de 18 años con una impresora 3D y que quiera ayudar (desde cualquier parte del mundo). Nosotros enviamos los planos, instrucciones y el costo de los materiales (si así lo solicita).
+            @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexAmbassadors2)
         </p>
     </div>
     <div class="footer-embajadores">
         <div class="link">
-            <a href="@Url.Action("Register", "Account")" class="boton-embajadores">Ser embajador</a>
+            <a href="@Url.Action("Register", "Account")" class="boton-embajadores">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexAmbassadors3)</a>
         </div>
     </div>
 </div>
 <div id="sobre">
     <section class="cont_pedir">
         <div class="texto_inicio">
-            <h1>¿Cómo está compuesta?</h1>
+            <h1>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexAbout1)</h1>
             <center>
-                Las manos mecánicas están impresas con PLA, un derivado del maíz que no generará picazón. <br />
-                Los diseños son open source, podés bajarlos gratis desde: <a href="http://www.atomiclab.org/limbs/libre">www.atomiclab.org/limbs/libre</a>.
+                @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexAbout2)
                 <br>
             </center>
         </div>
@@ -106,15 +103,15 @@
 </div>
 <div id="manoton">
     <div class="texto_manoton">
-        <h1>Manot&oacute;n</h1>
+        <h1>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexManoton)</h1>
         <div class="body-embajadores">
             <center>
-                <p>El #MANOTÓN es un evento en el que se convocan chicos que hayan solicitado un prótesis mediante la plataforma LIMBS. Durante el día se ensamblan y entregan las manos mecánicas, ¡Convirtiendo chicos en super héroes!</p>
+                <p>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexManoton1)</p>
             </center>
         </div>
         <div class="footer-embajadores">
             <div class="link">
-                <a class="boton-embajadores" href="http://atomiclab.org/manoton/" target="_blank">Saber más</a>
+                <a class="boton-embajadores" href="http://atomiclab.org/manoton/" target="_blank">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.IndexManoton2)</a>
             </div>
         </div>
     </div>

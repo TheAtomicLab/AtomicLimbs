@@ -231,7 +231,49 @@
   <data name="PropertyValueRequired" xml:space="preserve">
     <value>Campo requerido</value>
   </data>
-  <data name="TextoInicioContent" xml:space="preserve">
+  <data name="IndexContent1" xml:space="preserve">
     <value>Desde Limbs -un proyecto de Atomic Lab- queremos que todas las personas que lo necesiten tengan su mano impresa en 3D, sin que el dinero sea una barrera. Por eso,&lt;br&gt;&lt;b&gt; las entregamos de manera GRATUITA.&lt;/b&gt;</value>
+  </data>
+  <data name="IndexAbout1" xml:space="preserve">
+    <value>¿Cómo está compuesta?</value>
+  </data>
+  <data name="IndexAbout2" xml:space="preserve">
+    <value>Las manos mecánicas están impresas con PLA, un derivado del maíz que no generará picazón. &lt;br /&gt;
+                Los diseños son open source, podés bajarlos gratis desde: &lt;a href="http://www.atomiclab.org/limbs/libre"&gt;www.atomiclab.org/limbs/libre&lt;/a&gt;.</value>
+  </data>
+  <data name="IndexAction1" xml:space="preserve">
+    <value>Pedir una mano</value>
+  </data>
+  <data name="IndexAmbassadors1" xml:space="preserve">
+    <value>EMBAJADORES&lt;br&gt;
+                                ATÓMICOS</value>
+  </data>
+  <data name="IndexAmbassadors2" xml:space="preserve">
+    <value>¿Tenés una impresora 3D y querés ayudar? ¡Inscribite!&lt;br&gt;
+            Un "Embajador Atómico" puede ser cualquier persona mayor de 18 años con una impresora 3D y que quiera ayudar (desde cualquier parte del mundo). Nosotros enviamos los planos, instrucciones y el costo de los materiales (si así lo solicita).</value>
+  </data>
+  <data name="IndexAmbassadors3" xml:space="preserve">
+    <value>Ser embajador</value>
+  </data>
+  <data name="IndexContent2" xml:space="preserve">
+    <value>Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D.</value>
+  </data>
+  <data name="IndexFaq" xml:space="preserve">
+    <value>Más Información</value>
+  </data>
+  <data name="IndexManoton" xml:space="preserve">
+    <value>Manot&amp;oacute;n</value>
+  </data>
+  <data name="IndexManoton1" xml:space="preserve">
+    <value>El #MANOTÓN es un evento en el que se convocan chicos que hayan solicitado un prótesis mediante la plataforma LIMBS. Durante el día se ensamblan y entregan las manos mecánicas, ¡Convirtiendo chicos en super héroes!</value>
+  </data>
+  <data name="IndexManoton2" xml:space="preserve">
+    <value>Saber más</value>
+  </data>
+  <data name="IndexTitle1" xml:space="preserve">
+    <value>¡Bienvenido a Limbs!</value>
+  </data>
+  <data name="IndexTitle2" xml:space="preserve">
+    <value>TRES SIMPLES PASOS</value>
   </data>
 </root>

@@ -106,6 +106,135 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ¿Cómo está compuesta?.
+        /// </summary>
+        public static string IndexAbout1 {
+            get {
+                return ResourceManager.GetString("IndexAbout1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Las manos mecánicas están impresas con PLA, un derivado del maíz que no generará picazón. &lt;br /&gt;
+        ///                Los diseños son open source, podés bajarlos gratis desde: &lt;a href=&quot;http://www.atomiclab.org/limbs/libre&quot;&gt;www.atomiclab.org/limbs/libre&lt;/a&gt;..
+        /// </summary>
+        public static string IndexAbout2 {
+            get {
+                return ResourceManager.GetString("IndexAbout2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedir una mano.
+        /// </summary>
+        public static string IndexAction1 {
+            get {
+                return ResourceManager.GetString("IndexAction1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EMBAJADORES&lt;br&gt;
+        ///                                ATÓMICOS.
+        /// </summary>
+        public static string IndexAmbassadors1 {
+            get {
+                return ResourceManager.GetString("IndexAmbassadors1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Tenés una impresora 3D y querés ayudar? ¡Inscribite!&lt;br&gt;
+        ///            Un &quot;Embajador Atómico&quot; puede ser cualquier persona mayor de 18 años con una impresora 3D y que quiera ayudar (desde cualquier parte del mundo). Nosotros enviamos los planos, instrucciones y el costo de los materiales (si así lo solicita)..
+        /// </summary>
+        public static string IndexAmbassadors2 {
+            get {
+                return ResourceManager.GetString("IndexAmbassadors2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ser embajador.
+        /// </summary>
+        public static string IndexAmbassadors3 {
+            get {
+                return ResourceManager.GetString("IndexAmbassadors3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desde Limbs -un proyecto de Atomic Lab- queremos que todas las personas que lo necesiten tengan su mano impresa en 3D, sin que el dinero sea una barrera. Por eso,&lt;br&gt;&lt;b&gt; las entregamos de manera GRATUITA.&lt;/b&gt;.
+        /// </summary>
+        public static string IndexContent1 {
+            get {
+                return ResourceManager.GetString("IndexContent1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D..
+        /// </summary>
+        public static string IndexContent2 {
+            get {
+                return ResourceManager.GetString("IndexContent2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Más Información.
+        /// </summary>
+        public static string IndexFaq {
+            get {
+                return ResourceManager.GetString("IndexFaq", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manot&amp;oacute;n.
+        /// </summary>
+        public static string IndexManoton {
+            get {
+                return ResourceManager.GetString("IndexManoton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El #MANOTÓN es un evento en el que se convocan chicos que hayan solicitado un prótesis mediante la plataforma LIMBS. Durante el día se ensamblan y entregan las manos mecánicas, ¡Convirtiendo chicos en super héroes!.
+        /// </summary>
+        public static string IndexManoton1 {
+            get {
+                return ResourceManager.GetString("IndexManoton1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saber más.
+        /// </summary>
+        public static string IndexManoton2 {
+            get {
+                return ResourceManager.GetString("IndexManoton2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¡Bienvenido a Limbs!.
+        /// </summary>
+        public static string IndexTitle1 {
+            get {
+                return ResourceManager.GetString("IndexTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TRES SIMPLES PASOS.
+        /// </summary>
+        public static string IndexTitle2 {
+            get {
+                return ResourceManager.GetString("IndexTitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to InvalidEmail {0}.
         /// </summary>
         public static string InvalidEmail {
@@ -354,15 +483,6 @@ namespace Limbs.Web.Common.Resources {
         public static string StoreNotIUserTwoFactorStore {
             get {
                 return ResourceManager.GetString("StoreNotIUserTwoFactorStore", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Desde Limbs -un proyecto de Atomic Lab- queremos que todas las personas que lo necesiten tengan su mano impresa en 3D, sin que el dinero sea una barrera. Por eso,&lt;br&gt;&lt;b&gt; las entregamos de manera GRATUITA.&lt;/b&gt;.
-        /// </summary>
-        public static string TextoInicioContent {
-            get {
-                return ResourceManager.GetString("TextoInicioContent", resourceCulture);
             }
         }
         
