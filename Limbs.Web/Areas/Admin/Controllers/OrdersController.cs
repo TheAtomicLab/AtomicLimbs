@@ -55,16 +55,20 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             sb.AppendLine(String.Join(",",orderExportTitles));
 
-            foreach (var data in dataList)
+            foreach (var order in dataList)
             {
-                string orderText = data.ToString();
+                string orderText = order.ToString();
                 sb.AppendLine(orderText);
             }
             
             var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
 
             var nameCsv = String.Format("pedidos{0}.csv", Timestamp);
-            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", nameCsv);
+
+            var data = Encoding.UTF8.GetBytes(sb.ToString());
+            var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
+
+            return File(result, "text/csv", nameCsv);
         }
 
         public async Task<ActionResult> LogCsvExport(int? orderId)
