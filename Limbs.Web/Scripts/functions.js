@@ -1,5 +1,8 @@
 //TODO (Lucas): Listar alerts en li
-function alertAtomic(text, div = "#alertAtomic") {
+function alertAtomic(text, div) {
+    if (div == undefined) {
+        div = '#alertAtomic';
+    }
 
     $(div).find('p').remove();
     var p = "<p>" + text + "</p>";
