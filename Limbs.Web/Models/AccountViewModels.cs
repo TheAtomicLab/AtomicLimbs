@@ -13,6 +13,7 @@ namespace Limbs.Web.Models
 
         [Required(ErrorMessage = " ")]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
 
         public bool EmailConfirmed { get; set; }
@@ -49,8 +50,9 @@ namespace Limbs.Web.Models
 
     public class ForgotViewModel
     {
-        [Required]
+        [Required(ErrorMessage = " ")]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
     }
 
@@ -58,7 +60,7 @@ namespace Limbs.Web.Models
     {
         [Required(ErrorMessage = " ")]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
@@ -78,7 +80,7 @@ namespace Limbs.Web.Models
         }
 
         [Required(ErrorMessage = " ")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = " ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -99,15 +101,15 @@ namespace Limbs.Web.Models
     public class SelectUserOrAmbassador
     {
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = " ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
 
     public class ResetPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = " ")]
+        [EmailAddress(ErrorMessage = " ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -127,8 +129,8 @@ namespace Limbs.Web.Models
 
     public class ForgotPasswordViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = " ")]
+        [EmailAddress(ErrorMessage = " ")]
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
