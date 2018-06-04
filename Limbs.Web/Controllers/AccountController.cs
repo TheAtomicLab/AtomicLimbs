@@ -420,7 +420,7 @@ namespace Limbs.Web.Controllers
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    ModelState.AddModelError(nameof(model), @"Intenta nuevamente.");
+                    ModelState.AddModelError(nameof(model), @"No pudimos leer la información de Facebook, intenta nuevamente.");
 
                     return View("Login");
                 }
