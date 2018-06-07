@@ -2,7 +2,7 @@
 {
 	public enum DistanceUnits
 	{
-		Miles,
-		Kilometers
+		Miles = 0,
+		Kilometers = 1
 	}
 }
