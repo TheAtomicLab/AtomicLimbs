@@ -28,6 +28,12 @@
             <div class="card card-l">
                 @Html.Partial("Details/_Messages", Model)
             </div>
+            @Html.ActionLink("Medir mano",
+                "ManoMedidas",
+                "Orders",
+                new { orderId = Model.Id }, 
+                null
+                )
         }
 
         @if (Model.Status == OrderStatus.Delivered || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Ready)
