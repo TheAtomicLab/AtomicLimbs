@@ -411,13 +411,13 @@ namespace Limbs.Web.Controllers
 
         public enum ManageMessageId
         {
-            AddPhoneSuccess,
-            ChangePasswordSuccess,
-            SetTwoFactorSuccess,
-            SetPasswordSuccess,
-            RemoveLoginSuccess,
-            RemovePhoneSuccess,
-            Error
+            AddPhoneSuccess = 0,
+            ChangePasswordSuccess = 1,
+            SetTwoFactorSuccess = 2,
+            SetPasswordSuccess = 3,
+            RemoveLoginSuccess = 4,
+            RemovePhoneSuccess = 5,
+            Error = 6
         }
 
 #endregion
