@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.Security.Principal;
+using System.Text;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Entities.Models
@@ -163,6 +164,34 @@ namespace Limbs.Web.Entities.Models
             return Birth <= DateTime.UtcNow.AddYears(-4);
         }
 
+        /// <summary> 
+        /// Turn a string into a CSV cell output 
+        /// </summary> 
+        /// <param name="str">String to output</param> 
+        /// <returns>The CSV cell formatted string</returns> 
+        private string StringToCSVCell(string str)
+        {
+            if (str == null)
+                str = "";
+
+            bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
+            if (mustQuote)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\"");
+                foreach (char nextChar in str)
+                {
+                    sb.Append(nextChar);
+                    if (nextChar == '"')
+                        sb.Append("\"");
+                }
+                sb.Append("\"");
+                return sb.ToString();
+            }
+
+            return str;
+        }
+
         public override string ToString()
         {
             var separator = ",";
@@ -171,21 +200,21 @@ namespace Limbs.Web.Entities.Models
             {
                 this.Id.ToString(),
                 this.UserId,
-                this.Dni,
+                StringToCSVCell(this.Dni),
                 this.Email,
                 this.AlternativeEmail,
-                String.Concat("\"",this.UserName,"\""),
-                String.Concat("\"",this.UserLastName,"\""),
-                String.Concat("\"",this.ResponsableName,"\""),
-                String.Concat("\"",this.ResponsableLastName,"\""),
-                String.Concat("\"",this.Phone,"\""),
+                StringToCSVCell(this.UserName),
+                StringToCSVCell(this.UserLastName),
+                StringToCSVCell(this.ResponsableName),
+                StringToCSVCell(this.ResponsableLastName),
+                StringToCSVCell(this.Phone),
                 this.Birth.ToString(),
                 this.Gender.ToString(),
-                String.Concat("\"",this.Country,"\""),
-                String.Concat("\"",this.State,"\""),
-                String.Concat("\"",this.City,"\""),
-                String.Concat("\"",this.Address,"\""),
-                String.Concat("\"",this.Address2,"\""),
+                StringToCSVCell(this.Country),
+                StringToCSVCell(this.State),
+                StringToCSVCell(this.City),
+                StringToCSVCell(this.Address),
+                StringToCSVCell(this.Address2),
                 //this.LatLng,
                 this.RegisteredAt.ToString(),
             };
