@@ -6,28 +6,28 @@ namespace Limbs.Web.Entities.Models
     {
         //Mano, No hay diseño
         [Description("Perdí UNA falange de cualquier dedo")]
-        A,
+        A = 0,
         //Mano, No hay diseño
         [Description("Perdí DOS falanges de cualquier dedo")]
-        B,
+        B = 1,
         //Mano
         [Description("Perdí mis cuatro dedos y tengo un pulgar")]
-        C,
+        C = 2,
         //Mano
         [Description("Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)")]
-        D,
+        D = 3,
         //Brazo
         [Description("Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)")]
-        E,
+        E = 4,
         //Brazo
         [Description("Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)")]
-        F,
+        F = 5,
         //Brazo, No hay diseño
         [Description("Perdí el codo y tengo el húmero")]
-        G,
+        G = 6,
         //Brazo, No hay diseño
         [Description("Tengo el húmero pero muy poco desarrollado")]
-        H
+        H = 7
     }
 
     public static class AmputationTypeExtensions

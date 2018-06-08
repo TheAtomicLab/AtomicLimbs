@@ -156,9 +156,6 @@ namespace Limbs.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto)
         {
-            //TODO (ale): implementar segun los campos que tengan sentido editarse
-            //throw new NotImplementedException();
-
             if (!ModelState.IsValid) return View(orderModel);
 
             var isOk = await UpdateOrder(orderModel, orderPhoto);
