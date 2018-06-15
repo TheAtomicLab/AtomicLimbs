@@ -3,8 +3,24 @@
 
 <h2>Asignar embajador al pedido @Model.Order.Id</h2>
 
-
+<br />
 <table>
+    <tr>
+            <td>
+                Nombre
+            </td>
+            <td>
+                Email
+            </td>
+            <td>
+                Distancia
+            </td>
+            <td>
+                Pedidos asignados
+            </td>
+            <td>
+            </td>
+        </tr>
     @foreach (var item in Model.AmbassadorList) {
         <tr>
             <td>
@@ -15,6 +31,9 @@
             </td>
             <td>
                 a @(item.Item2.ToFriendlyDistanceString()) del solicitante
+            </td>
+            <td>
+                @(item.Item3)
             </td>
             <td>
                 @Html.ActionLink("Asignar", "AssignAmbassador", new { idOrder = Model.Order.Id, id = item.Item1.Id })
