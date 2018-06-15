@@ -9,6 +9,10 @@
     
     ViewBag.Title = isEdit ? "Editar datos" : "Registro";
 }
+@if (!isEdit)
+{
+    @Facebook.DisplayFacebookChat()
+}
 
 @section scripts
 {

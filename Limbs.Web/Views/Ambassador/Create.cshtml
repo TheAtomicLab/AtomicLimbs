@@ -8,7 +8,10 @@
 
     ViewBag.Title = isEdit ? "Editar datos" : "Registro";
 }
-
+@if (!isEdit)
+{
+    @Facebook.DisplayFacebookChat()
+}
 @section scripts{
     <script type="text/javascript">
         $("#@Html.IdFor(model => model.Birth)").datepicker(

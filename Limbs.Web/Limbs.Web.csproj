@@ -462,6 +462,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="App_Code\Facebook.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
@@ -639,6 +640,7 @@
     <Content Include="Views\DataMigration\UserMigration.cshtml" />
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
+    <Content Include="Views\Account\_ViewStart.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
