@@ -151,7 +151,13 @@ namespace Limbs.Web.Controllers
                     ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
             }
-            if (!ModelState.IsValid) return View("ManoImagen", orderModel);
+            if (!ModelState.IsValid)
+            {
+                TempData["AmputationType"] = orderModel.AmputationType;
+                TempData["ProductType"] = orderModel.ProductType;
+
+                return Json(new { Action = "ManoImagen" });
+            }
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
@@ -178,7 +184,8 @@ namespace Limbs.Web.Controllers
 
         //AB 20171216: las medidas las toma el embajador
         //// GET: Orders/ManoMedidas
-        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        //[OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        [OverrideAuthorize(Roles = AppRoles.Administrator)]
         public async Task<ActionResult> ManoMedidas(int? orderId)
         {
             if (orderId == null)
