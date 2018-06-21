@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -33,8 +34,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 sb.AppendLine(ambassadorText);
             }
 
-            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            var nameCsv = String.Format("embajadores{0}.csv", Timestamp);
+            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            var nameCsv = String.Format("embajadores_{0}.csv", DateTimeExport);
 
             var data = Encoding.UTF8.GetBytes(sb.ToString());
             var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();

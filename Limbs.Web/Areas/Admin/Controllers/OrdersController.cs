@@ -15,6 +15,7 @@ using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Common.Extensions;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -40,7 +41,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Orders/CsvExport
         public async Task<FileContentResult> CsvExport()
         {
-            var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
+            var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderBy(o => o.Id).ToListAsync();
             var sb = new StringBuilder();
 
             var anyOrder = dataList.Where(x => x.OrderAmbassador != null).FirstOrDefault();
@@ -60,10 +61,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 string orderText = order.ToString();
                 sb.AppendLine(orderText);
             }
-            
-            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
 
-            var nameCsv = String.Format("pedidos{0}.csv", Timestamp);
+            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss",CultureInfo.InvariantCulture);
+
+            var nameCsv = String.Format("pedidos_{0}.csv", DateTimeExport);
 
             var data = Encoding.UTF8.GetBytes(sb.ToString());
             var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
@@ -120,8 +121,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 sb.AppendLine(dataText);
             }
 
-            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            var nameCsv = String.Format("order_{0}_{1}.csv",orderId,Timestamp);
+            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            var nameCsv = String.Format("order_{0}_{1}.csv",orderId, DateTimeExport);
 
             return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv",nameCsv);
         }
