@@ -49,7 +49,7 @@ namespace Limbs.Web.Common.Extensions
 
             // 4.
             // Don't allow out of range values.
-            if (dayDiff < 0 || dayDiff >= 31)
+            if (dayDiff < 0)
             {
                 return null;
             }
@@ -99,6 +99,24 @@ namespace Limbs.Web.Common.Extensions
             {
                 return $"hace {dayDiff} dias";
             }
+
+            //7
+            // Get total number of month elapsed.
+            var monthDiff = Math.Abs((DateTime.UtcNow.Month - date.Month) + 12 * (DateTime.UtcNow.Year - date.Year));
+
+            if (dayDiff >= 31)
+            {
+                if (monthDiff < 2)
+                {
+                    return "hace 1 mes";
+                }
+                else
+                {
+                    return String.Format("hace {0} meses", monthDiff);
+                }
+            }
+
+            //
             return dayDiff < 31 ? $"hace {Math.Ceiling((double)dayDiff / 7)} semanas" : null;
         }
 
