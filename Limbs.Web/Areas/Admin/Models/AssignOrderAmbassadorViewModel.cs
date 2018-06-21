@@ -8,10 +8,10 @@ namespace Limbs.Web.Areas.Admin.Models
     {
         public AssignOrderAmbassadorViewModel()
         {
-            AmbassadorList = new List<Tuple<AmbassadorModel, double>>();
+            AmbassadorList = new List<Tuple<AmbassadorModel, double,int>>();
         }
 
         public OrderModel Order { get; set; }
-        public IEnumerable<Tuple<AmbassadorModel, double>> AmbassadorList { get; set; }
+        public IEnumerable<Tuple<AmbassadorModel, double,int>> AmbassadorList { get; set; }
     }
 }

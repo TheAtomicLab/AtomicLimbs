@@ -5,10 +5,10 @@
 	/// </remarks>
 	public enum GoogleLocationType
 	{
-		Unknown,
-		Rooftop,
-		RangeInterpolated,
-		GeometricCenter,
-		Approximate
+		Unknown = 0,
+		Rooftop = 1,
+		RangeInterpolated = 2,
+		GeometricCenter = 3,
+		Approximate = 4
 	}
 }

@@ -39,16 +39,16 @@ namespace Limbs.Web.Entities.Models
 
     public enum Priority
     {
-        Low,
-        Normal,
-        High
+        Low = 0,
+        Normal = 1,
+        High = 2
     }
 
     public enum MessageStatus
     {
-        Unread,
-        Read,
-        Archived,
-        Deleted
+        Unread = 0,
+        Read = 1,
+        Archived = 2,
+        Deleted = 3
     }
 }

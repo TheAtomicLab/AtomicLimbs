@@ -94,7 +94,8 @@ namespace Limbs.Web.Controllers
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", userModel);
 
-            if (userModel.Id == 0)
+            var user = await Db.UserModelsT.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userModel.Id);
+            if (user == null)
             {
                 //CREATE
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(Db));
@@ -106,11 +107,11 @@ namespace Limbs.Web.Controllers
                 Db.UserModelsT.Add(userModel);
                 await Db.SaveChangesAsync();
 
+
                 return RedirectToAction("Index");
             }
             if (!userModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
 
-            var user = await Db.UserModelsT.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userModel.Id);
             if (!user.CanViewOrEdit(User))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

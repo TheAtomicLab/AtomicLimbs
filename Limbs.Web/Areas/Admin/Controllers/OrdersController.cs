@@ -156,9 +156,6 @@ namespace Limbs.Web.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto)
         {
-            //TODO (ale): implementar segun los campos que tengan sentido editarse
-            //throw new NotImplementedException();
-
             if (!ModelState.IsValid) return View(orderModel);
 
             var isOk = await UpdateOrder(orderModel, orderPhoto);
@@ -335,10 +332,11 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 Order = order,
                 AmbassadorList = ambassadorList.Select(
-                    ambassadorModel => new Tuple<AmbassadorModel, double>(
+                    ambassadorModel => new Tuple<AmbassadorModel,double,int>(
                         ambassadorModel,
-                        ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
-                    .ToList(),
+                        ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0,
+                        Db.OrderModels.Count(o => o.OrderAmbassador.Id == ambassadorModel.Id)))
+                    .ToList()
             });
 
         }

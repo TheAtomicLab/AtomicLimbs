@@ -123,13 +123,12 @@
                 <div class="paso4" style="display: none;">
                     <p>Listo!</p>
                     <p>Estas son las medidas tomadas:</p>
-                    @using (Html.BeginForm("ManoOrden", "Orders"))
+                    @using (Html.BeginForm("UpdateSize", "Orders"))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary()
-                        @Html.HiddenFor(x => x.AmputationType)
-                        @Html.HiddenFor(x => x.ProductType)
-                        @Html.HiddenFor(x => x.IdImage)
+                        @Html.HiddenFor(x => x.Id)
+
 
                         <label>
                             A:

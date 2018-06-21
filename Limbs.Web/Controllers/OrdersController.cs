@@ -151,7 +151,13 @@ namespace Limbs.Web.Controllers
                     ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
             }
-            if (!ModelState.IsValid) return View("ManoImagen", orderModel);
+            if (!ModelState.IsValid)
+            {
+                TempData["AmputationType"] = orderModel.AmputationType;
+                TempData["ProductType"] = orderModel.ProductType;
+
+                return Json(new { Action = "ManoImagen" });
+            }
 
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
@@ -178,36 +184,96 @@ namespace Limbs.Web.Controllers
 
         //AB 20171216: las medidas las toma el embajador
         //// GET: Orders/ManoMedidas
-        //public ActionResult ManoMedidas()
-        //{
-        //    if (TempData["fileUrl"] == null)
-        //    {
-        //        return RedirectToAction("ManoPedir", "Orders");
-        //    }
-        //    
-        //    return View("ManoMedidas", new OrderModel
-        //    {
-        //        IdImage = TempData["fileUrl"].ToString(),
-        //        AmputationType = (AmputationType)TempData["AmputationType"],
-        //        ProductType = (ProductType)TempData["ProductType"],
-        //    });
-        //}
+        //[OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        [OverrideAuthorize(Roles = AppRoles.Administrator)]
+        public async Task<ActionResult> ManoMedidas(int? orderId)
+        {
+            if (orderId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var orderModel = await Db.OrderModels.FindAsync(orderId.Value);
+           
+            if (orderModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (orderModel.Status != OrderStatus.Pending)
+                return View("Index"); //Aca retornar el index del rol
+
+            var userId = User.Identity.GetUserId();
+            if (!User.IsInRole(AppRoles.Administrator))
+            {
+                bool ambassadorEditOrder = orderModel.OrderAmbassador.UserId == userId;
+
+                if (!ambassadorEditOrder)
+                    return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+
+            return View("ManoMedidas", orderModel);
+        }
 
         //// POST: Orders/ManoOrden
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult ManoOrden(OrderModel orderModel)
-        //{
-        //    ModelState.Clear();
-        //    if (string.IsNullOrWhiteSpace(orderModel.IdImage))
-        //        ModelState.AddModelError("noimage", @"Error desconocido, vuelva a comenzar.");
-        //    if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0)
-        //        ModelState.AddModelError("nodistance", @"Seleccione las medidas.");
-        //
-        //    if (!ModelState.IsValid) return View("ManoMedidas", orderModel);
-        //
-        //    return View("ManoOrden", orderModel);
-        //}
+        //[HttpPost] 
+        //[ValidateAntiForgeryToken] 
+        //public ActionResult ManoOrden(OrderModel orderModel) 
+        //{ 
+        //    ModelState.Clear(); 
+        //    if (string.IsNullOrWhiteSpace(orderModel.IdImage)) 
+        //        ModelState.AddModelError("noimage", @"Error desconocido, vuelva a comenzar."); 
+        //    if (orderModel.Sizes.A <= 0 || orderModel.Sizes.B <= 0 || orderModel.Sizes.C <= 0) 
+        //        ModelState.AddModelError("nodistance", @"Seleccione las medidas."); 
+        // 
+        //    if (!ModelState.IsValid) return View("ManoMedidas", orderModel); 
+        // 
+        //    return View("ManoOrden", orderModel); 
+        //} 
+
+        [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateSize(OrderModel orderModelSize)
+        {
+            var orderId = orderModelSize.Id;
+
+            var orderModel = await Db.OrderModels.FindAsync(orderId);
+
+            if (orderModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (orderModel.Status != OrderStatus.Pending)
+                return View("Index"); //Aca retornar el index del rol
+
+            var userId = User.Identity.GetUserId();
+            if (!User.IsInRole(AppRoles.Administrator))
+            {
+                bool ambassadorEditOrder = orderModel.OrderAmbassador.UserId == userId;
+
+                if (!ambassadorEditOrder)
+                    return new HttpStatusCodeResult(HttpStatusCode.Conflict);
+            }
+
+            if (string.IsNullOrWhiteSpace(orderModel.IdImage))
+                ModelState.AddModelError("noimage", @"Error desconocido, vuelva a comenzar.");
+            if (orderModelSize.Sizes.A <= 0 || orderModelSize.Sizes.B <= 0 || orderModelSize.Sizes.C <= 0)
+                ModelState.AddModelError("nodistance", @"Seleccione las medidas.");
+
+            if (!ModelState.IsValid) return View("ManoMedidas", orderModel);
+
+
+            orderModel.Sizes = orderModelSize.Sizes;
+
+            Db.OrderModels.AddOrUpdate(orderModel);
+            orderModel.LogMessage(User, "Add or update sizes");
+
+            await Db.SaveChangesAsync();
+
+            return RedirectToAction("Details", "Orders", new { id = orderId });
+        }
 
         // POST: Orders/Create
         [HttpPost]
