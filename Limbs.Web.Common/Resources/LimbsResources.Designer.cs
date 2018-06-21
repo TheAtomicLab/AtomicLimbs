@@ -106,6 +106,60 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas..
+        /// </summary>
+        public static string FooterText1 {
+            get {
+                return ResourceManager.GetString("FooterText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contactanos por las redes.
+        /// </summary>
+        public static string FooterText2 {
+            get {
+                return ResourceManager.GetString("FooterText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estamos en todas las redes sociales. No te olvides de compartir con tus amigos lo que hacemos, as&amp;iacute; m&amp;aacute;s personas pueden solicitarnos su mano..
+        /// </summary>
+        public static string FooterText3 {
+            get {
+                return ResourceManager.GetString("FooterText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Encontraste errores o mejoras en esta plataforma? - Hacé click.
+        /// </summary>
+        public static string FooterText4 {
+            get {
+                return ResourceManager.GetString("FooterText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to y ayudanos a mejorarla..
+        /// </summary>
+        public static string FooterText5 {
+            get {
+                return ResourceManager.GetString("FooterText5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to acá.
+        /// </summary>
+        public static string FooterTextLink {
+            get {
+                return ResourceManager.GetString("FooterTextLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ¿Cómo está compuesta?.
         /// </summary>
         public static string IndexAbout1 {

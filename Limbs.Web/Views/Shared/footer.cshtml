@@ -2,7 +2,7 @@
     <div class="footer-left">
         <h3><span>Atomic Lab</span></h3>
         <p class="footer-company-about">
-            Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.
+            @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.FooterText1)
         </p>
         <p class="footer-company-name">Limbs - Atomic Lab &copy; @DateTime.UtcNow.Year</p>
     </div>
@@ -22,14 +22,14 @@
     </div>
     <div class="footer-right">
         <p class="footer-company-about">
-            <span>Contactanos por las redes</span>
-            Estamos en todas las redes sociales. No te olvides de compartir con tus amigos lo que hacemos, as&iacute; m&aacute;s personas pueden solicitarnos su mano.
+            <span>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.FooterText2)</span>
+            @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.FooterText3)
         </p>
         <div class="footer-icons">
             <a href="http://www.facebook.com/TheAtomicLab"><i class="fa fa-facebook"></i></a>
             <a href="http://www.twitter.com/TheAtomicLab"><i class="fa fa-twitter"></i></a>
             <a href="http://www.instagram.com/TheAtomicLab"><i class="fa fa-instagram"></i></a>
         </div>
-        <p><div class="footer-company-about"> ¿Encontraste errores o mejoras en esta plataforma? - Hacé click <a href="https://goo.gl/forms/08M0ysXh75FK8r2I3" target="_blank">acá</a> y ayudanos a mejorarla.</div></pfooter-company-about>
+        <p><div class="footer-company-about"> @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.FooterText4) <a href="https://goo.gl/forms/08M0ysXh75FK8r2I3" target="_blank">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.FooterTextLink)</a> @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.FooterText5)</div></pfooter-company-about>
     </div>
 </footer>

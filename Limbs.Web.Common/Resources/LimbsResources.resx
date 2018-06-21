@@ -276,4 +276,22 @@
   <data name="IndexTitle2" xml:space="preserve">
     <value>TRES SIMPLES PASOS</value>
   </data>
+  <data name="FooterText1" xml:space="preserve">
+    <value>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</value>
+  </data>
+  <data name="FooterText2" xml:space="preserve">
+    <value>Contactanos por las redes</value>
+  </data>
+  <data name="FooterText3" xml:space="preserve">
+    <value>Estamos en todas las redes sociales. No te olvides de compartir con tus amigos lo que hacemos, as&amp;iacute; m&amp;aacute;s personas pueden solicitarnos su mano.</value>
+  </data>
+  <data name="FooterText4" xml:space="preserve">
+    <value>¿Encontraste errores o mejoras en esta plataforma? - Hacé click</value>
+  </data>
+  <data name="FooterText5" xml:space="preserve">
+    <value>y ayudanos a mejorarla.</value>
+  </data>
+  <data name="FooterTextLink" xml:space="preserve">
+    <value>acá</value>
+  </data>
 </root>
