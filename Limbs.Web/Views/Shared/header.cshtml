@@ -12,29 +12,29 @@
         <nav>
             <ul>
                 <li>
-                    <a onclick="cerrarmenu()" href="/">Inicio</a>
+                    <a onclick="cerrarmenu()" href="/">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.HeaderText1)</a>
                 </li>
                 @if (User.IsInRole(AppRoles.Requester))
                 {
                     <li>
-                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
+                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.HeaderText2)</a>
                     </li>
                 }
                 @if (User.IsInRole(AppRoles.Ambassador))
                 {
                     <li>
-                        <a name="comunidad" onclick="cerrarmenu()" href="http://facebook.com/groups/AtomicLabEmbajadores" target="_blank">Comunidad de Embajadores</a>
+                        <a name="comunidad" onclick="cerrarmenu()" href="http://facebook.com/groups/AtomicLabEmbajadores" target="_blank">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.HeaderText3)</a>
                     </li>
 
                     <li>
-                        <a name="manual" onclick="cerrarmenu()" href="http://atomiclab.org/limbs/ambassadors/manual" target="_blank">Manual</a>
+                        <a name="manual" onclick="cerrarmenu()" href="http://atomiclab.org/limbs/ambassadors/manual" target="_blank">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.HeaderText4)</a>
                     </li>
                 }
                 <li>
                     @Html.ActionLink("¿Qué es Limbs?", "QueEsLimbs", "StaticContent", null, null, "pedir", null, null)
                 </li>
                 <li>
-                    <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">Donar</a>
+                    <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.HeaderText5)</a>
                 </li>
 
                 @Html.Partial("AdminMenu")

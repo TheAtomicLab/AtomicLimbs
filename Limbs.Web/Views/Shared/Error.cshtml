@@ -10,7 +10,7 @@
 @{
     if (string.IsNullOrEmpty(ViewBag.ErrorMessage))
     {
-        <h2 class="text-danger">Ocurrió un error. No te preocupes, ya nos enteramos y vamos a solucionarlo lo antes posible.</h2>
+<h2 class="text-danger">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.ErrorTitle1)</h2>
     }
     else
     {
@@ -21,7 +21,7 @@
 @if (Model != null)
 {
     <div style="font-size: 11px; margin-top: 100px;">
-        <h3 onclick="$('#errorinfo li').show();">Información del error</h3>
+        <h3 onclick="$('#errorinfo li').show();">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.ErrorTitle2)</h3>
         <ul id="errorinfo" style="list-style: none;">
             <li>Error: @Model.Exception.Message</li>
             <li>ActionName: @Model.ActionName</li>

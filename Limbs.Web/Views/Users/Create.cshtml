@@ -51,9 +51,9 @@
             @Html.HiddenFor(x => x.Email)
             @Html.HiddenFor(x => x.UserId)
             @Html.AntiForgeryToken()
-            <h2 class="f-titulo">Tus datos</h2>
+        <h2 class="f-titulo">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle1)</h2>
             <div class="f-seccion">
-                <h3>¿Sos el usuario de la mano?</h3>
+                <h3>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle2)</h3>
                 <select class="f-drop bn_blue" style="color: black;" name="@Html.NameFor(model => model.IsProductUser)">
                     <option value="false">NO</option>
                     <option value="true">SI</option>
@@ -61,14 +61,14 @@
                 <br />
                 <label for="isAdultCheck" id="isAdultCheckContainer">
                     @Html.CheckBox("isAdultCheck", isAdultCheck, new { id = "isAdultCheck" })
-                    ¿Declara que es mayor de 18 años?
+                    @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle3)
                 </label><br>
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
                     @Html.EditorFor(model => model.ResponsableLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
                 </div>
             </div>
-            <h2 class="f-titulo" name="titleDateUser">Datos del usuario de la mano</h2>
+            <h2 class="f-titulo" name="titleDateUser">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle4)</h2>
             <div class="f-seccion">
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
@@ -76,12 +76,12 @@
                 </div>
                 @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte" } })
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
-                <label class="f-label">Fecha de nacimiento</label>
+                <label class="f-label">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle5)</label>
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
-                <label class="f-label">Sexo</label>
+                <label class="f-label">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle6)</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
-                <label class="f-label">Email Alternativo</label>
-                <label class="f-label" style="font-style: italic; font-size: 12px;">Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado </label>
+                <label class="f-label">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle7)</label>
+                <label class="f-label" style="font-style: italic; font-size: 12px;">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserCreateTitle8) </label>
                 @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo" } })
 
                 @Html.Partial("_Address", Model)

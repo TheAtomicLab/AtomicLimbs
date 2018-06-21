@@ -61,6 +61,33 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ¿Ésta es tu dirección?.
+        /// </summary>
+        public static string AddressText1 {
+            get {
+                return ResourceManager.GetString("AddressText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buscá en el mapa, y hacé click en la ubicación correcta..
+        /// </summary>
+        public static string AddressText2 {
+            get {
+                return ResourceManager.GetString("AddressText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Es importante que ubiques tu dirección correctamente para gestionar tu pedido..
+        /// </summary>
+        public static string AddressText3 {
+            get {
+                return ResourceManager.GetString("AddressText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error general..
         /// </summary>
         public static string DefaultError {
@@ -84,6 +111,24 @@ namespace Limbs.Web.Common.Resources {
         public static string DuplicateName {
             get {
                 return ResourceManager.GetString("DuplicateName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocurrió un error. No te preocupes, ya nos enteramos y vamos a solucionarlo lo antes posible..
+        /// </summary>
+        public static string ErrorTitle1 {
+            get {
+                return ResourceManager.GetString("ErrorTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Información del error.
+        /// </summary>
+        public static string ErrorTitle2 {
+            get {
+                return ResourceManager.GetString("ErrorTitle2", resourceCulture);
             }
         }
         
@@ -156,6 +201,51 @@ namespace Limbs.Web.Common.Resources {
         public static string FooterTextLink {
             get {
                 return ResourceManager.GetString("FooterTextLink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inicio.
+        /// </summary>
+        public static string HeaderText1 {
+            get {
+                return ResourceManager.GetString("HeaderText1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedir una mano.
+        /// </summary>
+        public static string HeaderText2 {
+            get {
+                return ResourceManager.GetString("HeaderText2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Comunidad de Embajadores.
+        /// </summary>
+        public static string HeaderText3 {
+            get {
+                return ResourceManager.GetString("HeaderText3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manual.
+        /// </summary>
+        public static string HeaderText4 {
+            get {
+                return ResourceManager.GetString("HeaderText4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Donar.
+        /// </summary>
+        public static string HeaderText5 {
+            get {
+                return ResourceManager.GetString("HeaderText5", resourceCulture);
             }
         }
         
@@ -555,6 +645,78 @@ namespace Limbs.Web.Common.Resources {
         public static string UserAlreadyInRole {
             get {
                 return ResourceManager.GetString("UserAlreadyInRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tus datos.
+        /// </summary>
+        public static string UserCreateTitle1 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Sos el usuario de la mano?.
+        /// </summary>
+        public static string UserCreateTitle2 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Declara que es mayor de 18 años?.
+        /// </summary>
+        public static string UserCreateTitle3 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datos del usuario de la mano.
+        /// </summary>
+        public static string UserCreateTitle4 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha de nacimiento.
+        /// </summary>
+        public static string UserCreateTitle5 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sexo.
+        /// </summary>
+        public static string UserCreateTitle6 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email Alternativo.
+        /// </summary>
+        public static string UserCreateTitle7 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado.
+        /// </summary>
+        public static string UserCreateTitle8 {
+            get {
+                return ResourceManager.GetString("UserCreateTitle8", resourceCulture);
             }
         }
         

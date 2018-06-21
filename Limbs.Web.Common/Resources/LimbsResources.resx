@@ -276,6 +276,21 @@
   <data name="IndexTitle2" xml:space="preserve">
     <value>TRES SIMPLES PASOS</value>
   </data>
+  <data name="AddressText1" xml:space="preserve">
+    <value>¿Ésta es tu dirección?</value>
+  </data>
+  <data name="AddressText2" xml:space="preserve">
+    <value>Buscá en el mapa, y hacé click en la ubicación correcta.</value>
+  </data>
+  <data name="AddressText3" xml:space="preserve">
+    <value>Es importante que ubiques tu dirección correctamente para gestionar tu pedido.</value>
+  </data>
+  <data name="ErrorTitle1" xml:space="preserve">
+    <value>Ocurrió un error. No te preocupes, ya nos enteramos y vamos a solucionarlo lo antes posible.</value>
+  </data>
+  <data name="ErrorTitle2" xml:space="preserve">
+    <value>Información del error</value>
+  </data>
   <data name="FooterText1" xml:space="preserve">
     <value>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</value>
   </data>
@@ -293,5 +308,44 @@
   </data>
   <data name="FooterTextLink" xml:space="preserve">
     <value>acá</value>
+  </data>
+  <data name="HeaderText1" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="HeaderText2" xml:space="preserve">
+    <value>Pedir una mano</value>
+  </data>
+  <data name="HeaderText3" xml:space="preserve">
+    <value>Comunidad de Embajadores</value>
+  </data>
+  <data name="HeaderText4" xml:space="preserve">
+    <value>Manual</value>
+  </data>
+  <data name="HeaderText5" xml:space="preserve">
+    <value>Donar</value>
+  </data>
+  <data name="UserCreateTitle1" xml:space="preserve">
+    <value>Tus datos</value>
+  </data>
+  <data name="UserCreateTitle2" xml:space="preserve">
+    <value>¿Sos el usuario de la mano?</value>
+  </data>
+  <data name="UserCreateTitle3" xml:space="preserve">
+    <value>¿Declara que es mayor de 18 años?</value>
+  </data>
+  <data name="UserCreateTitle4" xml:space="preserve">
+    <value>Datos del usuario de la mano</value>
+  </data>
+  <data name="UserCreateTitle5" xml:space="preserve">
+    <value>Fecha de nacimiento</value>
+  </data>
+  <data name="UserCreateTitle6" xml:space="preserve">
+    <value>Sexo</value>
+  </data>
+  <data name="UserCreateTitle7" xml:space="preserve">
+    <value>Email Alternativo</value>
+  </data>
+  <data name="UserCreateTitle8" xml:space="preserve">
+    <value>Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado</value>
   </data>
 </root>
