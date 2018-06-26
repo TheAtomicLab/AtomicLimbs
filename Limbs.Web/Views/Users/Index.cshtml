@@ -9,17 +9,16 @@
 <div id="cont" class="min_full">
     <article id="home">
 
-        <h1>Hola @Model.UserName</h1>
+        <h1>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserIndexTitle1) @Model.UserName</h1>
 
         <a name="btn_pedir" class="bn_blue" @(Model.IsValidAge ? "" : "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
 
         @if (!Model.IsValidAge)
         {
             <div class="no-design">
-                <h2 class="f-titulo" style="background: red;">    Podrás pedir la mano recién cuando el usuario cumpla 4 años de edad</h2>
+                <h2 class="f-titulo" style="background: red;">@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserIndexTitle2)</h2>
                 <p style="color: red;text-align: center; margin: 10px 20px;">
-                    Nuestra experiencia luego de varios años diseñando, imprimiendo y probando manos mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
-                    Por diferentes motivos, las personas no tienen el desarrollo mínimo para usar y ser conscientes de la mano mecánica, la misma requiere de un aprendizaje que no es posible lograr a esa edad, y genera más frustraciones que alegrías.
+                    @Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserIndexTitle3)
                 </p>
             </div>
         }
@@ -31,7 +30,7 @@
         @if (Model.Order != null)
         {
             <article id="tus_pedidos">
-                <h2>Tus pedidos:</h2>
+                <h2>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserIndexTitle4)</h2>
                 <table>
                     <tr>
                         <th>@Html.DisplayNameFor(x => o.Id)</th>
@@ -79,7 +78,7 @@
         }
         else
         {
-            <p>No tienes pedidos asignados</p>
+            <p>@Html.Raw(Limbs.Web.Common.Resources.LimbsResources.UserIndexTitle5)</p>
         }
     </article>
 

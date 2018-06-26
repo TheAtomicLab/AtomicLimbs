@@ -730,6 +730,52 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hola.
+        /// </summary>
+        public static string UserIndexTitle1 {
+            get {
+                return ResourceManager.GetString("UserIndexTitle1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podrás pedir la mano recién cuando el usuario cumpla 4 años de edad.
+        /// </summary>
+        public static string UserIndexTitle2 {
+            get {
+                return ResourceManager.GetString("UserIndexTitle2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nuestra experiencia luego de varios años diseñando, imprimiendo y probando manos mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
+        ///                    Por diferentes motivos, las personas no tienen el desarrollo mínimo para usar y ser conscientes de la mano mecánica, la misma requiere de un aprendizaje que no es posible lograr a esa edad, y genera más frustraciones que alegrías..
+        /// </summary>
+        public static string UserIndexTitle3 {
+            get {
+                return ResourceManager.GetString("UserIndexTitle3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tus pedidos:.
+        /// </summary>
+        public static string UserIndexTitle4 {
+            get {
+                return ResourceManager.GetString("UserIndexTitle4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tienes pedidos asignados.
+        /// </summary>
+        public static string UserIndexTitle5 {
+            get {
+                return ResourceManager.GetString("UserIndexTitle5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to UserNameNotFound {0}.
         /// </summary>
         public static string UserNameNotFound {

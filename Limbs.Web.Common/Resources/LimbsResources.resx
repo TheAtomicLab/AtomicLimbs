@@ -348,4 +348,20 @@
   <data name="UserCreateTitle8" xml:space="preserve">
     <value>Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado</value>
   </data>
+  <data name="UserIndexTitle1" xml:space="preserve">
+    <value>Hola</value>
+  </data>
+  <data name="UserIndexTitle2" xml:space="preserve">
+    <value>Podrás pedir la mano recién cuando el usuario cumpla 4 años de edad</value>
+  </data>
+  <data name="UserIndexTitle3" xml:space="preserve">
+    <value>Nuestra experiencia luego de varios años diseñando, imprimiendo y probando manos mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
+                    Por diferentes motivos, las personas no tienen el desarrollo mínimo para usar y ser conscientes de la mano mecánica, la misma requiere de un aprendizaje que no es posible lograr a esa edad, y genera más frustraciones que alegrías.</value>
+  </data>
+  <data name="UserIndexTitle4" xml:space="preserve">
+    <value>Tus pedidos:</value>
+  </data>
+  <data name="UserIndexTitle5" xml:space="preserve">
+    <value>No tienes pedidos asignados</value>
+  </data>
 </root>
