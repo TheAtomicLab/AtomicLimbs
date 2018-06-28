@@ -67,6 +67,7 @@
                     @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
                     @Html.EditorFor(model => model.ResponsableLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
                 </div>
+                @Html.EditorFor(model => model.ResponsableDni, new { htmlAttributes = new { @class = "f-campo", placeholder = "Número de Documento de Identidad / Pasaporte" } })
             </div>
             <h2 class="f-titulo" name="titleDateUser">Datos del usuario de la mano</h2>
             <div class="f-seccion">

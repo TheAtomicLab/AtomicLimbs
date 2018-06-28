@@ -102,7 +102,11 @@ namespace Limbs.Web.Entities.Models
         [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
-        
+
+        [Display(Name = "Número de Documento de Identidad / Pasaporte", Description = "")]
+        [Required(ErrorMessage = " ")]
+        public string ResponsableDni { get; set; }
+
         public DbGeography Location { get; set; }
 
         [NotMapped]
@@ -207,6 +211,7 @@ namespace Limbs.Web.Entities.Models
                 StringToCSVCell(this.UserLastName),
                 StringToCSVCell(this.ResponsableName),
                 StringToCSVCell(this.ResponsableLastName),
+                StringToCSVCell(this.ResponsableDni),
                 StringToCSVCell(this.Phone),
                 this.Birth.ToString(),
                 this.Gender.ToString(),
@@ -236,6 +241,7 @@ namespace Limbs.Web.Entities.Models
                 "UserLastName",
                 "ResponsableName",
                 "ResponsableLastName",
+                "ResponsableDni",
                 "UserPhone",
                 "UserDate",
                 "UserGender",
