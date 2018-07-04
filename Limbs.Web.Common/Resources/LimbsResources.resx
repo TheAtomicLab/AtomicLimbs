@@ -157,7 +157,7 @@
     <value>PropertyTooShort {0}</value>
   </data>
   <data name="DuplicateName" xml:space="preserve">
-    <value></value>
+    <value />
   </data>
   <data name="UserAlreadyHasPassword" xml:space="preserve">
     <value>UserAlreadyHasPassword</value>
@@ -208,7 +208,7 @@
     <value>InvalidEmail {0}</value>
   </data>
   <data name="InvalidToken" xml:space="preserve">
-    <value>Ocurrio un error. Vuelva a Iniciar Sesion y seleccione "olvide contraseña" para intentarlo nuevamente.</value>
+    <value>Ocurrió un error. Vuelva a Iniciar Sesión y seleccione "olvidé contraseña" para intentarlo nuevamente.</value>
   </data>
   <data name="InvalidUserName" xml:space="preserve">
     <value>InvalidUserName</value>
