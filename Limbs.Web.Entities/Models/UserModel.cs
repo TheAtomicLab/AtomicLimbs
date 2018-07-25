@@ -16,7 +16,7 @@ namespace Limbs.Web.Entities.Models
     {
         private string _responsableName;
         private string _responsableLastName;
-
+        private string _responsableDNI;
         public UserModel()
         {
             Gender = Gender.NoDeclara;
@@ -105,7 +105,11 @@ namespace Limbs.Web.Entities.Models
 
         [Display(Name = "Número de Documento de Identidad / Pasaporte", Description = "")]
         [Required(ErrorMessage = " ")]
-        public string ResponsableDni { get; set; }
+        public string ResponsableDni
+        {
+            get => IsProductUser ? null : _responsableDNI;
+            set => _responsableDNI = IsProductUser ? null : value;
+        }
 
         public DbGeography Location { get; set; }
 
@@ -141,6 +145,14 @@ namespace Limbs.Web.Entities.Models
         public string FullAddress()
         {
             return $"{Address} {Address2}, {City} {State}, {Country}";
+        }
+
+        public string FullDni()
+        {
+            var result = $"{Dni}";
+            if (!IsProductUser)
+                result += $" (Responsable: {ResponsableDni})";
+            return result;
         }
 
         public bool CanViewOrEdit(IPrincipal user)
@@ -223,7 +235,7 @@ namespace Limbs.Web.Entities.Models
                 //this.LatLng,
                 this.RegisteredAt.ToString(),
             };
-            
+
             return String.Join(separator, listUser);
         }
 
@@ -262,7 +274,7 @@ namespace Limbs.Web.Entities.Models
             return !string.IsNullOrWhiteSpace(AlternativeEmail);
         }
     }
-    
+
     public enum Gender
     {
         [Description("Femenino")]
