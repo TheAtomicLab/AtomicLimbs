@@ -42,7 +42,7 @@ function isProductUser(value) {
 
 function validAdultCheck(check) {
     if (!check.is(":checked")) {
-        alertAtomic("Por favor. Si usted no es el usuario de la mano es necesario que sea mayor de 18 años.");
+        alertAtomic("Por favor. Si usted no es el usuario de la prótesis es necesario que sea mayor de 18 años.");
         return false;
     }
     return true;
