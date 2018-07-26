@@ -162,7 +162,7 @@ namespace Limbs.Web.Controllers
                 ModelState.AddModelError("BirthDeclaration", @"Debe ser mayor de 18 años.");
 
             //if (userModel.Birth >= DateTime.UtcNow.AddYears(-4))
-            //    ModelState.AddModelError(nameof(userModel.Birth), @"El usuario de la mano debe ser mayor de 4 años.");
+            //    ModelState.AddModelError(nameof(userModel.Birth), @"El usuario de la prótesis debe ser mayor de 4 años.");
 
             if (string.IsNullOrWhiteSpace(userModel.ResponsableName))
                 ModelState.AddModelError(nameof(userModel.ResponsableName), @" ");
