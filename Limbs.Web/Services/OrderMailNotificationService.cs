@@ -137,7 +137,7 @@ namespace Limbs.Web.Services
             {
                 From = _fromEmail,
                 To = order.OrderRequestor.Email,
-                Subject = "[Atomic Limbs] Tu pedido de mano fue realizado con éxito",
+                Subject = "[Atomic Limbs] Tu pedido de prótesis fue realizado con éxito",
                 Body = CompiledTemplateEngine.Render("Mails.NewOrderRequestor", order),
             };
             if (order.OrderRequestor.HasAlternativeEmail())

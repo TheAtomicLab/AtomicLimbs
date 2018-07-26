@@ -163,7 +163,7 @@ namespace Limbs.Web.Controllers
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
                 var body = CompiledTemplateEngine.Render("Mails.EmailPasswordChangeImport", callbackUrl);
 
-                return UserManager.SendEmailAsync(user.Id, "[Acción Requerida] ¡Te presentamos la nueva plataforma! Continuá con tu pedido ahora para obtener tu mano 3D", body);
+                return UserManager.SendEmailAsync(user.Id, "[Acción Requerida] ¡Te presentamos la nueva plataforma! Continuá con tu pedido ahora para obtener tu prótesis impresa en 3D", body);
             }
             return Task.CompletedTask;
         }
