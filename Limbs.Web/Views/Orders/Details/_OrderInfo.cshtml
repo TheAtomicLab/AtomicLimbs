@@ -13,7 +13,12 @@
     </tr>
     <tr>
         <td>@Html.DisplayNameFor(x => x.IdImage)</td>
-        <td><img src="@Model.IdImage"/></td>
+        @*TODO: Rediseñar toda esta parte!! *@
+        @foreach(var image in (Model.IdImage).Split(','))
+        {
+            <td><img src="@image"/></td>
+        }
+        @*<td><img src="@Model.IdImage" /></td>*@
     </tr>
     <tr>
         <td>@Html.DisplayNameFor(x => x.Sizes)</td>
