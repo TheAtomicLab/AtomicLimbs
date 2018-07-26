@@ -20,12 +20,15 @@ namespace Limbs.Web.Entities.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [Display(Name = "Horario", Description = "")]
         public DateTime Time { get; set; }
         
         public Priority Priority { get; set; }
 
+        [Display(Name = "De", Description = "")]
         public ApplicationUser From { get; set; }
 
+        [Display(Name = "Para", Description = "")]
         public ApplicationUser To { get; set; }
 
         public string Content { get; set; }

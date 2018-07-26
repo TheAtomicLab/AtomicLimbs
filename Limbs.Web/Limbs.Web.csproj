@@ -314,6 +314,10 @@
     <Compile Include="Migrations\201805101330167_alternativeEmail.Designer.cs">
       <DependentUpon>201805101330167_alternativeEmail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806281344273_responsableDni.cs" />
+    <Compile Include="Migrations\201806281344273_responsableDni.Designer.cs">
+      <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -696,6 +700,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805101330167_alternativeEmail.resx">
       <DependentUpon>201805101330167_alternativeEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281344273_responsableDni.resx">
+      <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

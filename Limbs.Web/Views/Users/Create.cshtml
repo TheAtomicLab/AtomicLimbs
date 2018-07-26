@@ -6,7 +6,7 @@
 
     bool isAdultCheck = ViewBag.IsAdultCheck != null && (bool)ViewBag.IsAdultCheck;
     bool termsAndConditions = ViewBag.TermsAndConditions != null && (bool)ViewBag.TermsAndConditions;
-    
+
     ViewBag.Title = isEdit ? "Editar datos" : "Registro";
 }
 @if (!isEdit)
@@ -18,7 +18,7 @@
 {
     <script src="~/Scripts/pages/users.js"></script>
     @if (!isEdit)
-        {
+    {
         <script src="~/Scripts/register.js"></script>
     }
     @if (Model != null && Model.IsProductUser)
@@ -70,6 +70,12 @@
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.ResponsableName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
                     @Html.EditorFor(model => model.ResponsableLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
+                </div>
+                <div id="ResponsableDni">
+                    @Html.EditorFor(model => model.ResponsableDni, new { htmlAttributes = new { @class = "f-campo", placeholder = "Número de Documento de Identidad / Pasaporte" } })
+                    <label class="f-label" style="font-style: italic; font-size: 11px;">
+                        Ingresar el número completo. Según el país, puede ser también conocido como: Cédula de Identidad (CI), Cédula de Ciudadanía (CC), Tarjeta de Identidad (TI), Registro Civil (RC), Cédula de Extranjería (CE), Carné de Identidad (CI), Documento Nacional de Identidad (DNI), Documento Único de Identidad (DUI), identificación oficial o identificación (ID), Clave Única de Registro de Población (CURP), etc.
+                    </label>
                 </div>
             </div>
             <h2 class="f-titulo" name="titleDateUser">Datos del usuario de la mano</h2>

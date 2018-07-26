@@ -152,6 +152,7 @@ namespace Limbs.Web.Controllers
             {
                 ModelState[nameof(userModel.ResponsableName)].Errors.Clear();
                 ModelState[nameof(userModel.ResponsableLastName)].Errors.Clear();
+                ModelState[nameof(userModel.ResponsableDni)].Errors.Clear();
                 if (userModel.Birth >= DateTime.UtcNow.AddYears(-18))
                     ModelState.AddModelError(nameof(userModel.Birth), @"Debe ser mayor de 18 años.");
                 return;
@@ -168,6 +169,9 @@ namespace Limbs.Web.Controllers
 
             if (string.IsNullOrWhiteSpace(userModel.ResponsableLastName))
                 ModelState.AddModelError(nameof(userModel.ResponsableLastName), @" ");
+
+            if (string.IsNullOrWhiteSpace(userModel.ResponsableDni))
+                ModelState.AddModelError(nameof(userModel.ResponsableDni), @" ");
         }
     }
 }

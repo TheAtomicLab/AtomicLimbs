@@ -16,6 +16,7 @@ using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity.Owin;
+using System.Collections.Generic;
 
 namespace Limbs.Web.Controllers
 {
@@ -134,21 +135,32 @@ namespace Limbs.Web.Controllers
         // POST: Orders/UploadImageUser
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UploadImageUser(OrderModel orderModel, HttpPostedFileBase file)
+        //public ActionResult UploadImageUser(OrderModel orderModel, HttpPostedFileBase file)
+        public ActionResult UploadImageUser(OrderModel orderModel, List<HttpPostedFileBase> file)
         {
-            if (file == null || file.ContentLength == 0)
+            int v_maxFiles = 6;
+
+            if (file.Count > v_maxFiles)
+            {
+                ModelState.AddModelError("maxfiles", @"Supero el maximo de archivos permitidos.");
+            }
+
+            if (file.Count == 0 || file == null)
             {
                 ModelState.AddModelError("nofile", @"Seleccione una foto.");
             }
             else
             {
-                if (file.ContentLength > 1000000 * 5)
+                foreach (var img in file)
                 {
-                    ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
-                }
-                if (!file.IsImage())
-                {
-                    ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
+                    if (img.ContentLength > 1000000 * 5)
+                    {
+                        ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
+                    }
+                    if (!img.IsImage())
+                    {
+                        ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
+                    }
                 }
             }
             if (!ModelState.IsValid)
@@ -159,10 +171,18 @@ namespace Limbs.Web.Controllers
                 return Json(new { Action = "ManoImagen" });
             }
 
-            var fileName = Guid.NewGuid().ToString("N") + ".jpg";
-            var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
+            System.Uri fileUrl = null;
+            List<string> filesUrl = new List<string>();
+            foreach (var img in file)
+            {
+                var fileName = Guid.NewGuid().ToString("N") + ".jpg";
 
-            TempData["fileUrl"] = fileUrl.AbsoluteUri;
+                fileUrl = _userFiles.UploadOrderFile(img.InputStream, fileName);
+                filesUrl.Add(fileUrl.AbsoluteUri);
+            }
+
+            var filesUser = string.Join(",", filesUrl);
+            TempData["fileUrl"] = filesUser;
             TempData["AmputationType"] = orderModel.AmputationType;
             TempData["ProductType"] = orderModel.ProductType;
 

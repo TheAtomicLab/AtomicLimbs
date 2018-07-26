@@ -11,7 +11,7 @@
     {
         <tr>
             <td>DNI o Pasaporte:</td>
-            <td>@Model.OrderRequestor.Dni</td>
+            <td>@Model.OrderRequestor.FullDni()</td>
         </tr>
     }
     @if (!User.IsInRole(AppRoles.Ambassador))

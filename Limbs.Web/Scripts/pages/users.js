@@ -28,6 +28,7 @@ function isProductUser(value) {
         setDatePicker(18);
         $("#ResponsableName").hide();
         $("#ResponsableLastName").hide();
+        $("#ResponsableDni").hide();
         $("[name='titleDateUser']").hide();
         $("#isAdultCheckContainer").hide();
     } else {
@@ -35,6 +36,7 @@ function isProductUser(value) {
         setDatePicker(0);
         $("#ResponsableName").show();
         $("#ResponsableLastName").show();
+        $("#ResponsableDni").show();
         $("[name='titleDateUser']").show();
         $("#isAdultCheckContainer").show();
     }
