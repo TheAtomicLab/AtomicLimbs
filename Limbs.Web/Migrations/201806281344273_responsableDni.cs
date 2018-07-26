@@ -7,7 +7,7 @@ namespace Limbs.Web.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.UserModels", "ResponsableDni", c => c.String(nullable: false));
+            AddColumn("dbo.UserModels", "ResponsableDni", c => c.String(nullable: true));
         }
         
         public override void Down()
