@@ -63,38 +63,18 @@
 
                 $('#msgErrorManoImagen').empty();
 
-
-
                 //Recorrer TODOS los archivos
-                for (var i = 1; i < dropZoneManoMedidas.files.length; i++) {
 
-                    var file = dropZoneManoMedidas.files[i];
+                updateRegisterFiles();
 
-                    if (!isConditionsValid(file)) {
-                        disabledRegister();
-                        showErrors(file);
-                        break;
-                    } else {
-                        enableRegister();
-                    }
-                }
 
             });
             this.on("removedfile", function (file) {
                 $('#msgErrorManoImagen').empty();
 
-                for (var i = 1; i < dropZoneManoMedidas.files.length; i++) {
+                updateRegisterFiles();
 
-                    var file = dropZoneManoMedidas.files[i];
-
-                    if (!isConditionsValid(file)) {
-                        disabledRegister();
-                        showErrors(file);
-                        break;
-                    } else {
-                        enableRegister();
-                    }
-                }
+                dropZoneManoMedidas.files.length == 0 ? disabledRegister() : "";
 
             });
 
@@ -143,7 +123,24 @@
             showError(invalidFileTypeMsg);
         }
     }
+
+    function updateRegisterFiles() {
+        for (var i = 0; i < dropZoneManoMedidas.files.length; i++) {
+
+            var file = dropZoneManoMedidas.files[i];
+
+            if (!isConditionsValid(file)) {
+                disabledRegister();
+                showErrors(file);
+                break;
+            } else {
+                enableRegister();
+            }
+        }
+    }
 });
+
+
 
 function isValidSizeImage(file, nro) {
     //var sizeFile = file.size / 1024 / 1024;
