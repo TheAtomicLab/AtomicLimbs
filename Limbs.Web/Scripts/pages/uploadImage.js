@@ -24,7 +24,7 @@
         dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
         //dictFileTooBig: fileTooBig,
         //dictInvalidFileType: "El tipo de archivo es invalido.",
-        dictFileTooBig: null,
+        //dictFileTooBig: null,
         dictInvalidFileType: null,
         dictRemoveFile: "Borrar imagen",
         dictCancelUpload: null,
@@ -79,6 +79,9 @@
             });
 
             this.on("error", function (file, errormessage, xhr) {
+                if (xhr == undefined)
+                    return false;
+
                 var t = xhr.response.responseText;
 
                 $('#msgManoImagen').empty();
