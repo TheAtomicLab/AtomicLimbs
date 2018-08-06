@@ -156,18 +156,18 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // POST: Admin/Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto)
+        public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto,int selectPhoto)
         {
             if (!ModelState.IsValid) return View(orderModel);
 
-            var isOk = await UpdateOrder(orderModel, orderPhoto);
+            var isOk = await UpdateOrder(orderModel, orderPhoto,selectPhoto);
 
             if (!isOk) return HttpNotFound();
 
             return RedirectToAction("Index");
         }
 
-        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file)
+        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file,int selectPhoto)
         {
             var oldOrder = await Db.OrderModels.Include(x => x.OrderRequestor).Include(x => x.OrderAmbassador).FirstOrDefaultAsync(x => x.Id == orderModel.Id);
 
@@ -178,7 +178,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //Campos a editar
             oldOrder.AmputationType = orderModel.AmputationType;
             oldOrder.ProductType = orderModel.ProductType;
-            if (file != null) UpdateOrderFile(oldOrder, file);
+
+            selectPhoto--;
+            if (file != null) UpdateOrderFile(oldOrder, file,selectPhoto);
             //oldOrder.Sizes = orderModel.Sizes;
             oldOrder.Color = orderModel.Color;
             oldOrder.Comments = orderModel.Comments;
@@ -190,7 +192,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //
             //if (oldStatus != newStatus) oldOrder.Status = newStatus;
             //
-
+            
             Db.OrderModels.AddOrUpdate(oldOrder);
             oldOrder.LogMessage(User, "Edited order",oldOrder.ToString());
             //oldOrder.LogMessage(User, "Edited order ");
@@ -200,7 +202,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return true;
         }
 
-        private void UpdateOrderFile(OrderModel orderModel, HttpPostedFileBase file)
+        private void UpdateOrderFile(OrderModel orderModel, HttpPostedFileBase file,int selectPhoto)
         {
             if (file == null || file.ContentLength == 0)
             {
@@ -221,7 +223,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
 
-            orderModel.IdImage = fileUrl.ToString();
+            var images = (orderModel.IdImage).Split(',');
+            images[selectPhoto] = fileUrl.ToString();
+
+            orderModel.IdImage = String.Join(",", images);
 
             //Db.OrderModels.AddOrUpdate(orderModel);
             //await Db.SaveChangesAsync();

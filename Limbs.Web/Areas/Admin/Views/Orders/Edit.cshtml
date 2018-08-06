@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Edit";
+    var cantImages = 0;
 }
 
 <div class="card center-card-l">
@@ -45,17 +46,48 @@
             </div>
 
             <div class="form-group">
-                <p class="form_title">@Html.DisplayNameFor(model => model.IdImage)</p>
+                <p class="form_title">Fotos</p>
                 <div class="col-md-10">
-                    <img src="@Model.IdImage" style="width:500px; max-width: 100%;" />
+                    <div class="slideshow-container">
+                        @foreach (var image in (Model.IdImage).Split(','))
+                        {
+                            cantImages++;
+                            <div class="mySlides fade">
+                                @*<div class="numbertext">1 / 3</div>*@
+                                <img src="@image" style="width:30%">
+                                @*<div class="text">Caption Text</div>*@
+                            </div>
+                        }
+                    @*<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>*@
+                    </div>
+                    <br>
+                    <!-- The dots/circles -->
+                    <div style="text-align:center">
+                        @if(cantImages > 1)
+                        {
+                            cantImages++;
+                            for (int i = 1; i < cantImages; i++)
+                            {
+                                <span class="dot" onclick="currentSlide(@i)"></span>
+                            }
+                        }
+                    </div>
+
                     <div>
                         Cambiar imagen <input name="orderPhoto" type="file" />
                     </div>
+                    <input name="selectPhoto" type="hidden" value="1"/>
                     @Html.ValidationMessageFor(model => model.IdImage, "", new { @class = "text-danger" })
                 </div>
             </div>
-            @*
-                <div class="form-group">
+            <br />
+            @*<div class="form-group">
+                <p class="form_title">Medidas</p>
+                <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
+            </div>*@
+
+            @*<div class="form-group">
                     @Html.LabelFor(model => model.Sizes, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.LabelFor(x => x.Sizes.A)
@@ -65,8 +97,8 @@
                         @Html.LabelFor(x => x.Sizes.C)
                         @Html.EditorFor(x => x.Sizes.C)
                     </div>
-                </div>
-            *@
+                </div>*@
+
             <div class="form-group">
                 <div class="col-md-10">
                     <div>
@@ -95,14 +127,14 @@
             </div>
 
             @*<div class="form-group">
-                <p class="form_title">
-                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
-                </p>
-                <div class="col-md-10">
-                    @Html.EnumDropDownListFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+                    <p class="form_title">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+                    </p>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
 
             <br />
 
@@ -122,3 +154,36 @@
         @Scripts.Render("~/bundles/jqueryval")
     }
 </div>
+
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+        $('input[name=selectPhoto]').val(n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+</script>
