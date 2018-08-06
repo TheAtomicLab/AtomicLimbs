@@ -20,7 +20,7 @@ namespace Limbs.Web.Controllers
         public ActionResult Index(string message)
         {
             var userId = User.Identity.GetUserId();
-            var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
+            var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).OrderBy(c => c.Id).ToList();
             var user = Db.UserModelsT.SingleOrDefault(u => u.UserId == userId);
 
             if (user == null) return RedirectToAction("Login", "Account");
