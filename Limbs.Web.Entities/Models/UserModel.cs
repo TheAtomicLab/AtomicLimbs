@@ -104,7 +104,6 @@ namespace Limbs.Web.Entities.Models
         public string Dni { get; set; }
 
         [Display(Name = "Número de Documento de Identidad / Pasaporte", Description = "")]
-        [Required(ErrorMessage = " ")]
         public string ResponsableDni
         {
             get => IsProductUser ? null : _responsableDNI;
