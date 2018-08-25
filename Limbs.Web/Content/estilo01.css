@@ -844,6 +844,7 @@ button[name="recoverPassword"] {
     margin: 20px 0px;
     text-align: left;
     position: relative;
+    overflow: hidden;
 }
     .orderContainer .headerOrder {
         display: flex;
@@ -877,6 +878,7 @@ button[name="recoverPassword"] {
     position: relative;
     width: calc(100% - 110px);
     margin: 0px auto;
+    pointer-events: none;
 }
 .puntosContainer {
     width: 100%;

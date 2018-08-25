@@ -170,11 +170,9 @@
     /*home*/
     .orderContainer {
         padding: 10px;
-        overflow: hidden;
     }
     .pedidoLinea {
         width: calc(100% - 30px);
-        pointer-events: none;
     }
     .labelsContainer p {
         display: none
