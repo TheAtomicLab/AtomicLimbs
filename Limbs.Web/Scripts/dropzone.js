@@ -1132,7 +1132,8 @@
         return;
       }
       if (this.options.uploadMultiple) {
-        return this.processFiles(queuedFiles.slice(0, parallelUploads - processingLength));
+        //return this.processFiles(queuedFiles.slice(0, parallelUploads - processingLength));
+        return this.processFiles(queuedFiles);
       } else {
         while (i < parallelUploads) {
           if (!queuedFiles.length) {

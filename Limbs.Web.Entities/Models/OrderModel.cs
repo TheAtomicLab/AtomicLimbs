@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Security.Principal;
+using System.Text;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 
@@ -143,6 +144,29 @@ namespace Limbs.Web.Entities.Models
             return OrderRequestor.UserId == user.Identity.GetUserId();
         }
 
+        private string StringToCSVCell(string str)
+        {
+            if (str == null)
+                str = "";
+
+            bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
+            if (mustQuote)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\"");
+                foreach (char nextChar in str)
+                {
+                    sb.Append(nextChar);
+                    if (nextChar == '"')
+                        sb.Append("\"");
+                }
+                sb.Append("\"");
+                return sb.ToString();
+            }
+
+            return str;
+        }
+
         public override string ToString()
         {
             var separator = ",";
@@ -151,7 +175,7 @@ namespace Limbs.Web.Entities.Models
             {
                 this.Id.ToString(),
                 this.Status.ToString(),
-                String.Concat("\"",this.Pieces.GetPercentage().ToString(),"\""),
+                StringToCSVCell(this.Pieces.GetPercentage().ToString()),
                 this.Date.ToString(),
                 this.AmputationType.ToString(),
                 this.ProductType.ToString(),
@@ -162,11 +186,11 @@ namespace Limbs.Web.Entities.Models
                 this.Sizes?.B.ToString(),
                 this.Sizes?.C.ToString(),
                 this.Sizes?.D.ToString(),
-                String.Concat("\"",this.Comments,"\""),
+                StringToCSVCell(this.Comments),
                 this.IdImage,
                 this.ProofOfDelivery,
                 this.DeliveryCourier.ToString(),
-                String.Concat("\"",this.DeliveryTrackingCode,"\""),
+                StringToCSVCell(this.DeliveryTrackingCode),
                 this.DeliveryPostalLabel,
                 this.StatusLastUpdated.ToString(),
 

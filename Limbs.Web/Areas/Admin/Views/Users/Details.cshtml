@@ -19,6 +19,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.ResponsableDni)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResponsableDni)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.Email)
         </dt>
 
@@ -44,7 +52,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.Address)
         </dt>
-        
+
         <dd>
             @Model.FullAddress()
         </dd>
@@ -81,6 +89,6 @@
         <dd>
             @Html.DisplayFor(model => model.RegisteredAt)
         </dd>
-        
+
     </dl>
 </div>

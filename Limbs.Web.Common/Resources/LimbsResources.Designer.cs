@@ -115,7 +115,7 @@ namespace Limbs.Web.Common.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ocurrio un error. Vuelva a Iniciar Sesion y seleccione &quot;olvide contraseña&quot; para intentarlo nuevamente..
+        ///   Looks up a localized string similar to Ocurrió un error. Vuelva a Iniciar Sesión y seleccione &quot;olvidé contraseña&quot; para intentarlo nuevamente..
         /// </summary>
         public static string InvalidToken {
             get {

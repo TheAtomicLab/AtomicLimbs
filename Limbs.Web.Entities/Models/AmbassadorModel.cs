@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.Security.Principal;
+using System.Text;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Entities.Models
@@ -79,6 +80,29 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
+        private string StringToCSVCell(string str)
+        {
+            if (str == null)
+                str = "";
+
+            bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
+            if (mustQuote)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\"");
+                foreach (char nextChar in str)
+                {
+                    sb.Append(nextChar);
+                    if (nextChar == '"')
+                        sb.Append("\"");
+                }
+                sb.Append("\"");
+                return sb.ToString();
+            }
+
+            return str;
+        }
+
         public override string ToString()
         {
             var separator = ",";
@@ -87,19 +111,19 @@ namespace Limbs.Web.Entities.Models
             {
                 this.Id.ToString(),
                 this.UserId,
-                this.Dni,
+                StringToCSVCell(this.Dni),
                 this.Email,
                 this.AlternativeEmail,
-                String.Concat("\"",this.AmbassadorName,"\""),
-                this.AmbassadorLastName,
-                this.Phone,
+                StringToCSVCell(this.AmbassadorName),
+                StringToCSVCell(this.AmbassadorLastName),
+                StringToCSVCell(this.Phone),
                 this.Birth.ToString(),
                 this.Gender.ToString(),
-                this.Country,
-                this.State,
-                this.City,
-                String.Concat("\"",this.Address,"\""),
-                String.Concat("\"",this.Address2,"\""),
+                StringToCSVCell(this.Country),
+                StringToCSVCell(this.State),
+                StringToCSVCell(this.City),
+                StringToCSVCell(this.Address),
+                StringToCSVCell(this.Address2),
                 this.RegisteredAt.ToString(),
             };
 
@@ -112,7 +136,7 @@ namespace Limbs.Web.Entities.Models
             List<String> titles = new List<string>
             {
                 "AmbassadorId",
-                "UserId",
+                "AmbassadorIdTable",
                 "AmbassadorDni",
                 "AmbassadorEmail",
                 "AmbassadorEmailAlternative",

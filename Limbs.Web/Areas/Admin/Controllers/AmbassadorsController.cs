@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data.Entity;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -27,15 +28,20 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var ambassadorExportTitles = firstAmbassador.GetTitles();
             sb.AppendLine(String.Join(",", ambassadorExportTitles));
 
-            foreach (var data in dataList)
+            foreach (var ambassador in dataList)
             {
-                string ambassadorText = data.ToString();
+                string ambassadorText = ambassador.ToString();
                 sb.AppendLine(ambassadorText);
             }
 
-            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            var nameCsv = String.Format("embajadores{0}.csv", Timestamp);
-            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", nameCsv);
+            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            var nameCsv = String.Format("embajadores_{0}.csv", DateTimeExport);
+
+            var data = Encoding.UTF8.GetBytes(sb.ToString());
+            var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
+
+            return File(result, "text/csv", nameCsv);
                     
         }
 

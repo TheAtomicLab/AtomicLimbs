@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.Security.Principal;
+using System.Text;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Entities.Models
@@ -15,7 +16,7 @@ namespace Limbs.Web.Entities.Models
     {
         private string _responsableName;
         private string _responsableLastName;
-
+        private string _responsableDNI;
         public UserModel()
         {
             Gender = Gender.NoDeclara;
@@ -101,7 +102,14 @@ namespace Limbs.Web.Entities.Models
         [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
-        
+
+        [Display(Name = "Número de Documento de Identidad / Pasaporte", Description = "")]
+        public string ResponsableDni
+        {
+            get => IsProductUser ? null : _responsableDNI;
+            set => _responsableDNI = IsProductUser ? null : value;
+        }
+
         public DbGeography Location { get; set; }
 
         [NotMapped]
@@ -138,6 +146,14 @@ namespace Limbs.Web.Entities.Models
             return $"{Address} {Address2}, {City} {State}, {Country}";
         }
 
+        public string FullDni()
+        {
+            var result = $"{Dni}";
+            if (!IsProductUser)
+                result += $" (Responsable: {ResponsableDni})";
+            return result;
+        }
+
         public bool CanViewOrEdit(IPrincipal user)
         {
             if (user.IsInRole(AppRoles.Administrator))
@@ -163,6 +179,34 @@ namespace Limbs.Web.Entities.Models
             return Birth <= DateTime.UtcNow.AddYears(-4);
         }
 
+        /// <summary> 
+        /// Turn a string into a CSV cell output 
+        /// </summary> 
+        /// <param name="str">String to output</param> 
+        /// <returns>The CSV cell formatted string</returns> 
+        private string StringToCSVCell(string str)
+        {
+            if (str == null)
+                str = "";
+
+            bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
+            if (mustQuote)
+            {
+                StringBuilder sb = new StringBuilder();
+                sb.Append("\"");
+                foreach (char nextChar in str)
+                {
+                    sb.Append(nextChar);
+                    if (nextChar == '"')
+                        sb.Append("\"");
+                }
+                sb.Append("\"");
+                return sb.ToString();
+            }
+
+            return str;
+        }
+
         public override string ToString()
         {
             var separator = ",";
@@ -171,25 +215,26 @@ namespace Limbs.Web.Entities.Models
             {
                 this.Id.ToString(),
                 this.UserId,
-                this.Dni,
+                StringToCSVCell(this.Dni),
                 this.Email,
                 this.AlternativeEmail,
-                String.Concat("\"",this.UserName,"\""),
-                this.UserLastName,
-                this.ResponsableName,
-                this.ResponsableLastName,
-                this.Phone,
+                StringToCSVCell(this.UserName),
+                StringToCSVCell(this.UserLastName),
+                StringToCSVCell(this.ResponsableName),
+                StringToCSVCell(this.ResponsableLastName),
+                StringToCSVCell(this.ResponsableDni),
+                StringToCSVCell(this.Phone),
                 this.Birth.ToString(),
                 this.Gender.ToString(),
-                this.Country,
-                this.State,
-                this.City,
-                String.Concat("\"",this.Address,"\""),
-                String.Concat("\"",this.Address2,"\""),
+                StringToCSVCell(this.Country),
+                StringToCSVCell(this.State),
+                StringToCSVCell(this.City),
+                StringToCSVCell(this.Address),
+                StringToCSVCell(this.Address2),
                 //this.LatLng,
                 this.RegisteredAt.ToString(),
             };
-            
+
             return String.Join(separator, listUser);
         }
 
@@ -207,6 +252,7 @@ namespace Limbs.Web.Entities.Models
                 "UserLastName",
                 "ResponsableName",
                 "ResponsableLastName",
+                "ResponsableDni",
                 "UserPhone",
                 "UserDate",
                 "UserGender",
@@ -227,7 +273,7 @@ namespace Limbs.Web.Entities.Models
             return !string.IsNullOrWhiteSpace(AlternativeEmail);
         }
     }
-    
+
     public enum Gender
     {
         [Description("Femenino")]

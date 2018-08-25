@@ -314,6 +314,10 @@
     <Compile Include="Migrations\201805101330167_alternativeEmail.Designer.cs">
       <DependentUpon>201805101330167_alternativeEmail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806281344273_responsableDni.cs" />
+    <Compile Include="Migrations\201806281344273_responsableDni.Designer.cs">
+      <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -462,6 +466,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="App_Code\Facebook.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
@@ -639,6 +644,7 @@
     <Content Include="Views\DataMigration\UserMigration.cshtml" />
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
+    <Content Include="Views\Account\_ViewStart.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -694,6 +700,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805101330167_alternativeEmail.resx">
       <DependentUpon>201805101330167_alternativeEmail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806281344273_responsableDni.resx">
+      <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

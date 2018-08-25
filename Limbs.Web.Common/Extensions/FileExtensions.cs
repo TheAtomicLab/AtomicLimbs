@@ -19,7 +19,8 @@ namespace Limbs.Web.Common.Extensions
                         postedFile.ContentType.ToLower() != "image/pjpeg" &&
                         postedFile.ContentType.ToLower() != "image/gif" &&
                         postedFile.ContentType.ToLower() != "image/x-png" &&
-                        postedFile.ContentType.ToLower() != "image/png")
+                        postedFile.ContentType.ToLower() != "image/png" &&
+                        postedFile.ContentType.ToLower() != "image/bmp")
             {
                 return false;
             }
@@ -30,7 +31,8 @@ namespace Limbs.Web.Common.Extensions
             if (Path.GetExtension(postedFile.FileName)?.ToLower() != ".jpg"
                 && Path.GetExtension(postedFile.FileName)?.ToLower() != ".png"
                 && Path.GetExtension(postedFile.FileName)?.ToLower() != ".gif"
-                && Path.GetExtension(postedFile.FileName)?.ToLower() != ".jpeg")
+                && Path.GetExtension(postedFile.FileName)?.ToLower() != ".jpeg"
+                && Path.GetExtension(postedFile.FileName)?.ToLower() != ".bmp")
             {
                 return false;
             }

@@ -61,7 +61,7 @@
             <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery})" class="bn_blue">Solicitar envío</a>
         }
         <script type="text/javascript">
-            $("#accion_pedido a").not("a[data-method='get']").click(function(e) {
+            $("#accion_pedido a").not("a[data-method='get']").click(function (e) {
                 e.stopPropagation();
                 e.preventDefault();
 
@@ -69,10 +69,21 @@
                 $("#tempform").submit();
             });
         </script>
+
+        if (User.IsInRole(AppRoles.Administrator)) //Se pone esta condicion porque no esta terminada la funcionabilidad
+        {
+            if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
+            {
+                <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
+            }
+        }
+
     }
+
     @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
     {
         <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
     }
+
     <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
 </div>

@@ -20,12 +20,15 @@ namespace Limbs.Web.Entities.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
 
+        [Display(Name = "Horario", Description = "")]
         public DateTime Time { get; set; }
         
         public Priority Priority { get; set; }
 
+        [Display(Name = "De", Description = "")]
         public ApplicationUser From { get; set; }
 
+        [Display(Name = "Para", Description = "")]
         public ApplicationUser To { get; set; }
 
         public string Content { get; set; }
@@ -39,16 +42,16 @@ namespace Limbs.Web.Entities.Models
 
     public enum Priority
     {
-        Low,
-        Normal,
-        High
+        Low = 0,
+        Normal = 1,
+        High = 2
     }
 
     public enum MessageStatus
     {
-        Unread,
-        Read,
-        Archived,
-        Deleted
+        Unread = 0,
+        Read = 1,
+        Archived = 2,
+        Deleted = 3
     }
 }

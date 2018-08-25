@@ -10,9 +10,9 @@ namespace Limbs.Web.Common.Extensions
 {
     public enum ExceptionAction
     {
-        Enqueue,
-        SendMail,
-        SendMailAndEnqueue,
+        Enqueue = 0,
+        SendMail = 1,
+        SendMailAndEnqueue = 2,
     }
 
     public static class ExceptionExtensions

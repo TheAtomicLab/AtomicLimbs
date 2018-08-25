@@ -20,7 +20,7 @@ namespace Limbs.Web.Controllers
         public ActionResult Index(string message)
         {
             var userId = User.Identity.GetUserId();
-            var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).ToList();
+            var orderList = Db.OrderModels.Where(c => c.OrderRequestor.UserId == userId).OrderBy(c => c.Id).ToList();
             var user = Db.UserModelsT.SingleOrDefault(u => u.UserId == userId);
 
             if (user == null) return RedirectToAction("Login", "Account");
@@ -94,7 +94,8 @@ namespace Limbs.Web.Controllers
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", userModel);
 
-            if (userModel.Id == 0)
+            var user = await Db.UserModelsT.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userModel.Id);
+            if (user == null)
             {
                 //CREATE
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(Db));
@@ -106,11 +107,11 @@ namespace Limbs.Web.Controllers
                 Db.UserModelsT.Add(userModel);
                 await Db.SaveChangesAsync();
 
+
                 return RedirectToAction("Index");
             }
             if (!userModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
 
-            var user = await Db.UserModelsT.AsNoTracking().FirstOrDefaultAsync(x => x.Id == userModel.Id);
             if (!user.CanViewOrEdit(User))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
@@ -151,6 +152,7 @@ namespace Limbs.Web.Controllers
             {
                 ModelState[nameof(userModel.ResponsableName)].Errors.Clear();
                 ModelState[nameof(userModel.ResponsableLastName)].Errors.Clear();
+                ModelState[nameof(userModel.ResponsableDni)].Errors.Clear();
                 if (userModel.Birth >= DateTime.UtcNow.AddYears(-18))
                     ModelState.AddModelError(nameof(userModel.Birth), @"Debe ser mayor de 18 años.");
                 return;
@@ -167,6 +169,9 @@ namespace Limbs.Web.Controllers
 
             if (string.IsNullOrWhiteSpace(userModel.ResponsableLastName))
                 ModelState.AddModelError(nameof(userModel.ResponsableLastName), @" ");
+
+            if (string.IsNullOrWhiteSpace(userModel.ResponsableDni))
+                ModelState.AddModelError(nameof(userModel.ResponsableDni), @" ");
         }
     }
 }

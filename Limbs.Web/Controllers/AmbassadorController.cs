@@ -114,8 +114,9 @@ namespace Limbs.Web.Controllers
             await ValidateData(ambassadorModel, termsAndConditions);
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", ambassadorModel);
-            
-            if (ambassadorModel.Id == 0 && (User.IsInRole(AppRoles.Unassigned) || User.IsInRole(AppRoles.Administrator)))
+
+            var ambassador = await Db.AmbassadorModels.AsNoTracking().FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
+            if (ambassador == null)
             {
                 //CREATE
                 var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(Db));
@@ -133,7 +134,6 @@ namespace Limbs.Web.Controllers
             }
             if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
 
-            var ambassador = await Db.AmbassadorModels.AsNoTracking().FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
             if (!ambassador.CanViewOrEdit(User))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);

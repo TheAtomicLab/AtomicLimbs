@@ -15,6 +15,7 @@ using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Common.Extensions;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -40,7 +41,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Orders/CsvExport
         public async Task<FileContentResult> CsvExport()
         {
-            var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
+            var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderBy(o => o.Id).ToListAsync();
             var sb = new StringBuilder();
 
             var anyOrder = dataList.Where(x => x.OrderAmbassador != null).FirstOrDefault();
@@ -55,16 +56,20 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             sb.AppendLine(String.Join(",",orderExportTitles));
 
-            foreach (var data in dataList)
+            foreach (var order in dataList)
             {
-                string orderText = data.ToString();
+                string orderText = order.ToString();
                 sb.AppendLine(orderText);
             }
-            
-            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
 
-            var nameCsv = String.Format("pedidos{0}.csv", Timestamp);
-            return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv", nameCsv);
+            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss",CultureInfo.InvariantCulture);
+
+            var nameCsv = String.Format("pedidos_{0}.csv", DateTimeExport);
+
+            var data = Encoding.UTF8.GetBytes(sb.ToString());
+            var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
+
+            return File(result, "text/csv", nameCsv);
         }
 
         public async Task<ActionResult> LogCsvExport(int? orderId)
@@ -116,8 +121,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 sb.AppendLine(dataText);
             }
 
-            var Timestamp = new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds();
-            var nameCsv = String.Format("order_{0}_{1}.csv",orderId,Timestamp);
+            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+
+            var nameCsv = String.Format("order_{0}_{1}.csv",orderId, DateTimeExport);
 
             return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv",nameCsv);
         }
@@ -150,21 +156,18 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // POST: Admin/Orders/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto)
+        public async Task<ActionResult> Edit(OrderModel orderModel, HttpPostedFileBase orderPhoto,int selectPhoto)
         {
-            //TODO (ale): implementar segun los campos que tengan sentido editarse
-            //throw new NotImplementedException();
-
             if (!ModelState.IsValid) return View(orderModel);
 
-            var isOk = await UpdateOrder(orderModel, orderPhoto);
+            var isOk = await UpdateOrder(orderModel, orderPhoto,selectPhoto);
 
             if (!isOk) return HttpNotFound();
 
             return RedirectToAction("Index");
         }
 
-        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file)
+        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file,int selectPhoto)
         {
             var oldOrder = await Db.OrderModels.Include(x => x.OrderRequestor).Include(x => x.OrderAmbassador).FirstOrDefaultAsync(x => x.Id == orderModel.Id);
 
@@ -175,7 +178,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //Campos a editar
             oldOrder.AmputationType = orderModel.AmputationType;
             oldOrder.ProductType = orderModel.ProductType;
-            if (file != null) UpdateOrderFile(oldOrder, file);
+
+            selectPhoto--;
+            if (file != null) UpdateOrderFile(oldOrder, file,selectPhoto);
             //oldOrder.Sizes = orderModel.Sizes;
             oldOrder.Color = orderModel.Color;
             oldOrder.Comments = orderModel.Comments;
@@ -187,7 +192,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //
             //if (oldStatus != newStatus) oldOrder.Status = newStatus;
             //
-
+            
             Db.OrderModels.AddOrUpdate(oldOrder);
             oldOrder.LogMessage(User, "Edited order",oldOrder.ToString());
             //oldOrder.LogMessage(User, "Edited order ");
@@ -197,7 +202,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return true;
         }
 
-        private void UpdateOrderFile(OrderModel orderModel, HttpPostedFileBase file)
+        private void UpdateOrderFile(OrderModel orderModel, HttpPostedFileBase file,int selectPhoto)
         {
             if (file == null || file.ContentLength == 0)
             {
@@ -218,7 +223,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var fileName = Guid.NewGuid().ToString("N") + ".jpg";
             var fileUrl = _userFiles.UploadOrderFile(file?.InputStream, fileName);
 
-            orderModel.IdImage = fileUrl.ToString();
+            var images = (orderModel.IdImage).Split(',');
+            images[selectPhoto] = fileUrl.ToString();
+
+            orderModel.IdImage = String.Join(",", images);
 
             //Db.OrderModels.AddOrUpdate(orderModel);
             //await Db.SaveChangesAsync();
@@ -331,10 +339,11 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 Order = order,
                 AmbassadorList = ambassadorList.Select(
-                    ambassadorModel => new Tuple<AmbassadorModel, double>(
+                    ambassadorModel => new Tuple<AmbassadorModel,double,int>(
                         ambassadorModel,
-                        ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0))
-                    .ToList(),
+                        ambassadorModel.Location.Distance(orderRequestorLocation) ?? 0,
+                        Db.OrderModels.Count(o => o.OrderAmbassador.Id == ambassadorModel.Id)))
+                    .ToList()
             });
 
         }
