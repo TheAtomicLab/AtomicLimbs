@@ -9,16 +9,13 @@
 <div id="cont" class="min_full">
     <article id="home">
 
-        <h1>Hola @Model.UserName</h1>
-
-        <a name="btn_pedir" class="bn_blue" @(Model.IsValidAge ? "" : "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'") href="@Url.Action("ManoPedir", "Orders")">Pedir una mano</a>
-
+        <a name="btn_pedir" class="bn_blue" @(Model.IsValidAge ? "" : "style= pointer-events:none;background:#cad4e2;border-color:#cad4e2;'") href="@Url.Action("ManoPedir", "Orders")">Pedir una prótesis</a>
         @if (!Model.IsValidAge)
         {
             <div class="no-design">
                 <h2 class="f-titulo" style="background: red;">    Podrás pedir la prótesis recién cuando el usuario cumpla 4 años de edad</h2>
                 <p style="color: red;text-align: center; margin: 10px 20px;">
-                    Nuestra experiencia luego de varios años diseñando, imprimiendo y probando manos mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
+                    Nuestra experiencia luego de varios años diseñando, imprimiendo y probando prótesis mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
                     Por diferentes motivos, las personas no tienen el desarrollo mínimo para usar y ser conscientes de la prótesis mecánica, la misma requiere de un aprendizaje que no es posible lograr a esa edad, y genera más frustraciones que alegrías.
                 </p>
             </div>
@@ -28,59 +25,86 @@
         {
             <p>@Html.DisplayFor(modelOrder => Model.Message)</p>
         }
+        
         @if (Model.Order != null)
         {
-            <article id="tus_pedidos">
-                <h2>Tus pedidos:</h2>
-                <table>
-                    <tr>
-                        <th>@Html.DisplayNameFor(x => o.Id)</th>
-                        <th>@Html.DisplayNameFor(x => o.OrderAmbassador.AmbassadorName) embajador</th>
-                        <th>@Html.DisplayNameFor(x => o.Date)</th>
-                        <th>@Html.DisplayNameFor(x => o.StatusLastUpdated)</th>
-                        <th>@Html.DisplayNameFor(x => o.Status)</th>
-                    </tr>
-                    @foreach (var order in Model.Order)
-                    {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(order.Id.ToString(), "Details", new { controller = "Orders", id = order.Id })
-                            </td>
-                            <td>
-                                @if (OrderStatus.Pending.Equals(order.Status)
-             || OrderStatus.Ready.Equals(order.Status)
-             || OrderStatus.ArrangeDelivery.Equals(order.Status)
-             || OrderStatus.Delivered.Equals(order.Status))
+            <h3 class="titleHome">Tus pedidos</h3>
+            <div class="pedidosActivos">
+                @foreach (var order in Model.Order)
+                {
+                    <a href="@(Url.Action("Details", "Orders", new { id = order.Id }))" class="orderLinkCont">
+                        <div class="orderContainer card" js_orderStatus="@order.Status">
+                            <div class="headerOrder">
+                                <h2>Pedido N°@Html.DisplayFor(modelOrder => order.Id)</h2><p>Creado @Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</p>
+                            </div>
+                            <div class="statusDescription">
+                                @if (order.Status == OrderStatus.NotAssigned)
                                 {
-                                    @Html.DisplayFor(modelOrder => order.OrderAmbassador.AmbassadorName)
+                                    <h3>Tu pedido fué realizado con éxito.</h3>
+                                    <p>Pronto asignaremos tu caso a un embajador.</p>
                                 }
-                                else
+                                @if (order.Status == OrderStatus.PreAssigned)
                                 {
-                                    <text>No asignado</text>
+                                    <h3>Tu pedido fue asiganado a un embajador Atómico.</h3>
+                                    <p>¡Pronto comenzará a imprimirse tu prótesis!</p>
                                 }
-                            </td>
-                            <td>
-                                @*@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")*@
-                                @Html.DisplayFor(x => order.Date, "ToFriendlyDateString")
-                            </td>
-                            <td>
-                                @Html.DisplayFor(x => order.StatusLastUpdated, "ToFriendlyDateString")
-                            </td>
-                            <td>
-                                @order.Status.ToDescription()
-                                @if (order.Status == OrderStatus.Pending)
+                                @if (order.Status == OrderStatus.Pending || order.Status == OrderStatus.Ready)
                                 {
-                                    <text>(</text>@(order.Pieces.GetPercentage())<text>%)</text>
+                                    <h3>¡Tu protesis se esta impriendo!</h3>
+                                    <p>Cuando esté terminada te contactaremos.</p>
                                 }
-                            </td>
-                        </tr>
-                    }
-                </table>
-            </article>
+                                @if (order.Status == OrderStatus.ArrangeDelivery)
+                                {
+                                    <h3>¡Tu protesis está en camino!</h3>
+                                    <p>Revisá los detalles de la entrega aquí.</p>
+                                }
+                                @if (order.Status == OrderStatus.Delivered)
+                                {
+                                    <h3>Tu prótesis ya fue entregada.</h3>
+                                }
+                            </div>
+                            <div class="pedidoLinea">
+                                <div class="puntosContainer"></div>
+                                <div class="labelsContainer"></div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+            <script>
+                var pedidoStrings = {
+                    'NotAssigned': 'Pedido creado',
+                    'PreAssigned': 'Asignado',
+                    'Pending': 'Imprimiendo',
+                    'ArrangeDelivery': 'Enviado',
+                    'Delivered': 'Entregado'
+                }
+                $('.orderContainer').each(function (k, o) {
+                    var estadoPedido = $(o).attr('js_orderStatus');
+                    console.log(estadoPedido);
+                    estadoPedido = estadoPedido == 'Ready' ? 'Pending' : estadoPedido;
+                    var pasado = false;
+                    var contadorPos = 0;
+                    $.each(pedidoStrings, function (key, obj) {
+                        var htmlLinea = key == 'NotAssigned' ? '' : '<div class="linea"></div>';
+                        var classPasado = pasado == false ? ' estadoPasado' : '';
+                        var posleft = 25 * contadorPos;
+                        var htmlPunto = '<div class="contenedorLinea ' + key + classPasado + '" style="left: ' + posleft + '%;">' + htmlLinea + '<div class="circulo"></div></div>';
+                        $(o).find('.puntosContainer').append(htmlPunto);
+                        var classLabelPresente = '';
+                        if (estadoPedido == key) {
+                            pasado = true;
+                            classLabelPresente = ' labelPresente'
+                        }
+                        $(o).find('.labelsContainer').append('<p class="ordersLabels ' + key + classLabelPresente + '" style="left: ' + posleft + '%;">' + obj + '</p>');
+                        contadorPos++;
+                    });
+                });
+            </script>
         }
         else
         {
-            <p>No tienes pedidos asignados</p>
+            <p>¡Aún no has pedido ninguna prótesis!</p>
         }
     </article>
 
