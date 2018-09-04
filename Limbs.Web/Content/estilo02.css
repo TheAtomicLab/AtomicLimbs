@@ -168,6 +168,30 @@
     }
 
     /*home*/
+    .orderContainer {
+        padding: 10px;
+    }
+    .pedidoLinea {
+        width: calc(100% - 30px);
+    }
+    .labelsContainer p {
+        display: none
+    }
+        .labelsContainer p:first-child {
+            left: -12px !important;
+            transform: none;
+        }
+        .labelsContainer p:last-child {
+            left: initial !important;
+            transform: none;
+            right: -12px;
+        }
+        .labelsContainer p.labelPresente {
+            display: initial;
+        }
+.orderContainer .statusDescription h3 {
+    font-size: 15px;
+}
     #tus_pedidos td, #tus_pedidos th {
         padding: 11px 5px !important;
         font-size: 0.8em;
