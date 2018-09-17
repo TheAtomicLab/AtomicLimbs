@@ -91,6 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbContext\IdentityModels.cs" />
+    <Compile Include="Models\PrinterModel.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
     <Compile Include="Models\AmbassadorModel.cs" />
     <Compile Include="Models\AmputationType.cs" />

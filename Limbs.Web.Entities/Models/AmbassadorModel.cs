@@ -196,5 +196,6 @@ namespace Limbs.Web.Entities.Models
         {
             return !string.IsNullOrWhiteSpace(AlternativeEmail);
         }
+        public PrinterModel Printer { get; set; }
     }
 }
