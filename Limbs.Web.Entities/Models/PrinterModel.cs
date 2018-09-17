@@ -16,6 +16,8 @@ namespace Limbs.Web.Entities.Models
 
         public string Model { get; set; }   
 
+        public string PrintingArea { get; set; }
+
         public bool IsHotBed { get; set; }
     }
 }

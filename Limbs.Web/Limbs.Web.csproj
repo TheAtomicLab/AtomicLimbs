@@ -318,6 +318,14 @@
     <Compile Include="Migrations\201806281344273_responsableDni.Designer.cs">
       <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809171910205_Printer.cs" />
+    <Compile Include="Migrations\201809171910205_Printer.Designer.cs">
+      <DependentUpon>201809171910205_Printer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809171944238_PrintingArea.cs" />
+    <Compile Include="Migrations\201809171944238_PrintingArea.Designer.cs">
+      <DependentUpon>201809171944238_PrintingArea.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -704,6 +712,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806281344273_responsableDni.resx">
       <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171910205_Printer.resx">
+      <DependentUpon>201809171910205_Printer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171944238_PrintingArea.resx">
+      <DependentUpon>201809171944238_PrintingArea.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

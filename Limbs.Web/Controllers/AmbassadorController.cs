@@ -84,7 +84,7 @@ namespace Limbs.Web.Controllers
             var userId = User.Identity.GetUserId();
             if (!id.HasValue && User.IsInRole(AppRoles.Ambassador))
             {
-                ambassadorModel = await Db.AmbassadorModels.FirstAsync(x => x.UserId == userId);
+                ambassadorModel = await Db.AmbassadorModels.Include(a => a.Printer).FirstAsync(x => x.UserId == userId);
             }
             else
             {

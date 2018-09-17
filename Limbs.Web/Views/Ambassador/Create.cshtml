@@ -90,6 +90,8 @@
                     @Html.EditorFor(model => model.Printer.Long, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
                     <label class="f-label">Altura</label>
                     @Html.EditorFor(model => model.Printer.Height, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    <label class="f-label">Area de impresión</label>
+                    @Html.EditorFor(model => model.Printer.PrintingArea, new { htmlAttributes = new { @class = "f-campo", placeholder = "300 x 300 x 350 mm" } })
                     <label class="f-label">Es cama caliente?</label>
                     @Html.EditorFor(model => model.Printer.IsHotBed, new { htmlAttributes = new { @class = "f-campo", placeholder = "" } })
                     @*End Printer*@
