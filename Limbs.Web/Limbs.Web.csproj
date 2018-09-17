@@ -491,6 +491,7 @@
     <Content Include="Scripts\pages\uploadImage.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
     <Content Include="Scripts\pages\orders.js" />
+    <Content Include="Scripts\pages\ambassador.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
