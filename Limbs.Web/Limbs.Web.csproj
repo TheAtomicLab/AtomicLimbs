@@ -234,6 +234,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
+    <Compile Include="Areas\Admin\Models\OrderListViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="Services\MessagesHub.cs" />
     <Compile Include="Services\MessagesService.cs" />
     <Compile Include="Services\OrderMailNotificationService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Services\UserFilesInAzureStorage.cs" />
@@ -467,6 +469,8 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="App_Code\Facebook.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AmputationType.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\OrderStatus.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
