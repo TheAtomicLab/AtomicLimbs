@@ -76,10 +76,10 @@
 
                 <h3>¿Tenes impresora 3D?</h3>
                 <select class="f-drop bn_blue" style="color: black;" name="havePrinter">
-                    <option value="false">NO</option>
                     <option value="true">SI</option>
+                    <option value="false">NO</option>
                 </select>
-                <div name="ambassadorPrinter">
+                <div name="ambassadorPrinter" >
                     <label class="f-label">Marca impresora</label>
                     @Html.EditorFor(model => model.Printer.Brand, new { htmlAttributes = new { @class = "f-campo", placeholder = "Trideo" } })
                     <label class="f-label">Modelo</label>

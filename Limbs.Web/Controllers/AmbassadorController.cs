@@ -84,7 +84,7 @@ namespace Limbs.Web.Controllers
             var userId = User.Identity.GetUserId();
             if (!id.HasValue && User.IsInRole(AppRoles.Ambassador))
             {
-                ambassadorModel = await Db.AmbassadorModels.Include(a => a.Printer).FirstAsync(x => x.UserId == userId);
+                ambassadorModel = await Db.AmbassadorModels.FirstAsync(x => x.UserId == userId);
             }
             else
             {
@@ -132,6 +132,7 @@ namespace Limbs.Web.Controllers
 
                 return RedirectToAction("Index");
             }
+
             if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
 
             if (!ambassador.CanViewOrEdit(User))
