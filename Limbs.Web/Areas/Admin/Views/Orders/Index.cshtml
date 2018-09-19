@@ -1,23 +1,81 @@
 ﻿@using Limbs.Web.Common.Extensions
 @using Limbs.Web.Entities.Models
-@model IEnumerable<OrderModel>
+@model Limbs.Web.Areas.Admin.Models.OrderListViewModel
 
 @{
+    var m = Model.List.FirstOrDefault();
     ViewBag.Title = "Pedidos";
 }
 
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#@Html.IdFor(x => x.Filters.ByStatus)').change(function () {                
+                $('#@Html.IdFor(x => x.Filters.Status)-container').toggle(this.checked);
+            }).change();
+            $('#@Html.IdFor(x => x.Filters.ByAmputationType)').change(function () {                
+                $('#@Html.IdFor(x => x.Filters.AmputationType)-container').toggle(this.checked);
+            }).change();
+        });
+    </script>
+}
+
 <h2>Pedidos</h2>
-@Html.ActionLink("Exportar listado a CSV", "CsvExport")
+
+<form action="@Url.Action("Index")" method="get">
+    
+    <table>
+        <tr>
+            <td style="width: 20%;">
+                @Html.LabelFor(x => x.Filters.ByStatus)
+            </td>
+            <td style="width: 80%;">
+                @Html.EditorFor(x => x.Filters.ByStatus)
+                <span id="@Html.IdFor(x => x.Filters.Status)-container" style="display: none;">
+                    @Html.EditorFor(x => x.Filters.Status)
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Filters.ByAmputationType)
+            </td>
+            <td>
+                @Html.EditorFor(x => x.Filters.ByAmputationType)
+                <span id="@Html.IdFor(x => x.Filters.AmputationType)-container" style="display: none;">
+                    @Html.EditorFor(x => x.Filters.AmputationType)
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(x => x.Filters.SearchTerm)
+            </td>
+            <td>
+                @Html.EditorFor(x => x.Filters.SearchTerm)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.ActionLink("Exportar listado a CSV", "CsvExport")
+            </td>
+            <td>
+                <input type="submit" value="Buscar!"/>
+            </td>
+        </tr>
+    </table>
+</form>
 <table>
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Id)
+            @Html.DisplayNameFor(model => m.Id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            @Html.DisplayNameFor(model => m.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => m.Date)
         </th>
         <th>
             E-mail solicitante
@@ -29,7 +87,7 @@
             Acciones
         </th>
     </tr>
-    @foreach (var item in Model)
+    @foreach (var item in Model.List)
     {
         <tr>
             <td>
