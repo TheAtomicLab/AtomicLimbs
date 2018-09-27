@@ -72,9 +72,12 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 sb.AppendLine(orderText);
             }
 
-            var dateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss",CultureInfo.InvariantCulture);
+            DateTime dateTime = DateTime.Now;
+            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");
+            DateTime dateTimeExport = TimeZoneInfo.ConvertTime(dateTime, TimeZoneInfo.Local, timeZoneInfo);
 
-            var nameCsv = $"pedidos_{dateTimeExport}.csv";
+            var dateTimeExportString = dateTimeExport.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            var nameCsv = $"pedidos_{dateTimeExportString}.csv";
 
             var data = Encoding.UTF8.GetBytes(sb.ToString());
             var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
