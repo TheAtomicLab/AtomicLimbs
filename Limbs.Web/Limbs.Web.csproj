@@ -559,7 +559,6 @@
     </Content>
     <Content Include="Views\Account\SelectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
-    <Content Include="Views\Shared\QueEsLimbs.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -662,6 +661,7 @@
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
