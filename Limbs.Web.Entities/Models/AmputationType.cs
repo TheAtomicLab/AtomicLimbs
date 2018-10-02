@@ -32,6 +32,16 @@ namespace Limbs.Web.Entities.Models
 
     public static class AmputationTypeExtensions
     {
+        public static string AmputationDescription(this AmputationType source)
+        {
+            if (EsBrazo(source))
+            { return "Brazo"; }
+            else if (EsMano(source))
+            { return "Mano"; }
+            else
+                return "Sin diseño";
+        }
+
         public static bool EsBrazo(this AmputationType source)
         {
             return source == AmputationType.E ||
