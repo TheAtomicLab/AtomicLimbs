@@ -40,22 +40,22 @@
                             <div class="statusDescription">
                                 @if (order.Status == OrderStatus.NotAssigned)
                                 {
-                                    <h3>Tu pedido fué realizado con éxito.</h3>
+                                    <h3>Tu pedido fue realizado con éxito.</h3>
                                     <p>Pronto asignaremos tu caso a un embajador.</p>
                                 }
                                 @if (order.Status == OrderStatus.PreAssigned)
                                 {
-                                    <h3>Tu pedido fue asiganado a un embajador Atómico.</h3>
+                                    <h3>Tu pedido fue asignado a un embajador Atómico.</h3>
                                     <p>¡Pronto comenzará a imprimirse tu prótesis!</p>
                                 }
                                 @if (order.Status == OrderStatus.Pending || order.Status == OrderStatus.Ready)
                                 {
-                                    <h3>¡Tu protesis se esta impriendo!</h3>
+                                    <h3>¡Tu prótesis se esta imprimiendo!</h3>
                                     <p>Cuando esté terminada te contactaremos.</p>
                                 }
                                 @if (order.Status == OrderStatus.ArrangeDelivery)
                                 {
-                                    <h3>¡Tu protesis está en camino!</h3>
+                                    <h3>¡Tu prótesis está en camino!</h3>
                                     <p>Revisá los detalles de la entrega aquí.</p>
                                 }
                                 @if (order.Status == OrderStatus.Delivered)
