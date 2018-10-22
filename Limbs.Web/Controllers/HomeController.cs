@@ -12,7 +12,7 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("RedirectUser", "Account");
             }
 
-            return View("QueEsLimbs");
+            return View();
         }
     }
 }

@@ -23,19 +23,29 @@ namespace Limbs.Web.Areas.Admin.Controllers
     {
         private readonly IUserFiles _userFiles;
         private readonly IOrderNotificationService _ns;
+        private readonly OrderService _os;
 
         public OrdersController(IUserFiles userFiles, IOrderNotificationService notificationService)
         {
             _userFiles = userFiles;
             _ns = notificationService;
+            _os = new OrderService(Db);
         }
 
         // GET: Admin/Order
-        public async Task<ActionResult> Index()
+        [AllowAnonymous]
+        public async Task<ActionResult> Index(OrderFilters filters)
         {
-            //TODO (ale): implementar paginacion, export to excel, ordenamiento
-            var orderList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderByDescending(x => x.Date).ToListAsync();
-            return View(orderList);
+            var f = filters ?? new OrderFilters();
+            var orderList = await _os.GetPaged(f);
+
+            var model = new OrderListViewModel
+            {
+                List = orderList,
+                Filters = f,
+            };
+
+            return View(model);
         }
 
         // GET: Admin/Orders/CsvExport
@@ -44,7 +54,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var dataList = await Db.OrderModels.Include(c => c.OrderRequestor).Include(c => c.OrderAmbassador).OrderBy(o => o.Id).ToListAsync();
             var sb = new StringBuilder();
 
-            var anyOrder = dataList.Where(x => x.OrderAmbassador != null).FirstOrDefault();
+            var anyOrder = dataList.FirstOrDefault(x => x.OrderAmbassador != null);
 
             anyOrder = anyOrder ?? dataList.First();
 
@@ -54,17 +64,20 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             var orderExportTitles = (ambassadorTitles != null) ? orderTitles.Union(requestorTitles.Union(ambassadorTitles)) : orderTitles.Union(requestorTitles);
 
-            sb.AppendLine(String.Join(",",orderExportTitles));
+            sb.AppendLine(string.Join(",",orderExportTitles));
 
             foreach (var order in dataList)
             {
-                string orderText = order.ToString();
+                var orderText = order.ToString();
                 sb.AppendLine(orderText);
             }
 
-            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss",CultureInfo.InvariantCulture);
+            DateTime dateTime = DateTime.Now;
+            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("Argentina Standard Time");
+            DateTime dateTimeExport = TimeZoneInfo.ConvertTime(dateTime, TimeZoneInfo.Local, timeZoneInfo);
 
-            var nameCsv = String.Format("pedidos_{0}.csv", DateTimeExport);
+            var dateTimeExportString = dateTimeExport.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            var nameCsv = $"pedidos_{dateTimeExportString}.csv";
 
             var data = Encoding.UTF8.GetBytes(sb.ToString());
             var result = Encoding.UTF8.GetPreamble().Concat(data).ToArray();
@@ -90,7 +103,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             var sb = new StringBuilder();
 
-            List<String> titles = new List<string>
+            var titles = new List<string>
             {
                 "Usuario",
                 "Accion",
@@ -105,25 +118,25 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             var exportTitles = titles.Union(orderExportTitles);
 
-            sb.AppendLine(String.Join(",", exportTitles));
+            sb.AppendLine(string.Join(",", exportTitles));
 
             foreach (var data in orderJson)
             {
-                List<String> dataList = new List<String>
+                var dataList = new List<string>
                 {
                     data.User,
-                    String.Concat("\"",data.Message,"\""),
-                    data.Date.ToString(),
+                    string.Concat("\"",data.Message,"\""),
+                    data.Date.ToString("G"),
                     data.OrderString,
                 };
 
-                string dataText = String.Join(",", dataList);
+                var dataText = string.Join(",", dataList);
                 sb.AppendLine(dataText);
             }
 
-            var DateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
+            var dateTimeExport = DateTime.Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture);
 
-            var nameCsv = String.Format("order_{0}_{1}.csv",orderId, DateTimeExport);
+            var nameCsv = $"order_{orderId}_{dateTimeExport}.csv";
 
             return File(new UTF8Encoding().GetBytes(sb.ToString()), "text/csv",nameCsv);
         }
@@ -167,7 +180,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file,int selectPhoto)
+        public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file, int selectPhoto)
         {
             var oldOrder = await Db.OrderModels.Include(x => x.OrderRequestor).Include(x => x.OrderAmbassador).FirstOrDefaultAsync(x => x.Id == orderModel.Id);
 

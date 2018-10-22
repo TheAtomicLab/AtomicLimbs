@@ -220,13 +220,13 @@ namespace Limbs.Web.Controllers
                 return HttpNotFound();
             }
 
-            if (orderModel.Status != OrderStatus.Pending)
-                return View("Index"); //Aca retornar el index del rol
-
             var userId = User.Identity.GetUserId();
             if (!User.IsInRole(AppRoles.Administrator))
             {
                 bool ambassadorEditOrder = orderModel.OrderAmbassador.UserId == userId;
+
+                if (orderModel.Status != OrderStatus.Pending)
+                    return View("Index"); //Aca retornar el index del rol
 
                 if (!ambassadorEditOrder)
                     return new HttpStatusCodeResult(HttpStatusCode.Conflict);

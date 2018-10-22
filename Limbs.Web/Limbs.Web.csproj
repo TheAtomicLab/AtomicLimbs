@@ -234,6 +234,7 @@
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
+    <Compile Include="Areas\Admin\Models\OrderListViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
@@ -318,6 +319,18 @@
     <Compile Include="Migrations\201806281344273_responsableDni.Designer.cs">
       <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201809171910205_Printer.cs" />
+    <Compile Include="Migrations\201809171910205_Printer.Designer.cs">
+      <DependentUpon>201809171910205_Printer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809171944238_PrintingArea.cs" />
+    <Compile Include="Migrations\201809171944238_PrintingArea.Designer.cs">
+      <DependentUpon>201809171944238_PrintingArea.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201809172225316_PrinterModel.cs" />
+    <Compile Include="Migrations\201809172225316_PrinterModel.Designer.cs">
+      <DependentUpon>201809172225316_PrinterModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -336,6 +349,7 @@
     <Compile Include="Services\MessagesHub.cs" />
     <Compile Include="Services\MessagesService.cs" />
     <Compile Include="Services\OrderMailNotificationService.cs" />
+    <Compile Include="Services\OrderService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Services\UserFilesInAzureStorage.cs" />
@@ -467,6 +481,8 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="App_Code\Facebook.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AmputationType.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\EditorTemplates\OrderStatus.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
@@ -491,6 +507,7 @@
     <Content Include="Scripts\pages\uploadImage.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
     <Content Include="Scripts\pages\orders.js" />
+    <Content Include="Scripts\pages\ambassador.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
@@ -542,7 +559,6 @@
     </Content>
     <Content Include="Views\Account\SelectUserOrAmbassador.cshtml" />
     <Content Include="Views\Ambassador\Index.cshtml" />
-    <Content Include="Views\Shared\QueEsLimbs.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -645,6 +661,7 @@
     <Content Include="Views\Help\Index.cshtml" />
     <Content Include="Views\Orders\Details\_AdminInfo.cshtml" />
     <Content Include="Views\Account\_ViewStart.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Help\Pedir.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -704,6 +721,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806281344273_responsableDni.resx">
       <DependentUpon>201806281344273_responsableDni.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171910205_Printer.resx">
+      <DependentUpon>201809171910205_Printer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809171944238_PrintingArea.resx">
+      <DependentUpon>201809171944238_PrintingArea.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201809172225316_PrinterModel.resx">
+      <DependentUpon>201809172225316_PrinterModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

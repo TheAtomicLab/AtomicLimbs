@@ -132,6 +132,7 @@ namespace Limbs.Web.Controllers
 
                 return RedirectToAction("Index");
             }
+
             if (!ambassadorModel.CanViewOrEdit(User)) return new HttpStatusCodeResult(HttpStatusCode.Conflict);
 
             if (!ambassador.CanViewOrEdit(User))

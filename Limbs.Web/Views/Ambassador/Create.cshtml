@@ -29,6 +29,7 @@
     {
         <script src="~/Scripts/register.js"></script>
     }
+    <script src="~/Scripts/pages/ambassador.js"></script>
 }
 
 @section styles
@@ -70,6 +71,31 @@
                 @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo" } })
 
                 @Html.Partial("_Address", Model)
+
+                @*Start Printer*@
+
+                <h3>¿Tenes impresora 3D?</h3>
+                <select class="f-drop bn_blue" style="color: black;" name="havePrinter">
+                    <option value="true">SI</option>
+                    <option value="false">NO</option>
+                </select>
+                <div name="ambassadorPrinter" >
+                    <label class="f-label">Marca impresora</label>
+                    @Html.EditorFor(model => model.Printer.Brand, new { htmlAttributes = new { @class = "f-campo", placeholder = "Trideo" } })
+                    <label class="f-label">Modelo</label>
+                    @Html.EditorFor(model => model.Printer.Model, new { htmlAttributes = new { @class = "f-campo", placeholder = "BIG-T" } })
+                    <label class="f-label">Ancho</label>
+                    @Html.EditorFor(model => model.Printer.Width, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    <label class="f-label">Largo</label>
+                    @Html.EditorFor(model => model.Printer.Long, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    <label class="f-label">Altura</label>
+                    @Html.EditorFor(model => model.Printer.Height, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    <label class="f-label">Area de impresión</label>
+                    @Html.EditorFor(model => model.Printer.PrintingArea, new { htmlAttributes = new { @class = "f-campo", placeholder = "300 x 300 x 350 mm" } })
+                    <label class="f-label">Es cama caliente?</label>
+                    @Html.EditorFor(model => model.Printer.IsHotBed, new { htmlAttributes = new { @class = "f-campo", placeholder = "" } })
+                    @*End Printer*@
+                </div>
             </div>
             <div>
                 @if (!isEdit)
@@ -82,7 +108,7 @@
                     </p>
                 }
                 <p>
-                    @Html.ValidationSummary("", new {@class = "text-danger"})
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
                     <button type="submit" class="bn_blue" name="register" onclick="this.form.submit(); this.disabled=true;">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
             </div>
