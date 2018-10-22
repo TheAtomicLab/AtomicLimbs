@@ -14,6 +14,18 @@
                 <li>
                     <a onclick="cerrarmenu()" href="/">Inicio</a>
                 </li>
+                @if (!Request.IsAuthenticated)
+                {
+                    <li class="mobile_menu_only">
+                        <a onclick="cerrarmenu()" href="@Url.Action("Login", "Account")">Iniciar sesión</a>
+                    </li>
+                    <li class="mobile_menu_only">
+                        <a onclick="cerrarmenu()" href="@Url.Action("Register", "Account")">Registrarse</a>
+                    </li>
+                    <li>
+                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("Pedir", "Help")">Pedir una prótesis</a>
+                    </li>
+                }
                 @if (User.IsInRole(AppRoles.Requester))
                 {
                     <li>
@@ -31,7 +43,7 @@
                     </li>
                 }
                 <li>
-                    @Html.ActionLink("¿Qué es Limbs?", "QueEsLimbs", "StaticContent", null, null, "pedir", null, null)
+                    @Html.ActionLink("Preguntas frecuentes", "faq", "StaticContent", null, null, null, null, null)
                 </li>
                 <li>
                     <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">Donar</a>

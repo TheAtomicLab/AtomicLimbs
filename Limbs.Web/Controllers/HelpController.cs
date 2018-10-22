@@ -13,5 +13,9 @@ namespace Limbs.Web.Controllers
         {
             return View();
         }
+        public ActionResult Pedir()
+        {
+            return View();
+        }
     }
 }

@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Pedir una prótesis";
+}
+
+<div class="help-pedirunaprotesis">
+    <div class="content">
+        <h2>¡Hola!</h2>
+        <p>Nos alegra que quieras una prótesis, vamos a guiarte paso a paso.<br />Para poder realizar el pedido, tenés tener una cuenta en Limbs.</p>
+        <div class="pregunta">
+            <p>¿Tenés una cuenta?</p>
+            <div class="opciones-cuenta">
+                <a class="opcion" href="@Url.Action("Login", "Account")"><p>¡Si! Ya tengo una cuenta.</p><div></div></a>
+                <a class="opcion" href="@Url.Action("Register", "Account")"><p>No, no tengo una cuenta.</p><div></div></a>
+            </div>
+        </div>
+    </div>
+</div>
+

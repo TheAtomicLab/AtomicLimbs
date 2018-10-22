@@ -18,6 +18,19 @@
         </ul>
     </div>
 }
+else
+{
+    <div id="menu_perfil">
+        <ul id="opciones_perfil">
+            <li class="perfil_name">
+                <a href="@Url.Action("Login", "Account")" class="cerrar_sesion">Iniciar sesión</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Register", "Account")" class="cerrar_sesion">Registrarse</a>
+            </li>
+        </ul>
+    </div>
+}
 
 @if (Request.IsAuthenticated)
 {
