@@ -89,6 +89,9 @@
             padding: 20px 0px;
             margin: 0px;
         }
+            nav li.mobile_menu_only {
+                display: block;
+            }
 
     .nav_mobile_act {
         left: 0px;

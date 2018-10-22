@@ -27,10 +27,10 @@
             @if (!Request.IsAuthenticated)
             {
                 <div>
-                    <a href="@Url.Action("Login", "Account")" class="bn_blue">Iniciar sesión</a>
+                    <a href="@Url.Action("Pedir", "Help")" class="bn_blue">Pedir una prótesis</a>
                 </div>
                 <div>
-                    <a href="@Url.Action("Register", "Account")" id="registrarse_button">Registrarse</a>
+                    <a href="@Url.Action("Login", "Account")" id="registrarse_button">Ingresar</a>
                 </div>
             }
         </div>
@@ -54,7 +54,7 @@
 
             <p class="text">Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D.</p>
             <div class="link">
-                <a href="@Url.Action("Register", "Account")" class="boton">Pedir una mano</a>
+                <a href="@Url.Action("Pedir", "Help")" class="boton">Registrate</a>
             </div>
             <div class="link">
                 <a class="azulAtomicTx" href="http://atomiclab.org/faq" target="_blank">Más Información</a>
