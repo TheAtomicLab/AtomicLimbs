@@ -33,7 +33,6 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
 
         // GET: Admin/Order
-        [AllowAnonymous]
         public async Task<ActionResult> Index(OrderFilters filters)
         {
             var f = filters ?? new OrderFilters();
