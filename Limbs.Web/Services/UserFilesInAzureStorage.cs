@@ -1,9 +1,11 @@
-﻿using System;
-using System.IO;
+﻿using Limbs.Web.Helpers;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Storage.Azure;
 using Limbs.Web.Storage.Azure.BlobStorage;
 using Microsoft.WindowsAzure.Storage.Blob;
+using System;
+using System.Drawing;
+using System.IO;
 
 namespace Limbs.Web.Services
 {
@@ -20,10 +22,12 @@ namespace Limbs.Web.Services
 
         public Uri UploadOrderFile(Stream file, string name)
         {
-            var blockBlob = _userFilesContainer.GetBlockBlobReference(name);
+            Image image = file.GenerateFromStreamAndResize(new Size(1000, 1000));
+            byte[] imageBytes = image.ToByteArray();
 
-            blockBlob.UploadFromStream(file);
-            
+            var blockBlob = _userFilesContainer.GetBlockBlobReference(name);
+            blockBlob.UploadFromByteArray(imageBytes, 0, imageBytes.Length);
+
             return blockBlob.StorageUri.PrimaryUri;
         }
     }
