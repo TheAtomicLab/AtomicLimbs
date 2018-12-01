@@ -584,10 +584,10 @@ button[name="recoverPassword"] {
         display: block;
     }
 
-.field-validation-error, .validation-summary-errors ul li, label.error {
+.field-validation-error, .validation-summary-errors ul li, .validation-summary-errors span, label.error {
     color: red;
     font-size: 14px;
-    list-style-type: none;`
+    list-style-type: none;
 }
 
 .address-selector {
