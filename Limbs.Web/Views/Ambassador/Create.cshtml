@@ -55,6 +55,10 @@
             @Html.HiddenFor(x => x.UserId)
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Tus datos</h2>
+            if (!ViewData.ModelState.IsValid)
+            {
+                @Html.ValidationSummary("Hay errores en el formulario, revisá los campos marcados en rojo", new { @class = "" })
+            }
             <div class="f-seccion">
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
@@ -79,7 +83,7 @@
                     <option value="true">SI</option>
                     <option value="false">NO</option>
                 </select>
-                <div name="ambassadorPrinter" >
+                <div name="ambassadorPrinter">
                     <label class="f-label">Marca impresora</label>
                     @Html.EditorFor(model => model.Printer.Brand, new { htmlAttributes = new { @class = "f-campo", placeholder = "Trideo" } })
                     <label class="f-label">Modelo</label>
@@ -108,7 +112,6 @@
                     </p>
                 }
                 <p>
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
                     <button type="submit" class="bn_blue" name="register" onclick="this.form.submit(); this.disabled=true;">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
             </div>
