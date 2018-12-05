@@ -1674,4 +1674,7 @@ button[name="recoverPassword"] {
         background-image: url(/Content/img/amputaciones_tipo/h.png);
     }
 
+.hide {
+    display: none;
+}
 /**/

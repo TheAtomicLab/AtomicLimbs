@@ -1,0 +1,14 @@
+﻿@using Limbs.Web.Common.Extensions
+@using Limbs.Web.Entities.Models
+@model Organization?
+@{
+    var values = Enum.GetValues(ViewData.ModelMetadata.ModelType).Cast<Organization>()
+        .Select(v => new SelectListItem
+        {
+            Selected = v.Equals(Model),
+            Text = v.ToDescription(),
+            Value = v.ToString()
+        });
+}
+
+@Html.DropDownList("", values, ViewData["htmlAttributes"])

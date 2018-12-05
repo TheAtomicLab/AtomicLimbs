@@ -332,6 +332,10 @@
     <Compile Include="Migrations\201809172225316_PrinterModel.Designer.cs">
       <DependentUpon>201809172225316_PrinterModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812050026278_Organization.cs" />
+    <Compile Include="Migrations\201812050026278_Organization.Designer.cs">
+      <DependentUpon>201812050026278_Organization.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -664,6 +668,7 @@
     <Content Include="Views\Account\_ViewStart.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Help\Pedir.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Organization.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -730,6 +735,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201809172225316_PrinterModel.resx">
       <DependentUpon>201809172225316_PrinterModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812050026278_Organization.resx">
+      <DependentUpon>201812050026278_Organization.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
