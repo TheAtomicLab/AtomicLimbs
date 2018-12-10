@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.Security.Principal;
 using System.Text;
-using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -52,6 +53,16 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public Gender Gender { get; set; }
 
+        [Display(Name = "Organización", Description = "")]
+        [Required(ErrorMessage = " ")]
+        public Organization Organization { get; set; }
+
+        [Display(Name = "Nombre de la organización", Description = "")]
+        public string OrganizationName { get; set; }
+
+        [Display(Name = "Rol en la organización", Description = "")]
+        public string RoleInOrganization { get; set; }
+
         [Display(Name = "País", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
@@ -83,7 +94,9 @@ namespace Limbs.Web.Entities.Models
         private string StringToCSVCell(string str)
         {
             if (str == null)
+            {
                 str = "";
+            }
 
             bool mustQuote = (str.Contains(",") || str.Contains("\"") || str.Contains("\r") || str.Contains("\n"));
             if (mustQuote)
@@ -94,7 +107,9 @@ namespace Limbs.Web.Entities.Models
                 {
                     sb.Append(nextChar);
                     if (nextChar == '"')
+                    {
                         sb.Append("\"");
+                    }
                 }
                 sb.Append("\"");
                 return sb.ToString();
@@ -119,6 +134,9 @@ namespace Limbs.Web.Entities.Models
                 StringToCSVCell(this.Phone),
                 this.Birth.ToString(),
                 this.Gender.ToString(),
+                this.Organization.ToString(),
+                StringToCSVCell(this.OrganizationName),
+                StringToCSVCell(this.RoleInOrganization),
                 StringToCSVCell(this.Country),
                 StringToCSVCell(this.State),
                 StringToCSVCell(this.City),
@@ -145,6 +163,9 @@ namespace Limbs.Web.Entities.Models
                 "AmbassadorPhone",
                 "AmbassadorDate",
                 "AmbassadorGender",
+                "AmbassadorOrganization",
+                "AmbassadorOrganizationName",
+                "AmbassadorRoleInOrganization",
                 "AmbassadorCountry",
                 "AmbassadorState",
                 "AmbassadorCity",
@@ -157,7 +178,7 @@ namespace Limbs.Web.Entities.Models
         }
 
         public DbGeography Location { get; set; }
-        
+
         [NotMapped]
         public string LatLng
         {
@@ -198,14 +219,30 @@ namespace Limbs.Web.Entities.Models
         }
         public PrinterModel Printer { get; set; }
     }
-        public class PrinterModel
-        {
-            public int? Width { get; set; }
-            public int? Height { get; set; }
-            public int? Long { get; set; }
-            public string Brand { get; set; }
-            public string Model { get; set; }
-            public string PrintingArea { get; set; }
-            public bool IsHotBed { get; set; }
-        }
+    public class PrinterModel
+    {
+        public int? Width { get; set; }
+        public int? Height { get; set; }
+        public int? Long { get; set; }
+        public string Brand { get; set; }
+        public string Model { get; set; }
+        public string PrintingArea { get; set; }
+        public bool IsHotBed { get; set; }
     }
+
+    public enum Organization
+    {
+        [Description("No, por cuenta propia")]
+        CuentaPropia = 1,
+        [Description("Escuela")]
+        Escuela = 2,
+        [Description("Universidad")]
+        Universidad = 3,
+        [Description("Organismo Gubernamental")]
+        OrganismoGubernamental = 4,
+        [Description("Organización SIN fines de lucro")]
+        OrganizacionSinFinesDeLucro = 5,
+        [Description("Organización CON fines de lucro")]
+        OrganizacionConFinesDeLucro = 6
+    }
+}

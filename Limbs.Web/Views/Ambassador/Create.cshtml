@@ -70,6 +70,13 @@
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
                 <label class="f-label">Sexo</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+                <label class="f-label">¿Te estás registrando en representación de una institución u organización?</label>
+                @Html.EditorFor(m => m.Organization, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+                <div class="organization-box hide">
+                    @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = "" } })
+                    @Html.EditorFor(model => model.RoleInOrganization, new { htmlAttributes = new { @class = "f-campo", placeholder = "Rol en la organización", data_val = "true", data_val_required = "" } })
+                </div>
+
                 <label class="f-label">Email Alternativo</label>
                 <label class="f-label" style="font-style: italic; font-size: 12px;">Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado </label>
                 @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo" } })
@@ -112,7 +119,7 @@
                     </p>
                 }
                 <p>
-                    <button type="submit" class="bn_blue" name="register" onclick="this.form.submit(); this.disabled=true;">@(isEdit ? "Editar datos" : "Registrarse")</button>
+                    <button id="btn-register" type="submit" class="bn_blue" name="register">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
             </div>
         }
