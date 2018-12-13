@@ -85,24 +85,25 @@
 
                 @*Start Printer*@
 
-                <h3>¿Tenes impresora 3D?</h3>
-                <select class="f-drop bn_blue" style="color: black;" name="havePrinter">
-                    <option value="true">SI</option>
-                    <option value="false">NO</option>
-                </select>
+                @*<h3>¿Tenes impresora 3D?</h3>
+        <select class="f-drop bn_blue" style="color: black;" name="havePrinter">
+            <option value="true">SI</option>
+            <option value="false">NO</option>
+        </select>*@
+                <h3>Datos de la impresora 3D</h3>
                 <div name="ambassadorPrinter">
                     <label class="f-label">Marca impresora</label>
-                    @Html.EditorFor(model => model.Printer.Brand, new { htmlAttributes = new { @class = "f-campo", placeholder = "Trideo" } })
+                    @Html.EditorFor(model => model.Printer.Brand, new { htmlAttributes = new { @class = "f-campo", placeholder = "Trideo", data_val = "true", data_val_required = "" } })
                     <label class="f-label">Modelo</label>
-                    @Html.EditorFor(model => model.Printer.Model, new { htmlAttributes = new { @class = "f-campo", placeholder = "BIG-T" } })
+                    @Html.EditorFor(model => model.Printer.Model, new { htmlAttributes = new { @class = "f-campo", placeholder = "BIG-T", data_val = "true", data_val_required = "" } })
                     <label class="f-label">Ancho</label>
-                    @Html.EditorFor(model => model.Printer.Width, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    @Html.EditorFor(model => model.Printer.Width, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm", data_val = "true", data_val_required = "" } })
                     <label class="f-label">Largo</label>
-                    @Html.EditorFor(model => model.Printer.Long, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    @Html.EditorFor(model => model.Printer.Long, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm", data_val = "true", data_val_required = "" } })
                     <label class="f-label">Altura</label>
-                    @Html.EditorFor(model => model.Printer.Height, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm" } })
+                    @Html.EditorFor(model => model.Printer.Height, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm", data_val = "true", data_val_required = "" } })
                     <label class="f-label">Area de impresión</label>
-                    @Html.EditorFor(model => model.Printer.PrintingArea, new { htmlAttributes = new { @class = "f-campo", placeholder = "300 x 300 x 350 mm" } })
+                    @Html.EditorFor(model => model.Printer.PrintingArea, new { htmlAttributes = new { @class = "f-campo", placeholder = "300 x 300 x 350 mm", data_val = "true", data_val_required = "" } })
                     <label class="f-label">Es cama caliente?</label>
                     @Html.EditorFor(model => model.Printer.IsHotBed, new { htmlAttributes = new { @class = "f-campo", placeholder = "" } })
                     @*End Printer*@

@@ -12,8 +12,25 @@ $(document).ready(function () {
         organizationBox.show();
     }
 
-    $('[name="havePrinter"]').on("change", function () {
-        havePrinter($(this).val());
+    //$('[name="havePrinter"]').on("change", function () {
+    //    havePrinter($(this).val());
+    //});
+    let printingArea = $('#Printer_PrintingArea');
+    let printerWidth = $('#Printer_Width');
+    let printerLong = $('#Printer_Long');
+    let printerHeight = $('#Printer_Height');
+
+    printingArea.on('input', function () {
+        printerWidth.val('').addClass('ignore');
+        printerLong.val('').addClass('ignore');
+        printerHeight.val('').addClass('ignore');
+
+        $(this).removeClass('ignore');
+    });
+
+    $(printerHeight, printerWidth, printerLong).on('input', function () {
+        printingArea.val('').addClass('ignore');
+        $(this).removeClass('ignore');
     });
 
     $('#Organization').change(function () {
@@ -27,6 +44,9 @@ $(document).ready(function () {
         }
     });
 
+    var settngs = $.data($('.form')[0], 'validator').settings;
+    settngs.ignore = ".ignore";
+
     frm.submit(function (e) {
         if (!$(this).valid()) {
             e.preventDefault();
@@ -36,27 +56,28 @@ $(document).ready(function () {
     });
 });
 
-function havePrinter(value) {
-    if (value != "true") {
-        hidePrinter();
-    } else {
-        showPrinter();
-    }
-}
 
-function hidePrinter() {
-    $("[name='ambassadorPrinter']").hide();
+//function havePrinter(value) {
+//    if (value != "true") {
+//        hidePrinter();
+//    } else {
+//        showPrinter();
+//    }
+//}
 
-    $("[name='Printer.Brand']").val('');
-    $("[name='Printer.Model']").val('');
-    $("[name='Printer.Width']").val('');
-    $("[name='Printer.Long']").val('');
-    $("[name='Printer.Height']").val('');
-    $("[name='Printer.PrintingArea']").val('');
+//function hidePrinter() {
+//    $("[name='ambassadorPrinter']").hide();
 
-    $("[name='Printer.IsHotBed']").prop('checked', false);
-}
+//    $("[name='Printer.Brand']").val('');
+//    $("[name='Printer.Model']").val('');
+//    $("[name='Printer.Width']").val('');
+//    $("[name='Printer.Long']").val('');
+//    $("[name='Printer.Height']").val('');
+//    $("[name='Printer.PrintingArea']").val('');
 
-function showPrinter() {
-    $("[name='ambassadorPrinter']").show();
-}
+//    $("[name='Printer.IsHotBed']").prop('checked', false);
+//}
+
+//function showPrinter() {
+//    $("[name='ambassadorPrinter']").show();
+//}
