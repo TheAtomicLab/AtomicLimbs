@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Helpers;
 using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 
@@ -14,9 +15,12 @@ namespace Limbs.Web.Controllers
     {
 
         private readonly IMessageService _ms;
-        public MessagesController(IMessageService ms)
+        private readonly ConnectionMapping<string> _connections;
+
+        public MessagesController(IMessageService ms, ConnectionMapping<string> connections)
         {
             _ms = new MessagesService(Db);
+            _connections = connections;
         }
 
         // GET: Messages
@@ -161,7 +165,12 @@ namespace Limbs.Web.Controllers
             messageModel.PreviousMessage = mainMessage;
             
             await _ms.Send(User, messageModel);
-            
+
+            if (!_connections.IsUserOnline(messageModel.To.Email))
+            {
+                //send email
+            }
+
             return PartialView("_Detail", messageModel);
         }
 
