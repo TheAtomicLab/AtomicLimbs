@@ -152,6 +152,7 @@
     <EmbeddedResource Include="Mail\Templates\EmailPasswordChangeImport.cshtml" />
     <EmbeddedResource Include="Mail\Templates\NewOrderRequestor.cshtml" />
     <EmbeddedResource Include="Mail\Templates\NewAmbassador.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\NotifyUserMessage.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
