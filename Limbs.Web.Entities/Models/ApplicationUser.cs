@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Configuration;
+using System;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -23,14 +24,17 @@ namespace Limbs.Web.Entities.Models
 
         public static ApplicationUser AdminAlias()
         {
+            PasswordHasher hasher = new PasswordHasher();
             return new ApplicationUser
             {
-                Id = "12345678-1234-1234-1234-123456789012",
                 Email = SuperAdminEmail,
                 EmailConfirmed = true,
-                PasswordHash = "-",
-                UserName = SuperAdminEmail
+                PasswordHash = hasher.HashPassword("atomic01"),
+                UserName = SuperAdminEmail,
+                SecurityStamp = Guid.NewGuid().ToString()
             };
+
+            
         }
 
         public static string SuperAdminEmail = "limbs-admin@atomiclab.org";

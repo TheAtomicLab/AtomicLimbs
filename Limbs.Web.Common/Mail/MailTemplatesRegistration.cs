@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.IO;
+using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Common.Mail
@@ -24,7 +25,7 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<OrderModel>("Mails.NewOrderRequestor", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NewOrderRequestor.cshtml"));
             CompiledTemplateEngine.Add<OrderModel>("Mails.Generic", GetStringTemplate("Limbs.Web.Common.Mail.Templates.Generic.cshtml"));
             CompiledTemplateEngine.Add<AmbassadorModel>("Mails.NewAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NewAmbassador.cshtml"));
-
+            CompiledTemplateEngine.Add<NotifyUserChat>("Mails.NotifyUserMessage", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NotifyUserMessage.cshtml"));
         }
 
 

@@ -7,6 +7,7 @@ using Limbs.Web;
 using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Resources;
+using Limbs.Web.Helpers;
 using Limbs.Web.Repositories;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Services;
@@ -56,7 +57,12 @@ namespace Limbs.Web
             container.Register<IOrderNotificationService, OrderMailNotificationService>();
             container.Register<IMessageService, MessagesService>();
 
-            GlobalHost.DependencyResolver.Register(typeof(MessagesHub), () => new MessagesHub(new MessagesService()));
+            container.Register<ConnectionMapping<string>>(new PerContainerLifetime());
+
+            var connectionMapping = container.GetInstance<ConnectionMapping<string>>();
+            var messageService = container.GetInstance<IMessageService>();
+
+            GlobalHost.DependencyResolver.Register(typeof(MessagesHub), () => new MessagesHub(messageService, connectionMapping));
             app.MapSignalR();
 
             container.RegisterControllers();

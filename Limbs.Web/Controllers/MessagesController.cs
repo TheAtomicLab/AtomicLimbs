@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Configuration;
 using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Helpers;
 using Limbs.Web.Services;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Controllers
@@ -12,11 +18,15 @@ namespace Limbs.Web.Controllers
     [DefaultAuthorize(Roles = AppRoles.User + "," + AppRoles.Administrator)]
     public class MessagesController : BaseController
     {
+        private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
 
         private readonly IMessageService _ms;
-        public MessagesController(IMessageService ms)
+        private readonly ConnectionMapping<string> _connections;
+
+        public MessagesController(IMessageService ms, ConnectionMapping<string> connections)
         {
             _ms = new MessagesService(Db);
+            _connections = connections;
         }
 
         // GET: Messages
@@ -161,7 +171,27 @@ namespace Limbs.Web.Controllers
             messageModel.PreviousMessage = mainMessage;
             
             await _ms.Send(User, messageModel);
-            
+
+            if (!_connections.IsUserOnline(messageModel.To.Email))
+            {
+                NotifyUserChat data = new NotifyUserChat
+                {
+                    ChatUrl = HttpContext.Request.UrlReferrer.ToString(),
+                    FromEmail = messageModel.From.Email,
+                    ToEmail = messageModel.To.Email
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = _fromEmail,
+                    Subject = $"[Atomic Limbs] Tenés un mensaje nuevo de {messageModel.From.Email}",
+                    To = messageModel.To.Email,
+                    Body = CompiledTemplateEngine.Render("Mails.NotifyUserMessage", data)
+                };
+
+                await AzureQueue.EnqueueAsync(mailMessage);
+            }
+
             return PartialView("_Detail", messageModel);
         }
 

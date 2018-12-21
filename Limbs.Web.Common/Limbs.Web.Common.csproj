@@ -103,6 +103,7 @@
     <Compile Include="Geocoder\IGeocoder.cs" />
     <Compile Include="Geocoder\Location.cs" />
     <Compile Include="Mail\CompiledTemplateEngine.cs" />
+    <Compile Include="Mail\Entities\NotifyUserChat.cs" />
     <Compile Include="Mail\GeneralMailSender.cs" />
     <Compile Include="Mail\IMailSender.cs" />
     <Compile Include="Mail\MailTemplatesRegistration.cs" />
@@ -152,6 +153,7 @@
     <EmbeddedResource Include="Mail\Templates\EmailPasswordChangeImport.cshtml" />
     <EmbeddedResource Include="Mail\Templates\NewOrderRequestor.cshtml" />
     <EmbeddedResource Include="Mail\Templates\NewAmbassador.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\NotifyUserMessage.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
