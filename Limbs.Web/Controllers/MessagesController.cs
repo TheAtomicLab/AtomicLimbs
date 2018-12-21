@@ -5,6 +5,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Helpers;
 using Limbs.Web.Services;
@@ -173,12 +174,19 @@ namespace Limbs.Web.Controllers
 
             if (!_connections.IsUserOnline(messageModel.To.Email))
             {
+                NotifyUserChat data = new NotifyUserChat
+                {
+                    ChatUrl = HttpContext.Request.UrlReferrer.ToString(),
+                    FromEmail = messageModel.From.Email,
+                    ToEmail = messageModel.To.Email
+                };
+
                 var mailMessage = new MailMessage
                 {
                     From = _fromEmail,
                     Subject = $"[Atomic Limbs] Tenés un mensaje nuevo de {messageModel.From.Email}",
                     To = messageModel.To.Email,
-                    Body = CompiledTemplateEngine.Render("Mails.NotifyUserMessage", messageModel),
+                    Body = CompiledTemplateEngine.Render("Mails.NotifyUserMessage", data)
                 };
 
                 await AzureQueue.EnqueueAsync(mailMessage);
