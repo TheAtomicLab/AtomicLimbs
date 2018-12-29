@@ -38,8 +38,14 @@ namespace Limbs.Web.Entities.Models
             { return "Brazo"; }
             else if (EsMano(source))
             { return "Mano"; }
+            else if (EsManoConPulgar(source))
+            {
+                return "Mano con pulgar";
+            }
             else
+            {
                 return "Sin diseño";
+            }
         }
 
         public static bool EsBrazo(this AmputationType source)
@@ -54,13 +60,17 @@ namespace Limbs.Web.Entities.Models
         {
             return source == AmputationType.A ||
                    source == AmputationType.B ||
-                   source == AmputationType.C ||
                    source == AmputationType.D;
+        }
+
+        public static bool EsManoConPulgar(this AmputationType source)
+        {
+            return source == AmputationType.C;
         }
 
         public static bool HayDiseno(this AmputationType source)
         {
-            return EsBrazo(source) || EsMano(source);
+            return EsBrazo(source) || EsMano(source) || EsManoConPulgar(source);
         }
     }
 }
