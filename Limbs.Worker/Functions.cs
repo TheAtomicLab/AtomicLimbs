@@ -9,40 +9,41 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Configuration;
+using System.Data.SqlClient;
 using System.IO;
 
 namespace Limbs.Worker
 {
     public class Functions
     {
-        //public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
-        //{
-        //    var queueM = MessageQueue<AppException>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
+        public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
+        {
+            var queueM = MessageQueue<AppException>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
 
-        //    new AppExceptionsSaver().ProcessMessages(queueM);
+            new AppExceptionsSaver().ProcessMessages(queueM);
 
-        //    logger.WriteLine($"AppExceptionsSaver: {queueM.Data.CustomMessage}");
-        //}
+            logger.WriteLine($"AppExceptionsSaver: {queueM.Data.CustomMessage}");
+        }
 
-        //public static void MailsMessagesSender([QueueTrigger(nameof(MailMessage))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
-        //{
-        //    var queueM = MessageQueue<MailMessage>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
+        public static void MailsMessagesSender([QueueTrigger(nameof(MailMessage))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
+        {
+            var queueM = MessageQueue<MailMessage>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
 
-        //    new MailsMessagesSender().ProcessMessages(queueM);
+            new MailsMessagesSender().ProcessMessages(queueM);
 
-        //    logger.WriteLine($"MailsMessagesSender: {queueM.Data.Subject} (f: {queueM.Data.From} |t: {queueM.Data.To})");
-        //}
+            logger.WriteLine($"MailsMessagesSender: {queueM.Data.Subject} (f: {queueM.Data.From} |t: {queueM.Data.To})");
+        }
 
-        //public static void ProductGeneratorResult([QueueTrigger(nameof(OrderProductGeneratorResult))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
-        //{
-        //    var queueM = MessageQueue<OrderProductGeneratorResult>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
+        public static void ProductGeneratorResult([QueueTrigger(nameof(OrderProductGeneratorResult))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
+        {
+            var queueM = MessageQueue<OrderProductGeneratorResult>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);
 
-        //    new ProductGeneratorResult().ProcessMessages(queueM);
+            new ProductGeneratorResult().ProcessMessages(queueM);
 
-        //    logger.WriteLine($"ProductGeneratorResult: {queueM.Data.OrderId} (f: {queueM.Data.FileUrl})");
-        //}
+            logger.WriteLine($"ProductGeneratorResult: {queueM.Data.OrderId} (f: {queueM.Data.FileUrl})");
+        }
 
-        public static void BackupBDTrigger([TimerTrigger("0 0 10 * * 0", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
+        public static void BackupBDTrigger([TimerTrigger("0 59 23 * * 0", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
         {
             try
             {
@@ -52,23 +53,40 @@ namespace Limbs.Worker
                 CloudBlobContainer blobContainer = blobClient.GetContainerReference(AzureStorageContainer.BackupsBD);
                 blobContainer.CreateIfNotExists();
 
-                string storageName = $"backup_{DateTime.Now.ToString("yyyyMMdd")}.bacpac";
+                BlobContainerPermissions permissions = blobContainer.GetPermissions();
+                permissions.PublicAccess = BlobContainerPublicAccessType.Container;
+                blobContainer.SetPermissions(permissions);
+
+                string storageName = $"backup_{DateTime.Now.ToString("yyyyMMdd_HHmmss")}.bacpac";
                 CloudBlockBlob backupFile = blobContainer.GetBlockBlobReference(storageName);
+
+                string cnn = ConfigurationManager.ConnectionStrings["Limbs"].ConnectionString;
+                string dbName = null;
+
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(cnn);
+                if (builder != null && builder.ContainsKey("Database"))
+                {
+                    dbName = builder["Database"] as string;
+
+                    if (string.IsNullOrEmpty(dbName))
+                        dbName = builder["Initial Catalog"] as string;
+                }
 
                 string tempFile = $"{Path.GetTempPath()}{backupFile.Name}";
 
-                DacServices services = new DacServices(@"Data Source=(LocalDB)\v11.0;User Id=mpetrini;Password=xxx");
-                services.ExportBacpac(tempFile, "LIMBS_a534054da0bd4135a1c5c9674f2158f2");
+                DacServices services = new DacServices(cnn);
+                services.ExportBacpac(tempFile, dbName);
 
-                //backupFile.Properties.ContentType = "binary/octet-stream";
                 backupFile.UploadFromFile(tempFile);
 
                 log.WriteLine($"URL PRIMARIA BLOB: {backupFile.StorageUri.PrimaryUri}");
                 log.WriteLine($"URL PRIMARIA BLOB: {backupFile.StorageUri.SecondaryUri}");
+
+                File.Delete(tempFile);
             }
             catch (Exception ex)
             {
-                throw ex;
+                log.WriteLine($"OCURRIO UN ERROR: {ex.Message}");
             }
         }
     }
