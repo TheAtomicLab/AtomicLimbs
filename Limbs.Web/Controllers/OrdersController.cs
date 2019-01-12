@@ -140,27 +140,20 @@ namespace Limbs.Web.Controllers
         {
             int v_maxFiles = 6;
 
-            if (file.Count > v_maxFiles)
-            {
-                ModelState.AddModelError("maxfiles", @"Supero el maximo de archivos permitidos.");
-            }
-
-            if (file.Count == 0 || file == null)
-            {
+            if (file == null || file.Count == 0)
                 ModelState.AddModelError("nofile", @"Seleccione una foto.");
-            }
             else
             {
+                if (file.Count > v_maxFiles)
+                    ModelState.AddModelError("maxfiles", @"Supero el maximo de archivos permitidos.");
+
                 foreach (var img in file)
                 {
                     if (img.ContentLength > 1000000 * 5)
-                    {
                         ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
-                    }
+                    
                     if (!img.IsImage())
-                    {
                         ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
-                    }
                 }
             }
             if (!ModelState.IsValid)

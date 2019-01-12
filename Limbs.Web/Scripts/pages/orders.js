@@ -1,4 +1,7 @@
 $(document).ready(function () {
+    let frm = $('#formManoMedidas');
+    let btnEnviar = $('#enviar');
+
     disabledRegister();
     $("#fileUpload").bind("change",
         function () {
@@ -10,6 +13,11 @@ $(document).ready(function () {
 
     $("#fileUpload").on("change", function () {
         validateImg();
+    });
+
+    btnEnviar.click(function () {
+        frm.submit();
+        $(this).attr('disabled', true);
     });
 });
 
