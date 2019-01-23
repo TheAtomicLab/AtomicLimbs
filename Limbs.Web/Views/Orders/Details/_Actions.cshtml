@@ -4,6 +4,13 @@
 <div id="accion_pedido">
     @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
     {
+        if (Model.Status == OrderStatus.NotAssigned)
+        {
+            <button id="open_modal_btn" class="bn_delete">Informar datos incorrectos</button>
+            @*<a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" id="open_modal_btn" class="bn_delete"></a>*@
+            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="bn_add">Asignar embajador</a>
+        }
+
         if (Model.Status == OrderStatus.PreAssigned)
         {
             <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="bn_blue">Aceptar pedido</a>
@@ -87,3 +94,133 @@
 
     <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
 </div>
+
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.75);
+    }
+
+    .limbs-modal-container {
+        display: block;
+        height: auto;
+        width: 650px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+    }
+
+    /* Modal Content */
+    .limbs-modal-content, .limbs-modal-header {
+        padding: 1em;
+    }
+
+    .limbs-modal-header {
+        background-color: #4772b2;
+    }
+
+        .limbs-modal-header h3 {
+            color: white;
+        }
+
+    .limbs-modal-content {
+        background-color: #fefefe;
+        border: 1px solid #888;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #dddddd;
+        float: right;
+        font-size: 1.75em;
+        margin-top: -5px;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: white;
+            text-decoration: none;
+            cursor: pointer;
+        }
+</style>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <div class="limbs-modal-container">
+        <!-- Modal content -->
+        <div class="limbs-modal-header">
+            <span class="close">&times;</span>
+            <h3>Informar datos incorrectos</h3>
+        </div>
+        <div class="limbs-modal-content">
+            @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-modal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <p style="margin-bottom: .5em;">
+                    <label for="termsAndConditions">
+                        @Html.CheckBox("termsAndConditions", false, new { id = "termsAndConditions" })
+                        Foto incorrecta.
+                    </label>
+                </p>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Comments, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(m => m.Comments, new { @class = "input-regis", data_val = "true", data_val_required = " " })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input id="btn-send" type="submit" class="btn btn-default bn_blue" value="Enviar" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("open_modal_btn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
+    $(document).ready(function () {
+        let frm = $('.form-modal');
+        frm.submit(function (e) {
+            if (!$(this).valid()) {
+                e.preventDefault();
+            } else {
+                $('#btn-send').prop('disabled', true);
+            }
+        });
+    });
+</script>
