@@ -244,6 +244,7 @@
     <Compile Include="Areas\Admin\Models\DelayedOrdersViewModel.cs" />
     <Compile Include="Areas\Admin\Models\MessageViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\WrongInfoModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
     <Compile Include="Controllers\HelpController.cs" />

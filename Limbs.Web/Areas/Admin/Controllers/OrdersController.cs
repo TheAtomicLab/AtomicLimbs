@@ -179,6 +179,23 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        //WrongInfo
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> WrongInfo(WrongInfoModel model)
+        {
+            if (model.IsWrongImages)
+            {
+                //send mail for wrong images
+            }
+
+            if (string.IsNullOrEmpty(model.Comments))
+            {
+                //send email for comments
+            }
+
+            return RedirectToAction("Details", "Orders", new { id = model.Order_Id, area = "" });
+        }
+
         public async Task<bool> UpdateOrder(OrderModel orderModel, HttpPostedFileBase file, int selectPhoto)
         {
             var oldOrder = await Db.OrderModels.Include(x => x.OrderRequestor).Include(x => x.OrderAmbassador).FirstOrDefaultAsync(x => x.Id == orderModel.Id);

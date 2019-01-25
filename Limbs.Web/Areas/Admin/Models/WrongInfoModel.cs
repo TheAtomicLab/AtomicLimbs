@@ -1,0 +1,10 @@
+﻿namespace Limbs.Web.Areas.Admin.Models
+{
+    public class WrongInfoModel
+    {
+        public int? Order_Id { get; set; }
+        public string Email_Requestor { get; set; }
+        public bool IsWrongImages { get; set; }
+        public string Comments { get; set; }
+    }
+}
