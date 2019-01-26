@@ -8,6 +8,7 @@ namespace Limbs.Web.Migrations
     using Models;
     using System.Data.Entity.Migrations;
     using System.Linq;
+    using System.Text;
 
     public sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -20,7 +21,9 @@ namespace Limbs.Web.Migrations
         {
             try
             {
-                context.Users.AddOrUpdate(ApplicationUser.AdminAlias());
+                ApplicationUser admin = ApplicationUser.AdminAlias();
+                if (!context.Users.Any(p => p.UserName == admin.UserName))
+                    context.Users.AddOrUpdate(ApplicationUser.AdminAlias());
 
                 if (!context.Roles.Any())
                 {
@@ -36,14 +39,16 @@ namespace Limbs.Web.Migrations
             {
                 Console.WriteLine(e);
                 Console.WriteLine(nameof(e.EntityValidationErrors));
+                StringBuilder sb = new StringBuilder();
                 foreach (var dbEntityValidationResult in e.EntityValidationErrors)
                 {
                     foreach (var validateError in dbEntityValidationResult.ValidationErrors)
                     {
+                        sb.AppendLine($@"{validateError.PropertyName}: {validateError.ErrorMessage}");
                         Console.WriteLine($@"{validateError.PropertyName}: {validateError.ErrorMessage}");
                     }
                 }
-                throw;
+                throw new Exception(sb.ToString());
             }
         }
     }

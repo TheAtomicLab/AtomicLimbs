@@ -338,6 +338,10 @@
     <Compile Include="Migrations\201812050026278_Organization.Designer.cs">
       <DependentUpon>201812050026278_Organization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901260157371_relationWithUser.cs" />
+    <Compile Include="Migrations\201901260157371_relationWithUser.Designer.cs">
+      <DependentUpon>201901260157371_relationWithUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
@@ -511,6 +515,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\pages\munonizer.js" />
+    <Content Include="Scripts\pages\orders_actions.js" />
     <Content Include="Scripts\pages\uploadImage.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
     <Content Include="Scripts\pages\orders.js" />
@@ -740,6 +745,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812050026278_Organization.resx">
       <DependentUpon>201812050026278_Organization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901260157371_relationWithUser.resx">
+      <DependentUpon>201901260157371_relationWithUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

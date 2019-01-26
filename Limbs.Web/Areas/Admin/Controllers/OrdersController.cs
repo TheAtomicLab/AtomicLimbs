@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 using Limbs.Web.Common.Extensions;
 using Newtonsoft.Json;
 using System.Globalization;
+using System.Data.Entity.Spatial;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -374,7 +375,28 @@ namespace Limbs.Web.Areas.Admin.Controllers
                         Db.OrderModels.Count(o => o.OrderAmbassador.Id == ambassadorModel.Id)))
                     .ToList()
             });
+        }
 
+        [HttpGet]
+        public async Task<ActionResult> AssignAmbassadorAuto(int idOrder)
+        {
+            OrderModel order = await Db.OrderModels.Include(p => p.OrderRequestor).FirstOrDefaultAsync(p => p.Id == idOrder);
+            if (order == null) return HttpNotFound();
+
+            DbGeography location = order.OrderRequestor.Location;
+            AmbassadorModel closestAmbassador = await Db.AmbassadorModels.Include(p => p.User)
+                                                    .FirstOrDefaultAsync(p => p.Location.Distance(location) <= 50d && 
+                                                        p.User.EmailConfirmed && 
+                                                        //CONFIRMAR ESTADOS
+                                                        !p.OrderModel.Any(o => o.Status != OrderStatus.Delivered || 
+                                                            (o.Id == idOrder && o.Status == OrderStatus.Rejected)));
+
+            if (closestAmbassador == null)
+            {
+                //search sucursal andreani!!
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: Admin/Orders/AssignAmbassador/5?idOrder=2

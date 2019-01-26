@@ -7,8 +7,7 @@
         if (Model.Status == OrderStatus.NotAssigned)
         {
             <button id="open_modal_btn" class="bn_delete">Informar datos incorrectos</button>
-            @*<a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" id="open_modal_btn" class="bn_delete"></a>*@
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="bn_add">Asignar embajador</a>
+            @Html.ActionLink("Asignar embajador", "AssignAmbassadorAuto", new { area = "admin", idOrder = Model.Id }, new { @class = "bn_add" })
         }
 
         if (Model.Status == OrderStatus.PreAssigned)

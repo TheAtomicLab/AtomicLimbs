@@ -112,6 +112,8 @@ namespace Limbs.Web.Entities.Models
 
         public DbGeography Location { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
         [NotMapped]
         public string LatLng
         {
