@@ -17,6 +17,11 @@ using Limbs.Web.Common.Extensions;
 using Newtonsoft.Json;
 using System.Globalization;
 using System.Data.Entity.Spatial;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.IO;
+using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -377,10 +382,9 @@ namespace Limbs.Web.Areas.Admin.Controllers
             });
         }
 
-        [HttpGet]
-        public async Task<ActionResult> AssignAmbassadorAuto(int idOrder)
+        public async Task<ActionResult> AssignAmbassadorAuto(int id)
         {
-            OrderModel order = await Db.OrderModels.Include(p => p.OrderRequestor).FirstOrDefaultAsync(p => p.Id == idOrder);
+            OrderModel order = await Db.OrderModels.Include(p => p.OrderRequestor).FirstOrDefaultAsync(p => p.Id == id);
             if (order == null) return HttpNotFound();
 
             DbGeography location = order.OrderRequestor.Location;
@@ -389,14 +393,156 @@ namespace Limbs.Web.Areas.Admin.Controllers
                                                         p.User.EmailConfirmed && 
                                                         //CONFIRMAR ESTADOS
                                                         !p.OrderModel.Any(o => o.Status != OrderStatus.Delivered || 
-                                                            (o.Id == idOrder && o.Status == OrderStatus.Rejected)));
+                                                            (o.Id == id && o.Status == OrderStatus.Rejected)));
+
+            var str = @"
+<?xml version=""1.0"" encoding=""UTF-8""?>
+<env:Envelope
+    xmlns:env=""http://www.w3.org/2003/05/soap-envelope""
+    xmlns:ns1=""urn:ConsultarSucursales""
+    xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
+    xmlns:xsd=""http://www.w3.org/2001/XMLSchema""
+    xmlns:ns2=""http://xml.apache.org/xml-soap""
+    xmlns:ns3=""http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd""
+    xmlns:enc=""http://www.w3.org/2003/05/soap-encoding"">
+    <env:Header>
+        <ns3:Security env:mustUnderstand=""true"">
+            <ns3:UsernameToken>
+                <ns3:Username></ns3:Username>
+                <ns3:Password></ns3:Password>
+            </ns3:UsernameToken>
+        </ns3:Security>
+    </env:Header>
+    <env:Body>
+        <ns1:ConsultarSucursales env:encodingStyle=""http://www.w3.org/2003/05/soap-encoding"">
+            <Consulta xsi:type=""ns2:Map"">
+                <item>
+                    <key xsi:type=""xsd:string"">consulta</key>
+                    <value xsi:type=""ns2:Map"">
+                        <item>
+                            <key xsi:type=""xsd:string"">Localidad</key>
+                            <value xsi:type=""xsd:string""></value>
+                        </item>
+                        <item>
+                            <key xsi:type=""xsd:string"">CodigoPostal</key>
+                            <value xsi:type=""xsd:string""></value>
+                        </item>
+                        <item>
+                            <key xsi:type=""xsd:string"">Provincia</key>
+                            <value xsi:type=""xsd:string""></value>
+                        </item>
+                    </value>
+                </item>
+            </Consulta>
+        </ns1:ConsultarSucursales>
+    </env:Body>
+</env:Envelope>";
 
             if (closestAmbassador == null)
             {
-                //search sucursal andreani!!
+                try
+                {
+                    using (var client = new HttpClient(new HttpClientHandler() { AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip }))
+                    {
+                        var request = new HttpRequestMessage()
+                        {
+                            RequestUri = new Uri("https://sucursales.andreani.com/ws?wsdl"),
+                            Method = HttpMethod.Post
+                        };
+
+                        request.Content = new StringContent("", Encoding.UTF8, "text/xml");
+
+                        request.Headers.Clear();
+                        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/xml"));
+                        request.Content.Headers.ContentType = new MediaTypeHeaderValue("text/xml");
+                        client.DefaultRequestHeaders.Add("SOAPAction", "ConsultarSucursales");
+
+                        HttpResponseMessage response = await client.SendAsync(request);
+
+                        if (!response.IsSuccessStatusCode)
+                        {
+                            throw new Exception();
+                        }
+
+                        Stream stream = await response.Content.ReadAsStreamAsync();
+                        var sr = new StreamReader(stream);
+                        var soapResponse = XDocument.Load(sr);
+                        Console.WriteLine(soapResponse);
+
+                        var xml = soapResponse.Descendants("ResultadoConsultarSucursales").FirstOrDefault().ToString();
+                        var purchaseOrderResult = Deserialize<ConsultarSurcursalesResponse>(xml);
+                    }
+                }
+                catch (AggregateException ex)
+                {
+                    if (ex.InnerException is TaskCanceledException)
+                    {
+                        throw ex.InnerException;
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
 
             return RedirectToAction("Index");
+        }
+
+        public class ConsultarSurcursalesResponse
+        {
+            public Cantidad cantidad { get; set; }
+
+            public class Cantidad
+            {
+                public ConsultarSucursalesResult ConsultarSucursalesResult { get; set; }
+            }
+
+            public class ConsultarSucursalesResult
+            {
+                public ResultadoConsultarSucursales ResultadoConsultarSucursales { get; set; }
+            }
+
+            public class ResultadoConsultarSucursales
+            {
+                public List<item> items { get; set; }
+            }
+
+            public class item
+            {
+                public string Descripcion { get; set; }
+                public string Direccion { get; set; }
+                public string HoradeTrabajo { get; set; }
+                public string Latitud { get; set; }
+                public string Longitud { get; set; }
+                public string Mail { get; set; }
+                public string Numero { get; set; }
+                public string Responsable { get; set; }
+                public string Resumen { get; set; }
+                public string Sucursal { get; set; }
+                public string Telefono1 { get; set; }
+                public string Telefono2 { get; set; }
+                public string Telefono3 { get; set; }
+                public string TipoSucursal { get; set; }
+                public string TipoTelefono1 { get; set; }
+                public string TipoTelefono2 { get; set; }
+                public string TipoTelefono3 { get; set; }
+            }
+        }
+
+        public static T Deserialize<T>(string xmlStr)
+        {
+            var serializer = new XmlSerializer(typeof(T));
+            T result;
+            using (TextReader reader = new StringReader(xmlStr))
+            {
+                result = (T)serializer.Deserialize(reader);
+            }
+            return result;
         }
 
         // GET: Admin/Orders/AssignAmbassador/5?idOrder=2
