@@ -263,6 +263,7 @@
     </Compile>
     <Compile Include="Helpers\ConnectionMapping.cs" />
     <Compile Include="Helpers\ImagesHelper.cs" />
+    <Compile Include="Helpers\SiteHelper.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
@@ -347,6 +348,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UbicacionAndreani.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
     <Compile Include="Repositories\IUsersRepository.cs" />
