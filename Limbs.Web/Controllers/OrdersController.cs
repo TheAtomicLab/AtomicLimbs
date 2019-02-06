@@ -49,6 +49,11 @@ namespace Limbs.Web.Controllers
         [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> Details(int? id)
         {
+            if (TempData["msg"] != null)
+            {
+                ViewBag.msg = TempData["msg"];
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

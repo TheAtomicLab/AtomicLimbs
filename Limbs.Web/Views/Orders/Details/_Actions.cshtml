@@ -93,6 +93,10 @@
 
     <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
 </div>
+@if (ViewBag != null && !string.IsNullOrEmpty(ViewBag.msg))
+{
+    <span class="auto-assign-error">@ViewBag.msg</span>
+}
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
