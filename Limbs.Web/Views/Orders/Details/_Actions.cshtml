@@ -111,6 +111,7 @@
             {
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="Order_Id" value="@Model.Id" />
+                <input type="hidden" name="Fullname_Requestor" value="@(Model.OrderRequestor.UserName + " " + Model.OrderRequestor.UserLastName)" />
                 <input type="hidden" name="Email_Requestor" value="@Model.OrderRequestor.Email" />
 
                 <p style="margin-bottom: 1em;">

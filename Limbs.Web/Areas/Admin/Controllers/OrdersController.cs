@@ -1,14 +1,19 @@
 ﻿using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Common.Extensions;
+using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Helpers;
 using Limbs.Web.Models;
 using Limbs.Web.Repositories.Interfaces;
 using Limbs.Web.Services;
+using Limbs.Web.Storage.Azure.QueueStorage;
+using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Spatial;
@@ -26,6 +31,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
 {
     public class OrdersController : AdminBaseController
     {
+        private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
+
         private readonly IUserFiles _userFiles;
         private readonly IOrderNotificationService _ns;
         private readonly OrderService _os;
@@ -194,15 +201,43 @@ namespace Limbs.Web.Areas.Admin.Controllers
         [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> WrongInfo(WrongInfoModel model)
         {
+            string subject = string.Empty;
+
+            WrongInfoEmail modelEmail = new WrongInfoEmail
+            {
+                Comments = model.Comments,
+                Fullname = model.Fullname_Requestor,
+                Url = HttpContext.Request.UrlReferrer.ToString()
+            };
+
+            MailMessage mailMessage = new MailMessage
+            {
+                From = _fromEmail,
+                Subject = subject,
+                To = model.Email_Requestor
+            };
+
             if (model.IsWrongImages)
             {
-                //send mail for wrong images
+                if (!string.IsNullOrEmpty(model.Comments))
+                {
+                    subject = "[Acción requerida] Lamentablemente necesitamos más datos y otra foto para hacerte la prótesis";
+                    mailMessage.Body = CompiledTemplateEngine.Render("Mails.IncorrectPhotoAmbassadorExtraComment", modelEmail);
+                }
+                else
+                {
+                    subject = "[Acción requerida] Lamentablemente necesitamos otra foto para hacerte la prótesis";
+                    mailMessage.Body = CompiledTemplateEngine.Render("Mails.IncorrectPhotoAmbassador", modelEmail);
+                }
             }
 
-            if (string.IsNullOrEmpty(model.Comments))
+            if (!string.IsNullOrEmpty(model.Comments) && !model.IsWrongImages)
             {
-                //send email for comments
+                subject = "[Acción requerida] Lamentablemente necesitamos más datos para hacerte la prótesis";
+                mailMessage.Body = CompiledTemplateEngine.Render("Mails.IncorrectInfoComment", modelEmail);
             }
+
+            await AzureQueue.EnqueueAsync(mailMessage);
 
             return RedirectToAction("Details", "Orders", new { id = model.Order_Id, area = "" });
         }

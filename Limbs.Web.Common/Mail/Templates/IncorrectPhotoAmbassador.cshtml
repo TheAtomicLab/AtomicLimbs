@@ -15,10 +15,10 @@
             <div style="margin: 0px auto; max-width: 475px; position: relative; width: 94%;">
                 <!-- Caja 1 -->
                 <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
-                    <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @Usuario.nombre!</p>
+                    <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.Fullname)!</p>
                     <p>
                         Las fotos que nos proporcionaste con tu pedido no son suficientes para determinar el diseño y el tamaño de la prótesis a realizarte.
-                        Te pedimos que por favor ingreses a @linkDirectoParaModificarElPedido y cargues una foto que cumpla con las siguientes características,
+                        Te pedimos que por favor ingreses <a href="@(Model.Url)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> y cargues una foto que cumpla con las siguientes características,
                         caso contrario no podremos imprimirte ni entregarte la prótesis:
                     </p>
                     <ol>
@@ -28,7 +28,7 @@
                         <li>Encendé todas las luces de esa habitación en donde estés (para que la foto se vea mejor)</li>
                         <li>Apoyá la hoja sobre la superficie plana, y tu muñón sobre la hoja.</li>
                         <li>Dependiendo de tus posibilidades, sacate o pedile a otra persona que te saque una foto desde arriba de la superficie, como se ve en el ejemplo.</li>
-                        <li>Ingresá a @linkDirectoParaModificarElPedido y cargá esta foto que sacaste.</li>
+                        <li>Ingresá <a href="@(Model.Url)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> y cargá esta foto que sacaste.</li>
                         <li>Listo :) ¡Te informaremos por correo los avances!</li>
                     </ol>
                     <p>¡Saludos!</p>

@@ -15,9 +15,9 @@
             <div style="margin: 0px auto; max-width: 475px; position: relative; width: 94%;">
                 <!-- Caja 1 -->
                 <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
-                    <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @Usuario.nombre!</p>
-                    <p>El equipo de Atomic Lab tiene este comentario para hacerte: <span style="display: block; margin: .5em 0; font-style: italic; font-weight: bold;">////////// COMENTARIO ///////////</span></p>
-                    <p>Recordá que podrás ingresar <a href="https://limbs.earth/Users/Edit" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> para modificar los datos de tu cuenta (Nombre, Apellido, Documento, Fecha de Nacimiento, Email y Dirección) y podrás ingresar acá (@linkDirectoParaModificarElPedido) para modificar los datos de tu pedido (Foto, Tipo de Amputación, Color de la prótesis, Comentarios, etc).</p>
+                    <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.Fullname)!</p>
+                    <p>El equipo de Atomic Lab tiene este comentario para hacerte: <span style="display: block; margin: .5em 0; font-style: italic; font-weight: bold;">@(Model.Comments)</span></p>
+                    <p>Recordá que podrás ingresar <a href="https://limbs.earth/Users/Edit" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> para modificar los datos de tu cuenta (Nombre, Apellido, Documento, Fecha de Nacimiento, Email y Dirección) y podrás ingresar <a href="@(Model.Url)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> para modificar los datos de tu pedido (Foto, Tipo de Amputación, Color de la prótesis, Comentarios, etc).</p>
                     <p>Por favor, hacé las modificaciones que te solicitamos para que podamos proceder a realizarte la prótesis.</p>
                     <p>¡Saludos!</p>
                     <p>El equipo de Atomic Lab.</p>
