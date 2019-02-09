@@ -207,14 +207,14 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 Comments = model.Comments,
                 Fullname = model.Fullname_Requestor,
-                Url = HttpContext.Request.UrlReferrer.ToString()
+                Url = HttpContext.Request.UrlReferrer.ToString(),
+                Url_Image = HttpContext.Request.Url.GetLeftPart(UriPartial.Authority) + Url.Content("~/Content/img/ej_mano_email.jpg")
             };
 
             MailMessage mailMessage = new MailMessage
             {
                 From = _fromEmail,
-                Subject = subject,
-                To = model.Email_Requestor
+                To = "dev.mpetrini@gmail.com" //model.Email_Requestor
             };
 
             if (model.IsWrongImages)
@@ -236,6 +236,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 subject = "[Acción requerida] Lamentablemente necesitamos más datos para hacerte la prótesis";
                 mailMessage.Body = CompiledTemplateEngine.Render("Mails.IncorrectInfoComment", modelEmail);
             }
+
+            mailMessage.Subject = subject;
 
             await AzureQueue.EnqueueAsync(mailMessage);
 
