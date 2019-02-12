@@ -465,7 +465,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             DbGeography location = order.OrderRequestor.Location;
             closestAmbassador = await Db.AmbassadorModels.Include(p => p.User)
-                                                    .FirstOrDefaultAsync(p => p.Location.Distance(location) <= 50d &&
+                                                    .FirstOrDefaultAsync(p => (p.Location.Distance(location) / 1000) <= 50d &&
                                                         p.User.EmailConfirmed &&
                                                         !p.OrderModel.Any(o => (o.Id == id && o.Status == OrderStatus.Rejected) || 
                                                             o.Status != OrderStatus.PreAssigned ||
