@@ -27,6 +27,7 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<AmbassadorModel>("Mails.NewAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NewAmbassador.cshtml"));
             CompiledTemplateEngine.Add<NotifyUserChat>("Mails.NotifyUserMessage", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NotifyUserMessage.cshtml"));
 
+            CompiledTemplateEngine.Add<OrderModel>("Mails.NoDesign", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NoDesign.cshtml"));
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectInfoComment", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectInfoComment.cshtml"));
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectPhotoAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectPhotoAmbassador.cshtml"));
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectPhotoAmbassadorExtraComment", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectPhotoAmbassadorExtraComment.cshtml"));

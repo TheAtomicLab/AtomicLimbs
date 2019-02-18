@@ -508,7 +508,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 var listAmbassadors = await Db.AmbassadorModels.ToListAsync();
                 closestAmbassador = listAmbassadors.FirstOrDefault(p =>
                                                                     ubicaciones.Any(x =>
-                                                                        x.Location.Distance(p.Location) <= 20d));
+                                                                        (x.Location.Distance(p.Location) / 1000) <= 20d));
             }
 
             if (closestAmbassador == null)

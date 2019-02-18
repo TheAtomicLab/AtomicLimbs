@@ -140,6 +140,7 @@ namespace Limbs.Web.Services
                 Subject = "[Atomic Limbs] Tu pedido de prótesis fue realizado con éxito",
                 Body = CompiledTemplateEngine.Render("Mails.NewOrderRequestor", order),
             };
+
             if (order.OrderRequestor.HasAlternativeEmail())
                 mailMessage.Cc = order.OrderRequestor.AlternativeEmail;
 
