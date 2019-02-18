@@ -91,6 +91,8 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
+        public virtual ApplicationUser User { get; set; }
+
         private string StringToCSVCell(string str)
         {
             if (str == null)

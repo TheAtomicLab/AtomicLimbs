@@ -1,0 +1,47 @@
+@using System.Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AtomicLab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div style="background-color: #fafafa;">
+        <div style="box-sizing: border-box; display: block; font-family: 'Roboto', helvetica, sans-serif; margin: 0px auto; max-width: 800px; padding-bottom: 50px; padding-left: 2px; padding-right: 2px; position: relative; width: 100%;">
+            <div style="background-color: #4772b2; padding: 30px 0px 20px 0px; position: relative; text-align: center;">
+                <img src="http://limbs.earth/content/img/logoatomicmail.png" style="max-width: 200px; min-width: 100px; position: relative; text-align: center; width: 50%;">
+            </div>
+            <div style="margin: 0px auto; max-width: 475px; position: relative; width: 94%;">
+                <!-- Caja 1 -->
+                <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
+                    <p style="color: #263238; font-size: 24px; font-weight: 400; line-height: 30px; text-align: center;">¡Hola @(Model.Fullname)!</p>
+                    <p>
+                        Las fotos que nos proporcionaste con tu pedido no son suficientes para determinar el diseño y el tamaño de la prótesis a realizarte.
+                        Te pedimos que por favor ingreses <a href="@(Model.Url)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> y cargues una foto que cumpla con las siguientes características,
+                        caso contrario no podremos imprimirte ni entregarte la prótesis:
+                    </p>
+                    <ol>
+                        <li>Conseguí una hoja de papel cuadriculada/centimetrada (de esas que usan los niños para las materias de matemática en la escuela)</li>
+                        <img style="display: block; width: 100%" src="@(Model.Url_Image)" alt="">
+                        <li>Buscá una superficie plana (por ejemplo, una mesa)</li>
+                        <li>Encendé todas las luces de esa habitación en donde estés (para que la foto se vea mejor)</li>
+                        <li>Apoyá la hoja sobre la superficie plana, y tu muñón sobre la hoja.</li>
+                        <li>Dependiendo de tus posibilidades, sacate o pedile a otra persona que te saque una foto desde arriba de la superficie, como se ve en el ejemplo.</li>
+                        <li>Ingresá <a href="@(Model.Url)" style="background: #4772b2; border-radius: 17px; color: white; padding: 8px 15px; text-decoration: none;">acá</a> y cargá esta foto que sacaste.</li>
+                        <li>Listo :) ¡Te informaremos por correo los avances!</li>
+                    </ol>
+                    <p>¡Saludos!</p>
+                    <p>El equipo de Atomic Lab.</p>
+                </div>
+            </div>
+            <div style="background: #232323; color: #bbbbbb; padding: 40px; text-align: center;">
+                <p>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</p>
+                <p>
+                    <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">Limbs, Atomic Lab © @DateTime.UtcNow.Year - AtomicLab.org</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

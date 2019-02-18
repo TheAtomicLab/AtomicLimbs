@@ -344,3 +344,10 @@ button, .bn, .bn_valid, .bn_delete, .bn_edit, .bn_add, .bn_blue, .bn_upload, .bn
         width: 100%;
     }
 }
+
+.auto-assign-error {
+    display: block;
+    color: #dc3545;
+    padding: 0 0 20px 12px;
+    font-weight: bold;
+}

@@ -156,6 +156,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Spatial, Version=5.8.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.8.3\lib\net40\System.Spatial.dll</HintPath>
     </Reference>
@@ -244,6 +245,7 @@
     <Compile Include="Areas\Admin\Models\DelayedOrdersViewModel.cs" />
     <Compile Include="Areas\Admin\Models\MessageViewModel.cs" />
     <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
+    <Compile Include="Areas\Admin\Models\WrongInfoModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
@@ -261,6 +263,7 @@
     </Compile>
     <Compile Include="Helpers\ConnectionMapping.cs" />
     <Compile Include="Helpers\ImagesHelper.cs" />
+    <Compile Include="Helpers\SiteHelper.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
@@ -337,10 +340,15 @@
     <Compile Include="Migrations\201812050026278_Organization.Designer.cs">
       <DependentUpon>201812050026278_Organization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901260157371_relationWithUser.cs" />
+    <Compile Include="Migrations\201901260157371_relationWithUser.Designer.cs">
+      <DependentUpon>201901260157371_relationWithUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\GoogleGeoModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\UbicacionAndreani.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
     <Compile Include="Repositories\IUsersRepository.cs" />
@@ -391,6 +399,7 @@
     <Content Include="Content\img\amputaciones_tipo\g.png" />
     <Content Include="Content\img\amputaciones_tipo\h.png" />
     <Content Include="Content\img\default_messages.svg" />
+    <Content Include="Content\img\ej_mano_email.jpg" />
     <Content Include="Content\img\ej_no001.jpg" />
     <Content Include="Content\img\ej_no001br.jpg" />
     <Content Include="Content\img\ej_no002.jpg" />
@@ -510,6 +519,7 @@
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\pages\munonizer.js" />
+    <Content Include="Scripts\pages\orders_actions.js" />
     <Content Include="Scripts\pages\uploadImage.js" />
     <Content Include="Scripts\pages\tracking-min.js" />
     <Content Include="Scripts\pages\orders.js" />
@@ -739,6 +749,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201812050026278_Organization.resx">
       <DependentUpon>201812050026278_Organization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901260157371_relationWithUser.resx">
+      <DependentUpon>201901260157371_relationWithUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

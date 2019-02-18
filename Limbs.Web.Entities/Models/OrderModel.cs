@@ -344,6 +344,7 @@ namespace Limbs.Web.Entities.Models
         [Description("Lista")] Ready = 3,
         [Description("Entregada")] Delivered = 4,
         [Description("Coordinando envío")] ArrangeDelivery = 5,
+        [Description("Rechazada")] Rejected = 6
     }
 
     public enum Courier
@@ -367,7 +368,4 @@ namespace Limbs.Web.Entities.Models
         [Description("Derecha")] Right = 0,
         [Description("Izquierda")] Left = 1,
     }
-
-    
-
 }
