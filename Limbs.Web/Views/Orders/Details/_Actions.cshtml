@@ -12,8 +12,8 @@
 
         if (Model.Status == OrderStatus.PreAssigned)
         {
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending})" class="bn_blue">Aceptar pedido</a>
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned})" class="bn_blue">Rechazar pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending })" class="bn_blue">Aceptar pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned })" class="bn_blue">Rechazar pedido</a>
         }
         else if (Model.Status == OrderStatus.Pending)
         {
@@ -58,13 +58,17 @@
             }
             if (Model.Pieces.Ready())
             {
-                <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready})" class="bn_blue">Terminé de imprimir</a>
+                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready })" class="bn_blue">Terminé de imprimir</a>
             }
         }
         else if (Model.Status == OrderStatus.Ready)
         {
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered })" class="bn_blue">Ya entregué el pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery })" class="bn_blue">Solicitar envío</a>
+        }
+        else if (Model.Status == OrderStatus.ArrangeDelivery)
+        {
             <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">Ya entregué el pedido</a>
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery})" class="bn_blue">Solicitar envío</a>
         }
         <script type="text/javascript">
             $("#accion_pedido a").not("a[data-method='get']").click(function (e) {
