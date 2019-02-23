@@ -12,7 +12,7 @@ namespace Limbs.Worker
         static void Main()
         {
             var config = new JobHostConfiguration();
-            config.UseTimers();
+            config.UseTimers(); 
 
             if (config.IsDevelopment)
             {
