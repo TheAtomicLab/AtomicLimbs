@@ -3,6 +3,9 @@
   "WebJobs": [
     {
       "filePath": "../Limbs.Worker/Limbs.Worker.csproj"
+    },
+    {
+      "filePath": "../Limbs.Worker/Limbs.Worker.csproj"
     }
   ]
 }
