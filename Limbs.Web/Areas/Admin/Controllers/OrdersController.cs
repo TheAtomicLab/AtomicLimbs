@@ -214,7 +214,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             MailMessage mailMessage = new MailMessage
             {
                 From = _fromEmail,
-                To = "dev.mpetrini@gmail.com" //model.Email_Requestor
+                To = model.Email_Requestor
             };
 
             if (model.IsWrongImages)
