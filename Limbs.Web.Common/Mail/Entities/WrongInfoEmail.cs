@@ -6,5 +6,6 @@
         public string Fullname { get; set; }
         public string Comments { get; set; }
         public string Url_Image { get; set; }
+        public string Url_UserEdit { get; set; }
     }
 }

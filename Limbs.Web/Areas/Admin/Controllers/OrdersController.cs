@@ -222,6 +222,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 if (!string.IsNullOrEmpty(model.Comments))
                 {
                     subject = "[Acción requerida] Lamentablemente necesitamos más datos y otra foto para hacerte la prótesis";
+                    modelEmail.Url_UserEdit = Url.Action("Edit", "Users", new { area = "" }, Request.Url.Scheme);
+
                     mailMessage.Body = CompiledTemplateEngine.Render("Mails.IncorrectPhotoAmbassadorExtraComment", modelEmail);
                 }
                 else

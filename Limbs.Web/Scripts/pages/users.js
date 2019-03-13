@@ -4,6 +4,24 @@ $(document).ready(function() {
     $('[name="IsProductUser"]').on("change", function () {
         isProductUser($(this).val());
     });
+
+    let validationTemplate = `<div class="validation-summary-errors " data-valmsg-summary="true">
+                                <span>Hay errores en el formulario, revis&#225; los campos marcados en rojo</span>
+                            </div>`;
+
+    let frm = $('.form');
+
+    frm.submit(function (e) {
+        if (!$(this).valid()) {
+            if (!$('.validation-summary-errors').length) {
+                $(validationTemplate).insertAfter('h2.f-titulo.first');
+            }
+
+            e.preventDefault();
+        } else {
+            $('#btn-register').prop('disabled', true);
+        }
+    });
 });
 
 var checkBoxAdult = $('[name="isAdultCheck"]');

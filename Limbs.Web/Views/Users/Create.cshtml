@@ -55,7 +55,7 @@
             @Html.HiddenFor(x => x.Email)
             @Html.HiddenFor(x => x.UserId)
             @Html.AntiForgeryToken()
-            <h2 class="f-titulo">Tus datos</h2>
+            <h2 class="f-titulo first">Tus datos</h2>
             if (!ViewData.ModelState.IsValid)
             {
                 @Html.ValidationSummary("Hay errores en el formulario, revisá los campos marcados en rojo", new { @class = "" })
@@ -111,7 +111,7 @@
                     </p>
                 }
                 <p>
-                    <button type="submit" class="bn_blue" name="register" onclick="this.form.submit(); this.disabled=true;">@(isEdit ? "Editar datos" : "Registrarse")</button>
+                    <button type="submit" id="btn-register" class="bn_blue" name="register">@(isEdit ? "Editar datos" : "Registrarse")</button>
                 </p>
             </div>
         }
