@@ -465,6 +465,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             DbGeography location = order.OrderRequestor.Location;
             closestAmbassador = await Db.AmbassadorModels.Include(p => p.User)
+                                                    .OrderBy(p => p.Location.Distance(location))
                                                     .FirstOrDefaultAsync(p => (p.Location.Distance(location) / 1000) <= 50d &&
                                                         p.User.EmailConfirmed &&
                                                         !p.OrderModel.Any(o => (o.Id == id && o.Status == OrderStatus.Rejected) || 
@@ -505,10 +506,19 @@ namespace Limbs.Web.Areas.Admin.Controllers
                     TipoTelefono3 = p.Element("TipoTelefono3").Value,
                     Location = SiteHelper.GeneratePoint($"{p.Element("Latitud").Value},{p.Element("Longitud").Value}".Split(','))
                 });
-                var listAmbassadors = await Db.AmbassadorModels.ToListAsync();
-                closestAmbassador = listAmbassadors.FirstOrDefault(p =>
-                                                                    ubicaciones.Any(x =>
-                                                                        (x.Location.Distance(location) / 1000) <= 20d));
+                var listAmbassadors = await Db.AmbassadorModels
+                                            .Include(p => p.User)
+                                            .Where(p => p.User.EmailConfirmed && 
+                                                        !p.OrderModel.Any(o => (o.Id == id && o.Status == OrderStatus.Rejected) ||
+                                                            o.Status == OrderStatus.PreAssigned ||
+                                                            o.Status == OrderStatus.Pending ||
+                                                            o.Status == OrderStatus.Ready ||
+                                                            o.Status == OrderStatus.ArrangeDelivery))
+                                            .OrderBy(p => p.Location.Distance(p.Location))
+                                            .ToListAsync();
+
+                closestAmbassador = listAmbassadors.FirstOrDefault(p => 
+                                                        ubicaciones.Any(x => (x.Location.Distance(p.Location) / 1000) <= 20d));
             }
 
             if (closestAmbassador == null)
