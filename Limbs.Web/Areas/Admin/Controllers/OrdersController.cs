@@ -468,10 +468,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
                                                     .FirstOrDefaultAsync(p => (p.Location.Distance(location) / 1000) <= 50d &&
                                                         p.User.EmailConfirmed &&
                                                         !p.OrderModel.Any(o => (o.Id == id && o.Status == OrderStatus.Rejected) || 
-                                                            o.Status != OrderStatus.PreAssigned ||
-                                                            o.Status != OrderStatus.Pending ||
-                                                            o.Status != OrderStatus.Ready ||
-                                                            o.Status != OrderStatus.ArrangeDelivery));
+                                                            o.Status == OrderStatus.PreAssigned ||
+                                                            o.Status == OrderStatus.Pending ||
+                                                            o.Status == OrderStatus.Ready ||
+                                                            o.Status == OrderStatus.ArrangeDelivery));
 
             if (closestAmbassador == null)
             {

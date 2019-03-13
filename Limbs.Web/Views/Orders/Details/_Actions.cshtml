@@ -4,7 +4,7 @@
 <div id="accion_pedido">
     @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
     {
-        if (Model.Status == OrderStatus.NotAssigned)
+        if (User.IsInRole(AppRoles.Administrator) && (Model.Status == OrderStatus.NotAssigned || Model.Status == OrderStatus.Rejected))
         {
             <button id="open_modal_btn" class="bn_delete">Informar datos incorrectos</button>
             @Html.ActionLink("Asignar embajador", "AssignAmbassadorAuto", new { area = "Admin", id = Model.Id }, new { @class = "bn_add" })
@@ -13,7 +13,7 @@
         if (Model.Status == OrderStatus.PreAssigned)
         {
             <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending })" class="bn_blue">Aceptar pedido</a>
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.NotAssigned })" class="bn_blue">Rechazar pedido</a>
+            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Rejected })" class="bn_blue">Rechazar pedido</a>
         }
         else if (Model.Status == OrderStatus.Pending)
         {
