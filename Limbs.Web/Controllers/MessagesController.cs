@@ -181,15 +181,15 @@ namespace Limbs.Web.Controllers
                     ToEmail = messageModel.To.Email
                 };
 
-                var mailMessage = new MailMessage
-                {
-                    From = _fromEmail,
-                    Subject = $"[Atomic Limbs] Tenés un mensaje nuevo de {messageModel.From.Email}",
-                    To = messageModel.To.Email,
-                    Body = CompiledTemplateEngine.Render("Mails.NotifyUserMessage", data)
-                };
+                //var mailMessage = new MailMessage
+                //{
+                //    From = _fromEmail,
+                //    Subject = $"[Atomic Limbs] Tenés un mensaje nuevo de {messageModel.From.Email}",
+                //    To = messageModel.To.Email,
+                //    Body = CompiledTemplateEngine.Render("Mails.NotifyUserMessage", data)
+                //};
 
-                await AzureQueue.EnqueueAsync(mailMessage);
+                //await AzureQueue.EnqueueAsync(mailMessage);
             }
 
             return PartialView("_Detail", messageModel);
