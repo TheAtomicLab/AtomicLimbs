@@ -24,6 +24,10 @@ namespace Limbs.Web
     {
         public void Configuration(IAppBuilder app)
         {
+            var configuration = new Migrations.Configuration();
+            var migrator = new DbMigrator(configuration);
+            migrator.Update();
+            
             ConfigureLocalization();
             ConfigureAuth(app);
             ConfigureServices(app);
