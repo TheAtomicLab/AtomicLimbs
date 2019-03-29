@@ -11,6 +11,10 @@ namespace Limbs.Web
     {
         protected void Application_Start()
         {
+            var configuration = new Migrations.Configuration();
+            var migrator = new System.Data.Entity.Migrations.DbMigrator(configuration);
+            migrator.Update();
+            
             SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
 
             AreaRegistration.RegisterAllAreas();
