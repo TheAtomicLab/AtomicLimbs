@@ -25,7 +25,7 @@ namespace Limbs.Web
         public void Configuration(IAppBuilder app)
         {
             var configuration = new Migrations.Configuration();
-            var migrator = new DbMigrator(configuration);
+            var migrator = new System.Data.Entity.Migrations.DbMigrator(configuration);
             migrator.Update();
             
             ConfigureLocalization();
