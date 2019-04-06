@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Entities.WebModels.Admin.Models;
 using Limbs.Web.Storage.Azure;
 using Limbs.Web.Storage.Azure.TableStorage.Queries;
 

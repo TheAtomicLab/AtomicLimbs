@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
-using Limbs.Web.Extensions;
-using Limbs.Web.Services;
+using Limbs.Web.Entities.WebModels.Admin.Models;
+using Limbs.Web.Entities.WebModels.Extensions;
+using Limbs.Web.Logic.Services;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Areas.Admin.Controllers

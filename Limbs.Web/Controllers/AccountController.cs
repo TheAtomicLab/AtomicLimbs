@@ -9,9 +9,8 @@ using Limbs.Web.Common.Resources;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Limbs.Web.Models;
 using Limbs.Web.Entities.Models;
-
+using Limbs.Web.Entities.WebModels;
 
 namespace Limbs.Web.Controllers
 {

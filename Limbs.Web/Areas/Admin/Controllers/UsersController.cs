@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Areas.Admin.Models;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Entities.WebModels.Admin.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 

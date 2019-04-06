@@ -1,5 +1,4 @@
-﻿@using Limbs.Web.Common.Extensions
-@model Limbs.Web.Areas.Admin.Models.AppExceptionViewModel
+﻿@model Limbs.Web.Entities.WebModels.Admin.Models.AppExceptionViewModel
 
 @{
     ViewBag.Title = "Errors";
@@ -14,7 +13,7 @@
     {
         @Html.LabelFor(x => x.Date)
         @Html.EditorFor(x => x.Date)
-        <input type="submit" value="VER"/>
+        <input type="submit" value="VER" />
     }
 </div>
 

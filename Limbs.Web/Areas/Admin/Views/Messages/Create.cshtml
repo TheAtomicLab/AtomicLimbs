@@ -1,9 +1,9 @@
-﻿@model Limbs.Web.Areas.Admin.Models.MessageViewModel
+﻿@model Limbs.Web.Entities.WebModels.Admin.Models.MessageViewModel
 
-@using (Html.BeginForm("Create", "Messages")) 
+@using (Html.BeginForm("Create", "Messages"))
 {
     @Html.AntiForgeryToken()
-        
+
     <div class="form-horizontal">
         <h4>MessageModel</h4>
         <hr />
@@ -21,7 +21,7 @@
                 @Html.EditorFor(x => x.To)
             </div>
         </div>
-    
+
         <div class="form-group">
             @Html.LabelFor(model => model.Priority, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -29,7 +29,7 @@
                 @Html.ValidationMessageFor(model => model.Priority, "", new { @class = "text-danger" })
             </div>
         </div>
-    
+
         <div class="form-group">
             @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -37,7 +37,7 @@
                 @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
             </div>
         </div>
-        
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -45,7 +45,7 @@
         </div>
     </div>
 }
-    
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
