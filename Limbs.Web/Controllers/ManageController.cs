@@ -1,14 +1,13 @@
 ﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Entities.WebModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using Limbs.Web.Models;
 
 namespace Limbs.Web.Controllers
 {

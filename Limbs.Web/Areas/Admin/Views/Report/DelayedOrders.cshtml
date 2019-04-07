@@ -1,5 +1,5 @@
 ﻿@using Limbs.Web.Common.Extensions
-@model Limbs.Web.Areas.Admin.Models.DelayedOrdersViewModel
+@model Limbs.Web.Entities.WebModels.Admin.Models.DelayedOrdersViewModel
 
 @{
     ViewBag.Title = "DelayedOrders";
@@ -11,10 +11,10 @@
 
 <div>
     @using (Html.BeginForm("DelayedOrders", "Report", FormMethod.Get))
-    { 
+    {
         @Html.DisplayNameFor(x => x.DaysBefore)
         @Html.EditorFor(x => x.DaysBefore)
-        <input type="submit" value="VER"/>
+        <input type="submit" value="VER" />
     }
 </div>
 

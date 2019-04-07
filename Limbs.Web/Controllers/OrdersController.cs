@@ -1,7 +1,5 @@
 ﻿using Limbs.Web.Common.Extensions;
 using Limbs.Web.Entities.Models;
-using Limbs.Web.Repositories.Interfaces;
-using Limbs.Web.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Data.Entity;
@@ -17,6 +15,8 @@ using Limbs.Web.Storage.Azure.QueueStorage.Messages;
 using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
+using Limbs.Web.Logic.Repositories.Interfaces;
+using Limbs.Web.Logic.Services;
 
 namespace Limbs.Web.Controllers
 {

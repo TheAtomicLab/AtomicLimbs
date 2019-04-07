@@ -5,7 +5,6 @@ using Limbs.Web.Entities.Models;
 
 namespace Limbs.Web.Migrations
 {
-    using Models;
     using System.Data.Entity.Migrations;
     using System.Linq;
     using System.Text;

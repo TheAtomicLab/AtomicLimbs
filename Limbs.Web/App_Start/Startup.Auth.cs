@@ -8,7 +8,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using Limbs.Web.Models;
 using Microsoft.Owin.Security.Facebook;
 
 namespace Limbs.Web

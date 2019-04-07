@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web", "Limbs.Web\Limbs.Web.csproj", "{5422F395-2043-402A-8D77-5053C0C14781}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.QueueConsumers", "Limbs.QueueConsumers\Limbs.QueueConsumers.csproj", "{55421E93-38D9-4A57-A4CB-217F16EC1838}"
 EndProject
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "Limbs.Functions", "Limbs.Functions\Limbs.Functions.njsproj", "{16E59878-4007-451A-B0A4-B1151F5B9C06}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Limbs.Web.Logic", "Limbs.Web.Logic\Limbs.Web.Logic.csproj", "{3007BA76-A656-4DAD-BC04-3901B6DFC5BC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{16E59878-4007-451A-B0A4-B1151F5B9C06}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16E59878-4007-451A-B0A4-B1151F5B9C06}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16E59878-4007-451A-B0A4-B1151F5B9C06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3007BA76-A656-4DAD-BC04-3901B6DFC5BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3007BA76-A656-4DAD-BC04-3901B6DFC5BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3007BA76-A656-4DAD-BC04-3901B6DFC5BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3007BA76-A656-4DAD-BC04-3901B6DFC5BC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

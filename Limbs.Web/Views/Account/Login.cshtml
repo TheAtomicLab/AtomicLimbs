@@ -1,4 +1,4 @@
-﻿@using Limbs.Web.Models
+﻿@using Limbs.Web.Entities.WebModels;
 @model LoginViewModel
 @{
     ViewBag.Title = "Ingresar";
@@ -12,38 +12,38 @@
         </div>
         <div class="cont_regis">
             <div class="social-log">
-                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
+                @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
             </div>
 
             <p id="post-form-ini">
-                ¿No tenés una cuenta en Facebook?<br/>
+                ¿No tenés una cuenta en Facebook?<br />
             </p>
-            @using (Html.BeginForm("Login", "Account", new {ViewBag.ReturnUrl}, FormMethod.Post, new {@class = "", role = "form"}))
+            @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.ValidationSummary("", new {@class = "text-danger"})
+                @Html.ValidationSummary("", new { @class = "text-danger" })
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new {@class = "col-md-2 control-label"})
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new {@class = "input-regis"})
+                        @Html.TextBoxFor(m => m.Email, new { @class = "input-regis" })
                     </div>
                 </div>
                 <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new {@class = "col-md-2 control-label"})
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new {@class = "input-regis"})
+                        @Html.PasswordFor(m => m.Password, new { @class = "input-regis" })
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default bn_blue" value="Ingresar"/>
+                    <input type="submit" class="btn btn-default bn_blue" value="Ingresar" />
                 </div>
             }
-            <br/>
+            <br />
             <a href="@Url.Action("ForgotPassword", "Account")">¿Olvidó su contraseña?</a>
         </div>
         <div class="cont_regis">
             <p id="post-form-ini">
-                ¿No tenés una cuenta?<br/><a href="@Url.Action("Register", "Account")">Registrate</a>
+                ¿No tenés una cuenta?<br /><a href="@Url.Action("Register", "Account")">Registrate</a>
             </p>
         </div>
     </div>

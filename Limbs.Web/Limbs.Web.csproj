@@ -235,17 +235,10 @@
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
-    <Compile Include="Areas\Admin\Models\OrderListViewModel.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
-    <Compile Include="Areas\Admin\Models\AppExceptionViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\AssignOrderAmbassadorViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\DelayedOrdersViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\MessageViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\UserViewModel.cs" />
-    <Compile Include="Areas\Admin\Models\WrongInfoModel.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
@@ -257,11 +250,9 @@
     <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
-    <Compile Include="Extensions\ApplicationUserExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\ConnectionMapping.cs" />
     <Compile Include="Helpers\ImagesHelper.cs" />
     <Compile Include="Helpers\SiteHelper.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
@@ -345,28 +336,9 @@
       <DependentUpon>201901260157371_relationWithUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\GoogleGeoModel.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\UbicacionAndreani.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repositories\Interfaces\IUserFiles.cs" />
-    <Compile Include="Repositories\IUsersRepository.cs" />
-    <Compile Include="Repositories\IAmbassadorsRepository.cs" />
-    <Compile Include="Repositories\IRepository.cs" />
-    <Compile Include="Repositories\AmbassadorsRepository.cs" />
-    <Compile Include="Repositories\IOrdersRepository.cs" />
-    <Compile Include="Repositories\UsersRepository.cs" />
-    <Compile Include="Repositories\OrdersRepository.cs" />
-    <Compile Include="Services\IMessageService.cs" />
-    <Compile Include="Services\IOrderNotificationService.cs" />
-    <Compile Include="Services\MessagesHub.cs" />
-    <Compile Include="Services\MessagesService.cs" />
-    <Compile Include="Services\OrderMailNotificationService.cs" />
-    <Compile Include="Services\OrderService.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="Services\UserFilesInAzureStorage.cs" />
     <Compile Include="ViewModels\UserPanelViewModel.cs" />
     <Compile Include="ViewModels\AmbassadorPanelViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />
@@ -610,7 +582,6 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Users\Details.cshtml" />
-    <Compile Include="Services\ApiAleBanzas.cs" />
     <Content Include="Areas\Admin\Views\Orders\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\Orders\Edit.cshtml" />
     <Content Include="Views\Users\Create.cshtml" />
@@ -763,6 +734,10 @@
     <ProjectReference Include="..\Limbs.Web.Entities\Limbs.Web.Entities.csproj">
       <Project>{01F5EA69-77A2-470A-B5D9-F4B614DB37B0}</Project>
       <Name>Limbs.Web.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Limbs.Web.Logic\Limbs.Web.Logic.csproj">
+      <Project>{3007ba76-a656-4dad-bc04-3901b6dfc5bc}</Project>
+      <Name>Limbs.Web.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\Limbs.Web.Storage.Azure\Limbs.Web.Storage.Azure.csproj">
       <Project>{F0C7E1E2-F99C-4398-811C-9CD2284B1DE4}</Project>

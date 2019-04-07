@@ -4,13 +4,10 @@ using System.Data.Entity;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
-using Limbs.Web.Helpers;
-using Limbs.Web.Services;
-using Limbs.Web.Storage.Azure.QueueStorage;
-using Limbs.Web.Storage.Azure.QueueStorage.Messages;
+using Limbs.Web.Logic.Helpers;
+using Limbs.Web.Logic.Services;
 using Microsoft.AspNet.Identity;
 
 namespace Limbs.Web.Controllers

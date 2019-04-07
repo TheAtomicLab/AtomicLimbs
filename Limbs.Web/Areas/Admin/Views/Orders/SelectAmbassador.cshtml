@@ -1,27 +1,27 @@
 ﻿@using Limbs.Web.Common.Extensions
-@model Limbs.Web.Areas.Admin.Models.AssignOrderAmbassadorViewModel
+@model Limbs.Web.Entities.WebModels.Admin.Models.AssignOrderAmbassadorViewModel
 
 <h2>Asignar embajador al pedido @Model.Order.Id</h2>
 
 <br />
 <table>
     <tr>
-            <td>
-                Nombre
-            </td>
-            <td>
-                Email
-            </td>
-            <td>
-                Distancia
-            </td>
-            <td>
-                Pedidos asignados
-            </td>
-            <td>
-            </td>
-        </tr>
-    @foreach (var item in Model.AmbassadorList) {
+        <td>
+            Nombre
+        </td>
+        <td>
+            Email
+        </td>
+        <td>
+            Distancia
+        </td>
+        <td>
+            Pedidos asignados
+        </td>
+        <td></td>
+    </tr>
+    @foreach (var item in Model.AmbassadorList)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Item1.AmbassadorName)
