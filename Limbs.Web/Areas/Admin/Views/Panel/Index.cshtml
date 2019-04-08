@@ -3,7 +3,23 @@
     ViewBag.Title = "Admin Panel";
 }
 
-<h2>Panel de admin</h2>
+    <div class="title-admin">
+        <h2>Panel de admin</h2><span class="limbs-version">V2.0</span>
+    </div>
+
+<style>
+    .title-admin h2 {
+        margin-right:.5em;
+    }
+    .title-admin h2, .title-admin span.limbs-version {
+        display: inline-block;
+    }
+    .title-admin span.limbs-version {
+        padding: .25em .5em;
+        background-color: #28a745;
+        color: white;
+    }
+</style>
 
 <ul style="padding:50px 0;">
     <li>@Html.ActionLink("Pedidos", "Index", new  { controller = "Orders", area = "Admin" } )</li>
