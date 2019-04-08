@@ -14,7 +14,7 @@ variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
 
-steps:
+steps:    
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
