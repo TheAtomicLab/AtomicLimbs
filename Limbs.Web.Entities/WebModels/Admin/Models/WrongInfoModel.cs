@@ -1,4 +1,4 @@
-﻿namespace Limbs.Web.Areas.Admin.Models
+﻿namespace Limbs.Web.Entities.WebModels.Admin.Models
 {
     public class WrongInfoModel
     {

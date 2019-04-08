@@ -1,5 +1,4 @@
-﻿using Limbs.Web.Areas.Admin.Models;
-using Limbs.Web.Common.Extensions;
+﻿using Limbs.Web.Common.Extensions;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;

@@ -14,12 +14,7 @@ variables:
   buildPlatform: 'AnyCPU'
   buildConfiguration: 'Release'
 
-steps:
-- task: DeleteFiles@1
-  inputs:
-    sourceFolder: C:\Windows\Microsoft.NET\Framework\v4.0.30319\Temporary ASP.NET Files\
-    contents: root
-    
+steps:    
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
