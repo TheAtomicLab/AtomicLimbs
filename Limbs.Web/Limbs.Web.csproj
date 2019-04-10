@@ -651,6 +651,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Help\Pedir.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Organization.cshtml" />
+    <Content Include="Views\Orders\Edit.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -39,6 +39,16 @@ namespace Limbs.Web.Controllers
             _ns = notificationService;
         }
 
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null) return HttpNotFound();
+
+            var orderModel = await Db.OrderModels.FindAsync(id);
+            if (orderModel == null) return HttpNotFound();
+
+            return View(orderModel);
+        }
+
         // GET: Orders/Index
         public ActionResult Index()
         {
@@ -85,7 +95,6 @@ namespace Limbs.Web.Controllers
             return View("ManoPedir", new OrderModel());
         }
 
-
         // POST: Orders/ManoPedir
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -118,7 +127,6 @@ namespace Limbs.Web.Controllers
                 ProductType = (ProductType)productType,
             });
         }
-
 
         // GET: Orders/BrazoImagen
         public ActionResult BrazoImagen()

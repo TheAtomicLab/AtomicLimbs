@@ -1,0 +1,200 @@
+﻿@model Limbs.Web.Entities.Models.OrderModel
+
+@{
+    ViewBag.Title = "Edit";
+    var cantImages = 0;
+}
+
+<script src="~/Scripts/pages/uploadImage.js"></script>
+<script src="~/Scripts/dropzone.js"></script>
+<link rel="stylesheet" href="~/Content/basic.css">
+<link rel="stylesheet" href="~/Content/dropzone.css">
+
+<div class="card center-card-l">
+    <h2>Editar orden</h2>
+
+    @using (Html.BeginForm("Edit", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                <p class="form_title">@Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label" })</p>
+                <div class="col-md-10">
+                    @Html.EditorFor(x => x.ProductType, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+                    @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">@Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label" })</p>
+                <div class="col-md-10 edit_type_amp">
+
+                    @Html.RadioButtonFor(model => model.AmputationType, "A", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "B", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "C", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "D", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "E", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "F", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "G", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "H", new { @class = "tipo_amp2" })
+                    @*TODO: Edit editortemplate for show selected radio
+                        @Html.EditorFor(model => model.AmputationType)
+                    *@
+                    @Html.ValidationMessageFor(model => model.AmputationType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">Fotos</p>
+                <div class="col-md-10">
+                    <div id="formManoMedidas" class="dropzone dz-clickable"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">Fotos</p>
+                <div class="col-md-10">
+                    <div class="slideshow-container">
+                        @foreach (var image in (Model.IdImage).Split(','))
+                        {
+                            cantImages++;
+                            <div class="mySlides fade">
+                                @*<div class="numbertext">1 / 3</div>*@
+                                <img src="@image" style="width:30%">
+                                @*<div class="text">Caption Text</div>*@
+                            </div>
+                        }
+                        @*<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                            <a class="next" onclick="plusSlides(1)">&#10095;</a>*@
+                    </div>
+                    <br>
+                    <!-- The dots/circles -->
+                    <div style="text-align:center">
+                        @if (cantImages > 1)
+                        {
+                            cantImages++;
+                            for (int i = 1; i < cantImages; i++)
+                            {
+                                <span class="dot" onclick="currentSlide(@i)"></span>
+                            }
+                        }
+                    </div>
+
+                    <div>
+                        Cambiar imagen <input name="orderPhoto" type="file" />
+                    </div>
+                    <input name="selectPhoto" type="hidden" value="1" />
+                    @Html.ValidationMessageFor(model => model.IdImage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            @*<div class="form-group">
+                    <p class="form_title">Medidas</p>
+                    <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
+                </div>*@
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => model.Sizes, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.LabelFor(x => x.Sizes.A)
+                        @Html.EditorFor(x => x.Sizes.A)
+                        @Html.LabelFor(x => x.Sizes.B)
+                        @Html.EditorFor(x => x.Sizes.B)
+                        @Html.LabelFor(x => x.Sizes.C)
+                        @Html.EditorFor(x => x.Sizes.C)
+                    </div>
+                </div>*@
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div>
+                        <p class="form_title">Color</p>
+                        <div class="color_mano">
+                            @Html.RadioButtonFor(model => model.Color, "A")
+                            @Html.RadioButtonFor(model => model.Color, "B")
+                            @Html.RadioButtonFor(model => model.Color, "C")
+                            @Html.RadioButtonFor(model => model.Color, "D")
+                            @Html.RadioButtonFor(model => model.Color, "E")
+                            @Html.RadioButtonFor(model => model.Color, "F")
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">
+                    @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label" })
+                </p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    <p class="form_title">
+                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
+                    </p>
+                    <div class="col-md-10">
+                        @Html.EnumDropDownListFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+            <br />
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar" class="bn_blue" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Volver", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+</div>
+
+
+<script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+        $('input[name=selectPhoto]').val(n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+</script>
