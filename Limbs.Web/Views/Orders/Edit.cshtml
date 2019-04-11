@@ -5,15 +5,13 @@
     var cantImages = 0;
 }
 
-<script src="~/Scripts/pages/uploadImage.js"></script>
-<script src="~/Scripts/dropzone.js"></script>
 <link rel="stylesheet" href="~/Content/basic.css">
 <link rel="stylesheet" href="~/Content/dropzone.css">
 
 <div class="card center-card-l">
     <h2>Editar orden</h2>
 
-    @using (Html.BeginForm("Edit", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("Edit", "Orders", FormMethod.Post, new { id = "frmEdit", enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
 
@@ -42,74 +40,18 @@
                     @Html.RadioButtonFor(model => model.AmputationType, "F", new { @class = "tipo_amp2" })
                     @Html.RadioButtonFor(model => model.AmputationType, "G", new { @class = "tipo_amp2" })
                     @Html.RadioButtonFor(model => model.AmputationType, "H", new { @class = "tipo_amp2" })
-                    @*TODO: Edit editortemplate for show selected radio
-                        @Html.EditorFor(model => model.AmputationType)
-                    *@
+
                     @Html.ValidationMessageFor(model => model.AmputationType, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                <p class="form_title">Fotos</p>
+                <p class="form_title">Agregar nuevas imagenes</p>
                 <div class="col-md-10">
-                    <div id="formManoMedidas" class="dropzone dz-clickable"></div>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <p class="form_title">Fotos</p>
-                <div class="col-md-10">
-                    <div class="slideshow-container">
-                        @foreach (var image in (Model.IdImage).Split(','))
-                        {
-                            cantImages++;
-                            <div class="mySlides fade">
-                                @*<div class="numbertext">1 / 3</div>*@
-                                <img src="@image" style="width:30%">
-                                @*<div class="text">Caption Text</div>*@
-                            </div>
-                        }
-                        @*<a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                            <a class="next" onclick="plusSlides(1)">&#10095;</a>*@
-                    </div>
-                    <br>
-                    <!-- The dots/circles -->
-                    <div style="text-align:center">
-                        @if (cantImages > 1)
-                        {
-                            cantImages++;
-                            for (int i = 1; i < cantImages; i++)
-                            {
-                                <span class="dot" onclick="currentSlide(@i)"></span>
-                            }
-                        }
-                    </div>
-
-                    <div>
-                        Cambiar imagen <input name="orderPhoto" type="file" />
-                    </div>
-                    <input name="selectPhoto" type="hidden" value="1" />
-                    @Html.ValidationMessageFor(model => model.IdImage, "", new { @class = "text-danger" })
+                    <div id="myId" class="dropzone"></div>
                 </div>
             </div>
             <br />
-            @*<div class="form-group">
-                    <p class="form_title">Medidas</p>
-                    <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
-                </div>*@
-
-            @*<div class="form-group">
-                    @Html.LabelFor(model => model.Sizes, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.LabelFor(x => x.Sizes.A)
-                        @Html.EditorFor(x => x.Sizes.A)
-                        @Html.LabelFor(x => x.Sizes.B)
-                        @Html.EditorFor(x => x.Sizes.B)
-                        @Html.LabelFor(x => x.Sizes.C)
-                        @Html.EditorFor(x => x.Sizes.C)
-                    </div>
-                </div>*@
-
             <div class="form-group">
                 <div class="col-md-10">
                     <div>
@@ -136,19 +78,7 @@
                     @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
                 </div>
             </div>
-
-            @*<div class="form-group">
-                    <p class="form_title">
-                        @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label" })
-                    </p>
-                    <div class="col-md-10">
-                        @Html.EnumDropDownListFor(model => model.Status, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-
             <br />
-
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Guardar" class="bn_blue" />
@@ -157,17 +87,89 @@
         </div>
     }
 
-    <div>
+    @*<div>
         @Html.ActionLink("Volver", "Index")
-    </div>
+    </div>*@
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 </div>
 
+<style>
+    .img-delete-container{
+        width: 30%;
+        height: 100%;
+    }
+
+    .img-delete-container:hover {
+        background-color: rgba(0,0,0,.75);
+    }
+
+    .dz-remove {
+        margin-top: 1em;
+    }
+
+    .dz-imageMano {
+        height: 120px;
+    }
+
+    .dz-imageMano img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;    
+    }
+</style>
+
+
+@*<script src="~/Scripts/pages/uploadImage.js"></script>*@
+<script src="~/Scripts/dropzone.js"></script>
 
 <script>
+    var typeFileAccepted = "image/*";
+    var maxFileSizeImage = 5; //MB
+    var maxUploadFiles = 6;
+    var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
+    var invalidFileTypeMsg = "Tipo de archivo inválido";
+    var msgWhileUploadFile = "Subiendo imagen, por favor espere";
+    let frm = $('#frmEdit');
+
+    var myDropzone = new Dropzone("div#myId", {
+        url: frm.attr('action'),
+        previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+        maxFilesize: maxFileSizeImage,
+        maxFiles: maxUploadFiles,
+        uploadMultiple: true,
+        maxThumbnailFilesize: 5,
+        acceptedFiles: "image/*",
+        autoProcessQueue: false,
+        autoQueue: true,
+        addRemoveLinks: true,
+        dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+        //dictFileTooBig: fileTooBig,
+        //dictInvalidFileType: "El tipo de archivo es invalido.",
+        //dictFileTooBig: null,
+        dictInvalidFileType: null,
+        dictRemoveFile: "Borrar imagen",
+        dictCancelUpload: null,
+        //dictCancelUploadConfirmation: "¿Estas seguro de cancelar la subida de la foto?",
+        dictRemoveFileConfirmation: null,
+        //dictMaxFilesExceeded: "No puedes subir más de una imagen.",
+        createImageThumbnails: true,
+        init: function () {
+            dropZoneManoMedidas = this;
+            
+            frm.submit(function (e) {
+                if (!$(this).valid()) {
+                    e.preventDefault();
+                } else {
+                    dropZoneManoMedidas.processQueue();
+                }
+            });
+        }
+});
+
+
     var slideIndex = 1;
     showSlides(slideIndex);
 

@@ -49,6 +49,25 @@ namespace Limbs.Web.Controllers
             return View(orderModel);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(OrderModel orderModel, List<HttpPostedFileBase> files)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(orderModel);
+            }
+
+            //var isOk = await UpdateOrder(orderModel, orderPhoto, selectPhoto);
+
+            //if (!isOk)
+            //{
+            //    return HttpNotFound();
+            //}
+
+            return RedirectToAction("Index");
+        }
+
         // GET: Orders/Index
         public ActionResult Index()
         {
