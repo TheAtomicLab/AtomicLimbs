@@ -13,6 +13,7 @@ using Limbs.Web.Logic.Repositories;
 using Limbs.Web.Logic.Repositories.Interfaces;
 using Limbs.Web.Logic.Services;
 using Limbs.Web.Storage.Azure;
+using Limbs.Web.ViewModels.Configs;
 using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
@@ -28,7 +29,9 @@ namespace Limbs.Web
             var configuration = new Migrations.Configuration();
             var migrator = new System.Data.Entity.Migrations.DbMigrator(configuration);
             migrator.Update();
-            
+
+            AutoMapperLimbsConfig.Configure();
+
             ConfigureLocalization();
             ConfigureAuth(app);
             ConfigureServices(app);

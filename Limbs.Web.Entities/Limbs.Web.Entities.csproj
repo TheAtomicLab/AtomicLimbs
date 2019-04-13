@@ -105,6 +105,7 @@
     <Compile Include="Models\AmputationType.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\AppRoles.cs" />
+    <Compile Include="Models\HttpPostedFileBase.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\OrderSizesModel.cs" />

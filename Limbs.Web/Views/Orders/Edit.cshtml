@@ -1,4 +1,4 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@model Limbs.Web.ViewModels.OrderUpdateModel
 
 @{
     ViewBag.Title = "Edit";
@@ -48,7 +48,10 @@
             <div class="form-group">
                 <p class="form_title">Agregar nuevas imagenes</p>
                 <div class="col-md-10">
-                    <div id="myId" class="dropzone"></div>
+                    <div id="edit-upload-images" class="dropzone">
+                        <span id="msgManoImagen" style="color:blue;"></span>
+                        <ul id="msgErrorManoImagen" style="color:red;"></ul>
+                    </div>
                 </div>
             </div>
             <br />
@@ -81,30 +84,31 @@
             <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Guardar" class="bn_blue" />
+                    <input type="button" id="enviar" value="Guardar" class="bn_blue" />
                 </div>
             </div>
         </div>
     }
 
     @*<div>
-        @Html.ActionLink("Volver", "Index")
-    </div>*@
+            @Html.ActionLink("Volver", "Index")
+        </div>*@
 
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
+        <script src="~/Scripts/dropzone.js"></script>
     }
 </div>
 
 <style>
-    .img-delete-container{
+    .img-delete-container {
         width: 30%;
         height: 100%;
     }
 
-    .img-delete-container:hover {
-        background-color: rgba(0,0,0,.75);
-    }
+        .img-delete-container:hover {
+            background-color: rgba(0,0,0,.75);
+        }
 
     .dz-remove {
         margin-top: 1em;
@@ -114,89 +118,167 @@
         height: 120px;
     }
 
-    .dz-imageMano img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;    
-    }
+        .dz-imageMano img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
 </style>
 
-
-@*<script src="~/Scripts/pages/uploadImage.js"></script>*@
-<script src="~/Scripts/dropzone.js"></script>
-
 <script>
-    var typeFileAccepted = "image/*";
-    var maxFileSizeImage = 5; //MB
-    var maxUploadFiles = 6;
-    var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
-    var invalidFileTypeMsg = "Tipo de archivo inválido";
-    var msgWhileUploadFile = "Subiendo imagen, por favor espere";
-    let frm = $('#frmEdit');
+    function objectifyForm(formArray) {//serialize data function
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    }
 
-    var myDropzone = new Dropzone("div#myId", {
-        url: frm.attr('action'),
-        previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
-        maxFilesize: maxFileSizeImage,
-        maxFiles: maxUploadFiles,
-        uploadMultiple: true,
-        maxThumbnailFilesize: 5,
-        acceptedFiles: "image/*",
-        autoProcessQueue: false,
-        autoQueue: true,
-        addRemoveLinks: true,
-        dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
-        //dictFileTooBig: fileTooBig,
-        //dictInvalidFileType: "El tipo de archivo es invalido.",
-        //dictFileTooBig: null,
-        dictInvalidFileType: null,
-        dictRemoveFile: "Borrar imagen",
-        dictCancelUpload: null,
-        //dictCancelUploadConfirmation: "¿Estas seguro de cancelar la subida de la foto?",
-        dictRemoveFileConfirmation: null,
-        //dictMaxFilesExceeded: "No puedes subir más de una imagen.",
-        createImageThumbnails: true,
-        init: function () {
-            dropZoneManoMedidas = this;
-            
-            frm.submit(function (e) {
-                if (!$(this).valid()) {
-                    e.preventDefault();
+    $(document).ready(function () {
+        var typeFileAccepted = "image/*";
+        var maxFileSizeImage = 5; //MB
+        var maxUploadFiles = 3;
+        var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
+        var invalidFileTypeMsg = "Tipo de archivo inválido";
+        var msgWhileUploadFile = "Subiendo imagen, por favor espere";
+        let frm = $('#frmEdit');
+
+        var myDropzone = $("#edit-upload-images").dropzone({
+            url: '/Orders/Edit/',
+            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+            maxFilesize: maxFileSizeImage,
+            maxFiles: maxUploadFiles,
+            uploadMultiple: true,
+            maxThumbnailFilesize: 5,
+            acceptedFiles: "image/*",
+            autoProcessQueue: false,
+            autoQueue: true,
+            addRemoveLinks: true,
+            dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+            dictInvalidFileType: null,
+            dictRemoveFile: "Borrar imagen",
+            dictCancelUpload: null,
+            dictRemoveFileConfirmation: null,
+            createImageThumbnails: true,
+            init: function () {
+                dz = this;
+                $('#enviar').click(function () {
+                    dz.processQueue();
+                });
+
+                this.on('sendingmultiple', function (file, xhr, data) {
+                    var array = frm.serializeArray();
+                    for (var i = 0; i < array.length; i++) {
+                        data.append(array[i].name, array[i].value)
+                    }
+                });
+
+                this.on("processing", function (file) {
+                    $('#msgManoImagen').empty();
+                    $('#msgManoImagen').html(msgWhileUploadFile);
+                });
+
+                this.on("addedfile", function (file) {
+                    if (dz.files.length > maxUploadFiles) {
+                        dz.removeFile(dz.files[0]);
+                    }
+
+                    $('#msgErrorManoImagen').empty();
+
+                    updateRegisterFiles();
+                });
+
+                this.on("removedfile", function (file) {
+                    $('#msgErrorManoImagen').empty();
+
+                    updateRegisterFiles();
+
+                    dz.files.length == 0 ? disabledRegister() : "";
+
+                });
+
+                this.on("error", function (file, errormessage, xhr) {
+                    if (xhr == undefined)
+                        return false;
+
+                    var t = xhr.response.responseText;
+
+                    $('#msgManoImagen').empty();
+                    $('#msgErrorManoImagen').empty();
+                    showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
+                    console.log($(errormessage)[1].textContent);
+
+                    disabledRegister();
+                });
+
+                this.on("success", function (file, response) {
+                    window.location = response.Action;
+                });
+            }
+        });
+
+        function updateRegisterFiles() {
+            for (var i = 0; i < dz.files.length; i++) {
+
+                var file = dz.files[i];
+
+                if (!isConditionsValid(file)) {
+                    disabledRegister();
+                    showErrors(file);
+                    break;
                 } else {
-                    dropZoneManoMedidas.processQueue();
+                    enableRegister();
                 }
-            });
+            }
         }
-});
 
-
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    // Next/previous controls
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    // Thumbnail image controls
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-        $('input[name=selectPhoto]').val(n);
-    }
-
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        function isValidSizeImage(file, nro) {
+            //var sizeFile = file.size / 1024 / 1024;
+            sizeFile = file.size / 1000000 // -> Dropzone calculate size
+            return sizeFile <= nro;
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
+
+        function validateImg() {
+            if (filesDropManoMedidas.length < 1) {
+                disabledRegister()
+            } else {
+                enableRegister()
+            }
         }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-    }
+
+        function showError(msg) {
+            var ErrorMsg = "<li>" + msg + "</li>";
+
+            $('#msgErrorManoImagen').append(ErrorMsg);
+        }
+
+        function disabledRegister() {
+            $("[name=enviar]").prop('disabled', true);
+        };
+
+        function enableRegister() {
+            $("[name=enviar]").prop('disabled', false);
+        };
+
+        function isConditionsValid(file) {
+            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+            return ConditionTypeImage && ConditionSizeImage;
+        }
+
+        function showErrors(file) {
+            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            Dropzone.sizeFile
+            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+            if (!ConditionSizeImage) {
+                showError(fileTooBigMsg);
+            }
+
+            if (!ConditionTypeImage) {
+                showError(invalidFileTypeMsg);
+            }
+        }
+    });
 </script>
