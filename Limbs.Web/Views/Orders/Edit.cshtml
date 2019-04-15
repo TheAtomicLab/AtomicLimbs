@@ -2,11 +2,12 @@
 
 @{
     ViewBag.Title = "Edit";
-    var cantImages = 0;
+    var cantImages = Model.TotalImages;
 }
 
 <link rel="stylesheet" href="~/Content/basic.css">
 <link rel="stylesheet" href="~/Content/dropzone.css">
+<link rel="stylesheet" href="~/Content/jquery.bxslider.min.css">
 
 <div class="card center-card-l">
     <h2>Editar orden</h2>
@@ -46,12 +47,38 @@
             </div>
 
             <div class="form-group">
+                <p class="form_title">Imagenes actuales</p>
+                <div class="slider">
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="slider-image-container">
+                            <img src="@image" />
+                            @{
+                                var imageId = image.Split('/').LastOrDefault();
+                                imageId = imageId == null ? string.Empty : imageId;
+                            }
+                            <div class="slider-image-action" data-imageId="@imageId" data-orderId="@(Model.Id)">
+                                <i class="fa fa-trash-o action" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
                 <p class="form_title">Agregar nuevas imagenes</p>
                 <div class="col-md-10">
-                    <div id="edit-upload-images" class="dropzone">
-                        <span id="msgManoImagen" style="color:blue;"></span>
-                        <ul id="msgErrorManoImagen" style="color:red;"></ul>
-                    </div>
+                    @if (cantImages < 8)
+                    {
+                        <div id="edit-upload-images" class="dropzone">
+                            <span id="msgManoImagen" style="color:blue;"></span>
+                            <ul id="msgErrorManoImagen" style="color:red;"></ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>No puede subir más de 8 imagenes por pedido.</h3>
+                    }
                 </div>
             </div>
             <br />
@@ -97,6 +124,7 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script src="~/Scripts/dropzone.js"></script>
+        <script src="~/Scripts/jquery.bxslider.min.js"></script>
     }
 </div>
 
@@ -137,7 +165,7 @@
     $(document).ready(function () {
         var typeFileAccepted = "image/*";
         var maxFileSizeImage = 5; //MB
-        var maxUploadFiles = 3;
+        var maxUploadFiles = @(8 - cantImages);
         var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
         var invalidFileTypeMsg = "Tipo de archivo inválido";
         var msgWhileUploadFile = "Subiendo imagen, por favor espere";
@@ -280,5 +308,42 @@
                 showError(invalidFileTypeMsg);
             }
         }
+
+        let imagesCount = @(Model.TotalImages);
+
+        var slider = $('.slider').bxSlider({
+            pager: true,
+            adaptiveHeight: true,
+            touchEnabled: false
+        });
+
+        $('.action').click(function () {
+            if (imagesCount == 1) {
+                return;
+            }
+
+            let parent = $(this).parent();
+
+            $.ajax({
+                url: '@(Url.Action("DeleteImage","Orders"))',
+                data: {
+                    OrderId: parent.attr('data-orderId'),
+                    FileNameBlob: parent.attr('data-imageId')
+                },
+                type: 'POST',
+                success: function (response) {
+                    if (response.IsSuccesful) {
+                        imagesCount--;
+                        parent.parent().remove();
+                        slider.reloadSlider();
+                    } else {
+                        alert('No se ha podido eliminar la imagen');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        });
     });
 </script>

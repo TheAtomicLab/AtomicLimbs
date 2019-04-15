@@ -1,9 +1,5 @@
 ﻿using Limbs.Web.Entities.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Limbs.Web.ViewModels
 {
@@ -25,5 +21,17 @@ namespace Limbs.Web.ViewModels
 
         [Display(Name = "Color", Description = "(si es posible)")]
         public OrderColor Color { get; set; }
+
+        public string[] Images { get; set; }
+        public int TotalImages { get; set; }
+    }
+
+    public class OrderDeleteImage
+    {
+        [Required]
+        public int OrderId { get; set; }
+
+        [Required]
+        public string FileNameBlob { get; set; }
     }
 }

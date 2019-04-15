@@ -364,6 +364,8 @@
     <Content Include="Content\chatbox.css" />
     <Content Include="Content\estiloatomchoose.css" />
     <Content Include="Content\general_style.css" />
+    <Content Include="Content\images\bx_loader.gif" />
+    <Content Include="Content\images\controls.png" />
     <Content Include="Content\images\ui-icons_444444_256x240.png" />
     <Content Include="Content\images\ui-icons_555555_256x240.png" />
     <Content Include="Content\images\ui-icons_777620_256x240.png" />
@@ -417,6 +419,8 @@
     <Content Include="Content\jquery-ui.structure.min.css" />
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
+    <Content Include="Content\jquery.bxslider.min.css" />
+    <Content Include="Scripts\jquery.bxslider.min.js" />
     <Content Include="Content\ManoMedidas.css" />
     <Content Include="Content\manualembajador.css" />
     <Content Include="Content\publicOrders.css" />

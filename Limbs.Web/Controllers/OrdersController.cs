@@ -12,7 +12,6 @@ using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
-using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using Limbs.Web.Logic.Repositories.Interfaces;
@@ -92,22 +91,42 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> UploadImages(int? id)
+        public async Task<ActionResult> DeleteImage(OrderDeleteImage model)
         {
-            var orderModel = await Db.OrderModels.FindAsync(id);
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var orderModel = await Db.OrderModels.FindAsync(model.OrderId);
+            if (orderModel == null) return HttpNotFound();
+
+            var resultRemoveFile = await _userFiles.RemoveImageAsync(model.FileNameBlob);
+
+            if (resultRemoveFile)
             {
-                return View(orderModel);
+                string newImageStr = string.Empty;
+
+                var images = orderModel.IdImage.Split(',');
+
+                foreach (var image in images)
+                {
+                    var imageName = image.Split('/').LastOrDefault();
+
+                    if (imageName != model.FileNameBlob)
+                        newImageStr += $"{image},";
+                }
+
+                if (newImageStr.EndsWith(","))
+                    newImageStr = newImageStr.Remove(newImageStr.Length - 1);
+
+                orderModel.IdImage = newImageStr;
             }
 
-            //var isOk = await UpdateOrder(orderModel, orderPhoto, selectPhoto);
+            Db.OrderModels.AddOrUpdate(orderModel);
+            await Db.SaveChangesAsync();
 
-            //if (!isOk)
-            //{
-            //    return HttpNotFound();
-            //}
-
-            return RedirectToAction("Index");
+            return Json(new
+            {
+                IsSuccesful = resultRemoveFile
+            });
         }
 
         // GET: Orders/Index
