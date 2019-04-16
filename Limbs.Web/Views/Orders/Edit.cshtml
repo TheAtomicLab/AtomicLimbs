@@ -1,0 +1,349 @@
+﻿@model Limbs.Web.ViewModels.OrderUpdateModel
+
+@{
+    ViewBag.Title = "Edit";
+    var cantImages = Model.TotalImages;
+}
+
+<link rel="stylesheet" href="~/Content/basic.css">
+<link rel="stylesheet" href="~/Content/dropzone.css">
+<link rel="stylesheet" href="~/Content/jquery.bxslider.min.css">
+
+<div class="card center-card-l">
+    <h2>Editar orden</h2>
+
+    @using (Html.BeginForm("Edit", "Orders", FormMethod.Post, new { id = "frmEdit", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+
+            <div class="form-group">
+                <p class="form_title">@Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label" })</p>
+                <div class="col-md-10">
+                    @Html.EditorFor(x => x.ProductType, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+                    @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">@Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label" })</p>
+                <div class="col-md-10 edit_type_amp">
+
+                    @Html.RadioButtonFor(model => model.AmputationType, "A", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "B", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "C", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "D", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "E", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "F", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "G", new { @class = "tipo_amp2" })
+                    @Html.RadioButtonFor(model => model.AmputationType, "H", new { @class = "tipo_amp2" })
+
+                    @Html.ValidationMessageFor(model => model.AmputationType, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">Imagenes actuales</p>
+                <div class="slider">
+                    @foreach (var image in Model.Images)
+                    {
+                        <div class="slider-image-container">
+                            <img src="@image" />
+                            @{
+                                var imageId = image.Split('/').LastOrDefault();
+                                imageId = imageId == null ? string.Empty : imageId;
+                            }
+                            <div class="slider-image-action" data-imageId="@imageId" data-orderId="@(Model.Id)">
+                                <i class="fa fa-trash-o action" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">Agregar nuevas imagenes</p>
+                <div class="col-md-10">
+                    @if (cantImages < 8)
+                    {
+                        <div id="edit-upload-images" class="dropzone">
+                            <span id="msgManoImagen" style="color:blue;"></span>
+                            <ul id="msgErrorManoImagen" style="color:red;"></ul>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>No puede subir más de 8 imagenes por pedido.</h3>
+                    }
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-10">
+                    <div>
+                        <p class="form_title">Color</p>
+                        <div class="color_mano">
+                            @Html.RadioButtonFor(model => model.Color, "A")
+                            @Html.RadioButtonFor(model => model.Color, "B")
+                            @Html.RadioButtonFor(model => model.Color, "C")
+                            @Html.RadioButtonFor(model => model.Color, "D")
+                            @Html.RadioButtonFor(model => model.Color, "E")
+                            @Html.RadioButtonFor(model => model.Color, "F")
+                        </div>
+                    </div>
+                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">
+                    @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label" })
+                </p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Comments, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" id="enviar" value="Guardar" class="bn_blue" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @*<div>
+            @Html.ActionLink("Volver", "Index")
+        </div>*@
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        <script src="~/Scripts/dropzone.js"></script>
+        <script src="~/Scripts/jquery.bxslider.min.js"></script>
+    }
+</div>
+
+<style>
+    .img-delete-container {
+        width: 30%;
+        height: 100%;
+    }
+
+        .img-delete-container:hover {
+            background-color: rgba(0,0,0,.75);
+        }
+
+    .dz-remove {
+        margin-top: 1em;
+    }
+
+    .dz-imageMano {
+        height: 120px;
+    }
+
+        .dz-imageMano img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+</style>
+
+<script>
+    function objectifyForm(formArray) {//serialize data function
+        var returnArray = {};
+        for (var i = 0; i < formArray.length; i++) {
+            returnArray[formArray[i]['name']] = formArray[i]['value'];
+        }
+        return returnArray;
+    }
+
+    $(document).ready(function () {
+        var typeFileAccepted = "image/*";
+        var maxFileSizeImage = 5; //MB
+        var maxUploadFiles = @(8 - cantImages);
+        var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
+        var invalidFileTypeMsg = "Tipo de archivo inválido";
+        var msgWhileUploadFile = "Subiendo imagen, por favor espere";
+        let frm = $('#frmEdit');
+
+        var myDropzone = $("#edit-upload-images").dropzone({
+            url: '/Orders/Edit/',
+            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+            maxFilesize: maxFileSizeImage,
+            maxFiles: maxUploadFiles,
+            uploadMultiple: true,
+            maxThumbnailFilesize: 5,
+            acceptedFiles: "image/*",
+            autoProcessQueue: false,
+            autoQueue: true,
+            addRemoveLinks: true,
+            dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+            dictInvalidFileType: null,
+            dictRemoveFile: "Borrar imagen",
+            dictCancelUpload: null,
+            dictRemoveFileConfirmation: null,
+            createImageThumbnails: true,
+            init: function () {
+                dz = this;
+                $('#enviar').click(function () {
+                    dz.processQueue();
+                });
+
+                this.on('sendingmultiple', function (file, xhr, data) {
+                    var array = frm.serializeArray();
+                    for (var i = 0; i < array.length; i++) {
+                        data.append(array[i].name, array[i].value)
+                    }
+                });
+
+                this.on("processing", function (file) {
+                    $('#msgManoImagen').empty();
+                    $('#msgManoImagen').html(msgWhileUploadFile);
+                });
+
+                this.on("addedfile", function (file) {
+                    if (dz.files.length > maxUploadFiles) {
+                        dz.removeFile(dz.files[0]);
+                    }
+
+                    $('#msgErrorManoImagen').empty();
+
+                    updateRegisterFiles();
+                });
+
+                this.on("removedfile", function (file) {
+                    $('#msgErrorManoImagen').empty();
+
+                    updateRegisterFiles();
+
+                    dz.files.length == 0 ? disabledRegister() : "";
+
+                });
+
+                this.on("error", function (file, errormessage, xhr) {
+                    if (xhr == undefined)
+                        return false;
+
+                    var t = xhr.response.responseText;
+
+                    $('#msgManoImagen').empty();
+                    $('#msgErrorManoImagen').empty();
+                    showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
+                    console.log($(errormessage)[1].textContent);
+
+                    disabledRegister();
+                });
+
+                this.on("success", function (file, response) {
+                    window.location = response.Action;
+                });
+            }
+        });
+
+        function updateRegisterFiles() {
+            for (var i = 0; i < dz.files.length; i++) {
+
+                var file = dz.files[i];
+
+                if (!isConditionsValid(file)) {
+                    disabledRegister();
+                    showErrors(file);
+                    break;
+                } else {
+                    enableRegister();
+                }
+            }
+        }
+
+        function isValidSizeImage(file, nro) {
+            //var sizeFile = file.size / 1024 / 1024;
+            sizeFile = file.size / 1000000 // -> Dropzone calculate size
+            return sizeFile <= nro;
+        }
+
+        function validateImg() {
+            if (filesDropManoMedidas.length < 1) {
+                disabledRegister()
+            } else {
+                enableRegister()
+            }
+        }
+
+        function showError(msg) {
+            var ErrorMsg = "<li>" + msg + "</li>";
+
+            $('#msgErrorManoImagen').append(ErrorMsg);
+        }
+
+        function disabledRegister() {
+            $("[name=enviar]").prop('disabled', true);
+        };
+
+        function enableRegister() {
+            $("[name=enviar]").prop('disabled', false);
+        };
+
+        function isConditionsValid(file) {
+            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+            return ConditionTypeImage && ConditionSizeImage;
+        }
+
+        function showErrors(file) {
+            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+            Dropzone.sizeFile
+            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+            if (!ConditionSizeImage) {
+                showError(fileTooBigMsg);
+            }
+
+            if (!ConditionTypeImage) {
+                showError(invalidFileTypeMsg);
+            }
+        }
+
+        let imagesCount = @(Model.TotalImages);
+
+        var slider = $('.slider').bxSlider({
+            pager: true,
+            adaptiveHeight: true,
+            touchEnabled: false
+        });
+
+        $('.action').click(function () {
+            if (imagesCount == 1) {
+                return;
+            }
+
+            let parent = $(this).parent();
+
+            $.ajax({
+                url: '@(Url.Action("DeleteImage","Orders"))',
+                data: {
+                    OrderId: parent.attr('data-orderId'),
+                    FileNameBlob: parent.attr('data-imageId')
+                },
+                type: 'POST',
+                success: function (response) {
+                    if (response.IsSuccesful) {
+                        imagesCount--;
+                        parent.parent().remove();
+                        slider.reloadSlider();
+                    } else {
+                        alert('No se ha podido eliminar la imagen');
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        });
+    });
+</script>

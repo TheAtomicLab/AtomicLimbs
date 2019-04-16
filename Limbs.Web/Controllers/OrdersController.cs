@@ -12,11 +12,12 @@ using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
-using Limbs.Web.Common.Mail;
 using Microsoft.AspNet.Identity.Owin;
 using System.Collections.Generic;
 using Limbs.Web.Logic.Repositories.Interfaces;
 using Limbs.Web.Logic.Services;
+using Limbs.Web.ViewModels;
+using AutoMapper;
 
 namespace Limbs.Web.Controllers
 {
@@ -37,6 +38,95 @@ namespace Limbs.Web.Controllers
         {
             _userFiles = userFiles;
             _ns = notificationService;
+        }
+
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var orderModel = await Db.OrderModels.FindAsync(id);
+            if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var orderUpdateModel = Mapper.Map<OrderUpdateModel>(orderModel);
+            return View(orderUpdateModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(OrderUpdateModel orderUpdateModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(orderUpdateModel);
+            }
+
+            var orderModel = await Db.OrderModels.FindAsync(orderUpdateModel.Id);
+            if (orderModel == null) new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            orderModel = Mapper.Map(orderUpdateModel, orderModel);
+
+            if (Request.Files != null && Request.Files.Count > 0)
+            {
+                foreach (string fileStr in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileStr];
+
+                    if (file.ContentLength == 0 || file.ContentLength > 1000000 * 5 || !file.IsImage())
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Ocurrio un error en la imagen");
+
+                    var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+                    var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+
+                    orderModel.IdImage += $",{fileUrl.ToString()}";
+                }
+            }
+
+            Db.OrderModels.AddOrUpdate(orderModel);
+            await Db.SaveChangesAsync();
+
+            return Json(new
+            {
+                Action = Url.Action("Details", "Orders", new { id = orderModel.Id })
+            });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteImage(OrderDeleteImage model)
+        {
+            if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var orderModel = await Db.OrderModels.FindAsync(model.OrderId);
+            if (orderModel == null) return HttpNotFound();
+
+            var resultRemoveFile = await _userFiles.RemoveImageAsync(model.FileNameBlob);
+
+            if (resultRemoveFile)
+            {
+                string newImageStr = string.Empty;
+
+                var images = orderModel.IdImage.Split(',');
+
+                foreach (var image in images)
+                {
+                    var imageName = image.Split('/').LastOrDefault();
+
+                    if (imageName != model.FileNameBlob)
+                        newImageStr += $"{image},";
+                }
+
+                if (newImageStr.EndsWith(","))
+                    newImageStr = newImageStr.Remove(newImageStr.Length - 1);
+
+                orderModel.IdImage = newImageStr;
+            }
+
+            Db.OrderModels.AddOrUpdate(orderModel);
+            await Db.SaveChangesAsync();
+
+            return Json(new
+            {
+                IsSuccesful = resultRemoveFile
+            });
         }
 
         // GET: Orders/Index
@@ -85,7 +175,6 @@ namespace Limbs.Web.Controllers
             return View("ManoPedir", new OrderModel());
         }
 
-
         // POST: Orders/ManoPedir
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -118,7 +207,6 @@ namespace Limbs.Web.Controllers
                 ProductType = (ProductType)productType,
             });
         }
-
 
         // GET: Orders/BrazoImagen
         public ActionResult BrazoImagen()
@@ -156,7 +244,7 @@ namespace Limbs.Web.Controllers
                 {
                     if (img.ContentLength > 1000000 * 5)
                         ModelState.AddModelError("bigfile", @"La foto elegida es muy grande (max = 5 MB).");
-                    
+
                     if (!img.IsImage())
                         ModelState.AddModelError("noimage", @"El archivo seleccionado no es una imagen.");
                 }
@@ -212,7 +300,7 @@ namespace Limbs.Web.Controllers
             }
 
             var orderModel = await Db.OrderModels.FindAsync(orderId.Value);
-           
+
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -324,7 +412,7 @@ namespace Limbs.Web.Controllers
 
             return RedirectToAction("Index", "Users");
         }
-        
+
         // GET: Orders/GetUserImage
         [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public ActionResult GetUserImage(string url)
@@ -376,7 +464,7 @@ namespace Limbs.Web.Controllers
             await _ns.SendProofOfDeliveryNotification(orderModel);
 
             //return Redirect(Request.UrlReferrer?.PathAndQuery);
-            return RedirectToAction("Details",new { orderModel.Id });
+            return RedirectToAction("Details", new { orderModel.Id });
         }
 
         [HttpPost]
