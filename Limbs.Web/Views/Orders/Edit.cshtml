@@ -317,33 +317,70 @@
             touchEnabled: false
         });
 
+        let modal = $('#myModal');
+        let span = $("#close_modal");
+
+        span.click(function () {
+            modal.hide();
+        });
+
         $('.action').click(function () {
             if (imagesCount == 1) {
                 return;
             }
 
             let parent = $(this).parent();
+            modal.attr('data-modalOrderId', parent.attr('data-orderId'));
+            modal.attr('data-modalImageId', parent.attr('data-imageId'));
 
+            $('#myModal').show();
+        });
+
+        $('#btn-modal-delete').click(function () {
+            let imageId = modal.attr('data-modalImageId');
             $.ajax({
                 url: '@(Url.Action("DeleteImage","Orders"))',
                 data: {
-                    OrderId: parent.attr('data-orderId'),
-                    FileNameBlob: parent.attr('data-imageId')
+                    OrderId: modal.attr('data-modalOrderId'),
+                    FileNameBlob: imageId
                 },
                 type: 'POST',
                 success: function (response) {
                     if (response.IsSuccesful) {
                         imagesCount--;
-                        parent.parent().remove();
+                        let imageFromSlider = $('div[data-imageId="' + imageId + '"]').parent();
+                        imageFromSlider.remove();
+                        //parent.parent().remove();
                         slider.reloadSlider();
+
+                        modal.hide();
                     } else {
                         alert('No se ha podido eliminar la imagen');
+                        modal.hide();
                     }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
+                    modal.hide();
                 }
             });
         });
     });
 </script>
+
+<!-- The Modal -->
+<div id="myModal" class="modal" data-modalOrderId="" data-modalImageId="" style="display: none;">
+    <div class="limbs-modal-container">
+        <!-- Modal content -->
+        <div class="limbs-modal-header">
+            <span id="close_modal" class="close">&times;</span>
+            <h3>Eliminar Imágen</h3>
+        </div>
+        <div class="limbs-modal-content">
+            <h3 class="text-error modal-body-title">¿Está seguro que desea eliminar la imagen?</h3>
+            <div class="form-group">
+                <input id="btn-modal-delete" type="button" class="btn btn-default bn_blue" value="Aceptar" />
+            </div>
+        </div>
+    </div>
+</div>

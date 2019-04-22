@@ -52,7 +52,7 @@ header {
     left: 0px;
     background: #4772b2;
     color: white;
-    z-index: 100;
+    z-index: 9999999999999;
     box-shadow: black 0px 0px 12px -2px;
 }
 
@@ -1737,5 +1737,13 @@ button[name="recoverPassword"] {
 
 #Comments {
     margin-top: .5em;
+}
+
+.modal-body-title {
+    margin-bottom: 1em;
+}
+
+.text-error {
+    color: red;
 }
 /**/
