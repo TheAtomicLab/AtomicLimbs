@@ -128,31 +128,6 @@
     }
 </div>
 
-<style>
-    .img-delete-container {
-        width: 30%;
-        height: 100%;
-    }
-
-        .img-delete-container:hover {
-            background-color: rgba(0,0,0,.75);
-        }
-
-    .dz-remove {
-        margin-top: 1em;
-    }
-
-    .dz-imageMano {
-        height: 120px;
-    }
-
-        .dz-imageMano img {
-            height: 100%;
-            width: 100%;
-            object-fit: cover;
-        }
-</style>
-
 <script>
     function objectifyForm(formArray) {//serialize data function
         var returnArray = {};
@@ -164,7 +139,7 @@
 
     $(document).ready(function () {
         var typeFileAccepted = "image/*";
-        var maxFileSizeImage = 5; //MB
+        var maxFileSizeImage = 5;
         var maxUploadFiles = @(8 - cantImages);
         var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
         var invalidFileTypeMsg = "Tipo de archivo inválido";
@@ -264,14 +239,6 @@
             //var sizeFile = file.size / 1024 / 1024;
             sizeFile = file.size / 1000000 // -> Dropzone calculate size
             return sizeFile <= nro;
-        }
-
-        function validateImg() {
-            if (filesDropManoMedidas.length < 1) {
-                disabledRegister()
-            } else {
-                enableRegister()
-            }
         }
 
         function showError(msg) {
