@@ -511,7 +511,7 @@
 }
 
 .slider .slider-image-container img {
-    max-height: 500px;
+    max-height: 450px;
     position: relative;
     left: 50%;
     transform: translateX(-50%);

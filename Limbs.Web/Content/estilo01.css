@@ -39,6 +39,7 @@ body {
 .azulAtomicTx {
     color: #4772b2;
 }
+
 h3 {
     color: #444444;
 }
@@ -84,6 +85,7 @@ nav {
         margin-right: 20px;
         position: relative;
     }
+
         nav li.mobile_menu_only {
             display: none;
         }
@@ -135,36 +137,36 @@ nav {
     border-radius: 50%;
 }
 
-#icono_perfil #message-count {
-    font-size: 10px;
-    font-weight: bold;
-    background-color: red;
-    padding: 10px;
-    border-radius: 50%;
-    margin: 30px 0 0 30px;
-    color: white;
-    display: none;
-}
-    
+    #icono_perfil #message-count {
+        font-size: 10px;
+        font-weight: bold;
+        background-color: red;
+        padding: 10px;
+        border-radius: 50%;
+        margin: 30px 0 0 30px;
+        color: white;
+        display: none;
+    }
+
 #opciones_perfil {
     padding-top: 3px;
     position: relative;
     float: left;
 }
 
-#opciones_perfil li {
-    list-style-type: none;
-}
+    #opciones_perfil li {
+        list-style-type: none;
+    }
 
 .perfil_name {
     font-size: 15px;
 }
 
-.perfil_name a {
-    text-decoration-line: underline;
-    color: white;
-    font-size: 15px;
-}
+    .perfil_name a {
+        text-decoration-line: underline;
+        color: white;
+        font-size: 15px;
+    }
 
 .cerrar_sesion {
     font-size: 13px;
@@ -266,6 +268,7 @@ nav {
     margin-bottom: 20px;
     margin-top: 40px;
 }
+
 .form_main_title {
     font-weight: 500;
     max-width: 100%;
@@ -274,10 +277,12 @@ nav {
     align-items: flex-start;
     display: flex;
 }
+
     .form_main_title > div {
         display: flex;
         flex-wrap: wrap
     }
+
     .form_main_title .step {
         color: #4772b2;
         font-size: 100px;
@@ -285,6 +290,7 @@ nav {
         height: 90px;
         flex-shrink: 1;
     }
+
     .form_main_title .title {
         color: #4d4d4d;
         font-size: 26px;
@@ -294,6 +300,7 @@ nav {
         align-items: flex-end;
         width: 100%;
     }
+
     .form_main_title .subtitle {
         color: #555;
         font-weight: 400;
@@ -304,19 +311,23 @@ nav {
     max-width: 600px;
     display: flex;
 }
+
 .selector_lado {
     flex-basis: 85%;
     position: relative;
     box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
     cursor: pointer;
 }
+
     .selector_lado:nth-child(1) {
         margin-right: 10%;
     }
+
     .selector_lado .sq_sizer {
         width: 100%;
         padding-top: 100%;
     }
+
     .selector_lado p {
         position: absolute;
         color: #4772b2;
@@ -327,19 +338,24 @@ nav {
         transform: translate(-50%, -50%);
         transition: transform 0.3s ease;
     }
+
     .selector_lado:hover p {
         transform: translate(-50%, -50%) scale(1.2);
     }
+
 .select_brazo {
     visibility: hidden;
     pointer-events: none
 }
+
 #form_parte_2 {
     display: none;
 }
+
 #tipo_de_amp {
     max-width: 700px;
 }
+
     #tipo_de_amp .selector_amp {
         position: relative;
         width: 280px;
@@ -353,6 +369,7 @@ nav {
         background: white;
         overflow: hidden;
     }
+
         #tipo_de_amp .selector_amp:before {
             content: '';
             position: absolute;
@@ -365,14 +382,17 @@ nav {
             background-repeat: no-repeat;
             transition: transform 0.2s ease;
         }
+
         #tipo_de_amp .selector_amp:hover:before {
             transform: scale(1.15);
         }
+
         #tipo_de_amp .selector_amp .selector_size {
             position: relative;
             width: 100%;
             padding-top: 36%;
         }
+
     #tipo_de_amp .amp_selected.selector_amp:before {
         transform: scale(1.15);
     }
@@ -380,6 +400,7 @@ nav {
     #tipo_de_amp .amp_selected.selector_amp {
         outline: solid 3px #4772B2;
     }
+
     #tipo_de_amp .selector_amp .tipo_amp {
         position: absolute;
         visibility: hidden;
@@ -388,34 +409,44 @@ nav {
 .selector_amp[js_value=A]:before, .edit_type_amp .tipo_amp[value=A] {
     background-image: url(/Content/img/amputaciones_tipo/a.png);
 }
+
 .selector_amp[js_value=B]:before, .edit_type_amp .tipo_amp[value=B] {
     background-image: url(/Content/img/amputaciones_tipo/b.png);
 }
+
 .selector_amp[js_value=C]:before, .edit_type_amp .tipo_amp[value=C] {
     background-image: url(/Content/img/amputaciones_tipo/c.png);
 }
+
 .selector_amp[js_value=D]:before, .edit_type_amp .tipo_amp[value=D] {
     background-image: url(/Content/img/amputaciones_tipo/d.png);
 }
+
 .selector_amp[js_value=E]:before, .edit_type_amp .tipo_amp[value=E] {
     background-image: url(/Content/img/amputaciones_tipo/e.png);
 }
+
 .selector_amp[js_value=F]:before, .edit_type_amp .tipo_amp[value=F] {
     background-image: url(/Content/img/amputaciones_tipo/f.png);
 }
+
 .selector_amp[js_value=G]:before, .edit_type_amp .tipo_amp[value=G] {
     background-image: url(/Content/img/amputaciones_tipo/g.png);
 }
+
 .selector_amp[js_value=H]:before, .edit_type_amp .tipo_amp[value=H] {
     background-image: url(/Content/img/amputaciones_tipo/h.png);
 }
+
 .no-design {
     color: red;
 }
-.no-design h2 {
-    font-size: 18px;
-    color: red;
-}
+
+    .no-design h2 {
+        font-size: 18px;
+        color: red;
+    }
+
 .select_brazo select {
     padding: 10px;
 }
@@ -429,6 +460,7 @@ nav {
     margin: 10px;
     background-repeat: no-repeat;
 }
+
     .edit_type_amp .tipo_amp:checked {
         outline: solid 4px #4772b2;
     }
@@ -595,12 +627,14 @@ button[name="recoverPassword"] {
     padding: 15px 10px;
     text-align: left;
 }
-.address-selector ul {
-    margin-left: 15px;
-}
-.address-selector ul li {
-    margin-top: 7px;
-}
+
+    .address-selector ul {
+        margin-left: 15px;
+    }
+
+        .address-selector ul li {
+            margin-top: 7px;
+        }
 
 #cont_login input {
     margin-bottom: 5px;
@@ -705,11 +739,13 @@ button[name="recoverPassword"] {
 
 .color_mano {
 }
+
 .sel_color_container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
+
     .sel_color_container .sel_color_mano {
         position: relative;
         width: 120px;
@@ -723,65 +759,67 @@ button[name="recoverPassword"] {
         background-repeat: no-repeat;
         cursor: pointer;
     }
-    .sel_color_container .sel_color_mano input {
-        visibility: hidden;
-        cursor: pointer;
-        pointer-events: none;
-    }
+
+        .sel_color_container .sel_color_mano input {
+            visibility: hidden;
+            cursor: pointer;
+            pointer-events: none;
+        }
+
         .sel_color_container .sel_color_mano.color_selected {
             outline: solid 5px #4772b2;
         }
 
-    .color_mano input {
-        position: relative;
-        width: 140px;
-        height: 140px;
-        display: inline-block;
-        /*float: left;*/
-        margin-right: 10px;
-        margin-bottom: 10px;
-        /*appearance: inherit;*/
-        -moz-appearance: inherit;
-        -webkit-appearance: inherit;
-        border: solid 0px #4772B2;
-        transition: border 0.3s;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        cursor: pointer;
+.color_mano input {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    display: inline-block;
+    /*float: left;*/
+    margin-right: 10px;
+    margin-bottom: 10px;
+    /*appearance: inherit;*/
+    -moz-appearance: inherit;
+    -webkit-appearance: inherit;
+    border: solid 0px #4772B2;
+    transition: border 0.3s;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+    .color_mano input[value=A], .sel_color_container .sel_color_mano[js_value=A] {
+        background-image: url(/Content/img/Mano/mano_a.png);
     }
 
-.color_mano input[value=A], .sel_color_container .sel_color_mano[js_value=A] {
-    background-image: url(/Content/img/Mano/mano_a.png);
-}
+    .color_mano input[value=B], .sel_color_container .sel_color_mano[js_value=B] {
+        background-image: url(/Content/img/Mano/mano_b.png);
+    }
 
-.color_mano input[value=B], .sel_color_container .sel_color_mano[js_value=B] {
-    background-image: url(/Content/img/Mano/mano_b.png);
-}
+    .color_mano input[value=C], .sel_color_container .sel_color_mano[js_value=C] {
+        background-image: url(/Content/img/Mano/mano_c.png);
+    }
 
-.color_mano input[value=C], .sel_color_container .sel_color_mano[js_value=C] {
-    background-image: url(/Content/img/Mano/mano_c.png);
-}
+    .color_mano input[value=D], .sel_color_container .sel_color_mano[js_value=D] {
+        background-image: url(/Content/img/Mano/mano_d.png);
+    }
 
-.color_mano input[value=D], .sel_color_container .sel_color_mano[js_value=D] {
-    background-image: url(/Content/img/Mano/mano_d.png);
-}
+    .color_mano input[value=E], .sel_color_container .sel_color_mano[js_value=E] {
+        background-image: url(/Content/img/Mano/mano_e.png);
+    }
 
-.color_mano input[value=E], .sel_color_container .sel_color_mano[js_value=E] {
-    background-image: url(/Content/img/Mano/mano_e.png);
-}
+    .color_mano input[value=F], .sel_color_container .sel_color_mano[js_value=F] {
+        background-image: url(/Content/img/Mano/mano_f.png);
+    }
 
-.color_mano input[value=F], .sel_color_container .sel_color_mano[js_value=F] {
-    background-image: url(/Content/img/Mano/mano_f.png);
-}
+    .color_mano input:checked {
+        border: solid 5px #4772B2;
+    }
 
-        .color_mano input:checked {
-            border: solid 5px #4772B2;
-        }
-
-        .color_mano input:focus {
-            outline: none;
-        }
+    .color_mano input:focus {
+        outline: none;
+    }
 
 .atomForm-send {
     margin-top: 60px;
@@ -835,13 +873,13 @@ button[name="recoverPassword"] {
     text-align: center;
 }
 
-#home a[name="btn_pedir"] {
-    margin: 30px 0px;
-}
+    #home a[name="btn_pedir"] {
+        margin: 30px 0px;
+    }
 
-#home .titleHome {
-    text-align: left;
-}
+    #home .titleHome {
+        text-align: left;
+    }
 
 .orderContainer {
     margin: 20px 0px;
@@ -849,50 +887,61 @@ button[name="recoverPassword"] {
     position: relative;
     overflow: hidden;
 }
+
     .orderContainer .headerOrder {
         display: flex;
         align-items: baseline;
     }
+
         .orderContainer .headerOrder h2 {
             font-size: 19px;
             font-weight: 400;
             margin-right: 7px;
         }
+
         .orderContainer .headerOrder p {
             font-size: 14px;
             font-weight: 400;
             color: #6d6d6d;
             font-style: italic;
         }
+
     .orderContainer .statusDescription {
         margin: 10px 0px;
     }
+
         .orderContainer .statusDescription h3 {
             color: #4772b2;
         }
+
         .orderContainer .statusDescription p {
         }
-.ordersLabels, .orderContainer .statusDescription p {
-    color: #6d6d6d;
-    font-weight: 400;
-    font-size: 14px;
-}
+
+        .ordersLabels, .orderContainer .statusDescription p {
+            color: #6d6d6d;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
 .pedidoLinea {
     position: relative;
     width: calc(100% - 110px);
     margin: 0px auto;
     pointer-events: none;
 }
+
 .puntosContainer {
     width: 100%;
     height: 50px;
     position: relative;
 }
+
     .puntosContainer .contenedorLinea {
         position: absolute;
         width: 25%;
         height: 100%;
     }
+
         .puntosContainer .contenedorLinea .circulo {
             width: 28px;
             height: 28px;
@@ -904,6 +953,7 @@ button[name="recoverPassword"] {
             transform: translateX(-50%);
             z-index: 10;
         }
+
         .puntosContainer .contenedorLinea .linea {
             width: 100%;
             height: 5px;
@@ -913,18 +963,22 @@ button[name="recoverPassword"] {
             left: -100%;
             z-index: 9;
         }
+
     .puntosContainer .estadoPasado .circulo, .puntosContainer .estadoPasado .linea {
         background: #4772b2;
     }
+
 .labelsContainer {
     width: 100%;
     height: 50px;
     position: relative;
 }
+
     .labelsContainer p {
         position: absolute;
         transform: translateX(-50%);
     }
+
         .labelsContainer p.labelPresente {
             color: #4772b2;
             font-weight: 500;
@@ -1016,6 +1070,7 @@ button[name="recoverPassword"] {
             max-width: 500px;
             margin: 0px auto;
         }
+
             .help-pedirunaprotesis .pregunta .opciones-cuenta .opcion {
                 position: relative;
                 margin: 20px;
@@ -1026,10 +1081,12 @@ button[name="recoverPassword"] {
                 background-color: white;
                 box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
             }
+
                 .help-pedirunaprotesis .pregunta .opciones-cuenta .opcion div {
                     position: relative;
                     padding-top: 100%;
                 }
+
                 .help-pedirunaprotesis .pregunta .opciones-cuenta .opcion p {
                     margin: 0px;
                     color: #4772b2;
@@ -1131,9 +1188,11 @@ button[name="recoverPassword"] {
     color: #4772B2;
     padding: 30px 0px;
 }
+
 #panel_embajadores .info_panel_embajador {
     text-align: center;
 }
+
 #estadistica_emb {
     overflow: auto;
 }
@@ -1188,6 +1247,7 @@ button[name="recoverPassword"] {
     background-color: #4772B2;
     color: white;
 }
+
 .table-pedidos {
     display: block
 }
@@ -1239,6 +1299,7 @@ button[name="recoverPassword"] {
             line-height: 12px;
             bottom: 7px;
         }
+
         .table-pedidos > *:hover > * {
             color: #ffffff !important;
         }
@@ -1256,20 +1317,24 @@ button[name="recoverPassword"] {
     box-sizing: border-box;
     position: relative;
 }
+
     .head_info h1 {
         font-size: 3em;
         font-weight: 200;
         color: #4772B2;
     }
+
 #estado_pedido {
     position: absolute;
     right: 5px;
     bottom: 5px;
 }
+
 .grid_pedidos .card img {
     max-height: 200px;
     max-width: 200px;
 }
+
 #info_solicitud {
     max-width: 900px;
     width: 100%;
@@ -1286,9 +1351,11 @@ button[name="recoverPassword"] {
         color: #4772B2;
         padding: 10vh 0px 10px 0px;
     }
-#accion_pedido{
+
+#accion_pedido {
     padding: 20px 0px;
 }
+
 .tabla_datos {
     padding: 3px;
     text-align: left;
@@ -1297,24 +1364,27 @@ button[name="recoverPassword"] {
     width: 100%;
 }
 
-.tabla_datos tr {
-    border-bottom: solid 1px #dadada;
-}
+    .tabla_datos tr {
+        border-bottom: solid 1px #dadada;
+    }
 
-.tabla_datos tr td {
-    padding: 11px 18px;
-}
-.tabla_datos tr:last-of-type {
-    border-bottom: none;
-}
+        .tabla_datos tr td {
+            padding: 11px 18px;
+        }
 
-.tabla_datos ul.log li {
-    max-width: 50vw;
-    word-wrap: break-word;
-}
+        .tabla_datos tr:last-of-type {
+            border-bottom: none;
+        }
+
+    .tabla_datos ul.log li {
+        max-width: 50vw;
+        word-wrap: break-word;
+    }
+
 .printed_pieces_box button[type="submit"] {
     margin-top: 10px;
 }
+
 .printed_pieces_box .pieces_row {
     width: 100%;
     padding: 20px 0px;
@@ -1324,186 +1394,194 @@ button[name="recoverPassword"] {
     justify-content: flex-start;
     align-items: center;
 }
+
     .printed_pieces_box .pieces_row:last-of-type {
         border-bottom: none;
     }
-.printed_pieces_box .pieces_row .cl_l, .printed_pieces_box .pieces_row .cl_r {
-    box-sizing: border-box;
-}
-.printed_pieces_box .pieces_row .cl_l {
-    width: 40%;
-    padding-left: 20px;
-    font-size: 17px;
-    min-width: 340px;
-}
+
+    .printed_pieces_box .pieces_row .cl_l, .printed_pieces_box .pieces_row .cl_r {
+        box-sizing: border-box;
+    }
+
+    .printed_pieces_box .pieces_row .cl_l {
+        width: 40%;
+        padding-left: 20px;
+        font-size: 17px;
+        min-width: 340px;
+    }
+
 .pieces_row .cl_l ul li {
     list-style-type: none;
     margin: 6px 0px;
 }
+
 .pieces_row .cl_l .cl_check, .pieces_row .cl_l p {
     display: inline-block;
     margin-right: 5px;
     vertical-align: middle
 }
-.pieces_row .cl_l .cl_check input{
-    width: 20px;
-    height: 20px;
-    vertical-align: middle;
-}
+
+    .pieces_row .cl_l .cl_check input {
+        width: 20px;
+        height: 20px;
+        vertical-align: middle;
+    }
+
 .printed_pieces_box .pieces_row .cl_r {
     width: 50%;
     padding: 10px 20px;
     min-width: 320px;
     margin: 0px auto;
 }
+
     .printed_pieces_box .pieces_row .cl_r img {
         width: 100%;
         max-height: initial;
         max-width: initial;
     }
-    /**FOOOOOTEEEERRRR**/
-    .footer-distributed {
-        background-color: #292c2f;
-        box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
-        box-sizing: border-box;
-        width: 100%;
-        text-align: left;
-        font: bold 16px sans-serif;
-        padding: 55px 50px 20px;
-        min-height: 255px;
-    }
-
-.footer-distributed .footer-left,
-.footer-distributed .footer-center,
-.footer-distributed .footer-right {
-    display: inline-block;
-    vertical-align: top;
+/**FOOOOOTEEEERRRR**/
+.footer-distributed {
+    background-color: #292c2f;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+    box-sizing: border-box;
+    width: 100%;
+    text-align: left;
+    font: bold 16px sans-serif;
+    padding: 55px 50px 20px;
+    min-height: 255px;
 }
 
-/* Footer left */
-
-.footer-distributed .footer-left {
-    width: 40%;
-}
-
-/* The company logo */
-
-.footer-distributed h3 {
-    color: #ffffff;
-    font: normal 36px 'Cookie', cursive;
-    margin: 0;
-}
-
-    .footer-distributed h3 span {
-        color: #0172c1;
-    }
-
-/* Footer links */
-
-.footer-distributed .footer-links {
-    color: #ffffff;
-    margin: 20px 0 12px;
-    padding: 0;
-}
-
-    .footer-distributed .footer-links a {
+    .footer-distributed .footer-left,
+    .footer-distributed .footer-center,
+    .footer-distributed .footer-right {
         display: inline-block;
-        line-height: 1.8;
-        text-decoration: none;
-        color: inherit;
+        vertical-align: top;
     }
 
-.footer-distributed .footer-company-name {
-    color: #8f9296;
-    font-size: 14px;
-    font-weight: normal;
-    margin: 0;
-}
+    /* Footer left */
 
-/* Footer Center */
-
-.footer-distributed .footer-center {
-    width: 35%;
-}
-
-    .footer-distributed .footer-center i {
-        background-color: #33383b;
-        color: #ffffff;
-        font-size: 25px;
-        width: 38px;
-        height: 38px;
-        border-radius: 50%;
-        text-align: center;
-        line-height: 42px;
-        margin: 10px 15px;
-        vertical-align: middle;
+    .footer-distributed .footer-left {
+        width: 40%;
     }
 
-        .footer-distributed .footer-center i.fa-envelope {
-            font-size: 17px;
-            line-height: 38px;
-        }
+    /* The company logo */
 
-    .footer-distributed .footer-center p {
-        display: inline-block;
+    .footer-distributed h3 {
         color: #ffffff;
-        vertical-align: middle;
+        font: normal 36px 'Cookie', cursive;
         margin: 0;
     }
 
-        .footer-distributed .footer-center p span {
-            display: block;
-            font-weight: normal;
-            font-size: 14px;
-            line-height: 2;
-        }
-
-        .footer-distributed .footer-center p a {
+        .footer-distributed h3 span {
             color: #0172c1;
-            text-decoration: none;
         }
 
+    /* Footer links */
 
-/* Footer Right */
-
-.footer-distributed .footer-right {
-    width: 20%;
-}
-
-.footer-distributed .footer-company-about {
-    line-height: 20px;
-    color: #92999f;
-    font-size: 13px;
-    font-weight: normal;
-    margin: 0;
-}
-
-    .footer-distributed .footer-company-about span {
-        display: block;
+    .footer-distributed .footer-links {
         color: #ffffff;
+        margin: 20px 0 12px;
+        padding: 0;
+    }
+
+        .footer-distributed .footer-links a {
+            display: inline-block;
+            line-height: 1.8;
+            text-decoration: none;
+            color: inherit;
+        }
+
+    .footer-distributed .footer-company-name {
+        color: #8f9296;
         font-size: 14px;
-        font-weight: bold;
-        margin-bottom: 20px;
+        font-weight: normal;
+        margin: 0;
     }
 
-.footer-distributed .footer-icons {
-    margin-top: 25px;
-}
+    /* Footer Center */
 
-    .footer-distributed .footer-icons a {
-        display: inline-block;
-        width: 35px;
-        height: 35px;
-        cursor: pointer;
-        background-color: #33383b;
-        border-radius: 2px;
-        font-size: 20px;
-        color: #ffffff;
-        text-align: center;
-        line-height: 35px;
-        margin-right: 3px;
-        margin-bottom: 5px;
+    .footer-distributed .footer-center {
+        width: 35%;
     }
+
+        .footer-distributed .footer-center i {
+            background-color: #33383b;
+            color: #ffffff;
+            font-size: 25px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 42px;
+            margin: 10px 15px;
+            vertical-align: middle;
+        }
+
+            .footer-distributed .footer-center i.fa-envelope {
+                font-size: 17px;
+                line-height: 38px;
+            }
+
+        .footer-distributed .footer-center p {
+            display: inline-block;
+            color: #ffffff;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+            .footer-distributed .footer-center p span {
+                display: block;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 2;
+            }
+
+            .footer-distributed .footer-center p a {
+                color: #0172c1;
+                text-decoration: none;
+            }
+
+
+    /* Footer Right */
+
+    .footer-distributed .footer-right {
+        width: 20%;
+    }
+
+    .footer-distributed .footer-company-about {
+        line-height: 20px;
+        color: #92999f;
+        font-size: 13px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+        .footer-distributed .footer-company-about span {
+            display: block;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+    .footer-distributed .footer-icons {
+        margin-top: 25px;
+    }
+
+        .footer-distributed .footer-icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            background-color: #33383b;
+            border-radius: 2px;
+            font-size: 20px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 3px;
+            margin-bottom: 5px;
+        }
 
 .footer-embajadores {
     text-align: center;
@@ -1747,3 +1825,26 @@ button[name="recoverPassword"] {
     color: red;
 }
 /**/
+
+.img-delete-container {
+    width: 30%;
+    height: 100%;
+}
+
+    .img-delete-container:hover {
+        background-color: rgba(0,0,0,.75);
+    }
+
+.dz-remove {
+    margin-top: 1em;
+}
+
+.dz-imageMano {
+    height: 120px;
+}
+
+    .dz-imageMano img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }

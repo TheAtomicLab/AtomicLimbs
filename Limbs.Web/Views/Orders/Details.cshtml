@@ -4,8 +4,10 @@
     ViewBag.Title = "Detalles de pedido";
 }
 
+<link rel="stylesheet" href="~/Content/jquery.bxslider.min.css">
+
 <article id="info_pedido">
-    
+
     <div id="Header" class="head_info">
         @Html.Partial("Details/_Header", Model)
     </div>
@@ -67,6 +69,8 @@
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
     <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
     <script src="@Url.Content("~/Scripts/pages/orders_actions.js")"></script>
+    <script src="~/Scripts/jquery.bxslider.min.js"></script>
+
     <script type="text/javascript">
         $(function () {
             $('form', $("#PrintedPieces")).submit(function (e) {
