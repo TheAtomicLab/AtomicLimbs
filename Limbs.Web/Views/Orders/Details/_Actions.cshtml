@@ -95,7 +95,7 @@
             <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
         }
 
-        @if (Model.Status == OrderStatus.NotAssigned)
+        @if (!User.IsInRole(AppRoles.Administrator) && Model.Status == OrderStatus.NotAssigned)
         {
             <a href="@Url.Action("Edit", "Orders", new { id = Model.Id })" class="bn_blue">Editar pedido</a>
         }

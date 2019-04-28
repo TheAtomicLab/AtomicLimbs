@@ -349,6 +349,16 @@ namespace Limbs.Web.Areas.Admin.Controllers
                 order.OrderAmbassador = null;
             }
 
+            if (newStatus == OrderStatus.Rejected)
+            {
+                Db.OrderRefusedModels.Add(new OrderRefusedModels
+                {
+                    OrderId = order.Id,
+                    AmbassadorId = order.OrderAmbassador.Id,
+                    Date = DateTime.Now
+                });
+            }
+
             order.Status = newStatus;
             order.StatusLastUpdated = DateTime.UtcNow;
             order.LogMessage(User, $"Change status from {oldStatus} to {newStatus}");
@@ -357,6 +367,15 @@ namespace Limbs.Web.Areas.Admin.Controllers
             await Db.SaveChangesAsync();
 
             await _ns.SendStatusChangeNotification(order, oldStatus, newStatus);
+
+            //Luego de actualizar el estado a rejected (SaveChanges)
+            if (newStatus == OrderStatus.Rejected)
+            {
+                AmbassadorModel ambassador = await GetAmbassadorAutoAssignAsync(order, true);
+
+                if (ambassador != null)
+                    await AssignmentAmbassadorAsync(ambassador.Id, order.Id);
+            }
 
             return RedirectToLocal(returnUrl);
         }
@@ -456,21 +475,17 @@ namespace Limbs.Web.Areas.Admin.Controllers
             });
         }
 
-        public async Task<ActionResult> AssignAmbassadorAuto(int id)
+        private async Task<AmbassadorModel> GetAmbassadorAutoAssignAsync(OrderModel order, bool fromRefuse)
         {
             AmbassadorModel closestAmbassador = null;
-            OrderModel order = await Db.OrderModels.Include(p => p.OrderRequestor).FirstOrDefaultAsync(p => p.Id == id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
 
             DbGeography location = order.OrderRequestor.Location;
-            closestAmbassador = await Db.AmbassadorModels.Include(p => p.User)
+            closestAmbassador = await Db.AmbassadorModels.Include(p => p.User).Include(p => p.RefusedOrders)
                                                     .OrderBy(p => p.Location.Distance(location))
                                                     .FirstOrDefaultAsync(p => (p.Location.Distance(location) / 1000) <= 50d &&
                                                         p.User.EmailConfirmed &&
-                                                        !p.OrderModel.Any(o => (o.Id == id && o.Status == OrderStatus.Rejected) || 
+                                                        !p.RefusedOrders.Any(x => x.OrderId == order.Id) &&
+                                                        !p.OrderModel.Any(o =>
                                                             o.Status == OrderStatus.PreAssigned ||
                                                             o.Status == OrderStatus.Pending ||
                                                             o.Status == OrderStatus.Ready ||
@@ -480,9 +495,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 HttpResponseMessage response = await CallAndreaniApiAsync();
                 if (!response.IsSuccessStatusCode)
-                {
-                    return HttpNotFound();
-                }
+                    return closestAmbassador;
 
                 string content = await response.Content.ReadAsStringAsync();
                 XDocument createXml = XDocument.Parse(content);
@@ -508,32 +521,45 @@ namespace Limbs.Web.Areas.Admin.Controllers
                     TipoTelefono3 = p.Element("TipoTelefono3").Value,
                     Location = SiteHelper.GeneratePoint($"{p.Element("Latitud").Value},{p.Element("Longitud").Value}".Split(','))
                 });
+
                 var listAmbassadors = await Db.AmbassadorModels
                                             .Include(p => p.User)
-                                            .Where(p => p.User.EmailConfirmed && 
-                                                        !p.OrderModel.Any(o => (o.Id == id && o.Status == OrderStatus.Rejected) ||
-                                                            o.Status == OrderStatus.PreAssigned ||
+                                            .Include(p => p.RefusedOrders)
+                                            .Where(p => p.User.EmailConfirmed &&
+                                                        !p.RefusedOrders.Any(x => x.OrderId == order.Id) &&
+                                                        !p.OrderModel.Any(o => o.Status == OrderStatus.PreAssigned ||
                                                             o.Status == OrderStatus.Pending ||
                                                             o.Status == OrderStatus.Ready ||
                                                             o.Status == OrderStatus.ArrangeDelivery))
                                             .OrderBy(p => p.Location.Distance(p.Location))
                                             .ToListAsync();
 
-                closestAmbassador = listAmbassadors.FirstOrDefault(p => 
+                closestAmbassador = listAmbassadors.FirstOrDefault(p =>
                                                         ubicaciones.Any(x => (x.Location.Distance(p.Location) / 1000) <= 20d));
             }
 
             if (closestAmbassador == null)
             {
-                TempData["msg"] = "No se han encontrado embajadores cercanos para asignar automáticamente";
-                return RedirectToAction("Details", "Orders", new { id, area = "" });
+                if (!fromRefuse)
+                    TempData["msg"] = "No se han encontrado embajadores cercanos para asignar automáticamente";                
             }
+
+            return closestAmbassador;
+        }
+
+        public async Task<ActionResult> AssignAmbassadorAuto(int id)
+        {
+            OrderModel order = await Db.OrderModels.Include(p => p.OrderRequestor).FirstOrDefaultAsync(p => p.Id == id);
+            if (order == null)
+                return HttpNotFound();
+
+            AmbassadorModel closestAmbassador = await GetAmbassadorAutoAssignAsync(order, false);
+            if (closestAmbassador == null)
+                return RedirectToAction("Details", "Orders", new { order.Id, area = "" });
 
             HttpStatusCodeResult result = await AssignmentAmbassadorAsync(closestAmbassador.Id, id);
             if (result.StatusCode == 404)
-            {
                 return HttpNotFound();
-            }
 
             return RedirectToAction("Index");
         }
@@ -604,16 +630,12 @@ namespace Limbs.Web.Areas.Admin.Controllers
             OrderModel order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
 
             if (order == null)
-            {
                 return new HttpStatusCodeResult(404);
-            }
 
             AmbassadorModel newAmbassador = await Db.AmbassadorModels.FindAsync(id);
 
             if (newAmbassador == null)
-            {
                 return new HttpStatusCodeResult(404);
-            }
 
             AmbassadorModel oldAmbassador = order.OrderAmbassador;
             OrderStatus orderOldStatus = order.Status;

@@ -108,6 +108,7 @@
     <Compile Include="Models\HttpPostedFileBase.cs" />
     <Compile Include="Models\MessageModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\OrderRefusedModels.cs" />
     <Compile Include="Models\OrderSizesModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

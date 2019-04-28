@@ -15,6 +15,7 @@ namespace Limbs.Web.Entities.DbContext
             return new ApplicationDbContext();
         }
 
+        public DbSet<OrderRefusedModels> OrderRefusedModels { get; set; }
         public DbSet<UserModel> UserModelsT { get; set; }
 
         public DbSet<AmbassadorModel> AmbassadorModels { get; set; }
