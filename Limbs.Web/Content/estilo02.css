@@ -89,6 +89,7 @@
             padding: 20px 0px;
             margin: 0px;
         }
+
             nav li.mobile_menu_only {
                 display: block;
             }
@@ -174,27 +175,34 @@
     .orderContainer {
         padding: 10px;
     }
+
     .pedidoLinea {
         width: calc(100% - 30px);
     }
+
     .labelsContainer p {
         display: none
     }
+
         .labelsContainer p:first-child {
             left: -12px !important;
             transform: none;
         }
+
         .labelsContainer p:last-child {
             left: initial !important;
             transform: none;
             right: -12px;
         }
+
         .labelsContainer p.labelPresente {
             display: initial;
         }
-.orderContainer .statusDescription h3 {
-    font-size: 15px;
-}
+
+    .orderContainer .statusDescription h3 {
+        font-size: 15px;
+    }
+
     #tus_pedidos td, #tus_pedidos th {
         padding: 11px 5px !important;
         font-size: 0.8em;
@@ -241,32 +249,37 @@
         min-width: initial;
         margin: 20px 0px;
     }
+
     #panele_embajadores table tr td {
         overflow-x: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         max-width: calc(100vw - 190px);
     }
+
     #paneles_embajador .card {
         padding: 20px 10px;
         max-width: 550px;
         margin-left: auto;
         margin-right: auto;
     }
+
         #paneles_embajador .card h2 {
             font-size: 16px;
         }
-        /*info pedido*/
-        #estado_pedido {
-            position: relative;
-            padding-top: 50px;
-        }
+    /*info pedido*/
+    #estado_pedido {
+        position: relative;
+        padding-top: 50px;
+    }
+
     .table-pedidos > * {
         color: #434343;
     }
-    .table-pedidos > * > div:nth-child(2) {
-        color: #4772b2;
-    }
+
+        .table-pedidos > * > div:nth-child(2) {
+            color: #4772b2;
+        }
 
     .flex_info {
         display: block;
@@ -356,7 +369,7 @@
     margin-bottom: 1em;
 }
 
-.fontUploadFile{
+.fontUploadFile {
     font-family: Roboto,sans-serif;
 }
 
@@ -519,24 +532,26 @@
 
 .slider-image-container {
     position: relative;
-    height:100%;
+    height: 100%;
     width: 100%;
 }
 
-    .slider-image-container .slider-image-action {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: none;
-        color: #fff;
-    }
 
-    .slider-image-container:hover .slider-image-action{
-        display: block;
-        background: rgba(0,0,0,.6);
-    }
+
+.slider-image-container .slider-image-action {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    color: #fff;
+}
+
+.slider-image-container:hover .slider-image-action {
+    display: block;
+    background: rgba(0,0,0,.6);
+}
 
 .slider-image-action .action {
     position: relative;
@@ -549,4 +564,11 @@
 
 .action:hover {
     cursor: pointer;
+}
+
+@media only screen and (max-width: 760px) {
+    .slider-image-container .slider-image-action {
+        display: block;
+        background: rgba(0,0,0,.6);
+    }
 }

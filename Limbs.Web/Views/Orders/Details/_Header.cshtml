@@ -7,13 +7,21 @@
     <p>Estado:</p>
     @if (TempData["Generating"] == null)
     {
-        <h2>
+        string statusDescription = string.Empty;
 
-            @Model.Status.ToDescription()
+        <h2>
+            @if (Model.Status == OrderStatus.Rejected && User.IsInRole(AppRoles.Requester))
+            {
+                statusDescription = OrderStatus.NotAssigned.ToDescription();
+            } else
+            {
+                statusDescription = @Model.Status.ToDescription();
+            }
+            @statusDescription
             @if (Model.Status == OrderStatus.Pending)
             {
-            <text>(</text>
-            @(Model.Pieces.GetPercentage())<text>%)</text>
+                <text>(</text>
+                @(Model.Pieces.GetPercentage())<text>%)</text>
             }
         </h2>
     }
