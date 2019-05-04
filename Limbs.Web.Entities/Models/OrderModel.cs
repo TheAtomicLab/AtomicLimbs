@@ -171,7 +171,7 @@ namespace Limbs.Web.Entities.Models
         {
             var separator = ",";
 
-            List<String> listOrder = new List<String>
+            List<string> listOrder = new List<string>
             {
                 this.Id.ToString(),
                 this.Status.ToString(),
@@ -187,19 +187,19 @@ namespace Limbs.Web.Entities.Models
                 this.Sizes?.C.ToString(),
                 this.Sizes?.D.ToString(),
                 StringToCSVCell(this.Comments),
-                this.IdImage,
-                this.ProofOfDelivery,
+                this.IdImage ?? null,
+                this.ProofOfDelivery ?? null,
                 this.DeliveryCourier.ToString(),
                 StringToCSVCell(this.DeliveryTrackingCode),
-                this.DeliveryPostalLabel,
+                this.DeliveryPostalLabel ?? null,
                 this.StatusLastUpdated.ToString(),
 
-                this.OrderRequestor.ToString(),
+                this.OrderRequestor?.ToString(),
                 this.OrderAmbassador?.ToString(),
 
             };
 
-            return String.Join(separator, listOrder);
+            return string.Join(separator, listOrder);
         }
 
         //TODO: Change this
