@@ -242,6 +242,15 @@ namespace Limbs.Web.Areas.Admin.Controllers
             mailMessage.Subject = subject;
 
             await AzureQueue.EnqueueAsync(mailMessage);
+            if (model.Order_Id != null)
+            {
+                OrderModel order = await Db.OrderModels.FindAsync(model.Order_Id);
+                if (order != null)
+                {
+                    order.LogMessage(User, "Request more info because of wrong info", order.ToString());
+                    await Db.SaveChangesAsync();
+                }
+            }
 
             return RedirectToAction("Details", "Orders", new { id = model.Order_Id, area = "" });
         }
@@ -259,6 +268,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
             {
                 return false;
             }
+
+            string olderModelStr = oldOrder.ToString();
 
             //Campos a editar
             oldOrder.AmputationType = orderModel.AmputationType;
@@ -281,8 +292,8 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //if (oldStatus != newStatus) oldOrder.Status = newStatus;
             //
 
+            oldOrder.LogMessage(User, "Edited order", olderModelStr);
             Db.OrderModels.AddOrUpdate(oldOrder);
-            oldOrder.LogMessage(User, "Edited order", oldOrder.ToString());
             //oldOrder.LogMessage(User, "Edited order ");
 
             await Db.SaveChangesAsync();

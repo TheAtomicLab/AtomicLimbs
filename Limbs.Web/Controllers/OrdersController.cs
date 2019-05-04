@@ -18,6 +18,7 @@ using Limbs.Web.Logic.Repositories.Interfaces;
 using Limbs.Web.Logic.Services;
 using Limbs.Web.ViewModels;
 using AutoMapper;
+using Newtonsoft.Json;
 
 namespace Limbs.Web.Controllers
 {
@@ -60,9 +61,10 @@ namespace Limbs.Web.Controllers
                 return View(orderUpdateModel);
             }
 
-            var orderModel = await Db.OrderModels.FindAsync(orderUpdateModel.Id);
+            OrderModel orderModel = await Db.OrderModels.FindAsync(orderUpdateModel.Id);
             if (orderModel == null) new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
+            string olderModelStr = orderModel.ToString();
             orderModel = Mapper.Map(orderUpdateModel, orderModel);
 
             if (Request.Files != null && Request.Files.Count > 0)
@@ -81,7 +83,9 @@ namespace Limbs.Web.Controllers
                 }
             }
 
+            orderModel.LogMessage(User, "Edited order by user", olderModelStr);
             Db.OrderModels.AddOrUpdate(orderModel);
+
             await Db.SaveChangesAsync();
 
             return Json(new
