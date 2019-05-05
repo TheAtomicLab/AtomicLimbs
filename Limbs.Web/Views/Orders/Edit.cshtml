@@ -54,7 +54,7 @@
             </div>
 
             <div class="form-group">
-                <p class="form_title">Imagenes actuales</p>
+                <p class="form_title">Imágenes actuales</p>
                 <div class="slider">
                     @foreach (var image in Model.Images)
                     {
@@ -73,19 +73,14 @@
             </div>
 
             <div class="form-group">
-                <p class="form_title">Agregar nuevas imagenes</p>
+                <p class="form_title">Agregar nuevas imágenes</p>
                 <div class="col-md-10">
-                    @if (cantImages < 8)
-                    {
-                        <div id="edit-upload-images" class="dropzone">
-                            <span id="msgManoImagen" style="color:blue;"></span>
-                            <ul id="msgErrorManoImagen" style="color:red;"></ul>
-                        </div>
-                    }
-                    else
-                    {
-                        <h3>No puede subir más de 8 imagenes por pedido.</h3>
-                    }
+                    <div id="edit-upload-images" class="dropzone" style="display: none;">
+                        <span id="msgManoImagen" style="color:blue;"></span>
+                        <ul id="msgErrorManoImagen" style="color:red;"></ul>
+                    </div>
+
+                    <h3 id="title-no-more-images" style="display: none;">No puede subir más de 8 imágenes por pedido.</h3>
                 </div>
             </div>
             <br />
@@ -132,10 +127,8 @@
         @Scripts.Render("~/bundles/jqueryval")
         <script src="~/Scripts/dropzone.js"></script>
         <script src="~/Scripts/jquery.bxslider.min.js"></script>
-    }
-</div>
 
-<script>
+        <script>
     function objectifyForm(formArray) {//serialize data function
         var returnArray = {};
         for (var i = 0; i < formArray.length; i++) {
@@ -144,23 +137,39 @@
         return returnArray;
     }
 
+
+
     $(document).ready(function () {
         var typeFileAccepted = "image/*";
         var maxFileSizeImage = 5;
+        var uploadMultipleVar = true;
         var maxUploadFiles = @(8 - cantImages);
         var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
         var invalidFileTypeMsg = "Tipo de archivo inválido";
         var msgWhileUploadFile = "Subiendo imagen, por favor espere";
+
         let frm = $('#frmEdit');
+        let titleNoUploadImages = $('#title-no-more-images');
+        let dropzoneContainerClass = $('#edit-upload-images');
+
+        frm.on('submit', function (e) {
+            e.preventDefault();
+
+            $.post(frm.attr('action'), frm.serialize(), function (json) {
+                window.location = json.Action;
+            }, 'json');
+
+            return false;
+        });
 
         var myDropzone = $("#edit-upload-images").dropzone({
             url: '/Orders/Edit/',
             previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
             maxFilesize: maxFileSizeImage,
             maxFiles: maxUploadFiles,
-            uploadMultiple: true,
+            uploadMultiple: uploadMultipleVar,
             maxThumbnailFilesize: 5,
-            acceptedFiles: "image/*",
+            acceptedFiles: typeFileAccepted,
             autoProcessQueue: false,
             autoQueue: true,
             addRemoveLinks: true,
@@ -172,60 +181,71 @@
             createImageThumbnails: true,
             init: function () {
                 dz = this;
-                $('#enviar').click(function () {
-                    dz.processQueue();
-                });
-
-                this.on('sendingmultiple', function (file, xhr, data) {
-                    var array = frm.serializeArray();
-                    for (var i = 0; i < array.length; i++) {
-                        data.append(array[i].name, array[i].value)
-                    }
-                });
-
-                this.on("processing", function (file) {
-                    $('#msgManoImagen').empty();
-                    $('#msgManoImagen').html(msgWhileUploadFile);
-                });
-
-                this.on("addedfile", function (file) {
-                    if (dz.files.length > maxUploadFiles) {
-                        dz.removeFile(dz.files[0]);
-                    }
-
-                    $('#msgErrorManoImagen').empty();
-
-                    updateRegisterFiles();
-                });
-
-                this.on("removedfile", function (file) {
-                    $('#msgErrorManoImagen').empty();
-
-                    updateRegisterFiles();
-
-                    dz.files.length == 0 ? disabledRegister() : "";
-
-                });
-
-                this.on("error", function (file, errormessage, xhr) {
-                    if (xhr == undefined)
-                        return false;
-
-                    var t = xhr.response.responseText;
-
-                    $('#msgManoImagen').empty();
-                    $('#msgErrorManoImagen').empty();
-                    showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
-                    console.log($(errormessage)[1].textContent);
-
-                    disabledRegister();
-                });
-
-                this.on("success", function (file, response) {
-                    window.location = response.Action;
-                });
+                dz.on('sendingmultiple', sendingMultiple);
+                dz.on("processingmultiple", processing);
+                dz.on("addedfile", addedFile);
+                dz.on("removedfile", removedFile);
+                dz.on("error", errorDropzone);
+                dz.on("success", successDropzone);
             }
         });
+
+        $('#enviar').click(function () {
+            console.log(dz);
+            if (dz.files.length > 0) {
+                dz.processQueue();
+            } else {
+                frm.submit();
+            }
+        });
+
+        function successDropzone(file, response) {
+            window.location = response.Action;
+        }
+
+        function errorDropzone(file, errormessage, xhr) {
+            if (xhr == undefined)
+                return false;
+
+            var t = xhr.response.responseText;
+
+            $('#msgManoImagen').empty();
+            $('#msgErrorManoImagen').empty();
+            showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
+            console.log($(errormessage)[1].textContent);
+
+            disabledRegister();
+        }
+
+         function removedFile(file) {
+            $('#msgErrorManoImagen').empty();
+            updateRegisterFiles();
+            dz.files.length == 0 ? disabledRegister() : "";
+         }
+
+        function processing(file) {
+            $('#msgManoImagen').empty();
+            $('#msgManoImagen').html(msgWhileUploadFile);
+        }
+
+        function addedFile(file) {
+            if (dz.files.length > maxUploadFiles) {
+                dz.removeFile(dz.files[0]);
+            }
+
+            console.log(file);
+
+            $('#msgErrorManoImagen').empty();
+
+            updateRegisterFiles();
+        }
+
+        function sendingMultiple(file, xhr, data) {
+            var array = frm.serializeArray();
+            for (var i = 0; i < array.length; i++) {
+                data.append(array[i].name, array[i].value)
+            }
+        }
 
         function updateRegisterFiles() {
             for (var i = 0; i < dz.files.length; i++) {
@@ -305,7 +325,12 @@
             }
         })
 
-        let imagesCount = @(Model.TotalImages);
+        let imagesCount = @cantImages;
+        if (imagesCount >= 8) {
+            titleNoUploadImages.show();
+        } else {
+            dropzoneContainerClass.show();
+        }
 
         var slider = $('.slider').bxSlider({
             pager: true,
@@ -344,6 +369,15 @@
                 success: function (response) {
                     if (response.IsSuccesful) {
                         imagesCount--;
+
+                        if (imagesCount < 8) {
+                            maxUploadFiles = 8 - imagesCount;
+                            dz.options.maxFiles = 8 - imagesCount;
+
+                            titleNoUploadImages.hide();
+                            dropzoneContainerClass.show();
+                        }
+
                         let imageFromSlider = $('div[data-imageId="' + imageId + '"]').parent();
                         imageFromSlider.remove();
                         //parent.parent().remove();
@@ -362,7 +396,9 @@
             });
         });
     });
-</script>
+        </script>
+    }
+</div>
 
 <!-- The Modal -->
 <div id="myModal" class="modal" data-modalOrderId="" data-modalImageId="" style="display: none;">
@@ -370,7 +406,7 @@
         <!-- Modal content -->
         <div class="limbs-modal-header">
             <span id="close_modal" class="close">&times;</span>
-            <h3>Eliminar Imágen</h3>
+            <h3>Eliminar Imagen</h3>
         </div>
         <div class="limbs-modal-content">
             <h3 class="text-error modal-body-title">¿Está seguro que desea eliminar la imagen?</h3>
