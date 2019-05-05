@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@(string.IsNullOrWhiteSpace(ViewBag.Title) ? "" : $"{ViewBag.Title} - ") Limbs | Atomic Lab</title>
     <meta charset="utf-8">
@@ -20,10 +20,15 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/scripts/functions.js")
-    @if (User.IsInRole(AppRoles.Administrator)) { <link href="/Content/admin.css" rel="stylesheet" type="text/css" /> }
+
+    @if (User.IsInRole(AppRoles.Administrator))
+    {
+        <link href="/Content/admin.css" rel="stylesheet" type="text/css" />
+    }
+
     <script src="~/Scripts/menu.js"></script>
-    
-    <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="/Content/img/favicon.ico" />
     <script src="/Scripts/menu-login.js"></script>
     <meta property="og:title" content="Limbs | Atomic Lab">
     <meta property="og:type" content="Website">
@@ -35,20 +40,19 @@
     <meta name="description" content="Desde Limbs, una plataforma de Atomic Lab, creemos que todos deben tener su prótesis impresa en 3D.">
 </head>
 <body>
-@RenderPage("Header.cshtml")
-<div class="container body-content">
-    <div class="min_full">
-        <div class="cont-wr">
-            @RenderBody()
+    @RenderPage("Header.cshtml")
+    <div class="container body-content">
+        <div class="min_full">
+            <div class="cont-wr">
+                @RenderBody()
+            </div>
         </div>
+        @RenderPage("Footer.cshtml")
     </div>
-    @RenderPage("Footer.cshtml")
-</div>
 
-@Scripts.Render("~/bundles/jqueryui")
-@RenderSection("scripts", false)
-@Html.Partial("_GoogleAnalytics")
+    @Scripts.Render("~/bundles/jqueryui")
+    @RenderSection("scripts", false)
+    @Html.Partial("_GoogleAnalytics")
     <div id="alertAtomic" style="display: none;"></div>
-    
 </body>
 </html>
