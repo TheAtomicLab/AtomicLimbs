@@ -1,4 +1,5 @@
 ﻿using LightInject;
+using Limbs.Web.Common.Mail;
 using Limbs.Web.Logic.Services;
 using Microsoft.Azure.WebJobs;
 
@@ -11,6 +12,8 @@ namespace Limbs.Worker
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
+            MailTemplatesRegistration.Initialize();
+
             var container = new ServiceContainer();
             container.Register<IOrderNotificationService, OrderMailNotificationService>();
             container.Register<Functions>();

@@ -103,6 +103,7 @@
     <Compile Include="Geocoder\IGeocoder.cs" />
     <Compile Include="Geocoder\Location.cs" />
     <Compile Include="Mail\CompiledTemplateEngine.cs" />
+    <Compile Include="Mail\Entities\FollowUpModel.cs" />
     <Compile Include="Mail\Entities\NotifyUserChat.cs" />
     <Compile Include="Mail\Entities\WrongInfoEmail.cs" />
     <Compile Include="Mail\GeneralMailSender.cs" />
@@ -159,6 +160,7 @@
     <EmbeddedResource Include="Mail\Templates\IncorrectPhotoAmbassadorExtraComment.cshtml" />
     <EmbeddedResource Include="Mail\Templates\IncorrectInfoComment.cshtml" />
     <EmbeddedResource Include="Mail\Templates\NoDesign.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\FollowUpAmbassador.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

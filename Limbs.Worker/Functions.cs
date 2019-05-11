@@ -1,4 +1,6 @@
 ﻿using Limbs.QueueConsumers;
+using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.DbContext;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Logic.Services;
@@ -13,6 +15,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -25,15 +28,55 @@ namespace Limbs.Worker
         private ApplicationDbContext Db = new ApplicationDbContext();
         private readonly OrderService _os;
         private readonly IOrderNotificationService _ns;
+        private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
         public Functions(IOrderNotificationService notificationService)
         {
             _ns = notificationService;
             _os = new OrderService(Db);
         }
 
+        public async Task FollowUpAmbassadors([TimerTrigger("* 0 10 * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
+        {
+            var ordersNoChange = await Db.OrderModels.Where(p => p.Status != OrderStatus.Delivered && p.Status != OrderStatus.NotAssigned && p.Status != OrderStatus.Rejected &&
+                                    DbFunctions.AddDays(p.StatusLastUpdated, 7) <= DateTime.UtcNow).ToListAsync();
+
+            if (ordersNoChange != null && ordersNoChange.Any())
+            {
+                MailMessage mailMessage = new MailMessage
+                {
+                    From = _fromEmail,
+                    Subject = "[Atomic Limbs] ¿Cómo va la impresión de la prótesis?"
+                };
+
+                foreach (var orderInList in ordersNoChange)
+                {
+                    var order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync( p => p.Id == orderInList.Id);
+                    if (order == null) continue;
+
+                    var modelFollowUp = new FollowUpModel
+                    {
+                        AmbassadorName = order.OrderAmbassador.FullName(),
+                        UserOrderName = order.OrderRequestor.FullName()
+                    };
+
+                    mailMessage.To = order.OrderAmbassador.Email;
+                    mailMessage.Body = CompiledTemplateEngine.Render("Mails.FollowUpAmbassador", modelFollowUp);
+
+                    await AzureQueue.EnqueueAsync(mailMessage);
+
+                    order.StatusLastUpdated = DateTime.UtcNow;
+                    order.LogMessage("Notification had sent (email follow-up) for inactivity in order");
+
+                    Db.OrderModels.AddOrUpdate(order);
+                }
+
+                await Db.SaveChangesAsync();
+            }
+        }
+
         public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("* 0/5 * * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
         {
-            var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => (p.Status == OrderStatus.PreAssigned || p.Status == OrderStatus.Rejected) &&
+            var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => p.Status == OrderStatus.Rejected &&
                                     DbFunctions.AddDays(p.StatusLastUpdated, 3) <= DateTime.UtcNow).ToListAsync();
 
             if (ordersNoUpdate != null && ordersNoUpdate.Any())
