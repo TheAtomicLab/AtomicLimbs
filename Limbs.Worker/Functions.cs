@@ -1,4 +1,7 @@
 ﻿using Limbs.QueueConsumers;
+using Limbs.Web.Entities.DbContext;
+using Limbs.Web.Entities.Models;
+using Limbs.Web.Logic.Services;
 using Limbs.Web.Storage.Azure;
 using Limbs.Web.Storage.Azure.BlobStorage;
 using Limbs.Web.Storage.Azure.QueueStorage;
@@ -9,13 +12,42 @@ using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Configuration;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Limbs.Worker
 {
     public class Functions
     {
+        private ApplicationDbContext Db = new ApplicationDbContext();
+        private readonly OrderService _os;
+        private readonly IOrderNotificationService _ns;
+        public Functions(IOrderNotificationService notificationService)
+        {
+            _ns = notificationService;
+            _os = new OrderService(Db);
+        }
+
+        public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("* 0/5 * * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
+        {
+            var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => (p.Status == OrderStatus.PreAssigned || p.Status == OrderStatus.Rejected) &&
+                                    DbFunctions.AddDays(p.StatusLastUpdated, 3) <= DateTime.UtcNow).ToListAsync();
+
+            if (ordersNoUpdate != null && ordersNoUpdate.Any())
+            {
+                foreach (var order in ordersNoUpdate)
+                {
+                    var ambassador = await _os.GetAmbassadorAutoAssignAsync(order);
+                    if (ambassador == null) continue;
+
+                    await _os.AssignmentAmbassadorAsync(ambassador.Id, order.Id, null, _ns);
+                }
+            }
+        }
+
         public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
         {
             var queueM = MessageQueue<AppException>.GenerateQueueMessage(queueMessage, expirationTime, insertionTime, nextVisibleTime, id, popReceipt, dequeueCount, queueTrigger, cloudStorageAccount);

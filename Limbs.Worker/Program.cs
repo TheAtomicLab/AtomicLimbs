@@ -1,5 +1,5 @@
-﻿using System;
-using System.Threading;
+﻿using LightInject;
+using Limbs.Web.Logic.Services;
 using Microsoft.Azure.WebJobs;
 
 namespace Limbs.Worker
@@ -11,7 +11,15 @@ namespace Limbs.Worker
         // AzureWebJobsDashboard and AzureWebJobsStorage
         static void Main()
         {
-            var config = new JobHostConfiguration();
+            var container = new ServiceContainer();
+            container.Register<IOrderNotificationService, OrderMailNotificationService>();
+            container.Register<Functions>();
+
+            var config = new JobHostConfiguration()
+            {
+                JobActivator = new SimpleInjectorJobActivator(container)
+            };
+
             config.UseTimers(); 
 
             if (config.IsDevelopment)
