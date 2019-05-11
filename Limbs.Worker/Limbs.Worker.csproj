@@ -57,6 +57,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="LightInject, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LightInject.5.1.2\lib\net46\LightInject.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.2.0.4\lib\net45\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
@@ -186,6 +189,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Functions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimpleInjectorJobActivator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -202,6 +206,14 @@
     <ProjectReference Include="..\Limbs.QueueConsumers\Limbs.QueueConsumers.csproj">
       <Project>{55421e93-38d9-4a57-a4cb-217f16ec1838}</Project>
       <Name>Limbs.QueueConsumers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Limbs.Web.Entities\Limbs.Web.Entities.csproj">
+      <Project>{01F5EA69-77A2-470A-B5D9-F4B614DB37B0}</Project>
+      <Name>Limbs.Web.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Limbs.Web.Logic\Limbs.Web.Logic.csproj">
+      <Project>{3007BA76-A656-4DAD-BC04-3901B6DFC5BC}</Project>
+      <Name>Limbs.Web.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\Limbs.Web.Storage.Azure\Limbs.Web.Storage.Azure.csproj">
       <Project>{f0c7e1e2-f99c-4398-811c-9cd2284b1de4}</Project>

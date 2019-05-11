@@ -4,7 +4,6 @@ using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Entities.WebModels;
 using Limbs.Web.Entities.WebModels.Admin.Models;
-using Limbs.Web.Helpers;
 using Limbs.Web.Logic.Repositories.Interfaces;
 using Limbs.Web.Logic.Services;
 using Limbs.Web.Storage.Azure.QueueStorage;
@@ -16,16 +15,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
-using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.Linq;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
-using System.Xml.Linq;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
@@ -43,7 +39,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             _ns = notificationService;
             _os = new OrderService(Db);
         }
-
+        
         // GET: Admin/Order
         public async Task<ActionResult> Index(OrderFilters filters)
         {
@@ -382,10 +378,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
             //Luego de actualizar el estado a rejected (SaveChanges)
             if (newStatus == OrderStatus.Rejected)
             {
-                AmbassadorModel ambassador = await GetAmbassadorAutoAssignAsync(order, true);
+                AmbassadorModel ambassador = await _os.GetAmbassadorAutoAssignAsync(order);
 
                 if (ambassador != null)
-                    await AssignmentAmbassadorAsync(ambassador.Id, order.Id);
+                    await _os.AssignmentAmbassadorAsync(ambassador.Id, order.Id, User, _ns);
             }
 
             return RedirectToLocal(returnUrl);
@@ -486,149 +482,32 @@ namespace Limbs.Web.Areas.Admin.Controllers
             });
         }
 
-        private async Task<AmbassadorModel> GetAmbassadorAutoAssignAsync(OrderModel order, bool fromRefuse)
-        {
-            AmbassadorModel closestAmbassador = null;
-
-            DbGeography location = order.OrderRequestor.Location;
-            closestAmbassador = await Db.AmbassadorModels.Include(p => p.User).Include(p => p.RefusedOrders)
-                                                    .OrderBy(p => p.Location.Distance(location))
-                                                    .FirstOrDefaultAsync(p => (p.Location.Distance(location) / 1000) <= 50d &&
-                                                        p.User.EmailConfirmed &&
-                                                        !p.RefusedOrders.Any(x => x.OrderId == order.Id) &&
-                                                        !p.OrderModel.Any(o =>
-                                                            o.Status == OrderStatus.PreAssigned ||
-                                                            o.Status == OrderStatus.Pending ||
-                                                            o.Status == OrderStatus.Ready ||
-                                                            o.Status == OrderStatus.ArrangeDelivery));
-
-            if (closestAmbassador == null)
-            {
-                HttpResponseMessage response = await CallAndreaniApiAsync();
-                if (!response.IsSuccessStatusCode)
-                    return closestAmbassador;
-
-                string content = await response.Content.ReadAsStringAsync();
-                XDocument createXml = XDocument.Parse(content);
-
-                IEnumerable<UbicacionAndreani> ubicaciones = createXml.Descendants("item").Select(p => new UbicacionAndreani
-                {
-                    Descripcion = p.Element("Descripcion").Value,
-                    Direccion = p.Element("Direccion").Value,
-                    HoradeTrabajo = p.Element("HoradeTrabajo").Value,
-                    Latitud = p.Element("Latitud").Value,
-                    Longitud = p.Element("Longitud").Value,
-                    Mail = p.Element("Mail").Value,
-                    Numero = p.Element("Numero").Value,
-                    Responsable = p.Element("Responsable").Value,
-                    Resumen = p.Element("Resumen").Value,
-                    Sucursal = p.Element("Sucursal").Value,
-                    Telefono1 = p.Element("Telefono1").Value,
-                    Telefono2 = p.Element("Telefono2").Value,
-                    Telefono3 = p.Element("Telefono3").Value,
-                    TipoSucursal = p.Element("TipoSucursal").Value,
-                    TipoTelefono1 = p.Element("TipoTelefono1").Value,
-                    TipoTelefono2 = p.Element("TipoTelefono2").Value,
-                    TipoTelefono3 = p.Element("TipoTelefono3").Value,
-                    Location = SiteHelper.GeneratePoint($"{p.Element("Latitud").Value},{p.Element("Longitud").Value}".Split(','))
-                });
-
-                var listAmbassadors = await Db.AmbassadorModels
-                                            .Include(p => p.User)
-                                            .Include(p => p.RefusedOrders)
-                                            .Where(p => p.User.EmailConfirmed &&
-                                                        !p.RefusedOrders.Any(x => x.OrderId == order.Id) &&
-                                                        !p.OrderModel.Any(o => o.Status == OrderStatus.PreAssigned ||
-                                                            o.Status == OrderStatus.Pending ||
-                                                            o.Status == OrderStatus.Ready ||
-                                                            o.Status == OrderStatus.ArrangeDelivery))
-                                            .OrderBy(p => p.Location.Distance(p.Location))
-                                            .ToListAsync();
-
-                closestAmbassador = listAmbassadors.FirstOrDefault(p =>
-                                                        ubicaciones.Any(x => (x.Location.Distance(p.Location) / 1000) <= 20d));
-            }
-
-            if (closestAmbassador == null)
-            {
-                if (!fromRefuse)
-                    TempData["msg"] = "No se han encontrado embajadores cercanos para asignar automáticamente";                
-            }
-
-            return closestAmbassador;
-        }
-
         public async Task<ActionResult> AssignAmbassadorAuto(int id)
         {
             OrderModel order = await Db.OrderModels.Include(p => p.OrderRequestor).FirstOrDefaultAsync(p => p.Id == id);
             if (order == null)
                 return HttpNotFound();
 
-            AmbassadorModel closestAmbassador = await GetAmbassadorAutoAssignAsync(order, false);
+            AmbassadorModel closestAmbassador = await _os.GetAmbassadorAutoAssignAsync(order);
             if (closestAmbassador == null)
+            {
+                TempData["msg"] = "No se han encontrado embajadores cercanos para asignar automáticamente";
                 return RedirectToAction("Details", "Orders", new { order.Id, area = "" });
+            }
 
-            HttpStatusCodeResult result = await AssignmentAmbassadorAsync(closestAmbassador.Id, id);
-            if (result.StatusCode == 404)
+            var result = await _os.AssignmentAmbassadorAsync(closestAmbassador.Id, id, User, _ns);
+            if (!result)
                 return HttpNotFound();
 
             return RedirectToAction("Index");
         }
 
-        public async Task<HttpResponseMessage> CallAndreaniApiAsync()
-        {
-            string soapString = @"<?xml version=""1.0"" encoding=""UTF-8""?>
-                                    <env:Envelope
-                                        xmlns:env=""http://www.w3.org/2003/05/soap-envelope""
-                                        xmlns:ns1=""urn:ConsultarSucursales""
-                                        xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""
-                                        xmlns:xsd=""http://www.w3.org/2001/XMLSchema""
-                                        xmlns:ns2=""http://xml.apache.org/xml-soap""
-                                        xmlns:ns3=""http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd""
-                                        xmlns:enc=""http://www.w3.org/2003/05/soap-encoding"">
-                                        <env:Header>
-                                            <ns3:Security env:mustUnderstand=""true"">
-                                                <ns3:UsernameToken>
-                                                    <ns3:Username></ns3:Username>
-                                                    <ns3:Password></ns3:Password>
-                                                </ns3:UsernameToken>
-                                            </ns3:Security>
-                                        </env:Header>
-                                        <env:Body>
-                                            <ns1:ConsultarSucursales env:encodingStyle=""http://www.w3.org/2003/05/soap-encoding"">
-                                                <Consulta xsi:type=""ns2:Map"">
-                                                    <item>
-                                                        <key xsi:type=""xsd:string"">consulta</key>
-                                                        <value xsi:type=""ns2:Map"">
-                                                            <item>
-                                                                <key xsi:type=""xsd:string"">Localidad</key>
-                                                                <value xsi:type=""xsd:string""></value>
-                                                            </item>
-                                                            <item>
-                                                                <key xsi:type=""xsd:string"">CodigoPostal</key>
-                                                                <value xsi:type=""xsd:string""></value>
-                                                            </item>
-                                                            <item>
-                                                                <key xsi:type=""xsd:string"">Provincia</key>
-                                                                <value xsi:type=""xsd:string""></value>
-                                                            </item>
-                                                        </value>
-                                                    </item>
-                                                </Consulta>
-                                            </ns1:ConsultarSucursales>
-                                        </env:Body>
-                                    </env:Envelope>";
-
-            HttpResponseMessage response = await SiteHelper.PostXmlRequestAsync("https://sucursales.andreani.com/ws", soapString, "ConsultarSucursales");
-            return response;
-        }
-
         // GET: Admin/Orders/AssignAmbassador/5?idOrder=2
         public async Task<ActionResult> AssignAmbassador(int id, int idOrder)
         {
-            HttpStatusCodeResult result = await AssignmentAmbassadorAsync(id, idOrder);
+            var result = await _os.AssignmentAmbassadorAsync(id, idOrder,User, _ns);
 
-            if (result.StatusCode == 404)
+            if (!result)
             {
                 return HttpNotFound();
             }
@@ -636,32 +515,6 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        private async Task<HttpStatusCodeResult> AssignmentAmbassadorAsync(int id, int idOrder)
-        {
-            OrderModel order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
-
-            if (order == null)
-                return new HttpStatusCodeResult(404);
-
-            AmbassadorModel newAmbassador = await Db.AmbassadorModels.FindAsync(id);
-
-            if (newAmbassador == null)
-                return new HttpStatusCodeResult(404);
-
-            AmbassadorModel oldAmbassador = order.OrderAmbassador;
-            OrderStatus orderOldStatus = order.Status;
-
-            order.OrderAmbassador = newAmbassador;
-            order.Status = OrderStatus.PreAssigned;
-            order.StatusLastUpdated = DateTime.UtcNow;
-            order.LogMessage(User, $"Change ambassador from {(oldAmbassador != null ? oldAmbassador.Email : "no-data")} to {newAmbassador.Email}");
-
-            await Db.SaveChangesAsync();
-            await _ns.SendStatusChangeNotification(order, orderOldStatus, OrderStatus.PreAssigned);
-            await _ns.SendAmbassadorChangedNotification(order, oldAmbassador, newAmbassador);
-
-            return new HttpStatusCodeResult(200);
-        }
 
         // GET: Admin/Orders/SelectDelivery/?idOrder=2
         public async Task<ActionResult> SelectDelivery(int idOrder)
