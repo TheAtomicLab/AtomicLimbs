@@ -31,6 +31,8 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectInfoComment", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectInfoComment.cshtml"));
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectPhotoAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectPhotoAmbassador.cshtml"));
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectPhotoAmbassadorExtraComment", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectPhotoAmbassadorExtraComment.cshtml"));
+
+            CompiledTemplateEngine.Add<FollowUpModel>("Mails.FollowUpAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.FollowUpAmbassador.cshtml"));
         }
 
 

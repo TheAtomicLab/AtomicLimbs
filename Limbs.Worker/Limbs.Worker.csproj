@@ -60,6 +60,7 @@
     <Reference Include="LightInject, Version=5.1.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\LightInject.5.1.2\lib\net46\LightInject.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.2.0.4\lib\net45\Microsoft.Azure.KeyVault.Core.dll</HintPath>
     </Reference>
@@ -206,6 +207,10 @@
     <ProjectReference Include="..\Limbs.QueueConsumers\Limbs.QueueConsumers.csproj">
       <Project>{55421e93-38d9-4a57-a4cb-217f16ec1838}</Project>
       <Name>Limbs.QueueConsumers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Limbs.Web.Common\Limbs.Web.Common.csproj">
+      <Project>{DFC2D76E-4E4B-4EF6-A378-5FB979C68C11}</Project>
+      <Name>Limbs.Web.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Limbs.Web.Entities\Limbs.Web.Entities.csproj">
       <Project>{01F5EA69-77A2-470A-B5D9-F4B614DB37B0}</Project>
