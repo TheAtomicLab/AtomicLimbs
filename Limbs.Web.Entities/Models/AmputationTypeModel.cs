@@ -12,8 +12,7 @@ namespace Limbs.Web.Entities.Models
         public string PrimaryUrlImage { get; set; }
         public string SecondaryUrlImage { get; set; }
 
-        public List<AmputationTypeColorModel> AmputationTypeColors { get; set; }
-
+        public List<OrderModel> Orders { get; set; }
         public List<RenderModel> Renders { get; set; }
         public List<ColorModel> Colors { get; set; }
     }

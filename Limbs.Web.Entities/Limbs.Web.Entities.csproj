@@ -102,7 +102,6 @@
     <Compile Include="DbContext\IdentityModels.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
     <Compile Include="Models\AmbassadorModel.cs" />
-    <Compile Include="Models\AmputationTypeColorModel.cs" />
     <Compile Include="Models\AmputationType.cs" />
     <Compile Include="Models\AmputationTypeModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
