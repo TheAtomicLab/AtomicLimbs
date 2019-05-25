@@ -33,8 +33,6 @@ namespace Limbs.Web.Entities.Models
                 UserName = SuperAdminEmail,
                 SecurityStamp = Guid.NewGuid().ToString()
             };
-
-            
         }
 
         public static string SuperAdminEmail = "limbs-admin@atomiclab.org";
