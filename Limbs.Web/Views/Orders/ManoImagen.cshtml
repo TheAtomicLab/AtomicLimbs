@@ -63,7 +63,7 @@
                 <ul id="msgErrorManoImagen" style="color:red;"></ul>
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary()
-                @Html.HiddenFor(x => x.AmputationType)
+                @Html.HiddenFor(x => x.AmputationTypeFkId)
                 @Html.HiddenFor(x => x.ProductType)
             }
             <button id="enviar" name="enviar" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">Continuar</button>

@@ -1,4 +1,6 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@using Limbs.Web.Entities.Models;
+
+@model OrderModel
 
 @{
     ViewBag.Title = "Pedido";
@@ -19,23 +21,25 @@
     {
         @Html.AntiForgeryToken()
 
-        @Html.HiddenFor(model => model.AmputationType)
+        @Html.HiddenFor(model => model.AmputationTypeFkId)
         @Html.HiddenFor(model => model.ProductType)
         @Html.HiddenFor(model => model.IdImage)
         @*Html.HiddenFor(model => model.Sizes.A)
-        @Html.HiddenFor(model => model.Sizes.B)
-        @Html.HiddenFor(model => model.Sizes.C)*@
+            @Html.HiddenFor(model => model.Sizes.B)
+            @Html.HiddenFor(model => model.Sizes.C)*@
 
         <div class="form-horizontal">
             <div class="">
                 <p class="form_title">Color</p>
                 <div class="sel_color_container">
-                    <div class="sel_color_mano" onclick="select_color(this)" js_value="A">@Html.RadioButtonFor(model => model.Color, "A", new { @class = "selector_color_input"})</div>
-                    <div class="sel_color_mano" onclick="select_color(this)" js_value="B">@Html.RadioButtonFor(model => model.Color, "B", new { @class = "selector_color_input"})</div>
-                    <div class="sel_color_mano" onclick="select_color(this)" js_value="C">@Html.RadioButtonFor(model => model.Color, "C", new { @class = "selector_color_input"})</div>
-                    <div class="sel_color_mano" onclick="select_color(this)" js_value="D">@Html.RadioButtonFor(model => model.Color, "D", new { @class = "selector_color_input"})</div>
-                    <div class="sel_color_mano" onclick="select_color(this)" js_value="E">@Html.RadioButtonFor(model => model.Color, "E", new { @class = "selector_color_input"})</div>
-                    <div class="sel_color_mano" onclick="select_color(this)" js_value="F">@Html.RadioButtonFor(model => model.Color, "F", new { @class = "selector_color_input"})</div>
+                    @{
+                        var colors = ViewData["renderColors"] == null ? new List<ColorModel>() : ViewData["renderColors"] as List<ColorModel>;
+
+                        foreach (var color in colors)
+                        {
+                            <div class="sel_color_mano" onclick="select_color(this)" style="background-image: url(@color.PrimaryUrlImage);background-size: contain; background-repeat: no-repeat;" js_value="@color.Name">@Html.RadioButtonFor(model => model.ColorFkId, color.Id, new { @class = "selector_color_input" })</div>
+                        }
+                    }
                 </div>
             </div>
             <script>

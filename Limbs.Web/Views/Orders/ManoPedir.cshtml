@@ -1,4 +1,6 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@using Limbs.Web.Entities.Models;
+
+@model OrderModel
 
 @section scripts
 {
@@ -6,15 +8,16 @@
     <script type="text/javascript">
         $('input[type=radio][name=AmputationType]').change(function () {
         });
-    </script>
+
+/**/</script>
 }
-@{ 
+@{
     ViewBag.Title = "Pedido";
 }
 <div class="min_full" id="cuerpo_pedir">
     <article id="exp_inicial" class="card center-card-l">
 
-        @using (Html.BeginForm("ManoPedir", "Orders", FormMethod.Post, new {enctype = "multipart/form-data"}))
+        @using (Html.BeginForm("ManoPedir", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             <div id="form_parte_1">
@@ -52,12 +55,24 @@
                     </div>
                 </div>
                 <div id="tipo_de_amp">
-                    @Html.EditorFor(x => x.AmputationType)
-                
+                    @{
+                        var amputationTypes = ViewData["ListAmputations"] == null ? new List<AmputationTypeModel>() : ViewData["ListAmputations"] as List<AmputationTypeModel>;
+
+                        foreach (var amputation in amputationTypes)
+                        {
+                            <div class="selector_amp" style="background-image: url(@amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputation.Description" js_value="@amputation.Id" onclick="select_amp(this)">
+                                <div class="selector_size"></div>
+                                @Html.RadioButtonFor(b => Model.AmputationTypeFkId, amputation.Id, new { @class = "tipo_amp", title = amputation.Description, })
+                            </div>
+                        }
+                    }
+
+                    @*@Html.EditorFor(x => x.AmputationType)*@
+
                     <div class="no-design" style="display: none;">
                         <h2>Importante</h2>
                         <p>
-                            No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos. 
+                            No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
                         </p>
                     </div>
                 </div>
@@ -88,7 +103,7 @@
         $obj.addClass('amp_selected');
         var radio = $obj.find('input')[0];
         $(radio).prop('checked', true);
-        if (radio.value === "A" || radio.value === "B" || radio.value === "G" || radio.value === "H") {
+        if (radio.value === 1 || radio.value === 2 || radio.value === 7 || radio.value === 8) {
             $(".no-design").show();
         } else {
             $(".no-design").hide();

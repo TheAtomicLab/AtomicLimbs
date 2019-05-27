@@ -406,38 +406,6 @@ nav {
         visibility: hidden;
     }
 
-.selector_amp[js_value=A]:before, .edit_type_amp .tipo_amp[value=A] {
-    background-image: url(/Content/img/amputaciones_tipo/a.png);
-}
-
-.selector_amp[js_value=B]:before, .edit_type_amp .tipo_amp[value=B] {
-    background-image: url(/Content/img/amputaciones_tipo/b.png);
-}
-
-.selector_amp[js_value=C]:before, .edit_type_amp .tipo_amp[value=C] {
-    background-image: url(/Content/img/amputaciones_tipo/c.png);
-}
-
-.selector_amp[js_value=D]:before, .edit_type_amp .tipo_amp[value=D] {
-    background-image: url(/Content/img/amputaciones_tipo/d.png);
-}
-
-.selector_amp[js_value=E]:before, .edit_type_amp .tipo_amp[value=E] {
-    background-image: url(/Content/img/amputaciones_tipo/e.png);
-}
-
-.selector_amp[js_value=F]:before, .edit_type_amp .tipo_amp[value=F] {
-    background-image: url(/Content/img/amputaciones_tipo/f.png);
-}
-
-.selector_amp[js_value=G]:before, .edit_type_amp .tipo_amp[value=G] {
-    background-image: url(/Content/img/amputaciones_tipo/g.png);
-}
-
-.selector_amp[js_value=H]:before, .edit_type_amp .tipo_amp[value=H] {
-    background-image: url(/Content/img/amputaciones_tipo/h.png);
-}
-
 .no-design {
     color: red;
 }
@@ -748,8 +716,8 @@ button[name="recoverPassword"] {
 
     .sel_color_container .sel_color_mano {
         position: relative;
-        width: 120px;
-        height: 120px;
+        width: 200px;
+        height: 200px;
         margin-right: 10px;
         margin-bottom: 10px;
         transition: outline 0.2s ease;
@@ -788,30 +756,6 @@ button[name="recoverPassword"] {
     background-repeat: no-repeat;
     cursor: pointer;
 }
-
-    .color_mano input[value=A], .sel_color_container .sel_color_mano[js_value=A] {
-        background-image: url(/Content/img/Mano/mano_a.png);
-    }
-
-    .color_mano input[value=B], .sel_color_container .sel_color_mano[js_value=B] {
-        background-image: url(/Content/img/Mano/mano_b.png);
-    }
-
-    .color_mano input[value=C], .sel_color_container .sel_color_mano[js_value=C] {
-        background-image: url(/Content/img/Mano/mano_c.png);
-    }
-
-    .color_mano input[value=D], .sel_color_container .sel_color_mano[js_value=D] {
-        background-image: url(/Content/img/Mano/mano_d.png);
-    }
-
-    .color_mano input[value=E], .sel_color_container .sel_color_mano[js_value=E] {
-        background-image: url(/Content/img/Mano/mano_e.png);
-    }
-
-    .color_mano input[value=F], .sel_color_container .sel_color_mano[js_value=F] {
-        background-image: url(/Content/img/Mano/mano_f.png);
-    }
 
     .color_mano input:checked {
         border: solid 5px #4772B2;

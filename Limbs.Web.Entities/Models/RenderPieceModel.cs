@@ -6,10 +6,10 @@ namespace Limbs.Web.Entities.Models
 {
     public class RenderPieceModel
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public int RenderId { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         public List<OrderRenderPieceModel> Orders { get; set; }
         public RenderModel Render { get; set; }
