@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Limbs.Web.Entities.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Limbs.Web.ViewModels.Configs
 {
@@ -17,6 +19,12 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.Images, opt => opt.MapFrom(src => src.IdImage.Split(',')))
                 .ReverseMap()
                 .ForAllOtherMembers(p => p.Ignore());
+
+            CreateMap<NewOrder, OrderModel>()
+                .ForMember(p => p.Status, opt => opt.MapFrom(src => OrderStatus.NotAssigned))
+                .ForMember(p => p.StatusLastUpdated, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(p => p.Date, opt => opt.MapFrom(src => DateTime.UtcNow))
+                .ForMember(p => p.RenderPieces, opt => opt.MapFrom(src => new List<OrderRenderPieceModel>()));
         }
     }
 }

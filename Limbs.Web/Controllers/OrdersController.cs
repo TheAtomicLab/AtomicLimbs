@@ -177,18 +177,35 @@ namespace Limbs.Web.Controllers
                 return RedirectToAction("Index", "Users");
             }
 
-            ViewData["ListAmputations"] = await Db.AmputationTypeModels.ToListAsync();
+            var listAmputations = await Db.AmputationTypeModels.ToListAsync();
+            var listAmputationDesign = new List<AmputationDesign>();
 
-            return View("ManoPedir", new OrderModel());
+            foreach (var amputation in listAmputations)
+            {
+                var hasDesign = await Db.RenderModels.AnyAsync(p => p.AmputationTypeId == amputation.Id);
+
+                listAmputationDesign.Add(new AmputationDesign
+                {
+                    Amputation = amputation,
+                    HasDesign = hasDesign
+                });
+            }
+
+            ViewData["ListAmputations"] = listAmputationDesign;
+
+            return View("ManoPedir", new NewOrder());
         }
 
         // POST: Orders/ManoPedir
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ManoPedir(OrderModel orderModel)
+        public ActionResult ManoPedir(NewOrder orderModel)
         {
             TempData["AmputationType"] = orderModel.AmputationTypeFkId;
             TempData["ProductType"] = orderModel.ProductType;
+            var hasDesign = Db.RenderModels.Any(p => p.AmputationTypeId == orderModel.AmputationTypeFkId);
+
+            TempData["hasDesign"] = hasDesign;
 
             return RedirectToAction("ManoImagen");
         }
@@ -198,16 +215,18 @@ namespace Limbs.Web.Controllers
         {
             var amputationType = TempData["AmputationType"];
             var productType = TempData["ProductType"];
+            var hasDesign = TempData["hasDesign"];
 
             if (amputationType == null || productType == null)
             {
                 return RedirectToAction("ManoPedir");
             }
 
-            return View("ManoImagen", new OrderModel
+            return View("ManoImagen", new NewOrder
             {
                 AmputationTypeFkId = (int)amputationType,
                 ProductType = (ProductType)productType,
+                HasDesign = (bool)hasDesign
             });
         }
 
@@ -215,9 +234,14 @@ namespace Limbs.Web.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult UploadImageUser(OrderModel orderModel, HttpPostedFileBase file)
-        public ActionResult UploadImageUser(OrderModel orderModel, List<HttpPostedFileBase> file)
+        public ActionResult UploadImageUser(NewOrder orderModel, List<HttpPostedFileBase> file)
         {
             int v_maxFiles = 6;
+
+            TempData["AmputationType"] = orderModel.AmputationTypeFkId;
+            TempData["ProductType"] = orderModel.ProductType;
+            TempData["hasDesign"] = orderModel.HasDesign;
+
 
             if (file == null || file.Count == 0)
                 ModelState.AddModelError("nofile", @"Seleccione una foto.");
@@ -237,9 +261,6 @@ namespace Limbs.Web.Controllers
             }
             if (!ModelState.IsValid)
             {
-                TempData["AmputationType"] = orderModel.AmputationTypeFkId;
-                TempData["ProductType"] = orderModel.ProductType;
-
                 return Json(new { Action = "ManoImagen" });
             }
 
@@ -255,8 +276,6 @@ namespace Limbs.Web.Controllers
 
             var filesUser = string.Join(",", filesUrl);
             TempData["fileUrl"] = filesUser;
-            TempData["AmputationType"] = orderModel.AmputationTypeFkId;
-            TempData["ProductType"] = orderModel.ProductType;
 
             //AB 20171216: las medidas las toma el embajador
             //return Json(new { Action = "ManoMedidas" });
@@ -272,11 +291,12 @@ namespace Limbs.Web.Controllers
 
             ViewData["renderColors"] = await Db.ColorModels.Where(p => p.AmputationTypeId == amputationType).ToListAsync();
 
-            return View("ManoOrden", new OrderModel
+            return View("ManoOrden", new NewOrder
             {
                 IdImage = TempData["fileUrl"].ToString(),
-                AmputationTypeFkId = amputationType,
+                AmputationTypeFkId = Convert.ToInt32(amputationType),
                 ProductType = (ProductType)TempData["ProductType"],
+                HasDesign = (bool)TempData["hasDesign"]
             });
         }
 
@@ -360,22 +380,29 @@ namespace Limbs.Web.Controllers
         // POST: Orders/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(OrderModel orderModel)
+        public async Task<ActionResult> Create(NewOrder orderModel)
         {
             if (!ModelState.IsValid) return View("ManoOrden", orderModel);
 
             var currentUserId = User.Identity.GetUserId();
             var userModel = await Db.UserModelsT.SingleAsync(c => c.UserId == currentUserId);
 
-            orderModel.OrderRequestor = userModel;
-            orderModel.Status = OrderStatus.NotAssigned;
-            orderModel.StatusLastUpdated = DateTime.UtcNow;
-            orderModel.Date = DateTime.UtcNow;
-            orderModel.LogMessage(User, "New order");
+            var newOrder = Mapper.Map<OrderModel>(orderModel);
 
-            orderModel.RenderPieces = new List<OrderRenderPieceModel>();
+            newOrder.OrderRequestor = userModel;
+            newOrder.LogMessage(User, "New order");
 
-            var renders = await Db.RenderModels.Where(p => p.AmputationTypeId == orderModel.AmputationTypeFkId).ToListAsync();
+            if (!orderModel.HasDesign)
+            {
+                Db.OrderModels.Add(newOrder);
+
+                await Db.SaveChangesAsync();
+                await _ns.SendNewOrderNotificacion(newOrder);
+
+                return RedirectToAction("Index", "Users");
+            }
+
+            var renders = await Db.RenderModels.Where(p => p.AmputationTypeId == newOrder.AmputationTypeFkId).ToListAsync();
             foreach (var render in renders)
             {
                 var renderPieces = await Db.RenderPieceModels.Where(p => p.RenderId == render.Id).ToListAsync();
@@ -385,7 +412,7 @@ namespace Limbs.Web.Controllers
 
                     foreach (var piece in renderPieces)
                     {
-                        orderModel.RenderPieces.Add(new OrderRenderPieceModel
+                        newOrder.RenderPieces.Add(new OrderRenderPieceModel
                         {
                             RenderPieceId = piece.Id,
                             Printed = false
@@ -394,10 +421,10 @@ namespace Limbs.Web.Controllers
                 }
             }
 
-            Db.OrderModels.Add(orderModel);
+            Db.OrderModels.Add(newOrder);
             await Db.SaveChangesAsync();
 
-            await _ns.SendNewOrderNotificacion(orderModel);
+            await _ns.SendNewOrderNotificacion(newOrder);
 
             return RedirectToAction("Index", "Users");
         }

@@ -352,8 +352,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AmputationDesign.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\NewOrder.cs" />
     <Compile Include="ViewModels\OrderUpdateModel.cs" />
     <Compile Include="ViewModels\UserPanelViewModel.cs" />
     <Compile Include="ViewModels\AmbassadorPanelViewModel.cs" />

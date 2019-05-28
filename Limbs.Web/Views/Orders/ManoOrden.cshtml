@@ -1,6 +1,7 @@
 ﻿@using Limbs.Web.Entities.Models;
+@using Limbs.Web.ViewModels;
 
-@model OrderModel
+@model NewOrder
 
 @{
     ViewBag.Title = "Pedido";
@@ -24,34 +25,36 @@
         @Html.HiddenFor(model => model.AmputationTypeFkId)
         @Html.HiddenFor(model => model.ProductType)
         @Html.HiddenFor(model => model.IdImage)
-        @*Html.HiddenFor(model => model.Sizes.A)
-            @Html.HiddenFor(model => model.Sizes.B)
-            @Html.HiddenFor(model => model.Sizes.C)*@
+        @Html.HiddenFor(model => model.HasDesign)
 
         <div class="form-horizontal">
-            <div class="">
-                <p class="form_title">Color</p>
-                <div class="sel_color_container">
-                    @{
-                        var colors = ViewData["renderColors"] == null ? new List<ColorModel>() : ViewData["renderColors"] as List<ColorModel>;
+            @if (Model.HasDesign)
+            {
+                <div class="">
+                    <p class="form_title">Color</p>
+                    <div class="sel_color_container">
+                        @{
+                            var colors = ViewData["renderColors"] == null ? new List<ColorModel>() : ViewData["renderColors"] as List<ColorModel>;
 
-                        foreach (var color in colors)
-                        {
-                            <div class="sel_color_mano" onclick="select_color(this)" style="background-image: url(@color.PrimaryUrlImage);background-size: contain; background-repeat: no-repeat;" js_value="@color.Name">@Html.RadioButtonFor(model => model.ColorFkId, color.Id, new { @class = "selector_color_input" })</div>
+                            foreach (var color in colors)
+                            {
+                                <div class="sel_color_mano" onclick="select_color(this)" style="background-image: url(@color.PrimaryUrlImage);background-size: contain; background-repeat: no-repeat;" js_value="@color.Name">@Html.RadioButtonFor(model => model.ColorFkId, color.Id, new { @class = "selector_color_input" })</div>
+                            }
                         }
-                    }
+                    </div>
                 </div>
-            </div>
-            <script>
-                function select_color(obj) {
-                    var $obj = $(obj);
-                    $('.sel_color_mano').removeClass('color_selected');
-                    $obj.addClass('color_selected');
-                    var radio = $obj.find('input')[0];
-                    $(radio).prop('checked', true);
-                }
-                $('.sel_color_mano input[checked]').closest('.sel_color_mano').addClass('color_selected');
-            </script>
+                <script>
+                    function select_color(obj) {
+                        var $obj = $(obj);
+                        $('.sel_color_mano').removeClass('color_selected');
+                        $obj.addClass('color_selected');
+                        var radio = $obj.find('input')[0];
+                        $(radio).prop('checked', true);
+                    }
+                    $('.sel_color_mano input[checked]').closest('.sel_color_mano').addClass('color_selected');
+                </script>
+            }
+
             <div class="form-group">
                 <p class="form_title">@Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label" })</p>
                 <div class="col-md-10">

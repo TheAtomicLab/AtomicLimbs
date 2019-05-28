@@ -1,4 +1,4 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@model Limbs.Web.ViewModels.NewOrder
 
 @{
     ViewBag.Title = "Pedido";
@@ -65,6 +65,7 @@
                 @Html.ValidationSummary()
                 @Html.HiddenFor(x => x.AmputationTypeFkId)
                 @Html.HiddenFor(x => x.ProductType)
+                @Html.HiddenFor(x => x.HasDesign)
             }
             <button id="enviar" name="enviar" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">Continuar</button>
        </div>

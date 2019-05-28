@@ -1,113 +1,113 @@
 ﻿@using Limbs.Web.Entities.Models;
+@using Limbs.Web.ViewModels;
 
-@model OrderModel
+@model NewOrder
 
-@section scripts
+    @section scripts
 {
-    <script src="~/Scripts/pages/orders.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        $('input[type=radio][name=AmputationType]').change(function () {
-        });
+        <script src="~/Scripts/pages/orders.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $('input[type=radio][name=AmputationType]').change(function () {
+            });
 
 /**/</script>
-}
-@{
-    ViewBag.Title = "Pedido";
-}
-<div class="min_full" id="cuerpo_pedir">
-    <article id="exp_inicial" class="card center-card-l">
+    }
+    @{
+        ViewBag.Title = "Pedido";
+    }
+    <div class="min_full" id="cuerpo_pedir">
+        <article id="exp_inicial" class="card center-card-l">
 
-        @using (Html.BeginForm("ManoPedir", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            <div id="form_parte_1">
-                <div class="form_main_title">
-                    <p class="step">1</p>
-                    <div>
-                        <p class="title">
-                            ¿En qué brazo necesitás la prótesis?
-                        </p>
-                        <p class="subtitle">Si necesitás en ambos lados, deberás hacer dos pedidos.</p>
+            @using (Html.BeginForm("ManoPedir", "Orders", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                @Html.AntiForgeryToken()
+                <div id="form_parte_1">
+                    <div class="form_main_title">
+                        <p class="step">1</p>
+                        <div>
+                            <p class="title">
+                                ¿En qué brazo necesitás la prótesis?
+                            </p>
+                            <p class="subtitle">Si necesitás en ambos lados, deberás hacer dos pedidos.</p>
+                        </div>
+                    </div>
+                    <div class="sel_lado">
+                        <div class="selector_lado" onclick="select_lado(this, 'Left')" js_val="Left">
+                            <div class="sq_sizer"></div>
+                            <p>Izquierdo</p>
+                        </div>
+                        <div class="selector_lado" onclick="select_lado(this, 'Right')" js_val="Right">
+                            <div class="sq_sizer"></div>
+                            <p>Derecho</p>
+                        </div>
+                    </div>
+                    <div class="select_brazo">
+                        @Html.EditorFor(x => x.ProductType)
                     </div>
                 </div>
-                <div class="sel_lado">
-                    <div class="selector_lado" onclick="select_lado(this, 'Left')" js_val="Left">
-                        <div class="sq_sizer"></div>
-                        <p>Izquierdo</p>
+                <!--PARTE 2-->
+                <div id="form_parte_2">
+                    <div class="form_main_title">
+                        <p class="step">2</p>
+                        <div>
+                            <p class="title">
+                                ¿Qué tipo de amputación tenés?
+                            </p>
+                        </div>
                     </div>
-                    <div class="selector_lado" onclick="select_lado(this, 'Right')" js_val="Right">
-                        <div class="sq_sizer"></div>
-                        <p>Derecho</p>
-                    </div>
-                </div>
-                <div class="select_brazo">
-                    @Html.EditorFor(x => x.ProductType)
-                </div>
-            </div>
-            <!--PARTE 2-->
-            <div id="form_parte_2">
-                <div class="form_main_title">
-                    <p class="step">2</p>
-                    <div>
-                        <p class="title">
-                            ¿Qué tipo de amputación tenés?
-                        </p>
-                    </div>
-                </div>
-                <div id="tipo_de_amp">
-                    @{
-                        var amputationTypes = ViewData["ListAmputations"] == null ? new List<AmputationTypeModel>() : ViewData["ListAmputations"] as List<AmputationTypeModel>;
+                    <div id="tipo_de_amp">
+                        @{
+                            var amputationDesigns = ViewData["ListAmputations"] == null ? new List<AmputationDesign>() : ViewData["ListAmputations"] as List<AmputationDesign>;
 
-                        foreach (var amputation in amputationTypes)
-                        {
-                            <div class="selector_amp" style="background-image: url(@amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputation.Description" js_value="@amputation.Id" onclick="select_amp(this)">
-                                <div class="selector_size"></div>
-                                @Html.RadioButtonFor(b => Model.AmputationTypeFkId, amputation.Id, new { @class = "tipo_amp", title = amputation.Description, })
-                            </div>
+                            foreach (var amputationDesign in amputationDesigns)
+                            {
+                                <div class="selector_amp" style="background-image: url(@amputationDesign.Amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputationDesign.Amputation.Description" js_value="@amputationDesign.Amputation.Id" data-hasdesign="@(amputationDesign.HasDesign ? "1" : "0")" onclick="select_amp(this)">
+                                    <div class="selector_size"></div>
+                                    @Html.RadioButtonFor(b => Model.AmputationTypeFkId, amputationDesign.Amputation.Id, new { @class = "tipo_amp", title = amputationDesign.Amputation.Description })
+                                </div>
+                            }
                         }
-                    }
-
-                    @*@Html.EditorFor(x => x.AmputationType)*@
-
-                    <div class="no-design" style="display: none;">
-                        <h2>Importante</h2>
-                        <p>
-                            No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
-                        </p>
+                        <div class="no-design" style="display: none;">
+                            <h2>Importante</h2>
+                            <p>
+                                No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
+                            </p>
+                        </div>
+                    </div>
+                    <p>
+                        @Html.ValidationMessageFor(x => x.AmputationTypeFkId)
+                    </p>
+                    <div>
+                        <input id="enviar" disabled type="submit" value="Siguiente" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">
                     </div>
                 </div>
-                <p>
-                    @Html.ValidationMessageFor(x => x.AmputationType)
-                </p>
-                <div>
-                    <input id="enviar" disabled type="submit" value="Siguiente" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">
-                </div>
-            </div>
+            }
+        </article>
+    </div>
+    <script>
+        function select_lado(obj, lado) {
+            if (lado !== 'Right' && lado !== 'Left') {
+                alert('Error al seleccionar lado.');
+                return false;
+            }
+            $('#ProductType').val(lado);
+            $('#form_parte_1').css('display', 'none');
+            $('#form_parte_2').css('display', 'block');
         }
-    </article>
-</div>
-<script>
-    function select_lado(obj, lado) {
-        if (lado !== 'Right' && lado !== 'Left') {
-            alert('Error al seleccionar lado.');
-            return false;
+        $('.selector_amp input').attr('required', true);
+        function select_amp(obj) {
+            var $obj = $(obj);
+            $('.selector_amp').removeClass('amp_selected');
+            $obj.addClass('amp_selected');
+            var hasDesign = $obj.attr('data-hasdesign');
+
+            var radio = $obj.find('input')[0];
+            $(radio).prop('checked', true);
+            if (hasDesign !== "1") {
+                $(".no-design").show();
+            } else {
+                $(".no-design").hide();
+            }
+            $('#enviar').prop('disabled', false);
         }
-        $('#ProductType').val(lado);
-        $('#form_parte_1').css('display', 'none');
-        $('#form_parte_2').css('display', 'block');
-    }
-    $('.selector_amp input').attr('required', true);
-    function select_amp(obj) {
-        var $obj = $(obj);
-        $('.selector_amp').removeClass('amp_selected');
-        $obj.addClass('amp_selected');
-        var radio = $obj.find('input')[0];
-        $(radio).prop('checked', true);
-        if (radio.value === 1 || radio.value === 2 || radio.value === 7 || radio.value === 8) {
-            $(".no-design").show();
-        } else {
-            $(".no-design").hide();
-        }
-        $('#enviar').prop('disabled', false);
-    }
-</script>
+    </script>
