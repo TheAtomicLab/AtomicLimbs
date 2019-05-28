@@ -745,6 +745,7 @@
     <EmbeddedResource Include="Migrations\201904272238105_refusedOrders.resx">
       <DependentUpon>201904272238105_refusedOrders.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AccountTexts.es.resx" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Limbs.Web.Common\Limbs.Web.Common.csproj">
