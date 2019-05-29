@@ -1,12 +1,13 @@
 ﻿@using System.Configuration
 @using Limbs.Web.Entities.Models
+@using Limbs.Web.Resources
 @model AmbassadorModel
 @{
     var isEdit = Model != null && Model?.Id != 0;
     var minYear = AmbassadorModel.MinYear;
     bool termsAndConditions = ViewBag.TermsAndConditions != null && (bool)ViewBag.TermsAndConditions;
 
-    ViewBag.Title = isEdit ? "Editar datos" : "Registro";
+    ViewBag.Title = isEdit ? AmbassadorTexts.Create_ViewBag_Title_Edit : AmbassadorTexts.Create_ViewBag_Title_Register;
 }
 @if (!isEdit)
 {
@@ -54,60 +55,60 @@
             @Html.HiddenFor(x => x.Email)
             @Html.HiddenFor(x => x.UserId)
             @Html.AntiForgeryToken()
-            <h2 class="f-titulo">Tus datos</h2>
+            <h2 class="f-titulo">@AmbassadorTexts.Create_Title_h2</h2>
             if (!ViewData.ModelState.IsValid)
             {
-                @Html.ValidationSummary("Hay errores en el formulario, revisá los campos marcados en rojo", new { @class = "" })
+                @Html.ValidationSummary(AmbassadorTexts.Create_ValidationSummary, new { @class = "" })
             }
             <div class="f-seccion">
                 <div class="f-campo-mitad">
-                    @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre" } })
-                    @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Apellido" } })
+                    @Html.EditorFor(model => model.AmbassadorName, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_Name } })
+                    @Html.EditorFor(model => model.AmbassadorLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_LastName } })
                 </div>
-                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte" } })
-                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono" } })
-                <label class="f-label">Fecha de nacimiento</label>
+                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_ID } })
+                @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_Phone } })
+                <label class="f-label">@AmbassadorTexts.Create_Birthday</label>
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })
-                <label class="f-label">Sexo</label>
+                <label class="f-label">@AmbassadorTexts.Create_Gender</label>
                 @Html.EditorFor(m => m.Gender, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
-                <label class="f-label">¿Te estás registrando en representación de una institución u organización?</label>
+                <label class="f-label">@AmbassadorTexts.Create_IsOrganization</label>
                 @Html.EditorFor(m => m.Organization, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
                 <div class="organization-box hide">
-                    @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = " " } })
-                    @Html.EditorFor(model => model.RoleInOrganization, new { htmlAttributes = new { @class = "f-campo", placeholder = "Rol en la organización", data_val = "true", data_val_required = " " } })
+                    @Html.EditorFor(model => model.OrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_OrganizationName, data_val = "true", data_val_required = " " } })
+                    @Html.EditorFor(model => model.RoleInOrganization, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_OrganizationRole, data_val = "true", data_val_required = " " } })
                 </div>
 
-                <label class="f-label">Email Alternativo</label>
-                <label class="f-label" style="font-style: italic; font-size: 12px;">Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado </label>
-                @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = "Email Alternativo" } })
+                <label class="f-label">@AmbassadorTexts.Create_AlternativeEmail</label>
+                <label class="f-label" style="font-style: italic; font-size: 12px;">@AmbassadorTexts.Create_AlternativeEmailLabel</label>
+                @Html.EditorFor(model => model.AlternativeEmail, new { htmlAttributes = new { @class = "f-campo", placeholder = AmbassadorTexts.Create_AlternativeEmail } })
 
                 @Html.Partial("_Address", Model)
 
                 @*Start Printer*@
 
-                <h3>Datos de la impresora 3D</h3>
+                <h3>@AmbassadorTexts.Create_Printer_Create_h3</h3>
                 <div name="ambassadorPrinter">
-                    <label class="f-label">Marca impresora</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_Brand</label>
                     @Html.EditorFor(model => model.Printer.Brand, new { htmlAttributes = new { @class = "f-campo", placeholder = "Trideo", data_val = "true", data_val_required = " " } })
-                    <label class="f-label">Modelo</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_Model</label>
                     @Html.EditorFor(model => model.Printer.Model, new { htmlAttributes = new { @class = "f-campo", placeholder = "BIG-T", data_val = "true", data_val_required = " " } })
-                    <label class="f-label">Ancho</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_Width</label>
                     @Html.EditorFor(model => model.Printer.Width, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm", data_val = "true", data_val_required = " " } })
-                    <label class="f-label">Largo</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_Long</label>
                     @Html.EditorFor(model => model.Printer.Long, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm", data_val = "true", data_val_required = " " } })
-                    <label class="f-label">Altura</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_Height</label>
                     @Html.EditorFor(model => model.Printer.Height, new { htmlAttributes = new { @class = "f-campo", placeholder = "30cm", data_val = "true", data_val_required = " " } })
-                    <label class="f-label">Area de impresión</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_PrintingArea</label>
                     @Html.EditorFor(model => model.Printer.PrintingArea, new { htmlAttributes = new { @class = "f-campo", placeholder = "300 x 300 x 350 mm", data_val = "true", data_val_required = " " } })
-                    <label class="f-label">¿Es cama caliente?</label>
+                    <label class="f-label">@AmbassadorTexts.Create_Printer_IsHotBed</label>
                     @Html.EditorFor(model => model.Printer.IsHotBed, new { htmlAttributes = new { @class = "f-campo", placeholder = "" } })
                     @*End Printer*@
                 </div>
 
                 @if (!isEdit)
                 {
-                    <h3>¿No tenés impresora?</h3>
-                    <h4 style="margin: 1em -50px;">¡No hay problema! Ingresa <a href="https://atomiclab.org/consejosimpresoras" target="_blank">acá</a> y seguí los consejos para comprar una!</h4>
+                    <h3>@AmbassadorTexts.Create_Printer_Create_h3</h3>
+                    <h4 style="margin: 1em -50px;">@AmbassadorTexts.Create_Printer_Create_h4_1 <a href="https://atomiclab.org/consejosimpresoras" target="_blank"> @AmbassadorTexts.Create_Printer_Create_h4_2</a> @AmbassadorTexts.Create_Printer_Create_h4_3</h4>
                 }
             </div>
             <div>
@@ -116,12 +117,12 @@
                     <p style="margin: 20px;">
                         <label for="termsAndConditions">
                             @Html.CheckBox("termsAndConditions", termsAndConditions, new { id = "termsAndConditions" })
-                            acepto los @Html.ActionLink("términos y condiciones", "TermsAndConditions", null, new { target = "_blank" }).
+                            acepto los @Html.ActionLink(AmbassadorTexts.Create_TermsAndConditions, "TermsAndConditions", null, new { target = "_blank" }).
                         </label>
                     </p>
                 }
                 <p>
-                    <button id="btn-register" type="submit" class="bn_blue" name="register">@(isEdit ? "Editar datos" : "Registrarse")</button>
+                    <button id="btn-register" type="submit" class="bn_blue" name="register">@(isEdit ? AmbassadorTexts.Create_EditSubmitButton : AmbassadorTexts.Create_CreateSubmitButton)</button>
                 </p>
             </div>
         }

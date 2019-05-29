@@ -356,6 +356,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AccountTexts.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\AmbassadorTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmbassadorTexts.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\AmbassadorTexts.es.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -771,6 +776,10 @@
     <EmbeddedResource Include="Resources\AmbassadorTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AmbassadorTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AmbassadorTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AmbassadorTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,93 +1,99 @@
 ﻿@using Limbs.Web.Common.Extensions
 @using Limbs.Web.Entities.Models
+@using Limbs.Web.Resources
 @model Limbs.Web.ViewModels.AmbassadorPanelViewModel
 @{
     var o = new OrderModel();
-    ViewBag.Title = "Ambassador Panel";
+    ViewBag.Title = AmbassadorTexts.Index_ViewBag_Title;
 }
 
 
-    <article id="panel_embajadores">
-        <div class="info_panel_embajador">
-            <h1>Panel de control</h1>
-            <div id="estadistica_emb">
-                <div>
-                    <p>Entregaste</p>
-                    <h2>@Model.Stats.HandledOrders</h2>
-                    <p>Manos</p>
-                </div>
-                <div>
-                    <p>Tenés</p>
-                    <h2>@Model.Stats.PendingOrders</h2>
-                    <p>Pedidos</p>
-                </div>
+<article id="panel_embajadores">
+    <div class="info_panel_embajador">
+        <h1>@AmbassadorTexts.Index_AmbassadorPanelInfo_h1</h1>
+        <div id="estadistica_emb">
+            <div>
+                <p>@AmbassadorTexts.Index_AmbassadorPanelInfo_p1</p>
+                <h2>@Model.Stats.HandledOrders</h2>
+                <p>@AmbassadorTexts.Index_AmbassadorPanelInfo_p2</p>
+            </div>
+            <div>
+                <p>@AmbassadorTexts.Index_AmbassadorPanelInfo_p3</p>
+                <h2>@Model.Stats.PendingOrders</h2>
+                <p>@AmbassadorTexts.Index_AmbassadorPanelInfo_p4</p>
             </div>
         </div>
-        <div id="paneles_embajador">
-
-
-
-                <article class="card card-l">
-                    <h2>Pedidos entrantes:</h2>
-                    @if (Model.PendingToAssignOrders.Count > 0)
-                    {
-                    <div class="table-items table-pedidos">
-                        @foreach (var order in Model.PendingToAssignOrders)
-                        {
-                            <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
-                                <div class="info_id">#@order.Id</div>
-                                <div class="info_name">@order.OrderRequestor.FullNameWithoutLastName()</div>
-                                <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
-                            </a>
-                        }
-                    </div>
-                    } else {
-                        <div>No tienes nuevos pedidos asignados</div>
-                    }
-                </article>
- @*          
-     <div>
-        <div>@Html.DisplayNameFor(x => o.Id)</div>
-        <div>@Html.DisplayNameFor(x => o.OrderRequestor.UserName)</div>
-        <div>@Html.DisplayNameFor(x => o.Date)</div>
-        <div>@Html.DisplayNameFor(x => o.Status)</div>
     </div>
-*@
-            <article class="card card-l">
-                <h2>Tus pedidos:</h2>
+    <div id="paneles_embajador">
+
+
+
+        <article class="card card-l">
+            <h2>@AmbassadorTexts.Index_PendingToAssignOrders</h2>
+            @if (Model.PendingToAssignOrders.Count > 0)
+            {
                 <div class="table-items table-pedidos">
-                    @foreach (var order in Model.PendingOrders)
+                    @foreach (var order in Model.PendingToAssignOrders)
+                    {
+                        <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
+                            <div class="info_id">#@order.Id</div>
+                            <div class="info_name">@order.OrderRequestor.FullNameWithoutLastName()</div>
+                            <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
+                        </a>
+                    }
+                </div>
+            }
+            else
+            {
+                <div>@AmbassadorTexts.Index_NotPendigOrders</div>
+            }
+        </article>
+        @*
+             <div>
+                <div>@Html.DisplayNameFor(x => o.Id)</div>
+                <div>@Html.DisplayNameFor(x => o.OrderRequestor.UserName)</div>
+                <div>@Html.DisplayNameFor(x => o.Date)</div>
+                <div>@Html.DisplayNameFor(x => o.Status)</div>
+            </div>
+        *@
+        <article class="card card-l">
+            <h2>@AmbassadorTexts.Index_PendingOrders</h2>
+            <div class="table-items table-pedidos">
+                @foreach (var order in Model.PendingOrders)
+                {
+                    <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
+                        <div class="info_id"><div>#@order.Id</div></div>
+                        <div class="info_name"><div>@order.OrderRequestor.FullNameWithoutLastName()</div></div>
+                        <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
+                        <div class="info_description">@order.Status.ToDescription()</div>
+                    </a>
+                }
+            </div>
+        </article>
+
+
+        <article id="terminadas" class="card card-l">
+            <h2>@AmbassadorTexts.Index_FinishedOrders</h2>
+            @if (Model.DeliveredOrders.Count > 0)
+            {
+                <div class="table-items table-pedidos">
+                    @foreach (var order in Model.DeliveredOrders)
                     {
                         <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
                             <div class="info_id"><div>#@order.Id</div></div>
-                            <div class="info_name"><div>@order.OrderRequestor.FullNameWithoutLastName()</div></div>
+                            <div class="info_name">@order.OrderRequestor.FullNameWithoutLastName()</div>
                             <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
                             <div class="info_description">@order.Status.ToDescription()</div>
                         </a>
                     }
                 </div>
-            </article>
+            }
+            else
+            {
+                <div>@AmbassadorTexts.Index_NotFinishedOrders</div>
+            }
+        </article>
 
 
-                <article id="terminadas" class="card card-l">
-                    <h2>Terminadas:</h2>
-                    @if (Model.DeliveredOrders.Count > 0) {
-                        <div class="table-items table-pedidos">
-                            @foreach (var order in Model.DeliveredOrders)
-                            {
-                                <a tabindex="0" href="@(Url.Action("Details", "Orders", new { id = order.Id }))">
-                                    <div class="info_id"><div>#@order.Id</div></div>
-                                    <div class="info_name">@order.OrderRequestor.FullNameWithoutLastName()</div>
-                                    <div class="info_date">@Html.DisplayFor(x => order.Date, "ToFriendlyDateString")</div>
-                                    <div class="info_description">@order.Status.ToDescription()</div>
-                                </a>
-                            }
-                        </div>
-                    } else {
-                        <div>¡Aún no has entregado ninguna mano!</div>
-                    }
-                </article>
-
-
-        </div>
-    </article>
+    </div>
+</article>
