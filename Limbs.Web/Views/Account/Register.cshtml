@@ -1,13 +1,13 @@
 ﻿@using Limbs.Web.Entities.WebModels;
 @model RegisterViewModel
 @{
-    ViewBag.Title = "Registrarse";
+    ViewBag.Title = Limbs.Web.Resources.AccountTexts.Register_ViewBag_Title;
 }
 <div id="cont" class="min_full">
     <div id="cont-form">
         <div class="inicio-form-r">
             <h2>@ViewBag.Title</h2>
-            <h4>Creá una cuenta nueva en solo un minuto.</h4>
+            <h4>@Limbs.Web.Resources.AccountTexts.Register_inicio_form_r_h4</h4>
         </div>
         <div class="cont_regis">
             <div class="social-log">
@@ -15,7 +15,7 @@
             </div>
 
             <p id="post-form-ini">
-                ¿No tenés una cuenta en Facebook?, registrate acá:<br />
+                @Limbs.Web.Resources.AccountTexts.Register_post_form_ini:<br />
 
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { id = "register-form", @class = "form-horizontal", role = "form" }))
                 {
@@ -43,13 +43,13 @@
                         <button class="btn btn-default bn_blue g-recaptcha"
                                 data-sitekey="@Model.RecaptchaPublicKey"
                                 data-callback="OnSubmit">
-                            Registrarse
+                            @Limbs.Web.Resources.AccountTexts.Register_ViewBag_Title
                         </button>
                     </div>
                 }
         </div>
         <div class="cont_regis">
-            <p id="post-form-ini">¿Ya tenés una cuenta?<br /><a href="@Url.Action("Login", "Account")">Iniciar sesión</a></p>
+            <p id="post-form-ini">@Limbs.Web.Resources.AccountTexts.Register_cont_regis_post_form_ini<br /><a href="@Url.Action("Login", "Account")">@Limbs.Web.Resources.AccountTexts.Register_cont_regis_post_form_ini_link</a></p>
         </div>
     </div>
 </div>

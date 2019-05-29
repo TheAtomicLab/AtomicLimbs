@@ -1,12 +1,12 @@
 ﻿@model Limbs.Web.Entities.WebModels.LoginViewModel
 @{
-    ViewBag.Title = "Ingresar";
+    ViewBag.Title = Limbs.Web.Resources.AccountTexts.SelectUserOrAmbassador_ViewBag_Title;
 }
 
 <div id="cont" class="min_full">
     <article id="reg2">
-        <a href="/Users/Create"><div class="selec"><div class="fondo"></div><h2>Quiero pedir una prótesis</h2></div></a>
-        <a href="/Ambassador/Create"><div class="selec"><div class="fondo"></div><h2>Tengo impresora y quiero ayudar</h2></div></a>
+        <a href="/Users/Create"><div class="selec"><div class="fondo"></div><h2>@Limbs.Web.Resources.AccountTexts.SelectUserOrAmbassador_UserLink</h2></div></a>
+        <a href="/Ambassador/Create"><div class="selec"><div class="fondo"></div><h2>@Limbs.Web.Resources.AccountTexts.SelectUserOrAmbassador_AmbassadorLink</h2></div></a>
     </article>
 </div>
 

@@ -346,6 +346,21 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AccountTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AccountTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AmbassadorTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmbassadorTexts.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
@@ -745,7 +760,18 @@
     <EmbeddedResource Include="Migrations\201904272238105_refusedOrders.resx">
       <DependentUpon>201904272238105_refusedOrders.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\AccountTexts.es.resx" />
+    <EmbeddedResource Include="Resources\AccountTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AccountTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AmbassadorTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AmbassadorTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Limbs.Web.Common\Limbs.Web.Common.csproj">
