@@ -1,17 +1,17 @@
-﻿
+﻿@using Limbs.Web.Resources
 @{
-    ViewBag.Title = "Pedir una prótesis";
+    ViewBag.Title = HelpTexts.Pedir_ViewBag_Title;
 }
 
 <div class="help-pedirunaprotesis">
     <div class="content">
-        <h2>¡Hola!</h2>
-        <p>Nos alegra que quieras una prótesis, vamos a guiarte paso a paso.<br />Para poder realizar el pedido, tenés tener una cuenta en Limbs.</p>
+        <h2>@HelpTexts.Pedir_h2</h2>
+        <p>@HelpTexts.Pedir_p1<br />@HelpTexts.Pedir_p2</p>
         <div class="pregunta">
-            <p>¿Tenés una cuenta?</p>
+            <p>@HelpTexts.Pedir_Pregunta</p>
             <div class="opciones-cuenta">
-                <a class="opcion" href="@Url.Action("Login", "Account")"><p>¡Si! Ya tengo una cuenta.</p><div></div></a>
-                <a class="opcion" href="@Url.Action("Register", "Account")"><p>No, no tengo una cuenta.</p><div></div></a>
+                <a class="opcion" href="@Url.Action("Login", "Account")"><p>@HelpTexts.Pedir_UrlActionLogin</p><div></div></a>
+                <a class="opcion" href="@Url.Action("Register", "Account")"><p>@HelpTexts.Pedir_UrlActionRegister</p><div></div></a>
             </div>
         </div>
     </div>
