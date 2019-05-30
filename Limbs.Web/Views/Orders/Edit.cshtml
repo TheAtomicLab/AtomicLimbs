@@ -1,4 +1,6 @@
-﻿@model Limbs.Web.ViewModels.OrderUpdateModel
+﻿@using Limbs.Web.ViewModels;
+
+@model OrderUpdateModel
 
 @{
     ViewBag.Title = "Edit";
@@ -32,15 +34,17 @@
             <div class="form-group">
                 <p class="form_title">@Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label" })</p>
                 <div class="col-md-10 edit_type_amp">
+                    @{
+                        var amputationDesigns = ViewData["ListAmputations"] == null ? new List<AmputationDesign>() : ViewData["ListAmputations"] as List<AmputationDesign>;
 
-                    @Html.RadioButtonFor(model => model.AmputationType, "A", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "B", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "C", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "D", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "E", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "F", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "G", new { @class = "tipo_amp2" })
-                    @Html.RadioButtonFor(model => model.AmputationType, "H", new { @class = "tipo_amp2" })
+                        foreach (var amputationDesign in amputationDesigns)
+                        {
+                            <div class="selector_amp" style="background-image: url(@amputationDesign.Amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputationDesign.Amputation.Description" js_value="@amputationDesign.Amputation.Id" data-hasdesign="@(amputationDesign.HasDesign ? "1" : "0")" onclick="select_amp(this)">
+                                <div class="selector_size"></div>
+                                @Html.RadioButtonFor(b => Model.AmputationTypeFkId, amputationDesign.Amputation.Id, new { @class = "tipo_amp", title = amputationDesign.Amputation.Description })
+                            </div>
+                        }
+                    }
 
                     @Html.ValidationMessageFor(model => model.AmputationType, "", new { @class = "text-danger" })
                 </div>
@@ -140,6 +144,22 @@
 
 
     $(document).ready(function () {
+        function select_amp(obj) {
+            var $obj = $(obj);
+            $('.selector_amp').removeClass('amp_selected');
+            $obj.addClass('amp_selected');
+            var hasDesign = $obj.attr('data-hasdesign');
+
+            var radio = $obj.find('input')[0];
+            $(radio).prop('checked', true);
+            if (hasDesign !== "1") {
+                $(".no-design").show();
+            } else {
+                $(".no-design").hide();
+            }
+            $('#enviar').prop('disabled', false);
+        }
+
         var typeFileAccepted = "image/*";
         var maxFileSizeImage = 5;
         var uploadMultipleVar = true;

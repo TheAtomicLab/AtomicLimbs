@@ -22,6 +22,9 @@ namespace Limbs.Web.ViewModels
         [Display(Name = "Color", Description = "(si es posible)")]
         public OrderColor Color { get; set; }
 
+        public int ColorIdFk { get; set; }
+        public int AmputationTypeFkId { get; set; }
+
         public string[] Images { get; set; }
         public int TotalImages { get; set; }
     }

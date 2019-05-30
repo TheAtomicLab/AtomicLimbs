@@ -49,6 +49,23 @@ namespace Limbs.Web.Controllers
             if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var orderUpdateModel = Mapper.Map<OrderUpdateModel>(orderModel);
+
+            var listAmputations = await Db.AmputationTypeModels.ToListAsync();
+            var listAmputationDesign = new List<AmputationDesign>();
+
+            foreach (var amputation in listAmputations)
+            {
+                var hasDesign = await Db.RenderModels.AnyAsync(p => p.AmputationTypeId == amputation.Id);
+
+                listAmputationDesign.Add(new AmputationDesign
+                {
+                    Amputation = amputation,
+                    HasDesign = hasDesign
+                });
+            }
+
+            ViewData["ListAmputations"] = listAmputationDesign;
+
             return View(orderUpdateModel);
         }
 
