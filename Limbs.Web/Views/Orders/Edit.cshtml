@@ -1,4 +1,5 @@
 ﻿@using Limbs.Web.ViewModels;
+@using Limbs.Web.Entities.Models;
 
 @model OrderUpdateModel
 
@@ -33,27 +34,24 @@
 
             <div class="form-group">
                 <p class="form_title">@Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label" })</p>
-                <div class="col-md-10 edit_type_amp">
+                <div id="tipo_de_amp" class="col-md-10">
                     @{
                         var amputationDesigns = ViewData["ListAmputations"] == null ? new List<AmputationDesign>() : ViewData["ListAmputations"] as List<AmputationDesign>;
 
                         foreach (var amputationDesign in amputationDesigns)
                         {
-                            <div class="selector_amp" style="background-image: url(@amputationDesign.Amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputationDesign.Amputation.Description" js_value="@amputationDesign.Amputation.Id" data-hasdesign="@(amputationDesign.HasDesign ? "1" : "0")" onclick="select_amp(this)">
+                            <div class="selector_amp" style="background-image: url(@amputationDesign.Amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputationDesign.Amputation.Description" js_value="@amputationDesign.Amputation.Id" data-idAmputation="@amputationDesign.Amputation.Id" data-hasdesign="@(amputationDesign.HasDesign ? "1" : "0")" onclick="select_amp(this)">
                                 <div class="selector_size"></div>
                                 @Html.RadioButtonFor(b => Model.AmputationTypeFkId, amputationDesign.Amputation.Id, new { @class = "tipo_amp", title = amputationDesign.Amputation.Description })
                             </div>
                         }
                     }
-
-                    @Html.ValidationMessageFor(model => model.AmputationType, "", new { @class = "text-danger" })
-                </div>
-
-                <div class="no-design" style="display: none;">
-                    <h2>Importante</h2>
-                    <p>
-                        No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con la edición el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
-                    </p>
+                    <div class="no-design" style="display: none;">
+                        <h2>Importante</h2>
+                        <p>
+                            No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
+                        </p>
+                    </div>
                 </div>
             </div>
 
@@ -92,16 +90,20 @@
                 <div class="col-md-10">
                     <div>
                         <p class="form_title">Color</p>
-                        <div class="color_mano">
-                            @Html.RadioButtonFor(model => model.Color, "A")
-                            @Html.RadioButtonFor(model => model.Color, "B")
-                            @Html.RadioButtonFor(model => model.Color, "C")
-                            @Html.RadioButtonFor(model => model.Color, "D")
-                            @Html.RadioButtonFor(model => model.Color, "E")
-                            @Html.RadioButtonFor(model => model.Color, "F")
+                        <div class="sel_color_container">
+                            @{
+                                var colors = ViewData["renderColors"] == null ? new List<ColorModel>() : ViewData["renderColors"] as List<ColorModel>;
+
+                                foreach (var color in colors)
+                                {
+                                    <div class="sel_color_mano" style="background-image: url(@color.PrimaryUrlImage);background-size: contain; background-repeat: no-repeat;" js_value="@color.Name">
+                                        @Html.RadioButtonFor(model => Model.ColorFkId, color.Id, new { @class = "selector_color_input" })
+                                    </div>
+                                }
+                            }
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.ColorFkId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -133,289 +135,301 @@
         <script src="~/Scripts/jquery.bxslider.min.js"></script>
 
         <script>
-    function objectifyForm(formArray) {//serialize data function
-        var returnArray = {};
-        for (var i = 0; i < formArray.length; i++) {
-            returnArray[formArray[i]['name']] = formArray[i]['value'];
-        }
-        return returnArray;
-    }
+            function objectifyForm(formArray) {//serialize data function
+                var returnArray = {};
+                for (var i = 0; i < formArray.length; i++) {
+                    returnArray[formArray[i]['name']] = formArray[i]['value'];
+                }
+                return returnArray;
+            }
 
+            function select_amp(obj) {
+                var $obj = $(obj);
+                $('.selector_amp').removeClass('amp_selected');
+                $obj.addClass('amp_selected');
+                let hasDesign = $obj.attr('data-hasdesign');
+                let idAmputation = $obj.attr('data-idAmputation');
 
+                var radio = $obj.find('input')[0];
+                $(radio).prop('checked', true);
+                if (hasDesign !== "1") {
+                    $(".no-design").show();
+                } else {
+                    $(".no-design").hide();
+                }
+                $('#enviar').prop('disabled', false);
+            }
 
     $(document).ready(function () {
-        function select_amp(obj) {
-            var $obj = $(obj);
-            $('.selector_amp').removeClass('amp_selected');
-            $obj.addClass('amp_selected');
-            var hasDesign = $obj.attr('data-hasdesign');
+                $('.sel_color_mano').on('click', function () {
+                        var $obj = $(this);
+                        $('.sel_color_mano').removeClass('color_selected')
 
-            var radio = $obj.find('input')[0];
-            $(radio).prop('checked', true);
-            if (hasDesign !== "1") {
-                $(".no-design").show();
-            } else {
-                $(".no-design").hide();
-            }
-            $('#enviar').prop('disabled', false);
-        }
+                        $obj.addClass('color_selected');
 
-        var typeFileAccepted = "image/*";
-        var maxFileSizeImage = 5;
-        var uploadMultipleVar = true;
-        var maxUploadFiles = @(8 - cantImages);
-        var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
-        var invalidFileTypeMsg = "Tipo de archivo inválido";
-        var msgWhileUploadFile = "Subiendo imagen, por favor espere";
+                        var radio = $obj.find('input')[0];
+                        $(radio).prop('checked', true);
+                });
 
-        let frm = $('#frmEdit');
-        let titleNoUploadImages = $('#title-no-more-images');
-        let dropzoneContainerClass = $('#edit-upload-images');
+                $('.tipo_amp:checked').parent().addClass('amp_selected');
+                $('.selector_color_input:checked').parent().addClass('color_selected');
 
-        frm.on('submit', function (e) {
-            e.preventDefault();
+                var typeFileAccepted = "image/*";
+                var maxFileSizeImage = 5;
+                var uploadMultipleVar = true;
+                var maxUploadFiles = @(8 - cantImages);
+                var fileTooBigMsg = "El archivo es muy grande. Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
+                var invalidFileTypeMsg = "Tipo de archivo inválido";
+                var msgWhileUploadFile = "Subiendo imagen, por favor espere";
 
-            $.post(frm.attr('action'), frm.serialize(), function (json) {
-                window.location = json.Action;
-            }, 'json');
+                let frm = $('#frmEdit');
+                let titleNoUploadImages = $('#title-no-more-images');
+                let dropzoneContainerClass = $('#edit-upload-images');
 
-            return false;
-        });
+                frm.on('submit', function (e) {
+                    e.preventDefault();
 
-        var myDropzone = $("#edit-upload-images").dropzone({
-            url: '/Orders/Edit/',
-            previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
-            maxFilesize: maxFileSizeImage,
-            maxFiles: maxUploadFiles,
-            uploadMultiple: uploadMultipleVar,
-            maxThumbnailFilesize: 5,
-            acceptedFiles: typeFileAccepted,
-            autoProcessQueue: false,
-            autoQueue: true,
-            addRemoveLinks: true,
-            dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
-            dictInvalidFileType: null,
-            dictRemoveFile: "Borrar imagen",
-            dictCancelUpload: null,
-            dictRemoveFileConfirmation: null,
-            createImageThumbnails: true,
-            init: function () {
-                dz = this;
-                dz.on('sendingmultiple', sendingMultiple);
-                dz.on("processingmultiple", processing);
-                dz.on("addedfile", addedFile);
-                dz.on("removedfile", removedFile);
-                dz.on("error", errorDropzone);
-                dz.on("success", successDropzone);
-            }
-        });
+                    $.post(frm.attr('action'), frm.serialize(), function (json) {
+                        window.location = json.Action;
+                    }, 'json');
 
-        $('#enviar').click(function () {
-            console.log(dz);
-            if (dz.files.length > 0) {
-                dz.processQueue();
-            } else {
-                frm.submit();
-            }
-        });
+                    return false;
+                });
 
-        function successDropzone(file, response) {
-            window.location = response.Action;
-        }
-
-        function errorDropzone(file, errormessage, xhr) {
-            if (xhr == undefined)
-                return false;
-
-            var t = xhr.response.responseText;
-
-            $('#msgManoImagen').empty();
-            $('#msgErrorManoImagen').empty();
-            showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
-            console.log($(errormessage)[1].textContent);
-
-            disabledRegister();
-        }
-
-         function removedFile(file) {
-            $('#msgErrorManoImagen').empty();
-            updateRegisterFiles();
-            dz.files.length == 0 ? disabledRegister() : "";
-         }
-
-        function processing(file) {
-            $('#msgManoImagen').empty();
-            $('#msgManoImagen').html(msgWhileUploadFile);
-        }
-
-        function addedFile(file) {
-            if (dz.files.length > maxUploadFiles) {
-                dz.removeFile(dz.files[0]);
-            }
-
-            console.log(file);
-
-            $('#msgErrorManoImagen').empty();
-
-            updateRegisterFiles();
-        }
-
-        function sendingMultiple(file, xhr, data) {
-            var array = frm.serializeArray();
-            for (var i = 0; i < array.length; i++) {
-                data.append(array[i].name, array[i].value)
-            }
-        }
-
-        function updateRegisterFiles() {
-            for (var i = 0; i < dz.files.length; i++) {
-
-                var file = dz.files[i];
-
-                if (!isConditionsValid(file)) {
-                    disabledRegister();
-                    showErrors(file);
-                    break;
-                } else {
-                    enableRegister();
-                }
-            }
-        }
-
-        function isValidSizeImage(file, nro) {
-            //var sizeFile = file.size / 1024 / 1024;
-            sizeFile = file.size / 1000000 // -> Dropzone calculate size
-            return sizeFile <= nro;
-        }
-
-        function showError(msg) {
-            var ErrorMsg = "<li>" + msg + "</li>";
-
-            $('#msgErrorManoImagen').append(ErrorMsg);
-        }
-
-        function disabledRegister() {
-            $("[name=enviar]").prop('disabled', true);
-        };
-
-        function enableRegister() {
-            $("[name=enviar]").prop('disabled', false);
-        };
-
-        function isConditionsValid(file) {
-            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
-            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
-
-            return ConditionTypeImage && ConditionSizeImage;
-        }
-
-        function showErrors(file) {
-            var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
-            Dropzone.sizeFile
-            var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
-
-            if (!ConditionSizeImage) {
-                showError(fileTooBigMsg);
-            }
-
-            if (!ConditionTypeImage) {
-                showError(invalidFileTypeMsg);
-            }
-        }
-
-        $('.tipo_amp2').change(function () {
-            let ampValue = $(this).val();
-            let noDesignBox = $('.no-design');
-            switch (ampValue) {
-                case 'A':
-                case 'B':
-                case 'G':
-                case 'H':
-                    noDesignBox.show();
-                    break;
-                case 'C':
-                case 'D':
-                case 'E':
-                case 'F':
-                    noDesignBox.hide();
-                    break;
-                default:
-                    noDesignBox.hide();
-                    break;
-            }
-        })
-
-        let imagesCount = @cantImages;
-        if (imagesCount >= 8) {
-            titleNoUploadImages.show();
-        } else {
-            dropzoneContainerClass.show();
-        }
-
-        var slider = $('.slider').bxSlider({
-            pager: true,
-            adaptiveHeight: true,
-            touchEnabled: false
-        });
-
-        let modal = $('#myModal');
-        let span = $("#close_modal");
-
-        span.click(function () {
-            modal.hide();
-        });
-
-        $('.action').click(function () {
-            if (imagesCount == 1) {
-                return;
-            }
-
-            let parent = $(this).parent();
-            modal.attr('data-modalOrderId', parent.attr('data-orderId'));
-            modal.attr('data-modalImageId', parent.attr('data-imageId'));
-
-            $('#myModal').show();
-        });
-
-        $('#btn-modal-delete').click(function () {
-            let imageId = modal.attr('data-modalImageId');
-            $.ajax({
-                url: '@(Url.Action("DeleteImage","Orders"))',
-                data: {
-                    OrderId: modal.attr('data-modalOrderId'),
-                    FileNameBlob: imageId
-                },
-                type: 'POST',
-                success: function (response) {
-                    if (response.IsSuccesful) {
-                        imagesCount--;
-
-                        if (imagesCount < 8) {
-                            maxUploadFiles = 8 - imagesCount;
-                            dz.options.maxFiles = 8 - imagesCount;
-
-                            titleNoUploadImages.hide();
-                            dropzoneContainerClass.show();
-                        }
-
-                        let imageFromSlider = $('div[data-imageId="' + imageId + '"]').parent();
-                        imageFromSlider.remove();
-                        //parent.parent().remove();
-                        slider.reloadSlider();
-
-                        modal.hide();
-                    } else {
-                        alert('No se ha podido eliminar la imagen');
-                        modal.hide();
+                var myDropzone = $("#edit-upload-images").dropzone({
+                    url: '/Orders/Edit/',
+                    previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+                    maxFilesize: maxFileSizeImage,
+                    maxFiles: maxUploadFiles,
+                    uploadMultiple: uploadMultipleVar,
+                    maxThumbnailFilesize: 5,
+                    acceptedFiles: typeFileAccepted,
+                    autoProcessQueue: false,
+                    autoQueue: true,
+                    addRemoveLinks: true,
+                    dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+                    dictInvalidFileType: null,
+                    dictRemoveFile: "Borrar imagen",
+                    dictCancelUpload: null,
+                    dictRemoveFileConfirmation: null,
+                    createImageThumbnails: true,
+                    init: function () {
+                        dz = this;
+                        dz.on('sendingmultiple', sendingMultiple);
+                        dz.on("processingmultiple", processing);
+                        dz.on("addedfile", addedFile);
+                        dz.on("removedfile", removedFile);
+                        dz.on("error", errorDropzone);
+                        dz.on("success", successDropzone);
                     }
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(textStatus, errorThrown);
-                    modal.hide();
+                });
+
+                $('#enviar').click(function () {
+                    console.log(dz);
+                    if (dz.files.length > 0) {
+                        dz.processQueue();
+                    } else {
+                        frm.submit();
+                    }
+                });
+
+                function successDropzone(file, response) {
+                    window.location = response.Action;
                 }
+
+                function errorDropzone(file, errormessage, xhr) {
+                    if (xhr == undefined)
+                        return false;
+
+                    var t = xhr.response.responseText;
+
+                    $('#msgManoImagen').empty();
+                    $('#msgErrorManoImagen').empty();
+                    showError("Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.");
+                    console.log($(errormessage)[1].textContent);
+
+                    disabledRegister();
+                }
+
+                 function removedFile(file) {
+                    $('#msgErrorManoImagen').empty();
+                    updateRegisterFiles();
+                    dz.files.length == 0 ? disabledRegister() : "";
+                 }
+
+                function processing(file) {
+                    $('#msgManoImagen').empty();
+                    $('#msgManoImagen').html(msgWhileUploadFile);
+                }
+
+                function addedFile(file) {
+                    if (dz.files.length > maxUploadFiles) {
+                        dz.removeFile(dz.files[0]);
+                    }
+
+                    console.log(file);
+
+                    $('#msgErrorManoImagen').empty();
+
+                    updateRegisterFiles();
+                }
+
+                function sendingMultiple(file, xhr, data) {
+                    var array = frm.serializeArray();
+                    for (var i = 0; i < array.length; i++) {
+                        data.append(array[i].name, array[i].value)
+                    }
+                }
+
+                function updateRegisterFiles() {
+                    for (var i = 0; i < dz.files.length; i++) {
+
+                        var file = dz.files[i];
+
+                        if (!isConditionsValid(file)) {
+                            disabledRegister();
+                            showErrors(file);
+                            break;
+                        } else {
+                            enableRegister();
+                        }
+                    }
+                }
+
+                function isValidSizeImage(file, nro) {
+                    //var sizeFile = file.size / 1024 / 1024;
+                    sizeFile = file.size / 1000000 // -> Dropzone calculate size
+                    return sizeFile <= nro;
+                }
+
+                function showError(msg) {
+                    var ErrorMsg = "<li>" + msg + "</li>";
+
+                    $('#msgErrorManoImagen').append(ErrorMsg);
+                }
+
+                function disabledRegister() {
+                    $("[name=enviar]").prop('disabled', true);
+                };
+
+                function enableRegister() {
+                    $("[name=enviar]").prop('disabled', false);
+                };
+
+                function isConditionsValid(file) {
+                    var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+                    var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+                    return ConditionTypeImage && ConditionSizeImage;
+                }
+
+                function showErrors(file) {
+                    var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+                    Dropzone.sizeFile
+                    var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+                    if (!ConditionSizeImage) {
+                        showError(fileTooBigMsg);
+                    }
+
+                    if (!ConditionTypeImage) {
+                        showError(invalidFileTypeMsg);
+                    }
+                }
+
+                $('.tipo_amp2').change(function () {
+                    let ampValue = $(this).val();
+                    let noDesignBox = $('.no-design');
+                    switch (ampValue) {
+                        case 'A':
+                        case 'B':
+                        case 'G':
+                        case 'H':
+                            noDesignBox.show();
+                            break;
+                        case 'C':
+                        case 'D':
+                        case 'E':
+                        case 'F':
+                            noDesignBox.hide();
+                            break;
+                        default:
+                            noDesignBox.hide();
+                            break;
+                    }
+                })
+
+                let imagesCount = @cantImages;
+                if (imagesCount >= 8) {
+                    titleNoUploadImages.show();
+                } else {
+                    dropzoneContainerClass.show();
+                }
+
+                var slider = $('.slider').bxSlider({
+                    pager: true,
+                    adaptiveHeight: true,
+                    touchEnabled: false
+                });
+
+                let modal = $('#myModal');
+                let span = $("#close_modal");
+
+                span.click(function () {
+                    modal.hide();
+                });
+
+                $('.action').click(function () {
+                    if (imagesCount == 1) {
+                        return;
+                    }
+
+                    let parent = $(this).parent();
+                    modal.attr('data-modalOrderId', parent.attr('data-orderId'));
+                    modal.attr('data-modalImageId', parent.attr('data-imageId'));
+
+                    $('#myModal').show();
+                });
+
+                $('#btn-modal-delete').click(function () {
+                    let imageId = modal.attr('data-modalImageId');
+                    $.ajax({
+                        url: '@(Url.Action("DeleteImage","Orders"))',
+                        data: {
+                            OrderId: modal.attr('data-modalOrderId'),
+                            FileNameBlob: imageId
+                        },
+                        type: 'POST',
+                        success: function (response) {
+                            if (response.IsSuccesful) {
+                                imagesCount--;
+
+                                if (imagesCount < 8) {
+                                    maxUploadFiles = 8 - imagesCount;
+                                    dz.options.maxFiles = 8 - imagesCount;
+
+                                    titleNoUploadImages.hide();
+                                    dropzoneContainerClass.show();
+                                }
+
+                                let imageFromSlider = $('div[data-imageId="' + imageId + '"]').parent();
+                                imageFromSlider.remove();
+                                //parent.parent().remove();
+                                slider.reloadSlider();
+
+                                modal.hide();
+                            } else {
+                                alert('No se ha podido eliminar la imagen');
+                                modal.hide();
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                            modal.hide();
+                        }
+                    });
+                });
             });
-        });
-    });
         </script>
     }
 </div>

@@ -65,6 +65,7 @@ namespace Limbs.Web.Controllers
             }
 
             ViewData["ListAmputations"] = listAmputationDesign;
+            ViewData["renderColors"] = await Db.ColorModels.Where(p => p.AmputationTypeId == orderModel.AmputationTypeFkId).ToListAsync();
 
             return View(orderUpdateModel);
         }
