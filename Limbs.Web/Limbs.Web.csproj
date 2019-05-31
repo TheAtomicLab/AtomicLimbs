@@ -376,6 +376,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HelpTexts.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\HomeTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeTexts.resx</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
@@ -798,6 +803,10 @@
     <EmbeddedResource Include="Resources\HelpTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HelpTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HomeTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

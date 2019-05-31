@@ -1,4 +1,5 @@
-﻿@model Limbs.Web.Entities.WebModels.LoginViewModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.WebModels.LoginViewModel
 @{
     ViewBag.Title = "";
 }
@@ -26,37 +27,37 @@
             @if (!Request.IsAuthenticated)
             {
                 <div>
-                    <a href="@Url.Action("Pedir", "Help")" class="bn_blue">Pedir una prótesis</a>
+                    <a href="@Url.Action("Pedir", "Help")" class="bn_blue">@HomeTexts.Index_UrlAction_Pedir</a>
                 </div>
                 <div>
-                    <a href="@Url.Action("Login", "Account")" id="registrarse_button">Ingresar</a>
+                    <a href="@Url.Action("Login", "Account")" id="registrarse_button">@HomeTexts.Index_UrlAction_Login</a>
                 </div>
             }
         </div>
     </div>
 
     <div class="texto_inicio">
-        <h1>¡Bienvenido a Limbs!</h1>
-        <p>Desde Limbs -un proyecto de Atomic Lab- queremos que todas las personas que lo necesiten tengan su prótesis impresa en 3D, sin que el dinero sea una barrera. Por eso,<br><b> las entregamos de manera GRATUITA.</b></p>
+        <h1>@HomeTexts.Index_texto_inicio_h1</h1>
+        <p>@HomeTexts.Index_texto_inicio_p1<br><b> @HomeTexts.Index_texto_inicio_p2</b></p>
     </div>
 </div>
 <div id="pedir">
     <div class="cont_pedir">
         <div class="imagen_pedir">
             <div class="cuadrado azulAtomicBG">
-                <h1>TRES SIMPLES PASOS</h1>
+                <h1>@HomeTexts.Index_imagen_pedir_h1</h1>
             </div>
             <img src="/Content/img/foto01.jpg" height="400" width="300" />
         </div>
 
         <center>
 
-            <p class="text">Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D.</p>
+            <p class="text">@HomeTexts.Index_center_text</p>
             <div class="link">
-                <a href="@Url.Action("Pedir", "Help")" class="boton">Registrate</a>
+                <a href="@Url.Action("Pedir", "Help")" class="boton">@HomeTexts.Index_UrlAction_Register</a>
             </div>
             <div class="link">
-                <a class="azulAtomicTx" href="http://atomiclab.org/faq" target="_blank">Más Información</a>
+                <a class="azulAtomicTx" href="http://atomiclab.org/faq" target="_blank">@HomeTexts.Index_MoreInformation</a>
             </div>
         </center>
     </div>
