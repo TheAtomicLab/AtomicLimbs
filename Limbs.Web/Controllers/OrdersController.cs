@@ -49,6 +49,9 @@ namespace Limbs.Web.Controllers
             if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             var orderUpdateModel = Mapper.Map<OrderUpdateModel>(orderModel);
+            orderUpdateModel.PreviousAmputationTypeId = orderModel.AmputationTypeFkId ?? 0;
+
+            orderUpdateModel.HasDesign = await Db.RenderModels.AnyAsync(p => p.AmputationTypeId == orderModel.AmputationTypeFkId);
 
             var listAmputations = await Db.AmputationTypeModels.ToListAsync();
             var listAmputationDesign = new List<AmputationDesign>();
@@ -70,6 +73,23 @@ namespace Limbs.Web.Controllers
             return View(orderUpdateModel);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetColors(int? amputationId)
+        {
+            bool isSuccessfully = false;
+            if (amputationId == null) return Json(new { isSuccessfully });
+
+            var colors = await Db.ColorModels.Where(p => p.AmputationTypeId == amputationId).ToListAsync();
+
+            isSuccessfully = true;
+
+            return Json(new
+            {
+                isSuccessfully,
+                colors
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(OrderUpdateModel orderUpdateModel)
@@ -79,7 +99,7 @@ namespace Limbs.Web.Controllers
                 return View(orderUpdateModel);
             }
 
-            OrderModel orderModel = await Db.OrderModels.FindAsync(orderUpdateModel.Id);
+            OrderModel orderModel = await Db.OrderModels.Include(p => p.RenderPieces).FirstOrDefaultAsync(x => x.Id == orderUpdateModel.Id);
             if (orderModel == null) new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             string olderModelStr = orderModel.ToString();
@@ -98,6 +118,32 @@ namespace Limbs.Web.Controllers
                     var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
 
                     orderModel.IdImage += $",{fileUrl.ToString()}";
+                }
+            }
+
+            if (orderUpdateModel.PreviousAmputationTypeId != orderUpdateModel.AmputationTypeFkId)
+            {
+                if (orderModel.RenderPieces != null && orderModel.RenderPieces.Any())
+                    Db.OrderRenderPieceModels.RemoveRange(orderModel.RenderPieces);
+
+                if (orderUpdateModel.HasDesign)
+                {
+                    var renders = await Db.RenderModels.Where(p => p.AmputationTypeId == orderUpdateModel.AmputationTypeFkId).ToListAsync();
+                    foreach (var render in renders)
+                    {
+                        var renderPieces = await Db.RenderPieceModels.Where(p => p.RenderId == render.Id).ToListAsync();
+
+                        if (renderPieces == null || renderPieces.Count == 0) continue;
+
+                        foreach (var piece in renderPieces)
+                        {
+                            orderModel.RenderPieces.Add(new OrderRenderPieceModel
+                            {
+                                RenderPieceId = piece.Id,
+                                Printed = false
+                            });
+                        }
+                    }
                 }
             }
 
@@ -217,11 +263,11 @@ namespace Limbs.Web.Controllers
         // POST: Orders/ManoPedir
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ManoPedir(NewOrder orderModel)
+        public async Task<ActionResult> ManoPedir(NewOrder orderModel)
         {
             TempData["AmputationType"] = orderModel.AmputationTypeFkId;
             TempData["ProductType"] = orderModel.ProductType;
-            var hasDesign = Db.RenderModels.Any(p => p.AmputationTypeId == orderModel.AmputationTypeFkId);
+            var hasDesign = await Db.RenderModels.AnyAsync(p => p.AmputationTypeId == orderModel.AmputationTypeFkId);
 
             TempData["hasDesign"] = hasDesign;
 
@@ -427,7 +473,6 @@ namespace Limbs.Web.Controllers
 
                 if (renderPieces != null && renderPieces.Count > 0)
                 {
-
                     foreach (var piece in renderPieces)
                     {
                         newOrder.RenderPieces.Add(new OrderRenderPieceModel

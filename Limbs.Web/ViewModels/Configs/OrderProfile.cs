@@ -11,8 +11,8 @@ namespace Limbs.Web.ViewModels.Configs
         {
             CreateMap<OrderModel, OrderUpdateModel>()
                 .ForMember(p => p.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(p => p.AmputationType, opt => opt.MapFrom(src => src.AmputationType))
-                .ForMember(p => p.Color, opt => opt.MapFrom(src => src.Color))
+                .ForMember(p => p.AmputationTypeFkId, opt => opt.MapFrom(src => src.AmputationTypeFkId))
+                .ForMember(p => p.ColorFkId, opt => opt.MapFrom(src => src.ColorFkId))
                 .ForMember(p => p.Comments, opt => opt.MapFrom(src => src.Comments))
                 .ForMember(p => p.ProductType, opt => opt.MapFrom(src => src.ProductType))
                 .ForMember(p => p.TotalImages, opt => opt.MapFrom(src => (src.IdImage == null) ? 0 : src.IdImage.Split(',').Length))

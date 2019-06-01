@@ -23,7 +23,8 @@
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.HiddenFor(model => model.Id)
-
+            @Html.HiddenFor(model => model.HasDesign)
+            @Html.HiddenFor(model => model.PreviousAmputationTypeId)
             <div class="form-group">
                 <p class="form_title">@Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label" })</p>
                 <div class="col-md-10">
@@ -33,14 +34,14 @@
             </div>
 
             <div class="form-group">
-                <p class="form_title">@Html.LabelFor(model => model.AmputationType, htmlAttributes: new { @class = "control-label" })</p>
+                <p class="form_title">@Html.LabelFor(model => model.AmputationTypeFkId, htmlAttributes: new { @class = "control-label" })</p>
                 <div id="tipo_de_amp" class="col-md-10">
                     @{
                         var amputationDesigns = ViewData["ListAmputations"] == null ? new List<AmputationDesign>() : ViewData["ListAmputations"] as List<AmputationDesign>;
 
                         foreach (var amputationDesign in amputationDesigns)
                         {
-                            <div class="selector_amp" style="background-image: url(@amputationDesign.Amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputationDesign.Amputation.Description" js_value="@amputationDesign.Amputation.Id" data-idAmputation="@amputationDesign.Amputation.Id" data-hasdesign="@(amputationDesign.HasDesign ? "1" : "0")" onclick="select_amp(this)">
+                            <div class="selector_amp" style="background-image: url(@amputationDesign.Amputation.PrimaryUrlImage); background-size: contain; background-repeat: no-repeat;" title="@amputationDesign.Amputation.Description" data-idAmputation="@amputationDesign.Amputation.Id" data-hasdesign="@(amputationDesign.HasDesign ? "1" : "0")" onclick="select_amp(this)">
                                 <div class="selector_size"></div>
                                 @Html.RadioButtonFor(b => Model.AmputationTypeFkId, amputationDesign.Amputation.Id, new { @class = "tipo_amp", title = amputationDesign.Amputation.Description })
                             </div>
@@ -88,7 +89,7 @@
             <br />
             <div class="form-group">
                 <div class="col-md-10">
-                    <div>
+                    <div id="color-container" @(!Model.HasDesign ? "style=display:none;" : string.Empty)>
                         <p class="form_title">Color</p>
                         <div class="sel_color_container">
                             @{
@@ -96,7 +97,7 @@
 
                                 foreach (var color in colors)
                                 {
-                                    <div class="sel_color_mano" style="background-image: url(@color.PrimaryUrlImage);background-size: contain; background-repeat: no-repeat;" js_value="@color.Name">
+                                    <div class="sel_color_mano" style="background-image: url(@color.PrimaryUrlImage);background-size: contain; background-repeat: no-repeat;">
                                         @Html.RadioButtonFor(model => Model.ColorFkId, color.Id, new { @class = "selector_color_input" })
                                     </div>
                                 }
@@ -125,23 +126,13 @@
         </div>
     }
 
-    @*<div>
-            @Html.ActionLink("Volver", "Index")
-        </div>*@
-
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
         <script src="~/Scripts/dropzone.js"></script>
         <script src="~/Scripts/jquery.bxslider.min.js"></script>
 
         <script>
-            function objectifyForm(formArray) {//serialize data function
-                var returnArray = {};
-                for (var i = 0; i < formArray.length; i++) {
-                    returnArray[formArray[i]['name']] = formArray[i]['value'];
-                }
-                return returnArray;
-            }
+            let hasDesignHidden = $('#HasDesign');
 
             function select_amp(obj) {
                 var $obj = $(obj);
@@ -154,14 +145,47 @@
                 $(radio).prop('checked', true);
                 if (hasDesign !== "1") {
                     $(".no-design").show();
+                    $('.sel_color_container').empty();
+                    $('#color-container').hide();
+
+                    hasDesignHidden.val("False");
                 } else {
                     $(".no-design").hide();
+                    hasDesignHidden.val("True");
+
+                    $.ajax({
+                        url: '@(Url.Action("GetColors","Orders"))',
+                        data: {
+                            amputationId: idAmputation
+                        },
+                        type: 'GET',
+                        success: function (response) {
+                            if (response.isSuccessfully) {
+                                let containerColors = $('.sel_color_container');
+                                containerColors.empty();
+
+                                response.colors.forEach(function (color) {
+                                    containerColors.append(`<div class="sel_color_mano" style="background-image: url(${color.PrimaryUrlImage});background-size: contain; background-repeat: no-repeat;">
+                                        <input class="selector_color_input" id="ColorFkId" name="ColorFkId" type="radio" value="${color.Id}">
+                                    </div>`);
+                                });
+
+                                $('#color-container').show();
+                            } else {
+                                alert('Error al obtener los colores de las protesis');
+                            }
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            console.log(textStatus, errorThrown);
+                        }
+                    });
+
                 }
                 $('#enviar').prop('disabled', false);
             }
 
     $(document).ready(function () {
-                $('.sel_color_mano').on('click', function () {
+                $('.sel_color_container').on('click', '.sel_color_mano', function () {
                         var $obj = $(this);
                         $('.sel_color_mano').removeClass('color_selected')
 
