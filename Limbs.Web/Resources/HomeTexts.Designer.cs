@@ -61,11 +61,56 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ¿Tenés una impresora 3D y querés ayudar? ¡Inscribite!.
+        /// </summary>
+        public static string Index_body_embajadores_p1 {
+            get {
+                return ResourceManager.GetString("Index_body_embajadores_p1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Un &quot;Embajador Atómico&quot; puede ser cualquier persona mayor de 18 años con una impresora 3D y que quiera ayudar (desde cualquier parte del mundo). Nosotros enviamos los planos, instrucciones y el costo de los materiales (si así lo solicita)..
+        /// </summary>
+        public static string Index_body_embajadores_p2 {
+            get {
+                return ResourceManager.GetString("Index_body_embajadores_p2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Limbs es una plataforma que te ayudará en 3 simples pasos a tener tu mano, brazo o cualquier otra parte impresa en 3D..
         /// </summary>
         public static string Index_center_text {
             get {
                 return ResourceManager.GetString("Index_center_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Las manos mecánicas están impresas con PLA, un derivado del maíz que no generará picazón.
+        /// </summary>
+        public static string Index_cont_pedir_texto_inicio_center1 {
+            get {
+                return ResourceManager.GetString("Index_cont_pedir_texto_inicio_center1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Los diseños son open source, podés bajarlos gratis desde:.
+        /// </summary>
+        public static string Index_cont_pedir_texto_inicio_center2 {
+            get {
+                return ResourceManager.GetString("Index_cont_pedir_texto_inicio_center2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Cómo está compuesta?.
+        /// </summary>
+        public static string Index_cont_pedir_texto_inicio_h1 {
+            get {
+                return ResourceManager.GetString("Index_cont_pedir_texto_inicio_h1", resourceCulture);
             }
         }
         
@@ -79,11 +124,65 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manotón.
+        /// </summary>
+        public static string Index_manoton_h1 {
+            get {
+                return ResourceManager.GetString("Index_manoton_h1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saber más.
+        /// </summary>
+        public static string Index_manoton_link {
+            get {
+                return ResourceManager.GetString("Index_manoton_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El #MANOTÓN es un evento en el que se convocan chicos que hayan solicitado un prótesis mediante la plataforma LIMBS. Durante el día se ensamblan y entregan las manos mecánicas, ¡Convirtiendo chicos en super héroes!.
+        /// </summary>
+        public static string Index_manoton_p {
+            get {
+                return ResourceManager.GetString("Index_manoton_p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Más Información.
         /// </summary>
         public static string Index_MoreInformation {
             get {
                 return ResourceManager.GetString("Index_MoreInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ser embajador.
+        /// </summary>
+        public static string Index_RegisterUrlAction {
+            get {
+                return ResourceManager.GetString("Index_RegisterUrlAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EMBAJADORES.
+        /// </summary>
+        public static string Index_texto_embajadores_h1_1 {
+            get {
+                return ResourceManager.GetString("Index_texto_embajadores_h1_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ATÓMICOS.
+        /// </summary>
+        public static string Index_texto_embajadores_h1_2 {
+            get {
+                return ResourceManager.GetString("Index_texto_embajadores_h1_2", resourceCulture);
             }
         }
         

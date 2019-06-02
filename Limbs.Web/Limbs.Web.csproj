@@ -366,10 +366,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AmbassadorTexts.es.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\HelpTexts .es.Designer.cs">
+    <Compile Include="Resources\HelpTexts.es.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>HelpTexts .es.resx</DependentUpon>
+      <DependentUpon>HelpTexts.es.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\HelpTexts.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -380,6 +380,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>HomeTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HomeTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeTexts.es.resx</DependentUpon>
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
@@ -796,13 +801,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AmbassadorTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\HelpTexts .es.resx">
+    <EmbeddedResource Include="Resources\HelpTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>HelpTexts .es.Designer.cs</LastGenOutput>
+      <LastGenOutput>HelpTexts.es.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HelpTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>HelpTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HomeTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeTexts.es.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\HomeTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
