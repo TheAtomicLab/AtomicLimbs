@@ -30,8 +30,11 @@ namespace Limbs.Web.ViewModels.Configs
             CreateMap<RenderModel, RenderViewModel>();
             CreateMap<AmputationTypeModel, AmputationTypeDetailsViewModel>();
             CreateMap<ColorModel, ColorDetailsViewModel>();
+
             CreateMap<OrderRenderPieceModel, OrderRenderPieceViewModel>()
                 .ForMember(p => p.PieceName, opt => opt.MapFrom(src => src.RenderPiece.Render.Pieces.FirstOrDefault(p => p.Id == src.RenderPieceId).Name));
+
+            CreateMap<OrderRenderPieceViewModel, OrderRenderPieceModel>();
 
             CreateMap<UserModel, OrderRequesterDetailsViewModel>()
                 .ForMember(p => p.FullName, opt => opt.MapFrom(src => src.FullName()))
@@ -48,14 +51,14 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.PercentagePrinted, opt => opt.MapFrom(src => GetPercentagePrinted(src.RenderPieces)));
         }
 
-        private IEnumerable<RenderPieceGroupByViewModel> GetRenderAndPieces(IEnumerable<OrderRenderPieceModel> orderRenderPieceModels)
+        private List<RenderPieceGroupByViewModel> GetRenderAndPieces(IEnumerable<OrderRenderPieceModel> orderRenderPieceModels)
         {
-            if (orderRenderPieceModels == null || !orderRenderPieceModels.Any()) return Enumerable.Empty<RenderPieceGroupByViewModel>();
+            if (orderRenderPieceModels == null || !orderRenderPieceModels.Any()) return new List<RenderPieceGroupByViewModel>();
 
             return orderRenderPieceModels.GroupBy(
                 p => p.RenderPiece.Render,
                 p => p,
-                (key, g) => new RenderPieceGroupByViewModel { Render = Mapper.Map<RenderViewModel>(key), OrderRenderPieces = Mapper.Map<IEnumerable<OrderRenderPieceViewModel>>(g) });
+                (key, g) => new RenderPieceGroupByViewModel { Render = Mapper.Map<RenderViewModel>(key), OrderRenderPieces = Mapper.Map<List<OrderRenderPieceViewModel>>(g) }).ToList();
         }
 
         private string[] GetImages(string imageStr)

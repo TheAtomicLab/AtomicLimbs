@@ -31,18 +31,21 @@
         </td>
     </tr>
 
-    <tr>
-        <td>
-            <p>
-                @Html.DisplayNameFor(x => x.Color.Name)
-                <br />
-                @Html.DescriptionFor(x => x.Color.Name)
-            </p>
-        </td>
-        <td>
-            <img src="@Model.Color.PrimaryUrlImage" alt="@Model.Color.Description" title="@Model.Color.Description" />
-        </td>
-    </tr>
+    @if (Model.Color != null)
+    {
+        <tr>
+            <td>
+                <p>
+                    @Html.DisplayNameFor(x => x.Color.Name)
+                    <br />
+                    @Html.DescriptionFor(x => x.Color.Name)
+                </p>
+            </td>
+            <td>
+                <img src="@Model.Color.PrimaryUrlImage" alt="@Model.Color.Description" title="@Model.Color.Description" />
+            </td>
+        </tr>
+    }
 
     @if (!string.IsNullOrWhiteSpace(Model.Comments))
     {

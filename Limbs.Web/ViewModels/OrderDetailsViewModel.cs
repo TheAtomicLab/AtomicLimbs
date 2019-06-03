@@ -48,6 +48,6 @@ namespace Limbs.Web.ViewModels
         [Display(Name = "Historial de cambios", Description = "")]
         public List<OrderLogItem> Log { get; private set; }
 
-        public IEnumerable<RenderPieceGroupByViewModel> RenderPiecesGroupBy { get; set; }
+        public List<RenderPieceGroupByViewModel> RenderPiecesGroupBy { get; set; }
     }
 }

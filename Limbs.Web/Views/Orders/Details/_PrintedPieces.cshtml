@@ -1,28 +1,30 @@
 ﻿@using Limbs.Web.ViewModels
-@using System.Linq;
 @model OrderDetailsViewModel
 
 <h3>Piezas impresas</h3>
-
 
 @using (Html.BeginForm("PrintedPiecesUpdate", "Orders", new { orderId = Model.Id }, FormMethod.Post))
 {
     <button type="submit" class="bn_blue">Actualizar</button>
 
-    if (Model.RenderPiecesGroupBy != null && Model.RenderPiecesGroupBy.Any())
+    if (Model.RenderPiecesGroupBy != null && Model.RenderPiecesGroupBy.Count > 0)
     {
-        foreach (var groupBy in Model.RenderPiecesGroupBy)
+        for (int i = 0; i < Model.RenderPiecesGroupBy.Count; i++)
         {
             <div class="pieces_row">
                 <div class="cl_l">
                     <ul>
-                        @foreach (var piece in groupBy.OrderRenderPieces)
+                        @for (int e = 0; e < Model.RenderPiecesGroupBy[i].OrderRenderPieces.Count; e++)
                         {
+                            @Html.HiddenFor(model => Model.RenderPiecesGroupBy[i].OrderRenderPieces[e].Id)
+                            @Html.HiddenFor(model => Model.RenderPiecesGroupBy[i].OrderRenderPieces[e].OrderId)
+                            @Html.HiddenFor(model => Model.RenderPiecesGroupBy[i].OrderRenderPieces[e].RenderPieceId)
+
                             <li>
-                                <div class="cl_check">@Html.CheckBoxFor(model => piece.Printed)</div>
+                                <div class="cl_check">@Html.CheckBoxFor(model => Model.RenderPiecesGroupBy[i].OrderRenderPieces[e].Printed)</div>
                                 <p>
-                                    <label for="@piece.PieceName">
-                                        @piece.PieceName
+                                    <label for="@Model.RenderPiecesGroupBy[i].OrderRenderPieces[e].PieceName">
+                                        @Model.RenderPiecesGroupBy[i].OrderRenderPieces[e].PieceName
                                     </label>
                                 </p>
                             </li>
@@ -30,7 +32,7 @@
                     </ul>
                 </div>
                 <div class="cl_r">
-                    <img src="@groupBy.Render.PrimaryUrlImage" alt="@groupBy.Render.Name" />
+                    <img src="@Model.RenderPiecesGroupBy[i].Render.PrimaryUrlImage" alt="@Model.RenderPiecesGroupBy[i].Render.Name" />
                 </div>
             </div>
         }

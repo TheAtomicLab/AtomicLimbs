@@ -552,28 +552,39 @@ namespace Limbs.Web.Controllers
 
         [HttpPost]
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
-        public async Task<ActionResult> PrintedPiecesUpdate(Pieces pieces, int orderId)
+        public async Task<ActionResult> PrintedPiecesUpdate(List<RenderPieceGroupByViewModel> RenderPiecesGroupBy, int orderId)
         {
             var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
             if (!order.CanView(User)) return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
 
-            order.Pieces = pieces;
             order.StatusLastUpdated = DateTime.UtcNow;
             Db.OrderModels.AddOrUpdate(order);
+
+            IEnumerable<OrderRenderPieceModel> renderPieces = new List<OrderRenderPieceModel>();
+
+            foreach (var renderPieceGroupBy in RenderPiecesGroupBy)
+                renderPieces = renderPieces.Concat(Mapper.Map<IEnumerable<OrderRenderPieceModel>>(renderPieceGroupBy.OrderRenderPieces));
+
+            Db.OrderRenderPieceModels.AddOrUpdate(renderPieces.ToArray());
             await Db.SaveChangesAsync();
 
             if (Request.IsAjaxRequest())
                 return new HttpStatusCodeResult(HttpStatusCode.OK);
+
             return RedirectToAction("Details", "Orders", new { id = orderId });
         }
 
         [OverrideAuthorize(Roles = AppRoles.Ambassador + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> GetPartial(int orderId, string partialName)
         {
-            var order = await Db.OrderModels.FirstOrDefaultAsync(x => x.Id == orderId);
-            if (order.CanView(User))
+            var orderModel = await Db.OrderModels.Include(p => p.RenderPieces.Select(x => x.RenderPiece.Render.Pieces)).Include(x => x.OrderRequestor).Include(p => p.AmputationTypeFk).Include(p => p.ColorFk).FirstOrDefaultAsync(x => x.Id == orderId);
+            if (orderModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var orderMap = Mapper.Map<OrderDetailsViewModel>(orderModel);
+
+            if (orderModel.CanView(User))
             {
-                return PartialView("Details/_" + partialName, order);
+                return PartialView("Details/_" + partialName, orderMap);
             }
             return new HttpUnauthorizedResult();
         }
