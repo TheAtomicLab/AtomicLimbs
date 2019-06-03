@@ -1,5 +1,7 @@
-﻿@using Limbs.Web.Entities.Models
-@model OrderModel
+﻿@using Limbs.Web.ViewModels
+@using Limbs.Web.Entities.Models;
+
+@model OrderDetailsViewModel
 
 <div id="accion_pedido">
     @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
@@ -56,7 +58,7 @@
             {
                 @*<a href="@Model.FileUrl" target="_blank" data-method="get" class="bn_download">Descargar archivos</a>*@
             }
-            if (Model.Pieces.Ready())
+            if (Model.PercentagePrinted == 100)
             {
                 <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready })" class="bn_blue">Terminé de imprimir</a>
             }
@@ -119,8 +121,8 @@
             {
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="Order_Id" value="@Model.Id" />
-                <input type="hidden" name="Fullname_Requestor" value="@(Model.OrderRequestor.UserName + " " + Model.OrderRequestor.UserLastName)" />
-                <input type="hidden" name="Email_Requestor" value="@Model.OrderRequestor.Email" />
+                <input type="hidden" name="Fullname_Requestor" value="@(Model.OrderRequester.UserName + " " + Model.OrderRequester.UserLastName)" />
+                <input type="hidden" name="Email_Requestor" value="@Model.OrderRequester.Email" />
 
                 <p style="margin-bottom: 1em;">
                     <label for="IsWrongImages">

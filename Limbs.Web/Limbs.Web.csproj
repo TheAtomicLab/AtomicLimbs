@@ -353,10 +353,17 @@
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AmputationDesign.cs" />
+    <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
+    <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
+    <Compile Include="ViewModels\OrderRenderPieceViewModel.cs" />
+    <Compile Include="ViewModels\OrderRequesterDetailsViewModel.cs" />
     <Compile Include="ViewModels\OrderUpdateModel.cs" />
+    <Compile Include="ViewModels\RenderPieceGroupByViewModel.cs" />
+    <Compile Include="ViewModels\RenderViewModel.cs" />
     <Compile Include="ViewModels\UserPanelViewModel.cs" />
     <Compile Include="ViewModels\AmbassadorPanelViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />

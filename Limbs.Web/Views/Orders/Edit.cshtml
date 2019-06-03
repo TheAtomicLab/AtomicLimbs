@@ -47,12 +47,14 @@
                             </div>
                         }
                     }
-                    <div class="no-design" style="display: none;">
+                    <div class="no-design" @(Model.HasDesign ? "style=display:none;" : string.Empty)>
                         <h2>Importante</h2>
                         <p>
                             No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
                         </p>
                     </div>
+                    @Html.ValidationMessageFor(model => model.AmputationTypeFkId, "", new { @class = "text-danger" })
+
                 </div>
             </div>
 
@@ -104,7 +106,6 @@
                             }
                         </div>
                     </div>
-                    @Html.ValidationMessageFor(model => model.ColorFkId, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -127,12 +128,20 @@
     }
 
     @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
         <script src="~/Scripts/dropzone.js"></script>
         <script src="~/Scripts/jquery.bxslider.min.js"></script>
 
         <script>
+            function fnValidateDynamicContent() {
+                var currForm = $('#frmEdit');
+                currForm.removeData("validator");
+                currForm.removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse(currForm);
+                currForm.validate(); 
+            }
+
             let hasDesignHidden = $('#HasDesign');
+            $.validator.unobtrusive.adapters.addBool("mandatory", "required");
 
             function select_amp(obj) {
                 var $obj = $(obj);
@@ -166,10 +175,14 @@
 
                                 response.colors.forEach(function (color) {
                                     containerColors.append(`<div class="sel_color_mano" style="background-image: url(${color.PrimaryUrlImage});background-size: contain; background-repeat: no-repeat;">
-                                        <input class="selector_color_input" id="ColorFkId" name="ColorFkId" type="radio" value="${color.Id}">
+                                        <input class="selector_color_input" id="ColorFkId" name="ColorFkId" type="radio" data-val="true" data-val-mandatory="Debe seleccionar un color" value="${color.Id}">
                                     </div>`);
                                 });
 
+                                fnValidateDynamicContent();
+
+                                $('#val-color-msg').remove();
+                                $('#color-container').append(`<span id="val-color-msg" class="field-validation-valid text-danger" data-valmsg-for="ColorFkId" data-valmsg-replace="true"></span>`);
                                 $('#color-container').show();
                             } else {
                                 alert('Error al obtener los colores de las protesis');
@@ -210,12 +223,14 @@
                 let titleNoUploadImages = $('#title-no-more-images');
                 let dropzoneContainerClass = $('#edit-upload-images');
 
-                frm.on('submit', function (e) {
-                    e.preventDefault();
+        frm.on('submit', function (e) {
+            e.preventDefault();
 
-                    $.post(frm.attr('action'), frm.serialize(), function (json) {
-                        window.location = json.Action;
-                    }, 'json');
+            if ($(this).valid()) {
+                $.post(frm.attr('action'), frm.serialize(), function (json) {
+                    window.location = json.Action;
+                }, 'json');
+            }
 
                     return false;
                 });

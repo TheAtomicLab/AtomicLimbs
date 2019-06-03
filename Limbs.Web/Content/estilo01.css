@@ -353,7 +353,8 @@ nav {
 }
 
 #tipo_de_amp {
-    max-width: 700px;
+    width: 100%;
+    text-align: center;
 }
 
     #tipo_de_amp .selector_amp {

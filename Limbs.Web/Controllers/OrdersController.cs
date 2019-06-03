@@ -216,7 +216,9 @@ namespace Limbs.Web.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var orderModel = await Db.OrderModels.Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == id);
+
+            var orderModel = await Db.OrderModels.Include(p => p.RenderPieces.Select(x => x.RenderPiece.Render.Pieces)).Include(x => x.OrderRequestor).Include(p => p.AmputationTypeFk).Include(p => p.ColorFk).FirstOrDefaultAsync(x => x.Id == id);
+
             if (orderModel == null)
             {
                 return HttpNotFound();
@@ -225,7 +227,9 @@ namespace Limbs.Web.Controllers
             {
                 return RedirectToAction("RedirectUser", "Account");
             }
-            return View(orderModel);
+
+            var orderModelReturn = Mapper.Map<OrderDetailsViewModel>(orderModel);
+            return View(orderModelReturn);
         }
 
         // GET: Orders/ManoPedir
