@@ -48,7 +48,8 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.Color, opt => opt.MapFrom(src => Mapper.Map<ColorDetailsViewModel>(src.ColorFk)))
                 .ForMember(p => p.AmputationType, opt => opt.MapFrom(src => Mapper.Map<AmputationTypeDetailsViewModel>(src.AmputationTypeFk)))
                 .ForMember(p => p.OrderRequester, opt => opt.MapFrom(src => Mapper.Map<OrderRequesterDetailsViewModel>(src.OrderRequestor)))
-                .ForMember(p => p.PercentagePrinted, opt => opt.MapFrom(src => GetPercentagePrinted(src.RenderPieces)));
+                .ForMember(p => p.PercentagePrinted, opt => opt.MapFrom(src => GetPercentagePrinted(src.RenderPieces)))
+                .ForMember(p => p.HasDesign, opt => opt.MapFrom(src => src.RenderPieces != null && src.RenderPieces.Any()));
         }
 
         private List<RenderPieceGroupByViewModel> GetRenderAndPieces(IEnumerable<OrderRenderPieceModel> orderRenderPieceModels)

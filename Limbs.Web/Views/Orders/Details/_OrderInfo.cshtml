@@ -31,9 +31,14 @@
         </td>
     </tr>
 
-    @if (Model.Color != null)
-    {
-        <tr>
+    <tr>
+        @if (Model.HasDesign == false || Model.Color == null)
+        {
+            <td class="text-bold">Importante</td>
+            <td class="text-danger">No tenemos diseño para la amputación seleccionada</td>
+        }
+        else
+        {
             <td>
                 <p>
                     @Html.DisplayNameFor(x => x.Color.Name)
@@ -44,8 +49,8 @@
             <td>
                 <img src="@Model.Color.PrimaryUrlImage" alt="@Model.Color.Description" title="@Model.Color.Description" />
             </td>
-        </tr>
-    }
+        }
+    </tr>
 
     @if (!string.IsNullOrWhiteSpace(Model.Comments))
     {

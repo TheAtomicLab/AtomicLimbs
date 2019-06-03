@@ -23,6 +23,14 @@ body {
     background-color: rgb(238,238,238);
 }
 
+.text-bold {
+    font-weight: bold;
+}
+
+.text-danger {
+    color: red;
+}
+
 #cont {
     position: relative;
     width: 100%;

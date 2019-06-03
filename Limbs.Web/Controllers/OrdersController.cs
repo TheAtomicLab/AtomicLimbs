@@ -229,6 +229,7 @@ namespace Limbs.Web.Controllers
             }
 
             var orderModelReturn = Mapper.Map<OrderDetailsViewModel>(orderModel);
+
             return View(orderModelReturn);
         }
 

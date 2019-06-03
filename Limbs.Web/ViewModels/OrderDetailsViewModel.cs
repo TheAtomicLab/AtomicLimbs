@@ -45,6 +45,8 @@ namespace Limbs.Web.ViewModels
         [Display(Name = "Etiqueta postal", Description = "")]
         public string DeliveryPostalLabel { get; set; }
 
+        public bool HasDesign { get; set; }
+
         [Display(Name = "Historial de cambios", Description = "")]
         public List<OrderLogItem> Log { get; private set; }
 
