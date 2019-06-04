@@ -1,37 +1,38 @@
-﻿@model Limbs.Web.Entities.WebModels.UserViewModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.WebModels.UserViewModel
 
 
 <table class="tabla_datos">
     <tr>
-        <td>Nombre:</td>
+        <td>@ManageTexts._UserInfo_Name:</td>
         <td>@Model.UserName</td>
     </tr>
     <tr>
-        <td>Apellido:</td>
+        <td>@ManageTexts._UserInfo_LastName:</td>
         <td>@Model.UserLastName</td>
     </tr>
     <tr>
-        <td>Email:</td>
+        <td>@ManageTexts._UserInfo_Email:</td>
         <td>@Model.Email</td>
     </tr>
     <tr>
-        <td>Nacimiento:</td>
+        <td>@ManageTexts._UserInfo_Birth:</td>
         <td>@Model.Birth.ToString("dd/MM/yyyy")</td>
     </tr>
     <tr>
-        <td>País:</td>
+        <td>@ManageTexts._UserInfo_Country:</td>
         <td>@Model.Country</td>
     </tr>
     <tr>
-        <td>Ciudad:</td>
+        <td>@ManageTexts._UserInfo_City:</td>
         <td>@Model.City</td>
     </tr>
     <tr>
-        <td>Dirección:</td>
+        <td>@ManageTexts._UserInfo_Address:</td>
         <td>@Model.Address</td>
     </tr>
     <tr>
-        <td>Teléfono:</td>
+        <td>@ManageTexts._UserInfo_Phone:</td>
         <td>@Model.Phone</td>
     </tr>
 </table>

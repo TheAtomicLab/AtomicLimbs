@@ -1,15 +1,16 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using Limbs.Web.Resources
+@using Microsoft.AspNet.Identity
 @model Limbs.Web.Entities.WebModels.IndexViewModel
 @{
-    ViewBag.Title = "Manage";
+    ViewBag.Title = ManageTexts.Index__ViewBag_Title;
 }
 
 
 <article id="info_pedido">
     <div class="head_info">
-        <h1>Mis datos:</h1>
+        <h1>@ManageTexts.Index_head_info_h1:</h1>
         <div id="estado_pedido">
-            <p>Email:</p>
+            <p>@ManageTexts.Index_head_info_p:</p>
             <h2>@User.Identity.GetUserName()</h2>
         </div>
     </div>
