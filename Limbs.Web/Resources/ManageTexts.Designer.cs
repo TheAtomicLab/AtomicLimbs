@@ -232,11 +232,38 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Inicia sesión con tu cuenta de.
         /// </summary>
-        public static string ManageLogins {
+        public static string ManageLogins_LoginSubmitInput_title {
             get {
-                return ResourceManager.GetString("ManageLogins", resourceCulture);
+                return ResourceManager.GetString("ManageLogins_LoginSubmitInput_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inicios de sesión registrados.
+        /// </summary>
+        public static string ManageLogins_RegisteredLogins {
+            get {
+                return ResourceManager.GetString("ManageLogins_RegisteredLogins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar inicio de sesión con tu cuenta de.
+        /// </summary>
+        public static string ManageLogins_RemoveSubmitInput_title {
+            get {
+                return ResourceManager.GetString("ManageLogins_RemoveSubmitInput_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar.
+        /// </summary>
+        public static string ManageLogins_RemoveSubmitInput_value {
+            get {
+                return ResourceManager.GetString("ManageLogins_RemoveSubmitInput_value", resourceCulture);
             }
         }
         
@@ -246,6 +273,60 @@ namespace Limbs.Web.Resources {
         public static string ManageLogins_ViewBag_Title {
             get {
                 return ResourceManager.GetString("ManageLogins_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iniciaste sesion con Facebook, creá una cuenta con tu propia contraseña.
+        /// </summary>
+        public static string SetPassword_inicio_form_r_h4 {
+            get {
+                return ResourceManager.GetString("SetPassword_inicio_form_r_h4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviar.
+        /// </summary>
+        public static string SetPassword_SubmitInput_value {
+            get {
+                return ResourceManager.GetString("SetPassword_SubmitInput_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crear contraseña.
+        /// </summary>
+        public static string SetPassword_ViewBag_Title {
+            get {
+                return ResourceManager.GetString("SetPassword_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ingrese número de verificación.
+        /// </summary>
+        public static string VerifyPhoneNumber_h4 {
+            get {
+                return ResourceManager.GetString("VerifyPhoneNumber_h4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviar.
+        /// </summary>
+        public static string VerifyPhoneNumber_SubmitInput_value {
+            get {
+                return ResourceManager.GetString("VerifyPhoneNumber_SubmitInput_value", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verificar número de teléfono.
+        /// </summary>
+        public static string VerifyPhoneNumber_ViewBag_Title {
+            get {
+                return ResourceManager.GetString("VerifyPhoneNumber_ViewBag_Title", resourceCulture);
             }
         }
     }

@@ -23,7 +23,7 @@
     {
         if (Model.CurrentLogins.Count > 0)
         {
-            <h4>Registered Logins</h4>
+            <h4>@ManageTexts.ManageLogins_RegisteredLogins</h4>
             <table class="table">
                 <tbody>
                     @foreach (var account in Model.CurrentLogins)
@@ -39,7 +39,7 @@
                                         <div>
                                             @Html.Hidden("loginProvider", account.LoginProvider)
                                             @Html.Hidden("providerKey", account.ProviderKey)
-                                            <input type="submit" class="btn btn-default" value="Remove" title="Remove this @account.LoginProvider login from your account" />
+                                            <input type="submit" class="btn btn-default" value="@ManageTexts.ManageLogins_RemoveSubmitInput_value" title="@ManageTexts.ManageLogins_RemoveSubmitInput_title @account.LoginProvider" />
                                         </div>
                                     }
                                 }
@@ -62,7 +62,7 @@
                     <p>
                         @foreach (AuthenticationDescription p in Model.OtherLogins)
                         {
-                            <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Log in using your @p.Caption account">@p.AuthenticationType</button>
+                            <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@ManageTexts.ManageLogins_RemoveSubmitInput_title @p.Caption">@p.AuthenticationType</button>
                         }
                     </p>
                 </div>
