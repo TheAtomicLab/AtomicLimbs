@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Create_AlternativeEmail" xml:space="preserve">
+    <value>Email Alternativo</value>
+  </data>
+  <data name="Create_AlternativeEmail_Label" xml:space="preserve">
+    <value>Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado</value>
+  </data>
+  <data name="Create_drop_op1" xml:space="preserve">
+    <value>NO</value>
+  </data>
+  <data name="Create_drop_op2" xml:space="preserve">
+    <value>SI</value>
+  </data>
+  <data name="Create_h2_1" xml:space="preserve">
+    <value>Tus datos</value>
+  </data>
+  <data name="Create_h2_2" xml:space="preserve">
+    <value>Datos del usuario de la mano</value>
+  </data>
+  <data name="Create_h3" xml:space="preserve">
+    <value>¿Sos el usuario de la mano?</value>
+  </data>
+  <data name="Create_isAdultCheck" xml:space="preserve">
+    <value>¿Declara que es mayor de 18 años?</value>
+  </data>
+  <data name="Create_ResponsableDni" xml:space="preserve">
+    <value>Número de Documento de Identidad / Pasaporte</value>
+  </data>
+  <data name="Create_ResponsableDni_Label" xml:space="preserve">
+    <value>Ingresar el número completo. Según el país, puede ser también conocido como: Cédula de Identidad (CI), Cédula de Ciudadanía (CC), Tarjeta de Identidad (TI), Registro Civil (RC), Cédula de Extranjería (CE), Carné de Identidad (CI), Documento Nacional de Identidad (DNI), Documento Único de Identidad (DUI), identificación oficial o identificación (ID), Clave Única de Registro de Población (CURP), etc</value>
+  </data>
+  <data name="Create_ResponsableLastName" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="Create_ResponsableName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Create_UserBirth" xml:space="preserve">
+    <value>Fecha de nacimiento</value>
+  </data>
+  <data name="Create_UserDni" xml:space="preserve">
+    <value>DNI o Pasaporte</value>
+  </data>
+  <data name="Create_UserGender" xml:space="preserve">
+    <value>Sexo</value>
+  </data>
+  <data name="Create_UserLastName" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="Create_UserName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Create_UserPhone" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="Create_ValidationSummary" xml:space="preserve">
+    <value>Hay errores en el formulario, revisá los campos marcados en rojo</value>
+  </data>
+  <data name="Create_ViewBag_Title_Edit" xml:space="preserve">
+    <value>Editar datos</value>
+  </data>
+  <data name="Create_ViewBag_Title_Register" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="_Address_h3" xml:space="preserve">
+    <value>¿Ésta es tu dirección?</value>
+  </data>
+  <data name="_Address_h4" xml:space="preserve">
+    <value>Buscá en el mapa, y hacé click en la ubicación correcta</value>
+  </data>
+  <data name="_Address_h5" xml:space="preserve">
+    <value>Es importante que ubiques tu dirección correctamente para gestionar tu pedido</value>
+  </data>
+  <data name="Create_RegisterButton_Edit" xml:space="preserve">
+    <value>Editar datos</value>
+  </data>
+  <data name="Create_RegisterButton_Register" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="Create_termsAndConditions" xml:space="preserve">
+    <value>acepto los</value>
+  </data>
+  <data name="Create_TermsAndConditionsActionLink" xml:space="preserve">
+    <value>términos y condiciones</value>
+  </data>
+  <data name="Index_NotValidAge_h2" xml:space="preserve">
+    <value>Podrás pedir la prótesis recién cuando el usuario cumpla 4 años de edad</value>
+  </data>
+  <data name="Index_ManoPedirUrlAction" xml:space="preserve">
+    <value>Pedir una prótesis</value>
+  </data>
+  <data name="Index_ViewBag_Title" xml:space="preserve">
+    <value>Panel usuario</value>
+  </data>
+  <data name="Index_headerOrder_Created" xml:space="preserve">
+    <value>Creado</value>
+  </data>
+  <data name="Index_headerOrder_Number" xml:space="preserve">
+    <value>Pedido N°</value>
+  </data>
+  <data name="Index_NotOrders" xml:space="preserve">
+    <value>¡Aún no has pedido ninguna prótesis!</value>
+  </data>
+  <data name="Index_NotValidAge_p" xml:space="preserve">
+    <value>Nuestra experiencia luego de varios años diseñando, imprimiendo y probando prótesis mecánicas 3D, nos dejan en claro que las mismas no se recomiendan bajo ningún concepto para que sean utilizadas por menores de 4 años.
+Por diferentes motivos, las personas no tienen el desarrollo mínimo para usar y ser conscientes de la prótesis mecánica, la misma requiere de un aprendizaje que no es posible lograr a esa edad, y genera más frustraciones que alegrías.</value>
+  </data>
+  <data name="Index_OrderStatus_ArrangeDelivery_h3" xml:space="preserve">
+    <value>¡Tu prótesis está en camino!</value>
+  </data>
+  <data name="Index_OrderStatus_ArrangeDelivery_p" xml:space="preserve">
+    <value>Revisá los detalles de la entrega aquí</value>
+  </data>
+  <data name="Index_OrderStatus_Delivered_h3" xml:space="preserve">
+    <value>Tu prótesis ya fue entregada</value>
+  </data>
+  <data name="Index_OrderStatus_NotAssigned_h3" xml:space="preserve">
+    <value>Tu pedido fue realizado con éxito</value>
+  </data>
+  <data name="Index_OrderStatus_NotAssigned_p" xml:space="preserve">
+    <value>Pronto asignaremos tu caso a un embajador</value>
+  </data>
+  <data name="Index_OrderStatus_Pending_h3" xml:space="preserve">
+    <value>¡Tu prótesis se esta imprimiendo!</value>
+  </data>
+  <data name="Index_OrderStatus_Pending_p" xml:space="preserve">
+    <value>Cuando esté terminada te contactaremos</value>
+  </data>
+  <data name="Index_OrderStatus_PreAssigned_h3" xml:space="preserve">
+    <value>Tu pedido fue asignado a un embajador Atómico</value>
+  </data>
+  <data name="Index_OrderStatus_PreAssigned_p" xml:space="preserve">
+    <value>¡Pronto comenzará a imprimirse tu prótesis!</value>
+  </data>
+  <data name="Index_Orders_h3" xml:space="preserve">
+    <value>Tus pedidos</value>
+  </data>
+</root>
