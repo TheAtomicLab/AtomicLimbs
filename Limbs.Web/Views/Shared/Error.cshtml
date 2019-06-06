@@ -1,18 +1,19 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using Limbs.Web.Resources
+@using Microsoft.AspNet.Identity
 @model System.Web.Mvc.HandleErrorInfo
 
 @{
-    ViewBag.Title = "Error";
+    ViewBag.Title = SharedTexts.Error_ViegBag_Title;
 }
 
 @Facebook.DisplayFacebookChat()
 
-<h1 class="text-danger">Error! :(</h1>
+<h1 class="text-danger">@SharedTexts.Error_ViegBag_Title! :(</h1>
 
 @{
     if (string.IsNullOrEmpty(ViewBag.ErrorMessage))
     {
-        <h2 class="text-danger">Ocurrió un error. No te preocupes, ya nos enteramos y vamos a solucionarlo lo antes posible.</h2>
+        <h2 class="text-danger">@SharedTexts.Error_text_danger_h2</h2>
     }
     else
     {
@@ -23,17 +24,17 @@
 @if (Model != null)
 {
     <div style="font-size: 11px; margin-top: 100px;">
-        <h3 onclick="$('#errorinfo li').show();">Información del error</h3>
+        <h3 onclick="$('#errorinfo li').show();">@SharedTexts.Error_errorInfo</h3>
         <ul id="errorinfo" style="list-style: none;">
-            <li>Error: @Model.Exception.Message</li>
+            <li>@SharedTexts.Error_ViegBag_Title: @Model.Exception.Message</li>
             <li>ActionName: @Model.ActionName</li>
             <li>ControllerName: @Model.ControllerName</li>
             @if (Context.User.Identity.IsAuthenticated)
             {
-                <li>User: @Context.User.Identity.GetUserName()</li>
+                <li>@SharedTexts.Error_User: @Context.User.Identity.GetUserName()</li>
             }
-            <li>Mas info: @(Model.Exception.InnerException?.Message)</li>
-            <li style="display: none;">Mas info: @Model.Exception.StackTrace</li>
+            <li>@SharedTexts.Error_moreInfo: @(Model.Exception.InnerException?.Message)</li>
+            <li style="display: none;">@SharedTexts.Error_moreInfo: @Model.Exception.StackTrace</li>
         </ul>
     </div>
     <span style="clear: both;"></span>

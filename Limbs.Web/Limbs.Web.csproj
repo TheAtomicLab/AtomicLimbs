@@ -406,6 +406,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MessagesTexts.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\SharedTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\SharedTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedTexts.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\UsersTexts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -862,6 +872,14 @@
     <EmbeddedResource Include="Resources\MessagesTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MessagesTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SharedTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SharedTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UsersTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
