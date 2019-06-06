@@ -406,6 +406,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MessagesTexts.es.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\OrdersTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrdersTexts.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SharedTexts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -872,6 +877,10 @@
     <EmbeddedResource Include="Resources\MessagesTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MessagesTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OrdersTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OrdersTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SharedTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

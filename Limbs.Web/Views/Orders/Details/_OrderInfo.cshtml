@@ -1,7 +1,8 @@
-﻿@using Limbs.Web.Common.Extensions
+﻿@using Limbs.Web.Resources
+@using Limbs.Web.Common.Extensions
 @model Limbs.Web.Entities.Models.OrderModel
 
-<h3>Datos del pedido</h3>
+<h3>@OrdersTexts._OrderInfo_h3</h3>
 <table class="tabla_datos">
     <tr>
         <td>@Html.DisplayNameFor(x => x.AmputationType)</td>
@@ -22,7 +23,7 @@
             }
             else
             {
-                <p>No medido</p>
+                <p>@OrdersTexts._OrderInfo_sizeNull</p>
             }
         </td>
     </tr>
@@ -49,7 +50,7 @@
 <hr />
 
 <div class="form-group">
-    <p class="form_title">Fotos</p>
+    <p class="form_title">@OrdersTexts._OrderInfo_photos</p>
     <div class="slider">
         @foreach (var image in (Model.IdImage).Split(','))
         {

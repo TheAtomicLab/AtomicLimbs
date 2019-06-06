@@ -1,8 +1,9 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.Models.OrderModel
 
-<h3>Mensajes</h3>
+<h3>@OrdersTexts._Messages_h3</h3>
 <div id="inbox">
-    <p style="padding: 20px 0;">Cargando mensajes...</p>
+    <p style="padding: 20px 0;">@OrdersTexts._Messages_loading...</p>
 </div>
 
 <script type="text/javascript">
@@ -13,7 +14,7 @@
         $dummy.load("@Url.Action("InboxPartial", "Messages", new { orderId = Model.Id })", function(response, status, xhr) {
             var $container = $("#inbox");
             if (status !== "success") {
-                $container.html("<p>Error al cargar los mensajes.</p><p>Para ver los mensajes, vaya a su <a href='/Messages/'>bandeja de entrada</a></p>");
+                $container.html("<p>@OrdersTexts._Messages_errorLoading_p1.</p><p>@OrdersTexts._Messages_errorLoading_p2 <a href='/Messages/'>@OrdersTexts._Messages_errorLoading_p3</a></p>");
             }
             else
             {
