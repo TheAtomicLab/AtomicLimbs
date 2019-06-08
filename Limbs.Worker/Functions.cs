@@ -74,7 +74,7 @@ namespace Limbs.Worker
             }
         }
 
-        public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("0 5 12 * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
+        public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("0 5 12 * * *")]TimerInfo myTimer, TextWriter log)
         {
             var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => (p.Status == OrderStatus.Rejected || p.Status == OrderStatus.PreAssigned) &&
                                     DbFunctions.AddDays(p.StatusLastUpdated, 3) <= DateTime.UtcNow).ToListAsync();
