@@ -64,6 +64,43 @@
     <div class="loader"></div>
 </div>
 
+<!-- The Modal -->
+<div id="myModal" class="modal" style="display: none;">
+    <div class="limbs-modal-container">
+        <!-- Modal content -->
+        <div class="limbs-modal-header">
+            <span id="close_modal" class="close">&times;</span>
+            <h3>Informar datos incorrectos</h3>
+        </div>
+        <div class="limbs-modal-content">
+            @using (Html.BeginForm("WrongInfo", "Orders", new { area = "Admin" }, FormMethod.Post, new { @class = "form-modal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Order_Id" value="@Model.Id" />
+                <input type="hidden" name="Fullname_Requestor" value="@(Model.OrderRequestor.UserName + " " + Model.OrderRequestor.UserLastName)" />
+                <input type="hidden" name="Email_Requestor" value="@Model.OrderRequestor.Email" />
+
+                <p style="margin-bottom: 1em;">
+                    <label for="IsWrongImages">
+                        <input id="IsWrongImages" name="IsWrongImages" type="checkbox" value="true">
+                        <input name="IsWrongImages" type="hidden" value="false">
+                        Imagenes incorrectas.
+                    </label>
+                </p>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Comments">Comentarios</label>
+                    <div class="col-md-10">
+                        <textarea cols="20" data-val="true" data-val-required=" " id="Comments" name="Comments" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input id="btn-send" type="submit" class="btn btn-default bn_blue" value="Informar" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
 @section scripts
 {
     <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
