@@ -35,7 +35,7 @@ namespace Limbs.Worker
             _os = new OrderService(Db);
         }
 
-        public async Task FollowUpAmbassadors([TimerTrigger("* 0 10 * * *")]TimerInfo myTimer, TextWriter log)
+        public async Task FollowUpAmbassadors([TimerTrigger("0 0 10 * * *")]TimerInfo myTimer, TextWriter log)
         {
             var ordersNoChange = await Db.OrderModels.Where(p => p.Status != OrderStatus.Delivered && p.Status != OrderStatus.NotAssigned && p.Status != OrderStatus.Rejected &&
                                     DbFunctions.AddDays(p.StatusLastUpdated, 7) <= DateTime.UtcNow).ToListAsync();
@@ -74,7 +74,7 @@ namespace Limbs.Worker
             }
         }
 
-        public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("* 0/5 * * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
+        public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("0 5 12 * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
         {
             var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => (p.Status == OrderStatus.Rejected || p.Status == OrderStatus.PreAssigned) &&
                                     DbFunctions.AddDays(p.StatusLastUpdated, 3) <= DateTime.UtcNow).ToListAsync();
