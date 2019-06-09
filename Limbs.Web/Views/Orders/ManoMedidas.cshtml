@@ -1,7 +1,8 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.Models.OrderModel
 
 @{
-    ViewBag.Title = "Pedido";
+    ViewBag.Title = OrdersTexts.ManoMedidas_ViewBag_Title;
 }
 
 @section scripts
@@ -68,19 +69,19 @@
 
 <div class="min_full" id="cuerpo_pedir">
     <article id="sistema_input">
-        <h2>Pedir una prótesis</h2>
+        <h2>@OrdersTexts.ManoMedidas_h2</h2>
         <div id="foto_input">
             @if (!string.IsNullOrWhiteSpace(Model.IdImage))
             {
                 <div id="loadingmodal" class="imagemodal">
-                    <p>Analizando imagen, aguarde.</p>
+                    <p>@OrdersTexts.ManoMedidas_loadingmodal</p>
                     <img src="/Content/img/Magnify.gif">
                 </div>
                 <div id="errormodal" class="imagemodal" style="display: none;">
                     <div class="valign">
-                        <p style="padding: 20px;">La imagen no es la mejor, pruebe sacandola más paralela.</p>
+                        <p style="padding: 20px;">@OrdersTexts.ManoMedidas_errormodal</p>
                         
-                        <a href="@Url.Action("ManoPedir")" class="bn_blue">Subir otra imagen</a>
+                        <a href="@Url.Action("ManoPedir")" class="bn_blue">@OrdersTexts.ManoMedidas_ManoPedirUrlAction</a>
                     </div>
                 </div>
 
@@ -92,37 +93,37 @@
             }
             else
             {
-                <p>Por favor cargue una foto</p>
+                <p>@OrdersTexts.ManoMedidas_LoadAnotherPhoto</p>
             }
         </div>
         <div id="exp_pedido_inp">
             <div>
-                <h2 style="padding-left: 0; margin-left: 0;">Paso <span id="stepnumber">1</span></h2>
+                <h2 style="padding-left: 0; margin-left: 0;">@OrdersTexts.ManoMedidas_step <span id="stepnumber">1</span></h2>
                 
                 <div class="paso1" style="display: none;">
-                    <p>Ayudanos a medir de lado a lado tu muñeca.</p>
-                    <p>Seguí el ejemplo de la animación.</p>
+                    <p>@OrdersTexts.ManoMedidas_paso1_p1</p>
+                    <p>@OrdersTexts.ManoMedidas_paso1_p2</p>
                     <img src="/Content/img/ManoMedidas/Paso1.gif" />
-                    <button class="volver_a_empezar clearBtn">Volver a empezar</button>
+                    <button class="volver_a_empezar clearBtn">@OrdersTexts.ManoMedidas_volver_a_empezar_btn</button>
                 </div>
 
                 <div class="paso2" style="display: none;">
-                    <p>Ahora, vas a medir el largo de tu muñon.</p>
-                    <p>Seguí el ejemplo de la animación.</p>
+                    <p>@OrdersTexts.ManoMedidas_paso2_p1</p>
+                    <p>@OrdersTexts.ManoMedidas_paso2_p2</p>
                     <img src="/Content/img/ManoMedidas/Paso2.gif" />
-                    <button class="volver_a_empezar clearBtn">Volver a empezar</button>
+                    <button class="volver_a_empezar clearBtn">@OrdersTexts.ManoMedidas_volver_a_empezar_btn</button>
                 </div>
 
                 <div class="paso3" style="display: none;">
-                    <p>Desde el extremo de tu muñon, ayudanos a medir su parte mas ancha.</p>
-                    <p>Seguí el ejemplo de la animación.</p>
+                    <p>@OrdersTexts.ManoMedidas_paso3_p1</p>
+                    <p>@OrdersTexts.ManoMedidas_paso3_p2</p>
                     <img src="/Content/img/ManoMedidas/Paso3.gif" />
-                    <button class="volver_a_empezar clearBtn">Volver a empezar</button>
+                    <button class="volver_a_empezar clearBtn">@OrdersTexts.ManoMedidas_volver_a_empezar_btn</button>
                 </div>
 
                 <div class="paso4" style="display: none;">
-                    <p>Listo!</p>
-                    <p>Estas son las medidas tomadas:</p>
+                    <p>@OrdersTexts.ManoMedidas_paso4_p1</p>
+                    <p>@OrdersTexts.ManoMedidas_paso4_p2</p>
                     @using (Html.BeginForm("UpdateSize", "Orders"))
                     {
                         @Html.AntiForgeryToken()
@@ -147,8 +148,8 @@
                         </label>
                         <br />
 
-                        <input type="submit" class="bn siguiente_medidas" value="Siguiente" />
-                        <button class="volver_a_empezar clearBtn">Volver a empezar</button>
+                        <input type="submit" class="bn siguiente_medidas" value="@OrdersTexts.ManoMedidas_btnSiguiente" />
+                        <button class="volver_a_empezar clearBtn">@OrdersTexts.ManoMedidas_volver_a_empezar_btn</button>
                     }
                 </div>
 

@@ -374,5 +374,797 @@ namespace Limbs.Web.Resources {
                 return ResourceManager.GetString("_OrderInfo_sizeNull", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Piezas impresas.
+        /// </summary>
+        public static string _PrintedPieces_h3 {
+            get {
+                return ResourceManager.GetString("_PrintedPieces_h3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actualizar.
+        /// </summary>
+        public static string _PrintedPieces_submitButton {
+            get {
+                return ResourceManager.GetString("_PrintedPieces_submitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seleccione un archivo menor a 5 MB.
+        /// </summary>
+        public static string _ProofOfDelivery_fileUploadScript_alert {
+            get {
+                return ResourceManager.GetString("_ProofOfDelivery_fileUploadScript_alert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subir prueba de entrega.
+        /// </summary>
+        public static string _ProofOfDelivery_ValidationSummary_p {
+            get {
+                return ResourceManager.GetString("_ProofOfDelivery_ValidationSummary_p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dirección.
+        /// </summary>
+        public static string _UserInfo_Address {
+            get {
+                return ResourceManager.GetString("_UserInfo_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nacimiento.
+        /// </summary>
+        public static string _UserInfo_Birth {
+            get {
+                return ResourceManager.GetString("_UserInfo_Birth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciudad.
+        /// </summary>
+        public static string _UserInfo_City {
+            get {
+                return ResourceManager.GetString("_UserInfo_City", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to País.
+        /// </summary>
+        public static string _UserInfo_Country {
+            get {
+                return ResourceManager.GetString("_UserInfo_Country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DNI o Pasaporte.
+        /// </summary>
+        public static string _UserInfo_DNI {
+            get {
+                return ResourceManager.GetString("_UserInfo_DNI", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string _UserInfo_Email {
+            get {
+                return ResourceManager.GetString("_UserInfo_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Datos del usuario.
+        /// </summary>
+        public static string _UserInfo_h3 {
+            get {
+                return ResourceManager.GetString("_UserInfo_h3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre.
+        /// </summary>
+        public static string _UserInfo_Name {
+            get {
+                return ResourceManager.GetString("_UserInfo_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Teléfono.
+        /// </summary>
+        public static string _UserInfo_Phone {
+            get {
+                return ResourceManager.GetString("_UserInfo_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación de lo contrario, la prótesis no podrá ser otorgada.
+        /// </summary>
+        public static string BrazoImage_bajada_exp {
+            get {
+                return ResourceManager.GetString("BrazoImage_bajada_exp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requisitos de la foto.
+        /// </summary>
+        public static string BrazoImagen_cardRequisitos {
+            get {
+                return ResourceManager.GetString("BrazoImagen_cardRequisitos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NO.
+        /// </summary>
+        public static string BrazoImagen_ej_no {
+            get {
+                return ResourceManager.GetString("BrazoImagen_ej_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SI.
+        /// </summary>
+        public static string BrazoImagen_ej_si {
+            get {
+                return ResourceManager.GetString("BrazoImagen_ej_si", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continuar.
+        /// </summary>
+        public static string BrazoImagen_enviarButton {
+            get {
+                return ResourceManager.GetString("BrazoImagen_enviarButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sacá una foto de la amputación.
+        /// </summary>
+        public static string BrazoImagen_form_title {
+            get {
+                return ResourceManager.GetString("BrazoImagen_form_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hoja cuadriculada de fondo.
+        /// </summary>
+        public static string BrazoImagen_req1 {
+            get {
+                return ResourceManager.GetString("BrazoImagen_req1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buena luz.
+        /// </summary>
+        public static string BrazoImagen_req2 {
+            get {
+                return ResourceManager.GetString("BrazoImagen_req2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foto sacada desde arriba.
+        /// </summary>
+        public static string BrazoImagen_req3 {
+            get {
+                return ResourceManager.GetString("BrazoImagen_req3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to De ser posible, colocar una regla.
+        /// </summary>
+        public static string BrazoImagen_req4 {
+            get {
+                return ResourceManager.GetString("BrazoImagen_req4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string BrazoImagen_ViewBag_title {
+            get {
+                return ResourceManager.GetString("BrazoImagen_ViewBag_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al guardar la información.
+        /// </summary>
+        public static string Details_Error {
+            get {
+                return ResourceManager.GetString("Details_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalles de pedido.
+        /// </summary>
+        public static string Details_ViewBag_title {
+            get {
+                return ResourceManager.GetString("Details_ViewBag_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Agregar nuevas imágenes.
+        /// </summary>
+        public static string Edit_addImages {
+            get {
+                return ResourceManager.GetString("Edit_addImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        public static string Edit_Color {
+            get {
+                return ResourceManager.GetString("Edit_Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aceptar.
+        /// </summary>
+        public static string Edit_deleteImage_button {
+            get {
+                return ResourceManager.GetString("Edit_deleteImage_button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No se ha podido eliminar la imagen.
+        /// </summary>
+        public static string Edit_deleteImage_error {
+            get {
+                return ResourceManager.GetString("Edit_deleteImage_error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar Imagen.
+        /// </summary>
+        public static string Edit_deleteImage_h3_1 {
+            get {
+                return ResourceManager.GetString("Edit_deleteImage_h3_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Está seguro que desea eliminar la imagen?.
+        /// </summary>
+        public static string Edit_deleteImage_h3_2 {
+            get {
+                return ResourceManager.GetString("Edit_deleteImage_h3_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guardar.
+        /// </summary>
+        public static string Edit_EnviarButton {
+            get {
+                return ResourceManager.GetString("Edit_EnviarButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ocurrió un error. Por favor envíenos la foto para solucionarle el problema.
+        /// </summary>
+        public static string Edit_errorDropzone {
+            get {
+                return ResourceManager.GetString("Edit_errorDropzone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar orden.
+        /// </summary>
+        public static string Edit_h2 {
+            get {
+                return ResourceManager.GetString("Edit_h2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El archivo es muy grande. Tamaño máximo permitido.
+        /// </summary>
+        public static string Edit_Image_fileTooBigMsg {
+            get {
+                return ResourceManager.GetString("Edit_Image_fileTooBigMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tipo de archivo inválido.
+        /// </summary>
+        public static string Edit_Image_invalidFileTypeMsg {
+            get {
+                return ResourceManager.GetString("Edit_Image_invalidFileTypeMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subiendo imagen, por favor espere.
+        /// </summary>
+        public static string Edit_Image_msgWhileUploadFile {
+            get {
+                return ResourceManager.GetString("Edit_Image_msgWhileUploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imágenes actuales.
+        /// </summary>
+        public static string Edit_Images {
+            get {
+                return ResourceManager.GetString("Edit_Images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importante.
+        /// </summary>
+        public static string Edit_no_design_h2 {
+            get {
+                return ResourceManager.GetString("Edit_no_design_h2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con la edición el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
+        /// </summary>
+        public static string Edit_no_design_p {
+            get {
+                return ResourceManager.GetString("Edit_no_design_p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No puede subir más de 8 imágenes por pedido.
+        /// </summary>
+        public static string Edit_title_no_more_images {
+            get {
+                return ResourceManager.GetString("Edit_title_no_more_images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar.
+        /// </summary>
+        public static string Edit_ViewBag_title {
+            get {
+                return ResourceManager.GetString("Edit_ViewBag_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación de lo contrario, la prótesis no podrá ser otorgada.
+        /// </summary>
+        public static string ManoImagen_bajada_exp {
+            get {
+                return ResourceManager.GetString("ManoImagen_bajada_exp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NO.
+        /// </summary>
+        public static string ManoImagen_ej_no {
+            get {
+                return ResourceManager.GetString("ManoImagen_ej_no", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SI.
+        /// </summary>
+        public static string ManoImagen_ej_si {
+            get {
+                return ResourceManager.GetString("ManoImagen_ej_si", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continuar.
+        /// </summary>
+        public static string ManoImagen_enviarButton {
+            get {
+                return ResourceManager.GetString("ManoImagen_enviarButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hoja cuadriculada de fondo.
+        /// </summary>
+        public static string ManoImagen_Req1 {
+            get {
+                return ResourceManager.GetString("ManoImagen_Req1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buena luz.
+        /// </summary>
+        public static string ManoImagen_Req2 {
+            get {
+                return ResourceManager.GetString("ManoImagen_Req2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Foto sacada desde arriba.
+        /// </summary>
+        public static string ManoImagen_Req3 {
+            get {
+                return ResourceManager.GetString("ManoImagen_Req3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to De ser posible, colocar una regla.
+        /// </summary>
+        public static string ManoImagen_Req4 {
+            get {
+                return ResourceManager.GetString("ManoImagen_Req4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requisitos de la foto.
+        /// </summary>
+        public static string ManoImagen_Requisitos {
+            get {
+                return ResourceManager.GetString("ManoImagen_Requisitos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sacá una foto de la amputación.
+        /// </summary>
+        public static string ManoImagen_title {
+            get {
+                return ResourceManager.GetString("ManoImagen_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string ManoImagen_ViewBag_title {
+            get {
+                return ResourceManager.GetString("ManoImagen_ViewBag_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siguiente.
+        /// </summary>
+        public static string ManoMedidas_btnSiguiente {
+            get {
+                return ResourceManager.GetString("ManoMedidas_btnSiguiente", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La imagen no es la mejor, pruebe sacandola más paralela.
+        /// </summary>
+        public static string ManoMedidas_errormodal {
+            get {
+                return ResourceManager.GetString("ManoMedidas_errormodal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedir una prótesis.
+        /// </summary>
+        public static string ManoMedidas_h2 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_h2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Por favor cargue una foto.
+        /// </summary>
+        public static string ManoMedidas_LoadAnotherPhoto {
+            get {
+                return ResourceManager.GetString("ManoMedidas_LoadAnotherPhoto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Analizando imagen, aguarde.
+        /// </summary>
+        public static string ManoMedidas_loadingmodal {
+            get {
+                return ResourceManager.GetString("ManoMedidas_loadingmodal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subir otra imagen.
+        /// </summary>
+        public static string ManoMedidas_ManoPedirUrlAction {
+            get {
+                return ResourceManager.GetString("ManoMedidas_ManoPedirUrlAction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ayudanos a medir de lado a lado tu muñeca.
+        /// </summary>
+        public static string ManoMedidas_paso1_p1 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso1_p1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seguí el ejemplo de la animación.
+        /// </summary>
+        public static string ManoMedidas_paso1_p2 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso1_p2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ahora, vas a medir el largo de tu muñon.
+        /// </summary>
+        public static string ManoMedidas_paso2_p1 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso2_p1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seguí el ejemplo de la animación.
+        /// </summary>
+        public static string ManoMedidas_paso2_p2 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso2_p2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Desde el extremo de tu muñon, ayudanos a medir su parte mas ancha.
+        /// </summary>
+        public static string ManoMedidas_paso3_p1 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso3_p1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seguí el ejemplo de la animación.
+        /// </summary>
+        public static string ManoMedidas_paso3_p2 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso3_p2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Listo!.
+        /// </summary>
+        public static string ManoMedidas_paso4_p1 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso4_p1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estas son las medidas tomadas:.
+        /// </summary>
+        public static string ManoMedidas_paso4_p2 {
+            get {
+                return ResourceManager.GetString("ManoMedidas_paso4_p2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paso.
+        /// </summary>
+        public static string ManoMedidas_step {
+            get {
+                return ResourceManager.GetString("ManoMedidas_step", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string ManoMedidas_ViewBag_Title {
+            get {
+                return ResourceManager.GetString("ManoMedidas_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Volver a empezar.
+        /// </summary>
+        public static string ManoMedidas_volver_a_empezar_btn {
+            get {
+                return ResourceManager.GetString("ManoMedidas_volver_a_empezar_btn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        public static string ManoOrden_Color {
+            get {
+                return ResourceManager.GetString("ManoOrden_Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enviar pedido.
+        /// </summary>
+        public static string ManoOrden_SubmitButton {
+            get {
+                return ResourceManager.GetString("ManoOrden_SubmitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string ManoOrden_ViewBag_Title {
+            get {
+                return ResourceManager.GetString("ManoOrden_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Si necesitás en ambos lados, deberás hacer dos pedidos.
+        /// </summary>
+        public static string ManoPedir_form_parte_1_subtitle {
+            get {
+                return ResourceManager.GetString("ManoPedir_form_parte_1_subtitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿En qué brazo necesitás la prótesis?.
+        /// </summary>
+        public static string ManoPedir_form_parte_1_title {
+            get {
+                return ResourceManager.GetString("ManoPedir_form_parte_1_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¿Qué tipo de amputación tenés?.
+        /// </summary>
+        public static string ManoPedir_form_parte_2_title {
+            get {
+                return ResourceManager.GetString("ManoPedir_form_parte_2_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Importante.
+        /// </summary>
+        public static string ManoPedir_no_design_h2 {
+            get {
+                return ResourceManager.GetString("ManoPedir_no_design_h2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tenemos diseño para la amputación seleccionada, pero no te preocupes, seguí con el pedido que te enviaremos un correo electrónico cuando lo desarrollemos.
+        /// </summary>
+        public static string ManoPedir_no_design_p {
+            get {
+                return ResourceManager.GetString("ManoPedir_no_design_p", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Izquierdo.
+        /// </summary>
+        public static string ManoPedir_selector_lado_Left {
+            get {
+                return ResourceManager.GetString("ManoPedir_selector_lado_Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Derecho.
+        /// </summary>
+        public static string ManoPedir_selector_lado_Right {
+            get {
+                return ResourceManager.GetString("ManoPedir_selector_lado_Right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Siguiente.
+        /// </summary>
+        public static string ManoPedir_submitButton {
+            get {
+                return ResourceManager.GetString("ManoPedir_submitButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedido.
+        /// </summary>
+        public static string ManoPedir_ViewBag_Title {
+            get {
+                return ResourceManager.GetString("ManoPedir_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Aún no asignado.
+        /// </summary>
+        public static string PublicOrders_AmbassadorNotAssigned {
+            get {
+                return ResourceManager.GetString("PublicOrders_AmbassadorNotAssigned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solicitante.
+        /// </summary>
+        public static string PublicOrders_table_th1 {
+            get {
+                return ResourceManager.GetString("PublicOrders_table_th1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to E-mail solicitante.
+        /// </summary>
+        public static string PublicOrders_table_th2 {
+            get {
+                return ResourceManager.GetString("PublicOrders_table_th2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Embajador.
+        /// </summary>
+        public static string PublicOrders_table_th3 {
+            get {
+                return ResourceManager.GetString("PublicOrders_table_th3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pedidos.
+        /// </summary>
+        public static string PublicOrders_ViewBag_Title {
+            get {
+                return ResourceManager.GetString("PublicOrders_ViewBag_Title", resourceCulture);
+            }
+        }
     }
 }

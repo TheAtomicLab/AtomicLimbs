@@ -1,13 +1,14 @@
-﻿@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Resources
+@using Limbs.Web.Entities.Models
 @model OrderModel
 
-<h3>Piezas impresas</h3>
+<h3>@OrdersTexts._PrintedPieces_h3</h3>
 
 
 @using (Html.BeginForm("PrintedPiecesUpdate", "Orders", new { orderId = Model.Id }, FormMethod.Post))
 {
 
-    <button type="submit" class="bn_blue">Actualizar</button>
+    <button type="submit" class="bn_blue">@OrdersTexts._PrintedPieces_submitButton</button>
 
     <div class="pieces_row">
         <div class="cl_l">

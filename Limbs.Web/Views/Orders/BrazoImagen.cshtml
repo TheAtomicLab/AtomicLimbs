@@ -1,7 +1,8 @@
-﻿@model Limbs.Web.Entities.Models.OrderModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.Models.OrderModel
 
 @{
-    ViewBag.Title = "Pedido";
+    ViewBag.Title = OrdersTexts.BrazoImagen_ViewBag_title;
 }
 
 @section scripts
@@ -16,33 +17,33 @@
 
 <div class="min_full" id="cuerpo_pedir">
     <article id="exp_inicial" class="brazo card center-card-l">
-        <p class="form_title">Sacá una foto de la amputación</p>
-        <p id="bajada_exp">Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación <b>de lo contrario, la prótesis no podrá ser otorgada.</b></p>
+        <p class="form_title">@OrdersTexts.BrazoImagen_form_title</p>
+        <p id="bajada_exp">@OrdersTexts.BrazoImage_bajada_exp</p>
         <div id="recomendaciones_foto">
             <div class="card requisitos">
                 <div>
-                    <p>Requisitos de la foto</p>
+                    <p>@OrdersTexts.BrazoImagen_cardRequisitos</p>
                 </div>
                 <div>
                     <ul>
-                        <li>Hoja cuadriculada de fondo</li>
-                        <li>Buena luz</li>
-                        <li>Foto sacada desde arriba</li>
-                        <li>De ser posible, colocar una regla</li>
+                        <li>@OrdersTexts.BrazoImagen_req1</li>
+                        <li>@OrdersTexts.BrazoImagen_req2</li>
+                        <li>@OrdersTexts.BrazoImagen_req3</li>
+                        <li>@OrdersTexts.BrazoImagen_req4</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="ejemplos_carga">
             <div id="ej_si" class="ej_exp card">
-                <p class="azulAtomicTx">SI</p>
+                <p class="azulAtomicTx">@OrdersTexts.BrazoImagen_ej_si</p>
                 <ul>
                     <li></li>
                     <li></li>
                 </ul>
             </div>
             <div id="ej_no" class="ej_exp card">
-                <p>NO</p>
+                <p>BrazoImagen_ej_no</p>
                 <ul>
                     <li></li>
                     <li></li>
@@ -57,7 +58,7 @@
                 @Html.HiddenFor(x => x.AmputationType)
                 @Html.HiddenFor(x => x.ProductType)
             }
-            <button id="enviar" name="enviar" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">Continuar</button>
+            <button id="enviar" name="enviar" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">@OrdersTexts.BrazoImagen_enviarButton</button>
        </div>
     </article>
 </div>

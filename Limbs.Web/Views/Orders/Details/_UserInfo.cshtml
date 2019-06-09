@@ -1,46 +1,47 @@
-﻿@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Resources
+@using Limbs.Web.Entities.Models
 @model OrderModel
 
-<h3>Datos del usuario</h3>
+<h3>@OrdersTexts._UserInfo_h3</h3>
 <table class="tabla_datos">
     <tr>
-        <td>Nombre:</td>
+        <td>@OrdersTexts._UserInfo_Name:</td>
         <td>@Model.OrderRequestor.FullName()</td>
     </tr>
     @if (User.IsInRole(AppRoles.Administrator))
     {
         <tr>
-            <td>DNI o Pasaporte:</td>
+            <td>@OrdersTexts._UserInfo_Name:</td>
             <td>@Model.OrderRequestor.FullDni()</td>
         </tr>
     }
     @if (!User.IsInRole(AppRoles.Ambassador))
     {
         <tr>
-            <td>Email:</td>
+            <td>@OrdersTexts._UserInfo_Email:</td>
             <td>@Model.OrderRequestor.Email</td>
         </tr>
     }
     <tr>
-        <td>Nacimiento:</td>
+        <td>@OrdersTexts._UserInfo_Birth:</td>
         <td>@Model.OrderRequestor.Birth.ToString("dd/MM/yyyy")</td>
     </tr>
     <tr>
-        <td>País:</td>
+        <td>@OrdersTexts._UserInfo_Country:</td>
         <td>@Model.OrderRequestor.Country</td>
     </tr>
     <tr>
-        <td>Ciudad:</td>
+        <td>@OrdersTexts._UserInfo_City:</td>
         <td>@Model.OrderRequestor.City</td>
     </tr>
     @if (!User.IsInRole(AppRoles.Ambassador))
     {
         <tr>
-            <td>Dirección:</td>
+            <td>@OrdersTexts._UserInfo_Address:</td>
             <td>@Model.OrderRequestor.FullAddress()</td>
         </tr>
         <tr>
-            <td>Teléfono:</td>
+            <td>@OrdersTexts._UserInfo_Phone:</td>
             <td>@Model.OrderRequestor.Phone</td>
         </tr>
     }

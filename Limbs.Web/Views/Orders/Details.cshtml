@@ -1,7 +1,8 @@
-﻿@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Resources
+@using Limbs.Web.Entities.Models
 @model OrderModel
 @{
-    ViewBag.Title = "Detalles de pedido";
+    ViewBag.Title = OrdersTexts.Details_ViewBag_title;
 }
 
 <link rel="stylesheet" href="~/Content/jquery.bxslider.min.css">
@@ -89,7 +90,7 @@
                             updatePartial("Actions");
                         },
                         error: function () {
-                            alert("error al guardar la información.");
+                            alert("@OrdersTexts.Details_Error");
                         }
                     });
                 }
