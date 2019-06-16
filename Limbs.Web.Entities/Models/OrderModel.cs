@@ -45,6 +45,15 @@ namespace Limbs.Web.Entities.Models
 
         public virtual ICollection<AccessoryModel> Extras { get; set; }
 
+        public int? AmputationTypeFkId { get; set; }
+
+        public AmputationTypeModel AmputationTypeFk { get; set; }
+
+        public int? ColorFkId { get; set; }
+        public ColorModel ColorFk { get; set; }
+
+        public List<OrderRenderPieceModel> RenderPieces { get; set; }
+
         [NotMapped]
         [Display(Name = "Tamaños", Description = "")]
         public virtual OrderSizesModel Sizes { get; set; }

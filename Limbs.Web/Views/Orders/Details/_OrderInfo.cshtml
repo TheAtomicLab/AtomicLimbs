@@ -1,11 +1,15 @@
 ﻿@using Limbs.Web.Common.Extensions
-@model Limbs.Web.Entities.Models.OrderModel
+@using Limbs.Web.ViewModels
+
+@model OrderDetailsViewModel
 
 <h3>Datos del pedido</h3>
 <table class="tabla_datos">
     <tr>
-        <td>@Html.DisplayNameFor(x => x.AmputationType)</td>
-        <td>@Html.DisplayFor(x => x.AmputationType)</td>
+        <td>@Html.DisplayNameFor(x => x.AmputationType.Name)</td>
+        <td>
+            <img src="@Model.AmputationType.PrimaryUrlImage" alt="@Model.AmputationType.Description" title="@Model.AmputationType.Description" />
+        </td>
     </tr>
     <tr>
         <td>@Html.DisplayNameFor(x => x.ProductType)</td>
@@ -28,14 +32,24 @@
     </tr>
 
     <tr>
-        <td>
-            <p>
-                @Html.DisplayNameFor(x => x.Color)
-                <br />
-                @Html.DescriptionFor(x => x.Color)
-            </p>
-        </td>
-        <td><img src="/Content/img/Mano/mano_@(Model.Color).png" /></td>
+        @if (Model.HasDesign == false || Model.Color == null)
+        {
+            <td class="text-bold">Importante</td>
+            <td class="text-danger">No tenemos diseño para la amputación seleccionada</td>
+        }
+        else
+        {
+            <td>
+                <p>
+                    @Html.DisplayNameFor(x => x.Color.Name)
+                    <br />
+                    @Html.DescriptionFor(x => x.Color.Name)
+                </p>
+            </td>
+            <td>
+                <img src="@Model.Color.PrimaryUrlImage" alt="@Model.Color.Description" title="@Model.Color.Description" />
+            </td>
+        }
     </tr>
 
     @if (!string.IsNullOrWhiteSpace(Model.Comments))
@@ -51,14 +65,10 @@
 <div class="form-group">
     <p class="form_title">Fotos</p>
     <div class="slider">
-        @foreach (var image in (Model.IdImage).Split(','))
+        @foreach (var image in Model.Images)
         {
             <div class="slider-image-container">
                 <img src="@image" />
-                @{
-                    var imageId = image.Split('/').LastOrDefault();
-                    imageId = imageId == null ? string.Empty : imageId;
-                }
             </div>
         }
     </div>

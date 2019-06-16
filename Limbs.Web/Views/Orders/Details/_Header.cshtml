@@ -1,6 +1,8 @@
 ﻿@using Limbs.Web.Common.Extensions
-@using Limbs.Web.Entities.Models
-@model OrderModel
+@using Limbs.Web.ViewModels
+@using Limbs.Web.Entities.Models;
+
+@model OrderDetailsViewModel
 
 <h1>Pedido:</h1>
 <div id="estado_pedido">
@@ -13,7 +15,8 @@
             @if (Model.Status == OrderStatus.Rejected && User.IsInRole(AppRoles.Requester))
             {
                 statusDescription = OrderStatus.NotAssigned.ToDescription();
-            } else
+            }
+            else
             {
                 statusDescription = @Model.Status.ToDescription();
             }
@@ -21,7 +24,7 @@
             @if (Model.Status == OrderStatus.Pending)
             {
                 <text>(</text>
-                @(Model.Pieces.GetPercentage())<text>%)</text>
+                @(Model.PercentagePrinted)<text>%)</text>
             }
         </h2>
     }

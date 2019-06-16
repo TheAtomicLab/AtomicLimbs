@@ -11,19 +11,23 @@ namespace Limbs.Web.ViewModels
         [Required(ErrorMessage = "Campo requerido")]
         public ProductType ProductType { get; set; }
 
-        [Display(Name = "Amputación", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
-        public AmputationType AmputationType { get; set; }
-
         [Display(Name = "Comentarios", Description = "")]
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
         [Display(Name = "Color", Description = "(si es posible)")]
-        public OrderColor Color { get; set; }
+        public int? ColorFkId { get; set; }
+
+        [Display(Name = "Amputación", Description = "")]
+        [Required(ErrorMessage = "Campo requerido")]
+        public int AmputationTypeFkId { get; set; }
+
+        public int PreviousAmputationTypeId { get; set; }
 
         public string[] Images { get; set; }
         public int TotalImages { get; set; }
+
+        public bool HasDesign { get; set; }
     }
 
     public class OrderDeleteImage

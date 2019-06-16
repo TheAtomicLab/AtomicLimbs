@@ -344,13 +344,26 @@
     <Compile Include="Migrations\201904272238105_refusedOrders.Designer.cs">
       <DependentUpon>201904272238105_refusedOrders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201905262320533_new-render.cs" />
+    <Compile Include="Migrations\201905262320533_new-render.Designer.cs">
+      <DependentUpon>201905262320533_new-render.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AmputationDesign.cs" />
+    <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\NewOrder.cs" />
+    <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
+    <Compile Include="ViewModels\OrderRenderPieceViewModel.cs" />
+    <Compile Include="ViewModels\OrderRequesterDetailsViewModel.cs" />
     <Compile Include="ViewModels\OrderUpdateModel.cs" />
+    <Compile Include="ViewModels\RenderPieceGroupByViewModel.cs" />
+    <Compile Include="ViewModels\RenderViewModel.cs" />
     <Compile Include="ViewModels\UserPanelViewModel.cs" />
     <Compile Include="ViewModels\AmbassadorPanelViewModel.cs" />
     <Compile Include="ViewModels\OrderDetailsEmbajadorViewModel.cs" />
@@ -744,6 +757,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201904272238105_refusedOrders.resx">
       <DependentUpon>201904272238105_refusedOrders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905262320533_new-render.resx">
+      <DependentUpon>201905262320533_new-render.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

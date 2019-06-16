@@ -1,35 +1,43 @@
-﻿@using Limbs.Web.Entities.Models
-@model OrderModel
+﻿@using Limbs.Web.ViewModels
+@using Limbs.Web.Entities.Models;
 
-<div id="accion_pedido">
-    @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
-    {
-        if (User.IsInRole(AppRoles.Administrator) && (Model.Status == OrderStatus.NotAssigned || Model.Status == OrderStatus.Rejected))
-        {
-            <button id="open_modal_btn" class="bn_delete">Informar datos incorrectos</button>
-            @Html.ActionLink("Asignar embajador", "AssignAmbassadorAuto", new { area = "Admin", id = Model.Id }, new { @class = "bn_add" })
-        }
+@model OrderDetailsViewModel
 
-        if (Model.Status == OrderStatus.PreAssigned)
+    <div id="accion_pedido">
+        @if (User.IsInRole(AppRoles.Ambassador) || User.IsInRole(AppRoles.Administrator))
         {
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending })" class="bn_blue">Aceptar pedido</a>
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Rejected })" class="bn_blue">Rechazar pedido</a>
-        }
-        else if (Model.Status == OrderStatus.Pending)
-        {
-            if (string.IsNullOrWhiteSpace(Model.FileUrl))
+            if (User.IsInRole(AppRoles.Administrator) && (Model.Status == OrderStatus.NotAssigned || Model.Status == OrderStatus.Rejected))
             {
-                if (TempData["Generating"] == null)
+                <button id="open_modal_btn" class="bn_delete">Informar datos incorrectos</button>
+                if (Model.HasDesign)
                 {
-                    <a href="@Url.Action("ProductGenerate", new { area = "", id = Model.Id })" class="bn_add">Generar archivos</a>
+                    @Html.ActionLink("Asignar embajador", "AssignAmbassadorAuto", new { area = "Admin", id = Model.Id }, new { @class = "bn_add" })
                 }
-                else
+            }
+
+            if (Model.Status == OrderStatus.PreAssigned && Model.HasDesign)
+            {
+                if (!User.IsInRole(AppRoles.Administrator))
                 {
-                    <p class="bn_blue">
-                        <img src="/Content/img/ajax-loader.gif" />
-                        Generando archivos
-                    </p>
-                    <script type="text/javascript">
+                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending })" class="bn_blue">Aceptar pedido</a>
+                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Rejected })" class="bn_blue">Rechazar pedido</a>
+                }
+            }
+            else if (Model.Status == OrderStatus.Pending)
+            {
+                if (string.IsNullOrWhiteSpace(Model.FileUrl))
+                {
+                    if (TempData["Generating"] == null)
+                    {
+                        <a href="@Url.Action("ProductGenerate", new { area = "", id = Model.Id })" class="bn_add">Generar archivos</a>
+                    }
+                    else
+                    {
+                        <p class="bn_blue">
+                            <img src="/Content/img/ajax-loader.gif" />
+                            Generando archivos
+                        </p>
+                        <script type="text/javascript">
                         function updateAction() {
                             $.ajax("@Url.Action("ProductGenerated", new { id = Model.Id, fileurl = Model.FileUrl })", {
                                 type: "GET",
@@ -49,59 +57,96 @@
                         setTimeout(function() {
                             location.reload();
                         }, 300000);
-                    </script>
+                        </script>
+                    }
+                }
+                else
+                {
+                    @*<a href="@Model.FileUrl" target="_blank" data-method="get" class="bn_download">Descargar archivos</a>*@
+                }
+                if (Model.PercentagePrinted == 100)
+                {
+                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready })" class="bn_blue">Terminé de imprimir</a>
                 }
             }
-            else
+            else if (Model.Status == OrderStatus.Ready)
             {
-                @*<a href="@Model.FileUrl" target="_blank" data-method="get" class="bn_download">Descargar archivos</a>*@
+                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered })" class="bn_blue">Ya entregué el pedido</a>
+                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery })" class="bn_blue">Solicitar envío</a>
             }
-            if (Model.Pieces.Ready())
+            else if (Model.Status == OrderStatus.ArrangeDelivery)
             {
-                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready })" class="bn_blue">Terminé de imprimir</a>
+                <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">Ya entregué el pedido</a>
             }
-        }
-        else if (Model.Status == OrderStatus.Ready)
-        {
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered })" class="bn_blue">Ya entregué el pedido</a>
-            <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery })" class="bn_blue">Solicitar envío</a>
-        }
-        else if (Model.Status == OrderStatus.ArrangeDelivery)
-        {
-            <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">Ya entregué el pedido</a>
-        }
-        <script type="text/javascript">
-            $("#accion_pedido a").not("a[data-method='get']").click(function (e) {
-                e.stopPropagation();
-                e.preventDefault();
+            <script type="text/javascript">
+                $("#accion_pedido a").not("a[data-method='get']").click(function (e) {
+                    e.stopPropagation();
+                    e.preventDefault();
 
-                $("body").append('<form action="' + e.target.href + '" method="post" id="tempform"></form>');
-                $("#tempform").submit();
-            });
-        </script>
+                    $("body").append('<form action="' + e.target.href + '" method="post" id="tempform"></form>');
+                    $("#tempform").submit();
+                });
+            </script>
 
-        if (User.IsInRole(AppRoles.Administrator)) //Se pone esta condicion porque no esta terminada la funcionabilidad
-        {
-            if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
+            if (User.IsInRole(AppRoles.Administrator)) //Se pone esta condicion porque no esta terminada la funcionabilidad
             {
-                <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
+                if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
+                {
+                    <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
+                }
             }
         }
-    }
 
-    @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
-    {
-        <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
-    }
+        @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
+        {
+            <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
+        }
 
-    @if ((!User.IsInRole(AppRoles.Administrator) && Model.Status == OrderStatus.NotAssigned) || (User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Rejected))
-    {
-        <a href="@Url.Action("Edit", "Orders", new { id = Model.Id })" class="bn_blue">Editar pedido</a>
-    }
+        @if ((!User.IsInRole(AppRoles.Administrator) && Model.Status == OrderStatus.NotAssigned) || (User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Rejected))
+        {
+            <a href="@Url.Action("Edit", "Orders", new { id = Model.Id })" class="bn_blue">Editar pedido</a>
+        }
 
-    <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
-</div>
+        <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
+    </div>
 @if (ViewBag != null && !string.IsNullOrEmpty(ViewBag.msg))
 {
     <span class="auto-assign-error">@ViewBag.msg</span>
 }
+
+<!-- The Modal -->
+<div id="myModal" class="modal" style="display: none;">
+    <div class="limbs-modal-container">
+        <!-- Modal content -->
+        <div class="limbs-modal-header">
+            <span id="close_modal" class="close">&times;</span>
+            <h3>Informar datos incorrectos</h3>
+        </div>
+        <div class="limbs-modal-content">
+            @using (Html.BeginForm("WrongInfo", "Orders", new { area = "Admin" }, FormMethod.Post, new { @class = "form-modal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="Order_Id" value="@Model.Id" />
+                <input type="hidden" name="Fullname_Requestor" value="@(Model.OrderRequester.UserName + " " + Model.OrderRequester.UserLastName)" />
+                <input type="hidden" name="Email_Requestor" value="@Model.OrderRequester.Email" />
+
+                <p style="margin-bottom: 1em;">
+                    <label for="IsWrongImages">
+                        <input id="IsWrongImages" name="IsWrongImages" type="checkbox" value="true">
+                        <input name="IsWrongImages" type="hidden" value="false">
+                        Imagenes incorrectas.
+                    </label>
+                </p>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Comments">Comentarios</label>
+                    <div class="col-md-10">
+                        <textarea cols="20" data-val="true" data-val-required=" " id="Comments" name="Comments" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input id="btn-send" type="submit" class="btn btn-default bn_blue" value="Informar" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
