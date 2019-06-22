@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using System.Web.Routing;
 using Limbs.Web.Common.Extensions;
+using Limbs.Web.Filters;
 
 namespace Limbs.Web
 {
@@ -9,6 +10,7 @@ namespace Limbs.Web
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new LocalizationAttribute("es"), 0);
             filters.Add(new CustomHandleErrorAttribute());
             filters.Add(new HandleAntiforgeryTokenErrorAttribute
             {

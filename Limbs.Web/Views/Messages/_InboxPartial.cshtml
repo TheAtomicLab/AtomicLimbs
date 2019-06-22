@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Limbs.Web.Entities.Models.MessageModel>
+﻿@using Limbs.Web.Resources
+@model IEnumerable<Limbs.Web.Entities.Models.MessageModel>
 
 @if (Model.Any())
 {
@@ -28,7 +29,7 @@
                     @Html.DisplayFor(modelItem => item.Time, "ToFriendlyDateString")
                 </td>
                 <td>
-                    @Html.ActionLink("Borrar", "Delete", new {id = item.Id}, new { @class = "bn_delete" })
+                    @Html.ActionLink(MessagesTexts._InboxPartial_ActionLinkDelete, "Delete", new {id = item.Id}, new { @class = "bn_delete" })
                 </td>
             </tr>
         }
@@ -37,5 +38,5 @@
 }
 else
 {
-    <p style="padding: 20px 0;">No tenés mensajes.</p>
+    <p style="padding: 20px 0;">@MessagesTexts._InboxPartial_anyMessages</p>
 }

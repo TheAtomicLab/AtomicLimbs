@@ -256,10 +256,12 @@
     <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Filters\LocalizationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ImagesHelper.cs" />
+    <Compile Include="Helpers\LanguageHelper.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.cs" />
     <Compile Include="Migrations\201709210349189_OrderSizesAsFloat.Designer.cs">
       <DependentUpon>201709210349189_OrderSizesAsFloat.cs</DependentUpon>
@@ -350,6 +352,96 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\AccountTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AccountTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AccountTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AmbassadorTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmbassadorTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\AmbassadorTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AmbassadorTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HelpTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HelpTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HelpTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HomeTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\HomeTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HomeTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ManageTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\ManageTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ManageTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MessagesTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessagesTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\MessagesTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MessagesTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\OrdersTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrdersTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\OrdersTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OrdersTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\SharedTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\SharedTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SharedTexts.es.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UsersTexts.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersTexts.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\UsersTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UsersTexts.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AmputationDesign.cs" />
@@ -758,8 +850,77 @@
     <EmbeddedResource Include="Migrations\201904272238105_refusedOrders.resx">
       <DependentUpon>201904272238105_refusedOrders.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201905262320533_new-render.resx">
-      <DependentUpon>201905262320533_new-render.cs</DependentUpon>
+    <EmbeddedResource Include="Resources\AccountTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AccountTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AccountTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AmbassadorTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AmbassadorTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\AmbassadorTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AmbassadorTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HelpTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HelpTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HelpTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HelpTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HomeTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\HomeTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>HomeTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ManageTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManageTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ManageTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ManageTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MessagesTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessagesTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\MessagesTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>MessagesTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OrdersTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OrdersTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\OrdersTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>OrdersTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SharedTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\SharedTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>SharedTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UsersTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UsersTexts.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>UsersTexts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
 ﻿@model Limbs.Web.ViewModels.OrderDetailsViewModel
+@using Limbs.Web.Resources
+
 
 @if (string.IsNullOrWhiteSpace(Model.ProofOfDelivery))
 {
@@ -8,7 +10,7 @@
         
             @Html.ValidationSummary()
 
-            <p>Subir prueba de entrega</p>
+            <p>@OrdersTexts._ProofOfDelivery_ValidationSummary_p</p>
 
             <input type="hidden" name="orderId" value="@Model.Id"/>
             <input id="fileUpload" type="file" name="file" accept="image/*"/>
@@ -22,7 +24,7 @@
             $("#fileUpload").bind("change",
                 function () {
                     if (this.files[0].size > 1000000 * 5) {
-                        alert("Seleccione un archivo menor a 5 MB.");
+                        alert("@OrdersTexts._ProofOfDelivery_fileUploadScript_alert");
                         this.value = null;
                     }
                 });

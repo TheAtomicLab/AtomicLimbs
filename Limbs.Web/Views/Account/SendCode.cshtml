@@ -1,6 +1,6 @@
 ﻿@model Limbs.Web.Entities.WebModels.SendCodeViewModel
 @{
-    ViewBag.Title = "Send";
+        ViewBag.Title = Limbs.Web.Resources.AccountTexts.SendCode_ViewBag_Title;
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,7 +8,7 @@
 @using (Html.BeginForm("SendCode", "Account", new { ReturnUrl = Model.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" })) {
     @Html.AntiForgeryToken()
     @Html.Hidden("rememberMe", @Model.RememberMe)
-    <h4>Send verification code</h4>
+    <h4>@Limbs.Web.Resources.AccountTexts.SendCode_h4</h4>
     <hr />
     <div class="row">
         <div class="col-md-8">

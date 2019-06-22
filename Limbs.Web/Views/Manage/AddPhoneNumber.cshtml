@@ -1,6 +1,7 @@
-﻿@model Limbs.Web.Entities.WebModels.AddPhoneNumberViewModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.WebModels.AddPhoneNumberViewModel
 @{
-    ViewBag.Title = "Phone Number";
+    ViewBag.Title = ManageTexts.AddPhoneNumber_ViewBag_Title;
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -8,7 +9,7 @@
 @using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Add a phone number</h4>
+    <h4>@ManageTexts.AddPhoneNumber_h4</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
     <div class="form-group">

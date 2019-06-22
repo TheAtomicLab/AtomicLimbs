@@ -1,7 +1,9 @@
 ﻿@model Limbs.Web.ViewModels.NewOrder
+@using Limbs.Web.Resources
+
 
 @{
-    ViewBag.Title = "Pedido";
+    ViewBag.Title = OrdersTexts.ManoImagen_ViewBag_title;
 }
 
 @section scripts
@@ -20,36 +22,36 @@
             <p class="step">3</p>
             <div>
                 <p class="title">
-                    Sacá una foto de la amputación
+                    @OrdersTexts.ManoImagen_title
                 </p>
             </div>
         </div>
-        <p id="bajada_exp">Deberás cargar una foto de tu brazo sobre una hoja cuadriculada para que podamos tomar referencias de las medidas, por favor, respetar los requisitos a continuación <b>de lo contrario, la prótesis no podrá ser otorgada.</b></p>
+        <p id="bajada_exp">@OrdersTexts.ManoImagen_bajada_exp</p>
         <div id="recomendaciones_foto">
             <div class="card requisitos">
                 <div>
-                    <p>Requisitos de la foto</p>
+                    <p>@OrdersTexts.ManoImagen_Requisitos</p>
                 </div>
                 <div>
                     <ul>
-                        <li>Hoja cuadriculada de fondo</li>
-                        <li>Buena luz</li>
-                        <li>Foto sacada desde arriba</li>
-                        <li>De ser posible, colocar una regla</li>
+                        <li>@OrdersTexts.ManoImagen_Req1</li>
+                        <li>@OrdersTexts.ManoImagen_Req2</li>
+                        <li>@OrdersTexts.ManoImagen_Req3</li>
+                        <li>@OrdersTexts.ManoImagen_Req4</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="ejemplos_carga">
             <div id="ej_si" class="ej_exp card">
-                <p class="azulAtomicTx">SI</p>
+                <p class="azulAtomicTx">@OrdersTexts.ManoImagen_ej_si</p>
                 <ul>
                     <li></li>
                     <li></li>
                 </ul>
             </div>
             <div id="ej_no" class="ej_exp card">
-                <p>NO</p>
+                <p>@OrdersTexts.ManoImagen_ej_no</p>
                 <ul>
                     <li></li>
                     <li></li>
@@ -67,7 +69,7 @@
                 @Html.HiddenFor(x => x.ProductType)
                 @Html.HiddenFor(x => x.HasDesign)
             }
-            <button id="enviar" name="enviar" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">Continuar</button>
+            <button id="enviar" name="enviar" class="bn_blue" onclick="this.form.submit(); this.disabled=true;">@OrdersTexts.enviarButton</button>
        </div>
     </article>
 </div>

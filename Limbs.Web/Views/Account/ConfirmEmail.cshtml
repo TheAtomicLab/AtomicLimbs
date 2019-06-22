@@ -1,8 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Gracias por confirmar tu email";
+    ViewBag.Title = Limbs.Web.Resources.AccountTexts.ConfirmEmail_ViewBag_Title;
 }
 
 <h2>@ViewBag.Title.</h2>
 <div>
-    <p>@Html.ActionLink("Iniciá sesión", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "bn_blue" })</p>
+    <p>@Html.ActionLink(Limbs.Web.Resources.AccountTexts.ConfirmEmail_LoginActionLink, "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "bn_blue" })</p>
 </div>

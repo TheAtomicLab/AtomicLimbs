@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Create_AlternativeEmail" xml:space="preserve">
+    <value>Email Alternativo</value>
+  </data>
+  <data name="Create_AlternativeEmailLabel" xml:space="preserve">
+    <value>Todo nuestro contacto será vía mail, si hay otro mail que uses escribilo acá para mantenerte informado</value>
+  </data>
+  <data name="Create_Birthday" xml:space="preserve">
+    <value>Fecha de nacimiento</value>
+  </data>
+  <data name="Create_CreateSubmitButton" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="Create_EditSubmitButton" xml:space="preserve">
+    <value>Editar datos</value>
+  </data>
+  <data name="Create_Gender" xml:space="preserve">
+    <value>Sexo</value>
+  </data>
+  <data name="Create_ID" xml:space="preserve">
+    <value>DNI o Pasaporte</value>
+  </data>
+  <data name="Create_IsOrganization" xml:space="preserve">
+    <value>¿Te estás registrando en representación de una institución u organización?</value>
+  </data>
+  <data name="Create_LastName" xml:space="preserve">
+    <value>Apellido</value>
+  </data>
+  <data name="Create_Name" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Create_OrganizationName" xml:space="preserve">
+    <value>Nombre de la organización</value>
+  </data>
+  <data name="Create_OrganizationRole" xml:space="preserve">
+    <value>Rol en la organización</value>
+  </data>
+  <data name="Create_Phone" xml:space="preserve">
+    <value>Teléfono</value>
+  </data>
+  <data name="Create_Printer_Brand" xml:space="preserve">
+    <value>Marca impresora</value>
+  </data>
+  <data name="Create_Printer_Create_h3" xml:space="preserve">
+    <value>¿No tenés impresora?</value>
+  </data>
+  <data name="Create_Printer_Create_h4_1" xml:space="preserve">
+    <value>¡No hay problema! Ingresa</value>
+  </data>
+  <data name="Create_Printer_Create_h4_2" xml:space="preserve">
+    <value>acá</value>
+  </data>
+  <data name="Create_Printer_Create_h4_3" xml:space="preserve">
+    <value>y seguí los consejos para comprar una!</value>
+  </data>
+  <data name="Create_Printer_h3" xml:space="preserve">
+    <value>Datos de la impresora 3D</value>
+  </data>
+  <data name="Create_Printer_Height" xml:space="preserve">
+    <value>Alto</value>
+  </data>
+  <data name="Create_Printer_IsHotBed" xml:space="preserve">
+    <value>¿Es cama caliente?</value>
+  </data>
+  <data name="Create_Printer_Long" xml:space="preserve">
+    <value>Largo</value>
+  </data>
+  <data name="Create_Printer_Model" xml:space="preserve">
+    <value>Modelo</value>
+  </data>
+  <data name="Create_Printer_PrintingArea" xml:space="preserve">
+    <value>Area de impresión</value>
+  </data>
+  <data name="Create_Printer_Width" xml:space="preserve">
+    <value>Ancho</value>
+  </data>
+  <data name="Create_TermsAndConditions" xml:space="preserve">
+    <value>términos y condiciones</value>
+  </data>
+  <data name="Create_Title_h2" xml:space="preserve">
+    <value>Tus datos</value>
+  </data>
+  <data name="Create_ValidationSummary" xml:space="preserve">
+    <value>Hay errores en el formulario, revisá los campos marcados en rojo</value>
+  </data>
+  <data name="Create_ViewBag_Title_Edit" xml:space="preserve">
+    <value>Editar datos</value>
+  </data>
+  <data name="Create_ViewBag_Title_Register" xml:space="preserve">
+    <value>Registro</value>
+  </data>
+  <data name="Index_AmbassadorPanelInfo_h1" xml:space="preserve">
+    <value>Panel de control</value>
+  </data>
+  <data name="Index_AmbassadorPanelInfo_p1" xml:space="preserve">
+    <value>Entregaste</value>
+  </data>
+  <data name="Index_AmbassadorPanelInfo_p2" xml:space="preserve">
+    <value>Manos</value>
+  </data>
+  <data name="Index_AmbassadorPanelInfo_p3" xml:space="preserve">
+    <value>Tenés</value>
+  </data>
+  <data name="Index_AmbassadorPanelInfo_p4" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="Index_FinishedOrders" xml:space="preserve">
+    <value>Terminadas</value>
+  </data>
+  <data name="Index_NotFinishedOrders" xml:space="preserve">
+    <value>¡Aún no has entregado ninguna mano!</value>
+  </data>
+  <data name="Index_NotPendigOrders" xml:space="preserve">
+    <value>No tienes nuevos pedidos asignados</value>
+  </data>
+  <data name="Index_PendingOrders" xml:space="preserve">
+    <value>Tus pedidos</value>
+  </data>
+  <data name="Index_PendingToAssignOrders" xml:space="preserve">
+    <value>Pedidos entrantes</value>
+  </data>
+  <data name="Index_ViewBag_Title" xml:space="preserve">
+    <value>Panel de Embajador</value>
+  </data>
+  <data name="_Address_h3" xml:space="preserve">
+    <value>¿Ésta es tu dirección?</value>
+  </data>
+  <data name="_Address_h4" xml:space="preserve">
+    <value>Buscá en el mapa, y hacé click en la ubicación correcta</value>
+  </data>
+  <data name="_Address_h5" xml:space="preserve">
+    <value>Es importante que ubiques tu dirección correctamente para gestionar tu pedido</value>
+  </data>
+</root>

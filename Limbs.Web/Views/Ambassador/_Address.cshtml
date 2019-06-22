@@ -1,4 +1,5 @@
 ﻿@using System.Configuration
+@using Limbs.Web.Resources
 @model Limbs.Web.Entities.Models.AmbassadorModel
 @{
     var googleKey = ConfigurationManager.AppSettings["Google.Maps.Key"] ?? "NOKEYINCONFIG";
@@ -16,10 +17,10 @@
 @Html.EditorFor(model => model.Country, new { htmlAttributes = new { @class = "f-campo", placeholder = HttpUtility.HtmlDecode(Html.DisplayNameFor(x => x.Country).ToHtmlString()) } })
 
 <div style="margin-bottom: 20px;">
-    <h3>¿Ésta es tu dirección?</h3>
-    <h4 style="margin: 0 -50px;">Buscá en el mapa, y hacé click en la ubicación correcta.</h4>
+    <h3>@AmbassadorTexts._Address_h3</h3>
+    <h4 style="margin: 0 -50px;">@AmbassadorTexts._Address_h4</h4>
     <div id="map" style="height: 400px; width: 400px; margin-left: -50px;margin-top: 10px;"></div>
-    <h5 style="margin: 0 -50px;">Es importante que ubiques tu dirección correctamente para gestionar tu pedido.</h5>
+    <h5 style="margin: 0 -50px;">@AmbassadorTexts._Address_h5</h5>
     @Html.HiddenFor(x => x.LatLng)
     <br />
 </div>

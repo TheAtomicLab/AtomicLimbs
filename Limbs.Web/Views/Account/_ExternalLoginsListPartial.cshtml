@@ -6,7 +6,7 @@
     if (!authenticationDescriptions.Any()) {
         <div>
             <p>
-                Error.
+                @Limbs.Web.Resources.AccountTexts._ExternalLoginsListPartial_Error
             </p>
         </div>
     }
@@ -15,7 +15,7 @@
             @Html.AntiForgeryToken()
             
             foreach (AuthenticationDescription p in authenticationDescriptions) {
-                <button class="ing-btn ing-@p.Caption.ToLowerInvariant()" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Ingresa con tu cuenta de @p.Caption">Ingresar con @p.Caption</button>
+        <button class="ing-btn ing-@p.Caption.ToLowerInvariant()" type="submit" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="@Limbs.Web.Resources.AccountTexts._ExternalLoginsListPartial_LoginButtonTitle @p.Caption">@Limbs.Web.Resources.AccountTexts._ExternalLoginsListPartial_LoginButtonText @p.Caption</button>
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿@using Limbs.Web.Entities.WebModels;
 @model LoginViewModel
 @{
-    ViewBag.Title = "Ingresar";
+    ViewBag.Title = Limbs.Web.Resources.AccountTexts.Login_ViewBag_Title;
 }
 
 <div id="cont" class="min_full">
@@ -16,7 +16,7 @@
             </div>
 
             <p id="post-form-ini">
-                ¿No tenés una cuenta en Facebook?<br />
+                @Limbs.Web.Resources.AccountTexts.Login_cont_regis_post_form_ini<br />
             </p>
             @using (Html.BeginForm("Login", "Account", new { ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
             {
@@ -35,15 +35,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default bn_blue" value="Ingresar" />
+                    <input type="submit" class="btn btn-default bn_blue" value="@Limbs.Web.Resources.AccountTexts.Login_form_group_SubmitButton" />
                 </div>
             }
             <br />
-            <a href="@Url.Action("ForgotPassword", "Account")">¿Olvidó su contraseña?</a>
+            <a href="@Url.Action("ForgotPassword", "Account")">@Limbs.Web.Resources.AccountTexts.Login_ForgotPasswordUrlAction</a>
         </div>
         <div class="cont_regis">
             <p id="post-form-ini">
-                ¿No tenés una cuenta?<br /><a href="@Url.Action("Register", "Account")">Registrate</a>
+                @Limbs.Web.Resources.AccountTexts.Login_cont_regis_post_form_ini<br /><a href="@Url.Action("Register", "Account")">@Limbs.Web.Resources.AccountTexts.Login_cont_regis_post_form_ini_link</a>
             </p>
         </div>
     </div>

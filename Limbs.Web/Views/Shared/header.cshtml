@@ -1,4 +1,5 @@
-﻿@using System.Configuration
+﻿@using Limbs.Web.Resources
+@using System.Configuration
 @using Limbs.Web.Entities.Models
 <header>
     <div id="main_head">
@@ -12,41 +13,41 @@
         <nav>
             <ul>
                 <li>
-                    <a onclick="cerrarmenu()" href="/">Inicio</a>
+                    <a onclick="cerrarmenu()" href="/">@SharedTexts.Header_home</a>
                 </li>
                 @if (!Request.IsAuthenticated)
                 {
                     <li class="mobile_menu_only">
-                        <a onclick="cerrarmenu()" href="@Url.Action("Login", "Account")">Iniciar sesión</a>
+                        <a onclick="cerrarmenu()" href="@Url.Action("Login", "Account")">@SharedTexts.Header_LoginUrlAction</a>
                     </li>
                     <li class="mobile_menu_only">
-                        <a onclick="cerrarmenu()" href="@Url.Action("Register", "Account")">Registrarse</a>
+                        <a onclick="cerrarmenu()" href="@Url.Action("Register", "Account")">@SharedTexts.Header_RegisterUrlAction</a>
                     </li>
                     <li>
-                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("Pedir", "Help")">Pedir una prótesis</a>
+                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("Pedir", "Help")">@SharedTexts.Header_PedirUrlAction</a>
                     </li>
                 }
                 @if (User.IsInRole(AppRoles.Requester))
                 {
                     <li>
-                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">Pedir una prótesis</a>
+                        <a name="manoPedir" onclick="cerrarmenu()" href="@Url.Action("ManoPedir", "Orders")">@SharedTexts.Header_PedirUrlAction</a>
                     </li>
                 }
                 @if (User.IsInRole(AppRoles.Ambassador))
                 {
                     <li>
-                        <a name="comunidad" onclick="cerrarmenu()" href="http://facebook.com/groups/AtomicLabEmbajadores" target="_blank">Comunidad de Embajadores</a>
+                        <a name="comunidad" onclick="cerrarmenu()" href="http://facebook.com/groups/AtomicLabEmbajadores" target="_blank">@SharedTexts.Header_Comunidad</a>
                     </li>
 
                     <li>
-                        <a name="manual" onclick="cerrarmenu()" href="http://atomiclab.org/limbs/ambassadors/manual" target="_blank">Manual</a>
+                        <a name="manual" onclick="cerrarmenu()" href="http://atomiclab.org/limbs/ambassadors/manual" target="_blank">@SharedTexts.Header_Manual</a>
                     </li>
                 }
                 <li>
                     @Html.ActionLink("Preguntas frecuentes", "faq", "StaticContent", null, null, null, null, null)
                 </li>
                 <li>
-                    <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">Donar</a>
+                    <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">@SharedTexts.Header_Donar</a>
                 </li>
 
                 @Html.Partial("AdminMenu")

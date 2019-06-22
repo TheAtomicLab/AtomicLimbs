@@ -1,11 +1,12 @@
-﻿@model IEnumerable<Limbs.Web.Entities.Models.MessageModel>
+﻿@using Limbs.Web.Resources
+@model IEnumerable<Limbs.Web.Entities.Models.MessageModel>
 
 @{
-    ViewBag.Title = "Mensajes";
+    ViewBag.Title = MessagesTexts.Inbox_ViewBag_Title;
 }
 
 <div class="card">
-    <div id="inbox-status"><p>Cargando mensajes...</p></div>
+    <div id="inbox-status"><p>@MessagesTexts.Inbox_inbox_status...</p></div>
     <div id="inbox"></div>
 </div>
 
@@ -21,9 +22,9 @@
                 var $status = $("#inbox-status");
                 if (status !== "success") {
                     if (neverLoaded) {
-                        $status.html("<p>Error al cargar los mensajes. Pruebe refrescando la página.</p>");
+                        $status.html("<p>@MessagesTexts.Inbox_error1</p>");
                     } else {
-                        $status.html("<p>Hubo un error al actualizar los mensajes. Si el error continua, refresque la página.</p>");
+                        $status.html("<p>@MessagesTexts.Inbox_error2</p>");
                     }
                 }
                 else {

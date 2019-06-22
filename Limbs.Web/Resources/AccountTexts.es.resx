@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ConfirmEmail_LoginActionLink" xml:space="preserve">
+    <value>Iniciá sesión</value>
+  </data>
+  <data name="ConfirmEmail_ViewBag_Title" xml:space="preserve">
+    <value>Gracias por confirmar tu email</value>
+  </data>
+  <data name="DisplayEmail_TextInfo" xml:space="preserve">
+    <value>Verificá tu bandeja de entrada, te enviamos un link para confirmar tu cuenta</value>
+  </data>
+  <data name="DisplayEmail_ViewBag_Title" xml:space="preserve">
+    <value>Confirmá tu email</value>
+  </data>
+  <data name="ExternalLoginConfirmation_inicio_form_r_h2" xml:space="preserve">
+    <value>Iniciaste sesión con</value>
+  </data>
+  <data name="ExternalLoginConfirmation_inicio_form_r_h4" xml:space="preserve">
+    <value>Ahora, ingresa tu email y hace click en el boton registrarse para continuar</value>
+  </data>
+  <data name="ExternalLoginConfirmation_SubmitInput" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="ExternalLoginConfirmation_ViewBag_Title" xml:space="preserve">
+    <value>Complete su registro</value>
+  </data>
+  <data name="ExternalLoginFailure_Text_danger" xml:space="preserve">
+    <value>Inicio de sesión fallido</value>
+  </data>
+  <data name="ExternalLoginFailure_ViewBag_Title" xml:space="preserve">
+    <value>Error al iniciar sesión</value>
+  </data>
+  <data name="ForgotPassword_EmailTextBox" xml:space="preserve">
+    <value>ejemplo@atomiclab.org</value>
+  </data>
+  <data name="ForgotPassword_inicio_form_r_h4" xml:space="preserve">
+    <value>Para recuperar su contraseña ingrese su mail</value>
+  </data>
+  <data name="ForgotPassword_SubmitButton" xml:space="preserve">
+    <value>Recuperar contraseña</value>
+  </data>
+  <data name="ForgotPassword_ViewBag_Title" xml:space="preserve">
+    <value>Recuperar contraseña</value>
+  </data>
+  <data name="ForgotPasswordConfirmation_inicio_form_r_h4" xml:space="preserve">
+    <value>Por favor revise su correo electrónico</value>
+  </data>
+  <data name="Login_cont_regis_post_form_ini" xml:space="preserve">
+    <value>¿No tenés una cuenta?</value>
+  </data>
+  <data name="Login_cont_regis_post_form_ini_link" xml:space="preserve">
+    <value>Registrate</value>
+  </data>
+  <data name="Login_ForgotPasswordUrlAction" xml:space="preserve">
+    <value>¿Olvidó su contraseña?</value>
+  </data>
+  <data name="Login_form_group_SubmitButton" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="Login_p_post_form_ini" xml:space="preserve">
+    <value>¿No tenés una cuenta en Facebook?</value>
+  </data>
+  <data name="Login_ViewBag_Title" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="Register_cont_regis_post_form_ini" xml:space="preserve">
+    <value>¿Ya tenés una cuenta?</value>
+  </data>
+  <data name="Register_cont_regis_post_form_ini_link" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="Register_inicio_form_r_h4" xml:space="preserve">
+    <value>Creá una cuenta nueva en solo un minuto</value>
+  </data>
+  <data name="Register_post_form_ini" xml:space="preserve">
+    <value>¿No tenés una cuenta en Facebook?, registrate acá:</value>
+  </data>
+  <data name="Register_ViewBag_Title" xml:space="preserve">
+    <value>Registrarse</value>
+  </data>
+  <data name="ResetPassword_inicio_form_r_h4" xml:space="preserve">
+    <value>Ingrese su mail y la contraseña nueva</value>
+  </data>
+  <data name="ResetPassword_SubmitButtonValue" xml:space="preserve">
+    <value>Cambiar contraseña</value>
+  </data>
+  <data name="ResetPasswordConfirmation_inicio_form_r_h4" xml:space="preserve">
+    <value>Su contraseña ha sido restablecida</value>
+  </data>
+  <data name="ResetPasswordConfirmation_LoginActionLink" xml:space="preserve">
+    <value>Haga click aquí para iniciar sesión</value>
+  </data>
+  <data name="SelectUserOrAmbassador_AmbassadorLink" xml:space="preserve">
+    <value>Tengo impresora y quiero ayudar</value>
+  </data>
+  <data name="SelectUserOrAmbassador_UserLink" xml:space="preserve">
+    <value>Quiero pedir una prótesis</value>
+  </data>
+  <data name="SelectUserOrAmbassador_ViewBag_Title" xml:space="preserve">
+    <value>Ingresar</value>
+  </data>
+  <data name="SendCode_h4" xml:space="preserve">
+    <value>Enviar código de verificación</value>
+  </data>
+  <data name="SendCode_ViewBag_Title" xml:space="preserve">
+    <value>Enviar</value>
+  </data>
+  <data name="VerifyCode_h4" xml:space="preserve">
+    <value>Ingresar código de verificación</value>
+  </data>
+  <data name="VerifyCode_ViewBag_Title" xml:space="preserve">
+    <value>Verificar</value>
+  </data>
+  <data name="_ExternalLoginsListPartial_LoginButtonText" xml:space="preserve">
+    <value>Ingresar con</value>
+  </data>
+  <data name="_ExternalLoginsListPartial_LoginButtonTitle" xml:space="preserve">
+    <value>Ingresa con tu cuenta de</value>
+  </data>
+  <data name="_ExternalLoginsListPartial_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+</root>

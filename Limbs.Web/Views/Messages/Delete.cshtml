@@ -1,15 +1,16 @@
-﻿@model Limbs.Web.Entities.Models.MessageModel
+﻿@using Limbs.Web.Resources
+@model Limbs.Web.Entities.Models.MessageModel
 @{
     var returnUrl = ViewBag.ReturnUrl != null ? ViewBag.ReturnUrl.ToString() : "";
 }
-<h3>¿Seguro querés borrar el mensaje?</h3>
+<h3>@MessagesTexts.Delete_h3</h3>
 <div>  
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
         <input name="returnUrl" type="hidden" value="@(returnUrl)"/>
         <div class="form-actions no-color">
             <br/>
-            <button type="submit" class="bn_delete">Borrar</button>
+            <button type="submit" class="bn_delete">@MessagesTexts.Delete_SubmitButton</button>
         </div>
     }
 </div>

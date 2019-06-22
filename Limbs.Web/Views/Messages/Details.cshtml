@@ -1,4 +1,5 @@
-﻿@using Limbs.Web.Entities.Models
+﻿@using Limbs.Web.Resources
+@using Limbs.Web.Entities.Models
 @using Microsoft.AspNet.Identity
 @model MessageModel
 @{
@@ -11,7 +12,7 @@
     {
         to = Model.From.Email;
     }
-    ViewBag.Title = "Mensajes";
+    ViewBag.Title = MessagesTexts.Details_ViewBag_Title;
 }
 <div class="chatbox min_full">
     <div class="ch_header">
@@ -19,14 +20,14 @@
             <h2 class="ch_to">@(to)</h2>
             @if (Model.Order != null)
             {
-                <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">Ir al pedido</a>
+                <a href="@Url.Action("Details", "Orders", new { id = Model.Order.Id })" class="bn_blue">@MessagesTexts.Details_DetailsUrlAction</a>
             }
         </div>
     </div>
     <div class="messages-details">
         <div class="messages">
-            <p id="loading">Cargando mensajes...</p>
-            <p id="more-messages" class="card">Tenés más mensajes sin leer...</p>
+            <p id="loading">@MessagesTexts.Details_Loading...</p>
+            <p id="more-messages" class="card">@MessagesTexts.Details_More_Messages...</p>
 
             <ul id="messages" style="display: none;">
                 <li>

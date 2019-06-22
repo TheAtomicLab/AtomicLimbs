@@ -1,11 +1,14 @@
 ﻿@using Limbs.Web.ViewModels
 @model OrderDetailsViewModel
+@using Limbs.Web.Resources
 
-<h3>Piezas impresas</h3>
+
+<h3>@OrdersTexts._PrintedPieces_h3</h3>
 
 @using (Html.BeginForm("PrintedPiecesUpdate", "Orders", new { orderId = Model.Id }, FormMethod.Post))
 {
-    <button type="submit" class="bn_blue">Actualizar</button>
+
+    <button type="submit" class="bn_blue">@OrdersTexts._PrintedPieces_submitButton</button>
 
     if (Model.RenderPiecesGroupBy != null && Model.RenderPiecesGroupBy.Count > 0)
     {

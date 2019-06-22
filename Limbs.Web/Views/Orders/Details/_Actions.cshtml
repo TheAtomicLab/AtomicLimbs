@@ -1,5 +1,7 @@
 ﻿@using Limbs.Web.ViewModels
 @using Limbs.Web.Entities.Models;
+@using Limbs.Web.Resources
+
 
 @model OrderDetailsViewModel
 
@@ -8,10 +10,10 @@
         {
             if (User.IsInRole(AppRoles.Administrator) && (Model.Status == OrderStatus.NotAssigned || Model.Status == OrderStatus.Rejected))
             {
-                <button id="open_modal_btn" class="bn_delete">Informar datos incorrectos</button>
+                <button id="open_modal_btn" class="bn_delete">@OrdersTexts._Actions_bn_delete</button>
                 if (Model.HasDesign)
                 {
-                    @Html.ActionLink("Asignar embajador", "AssignAmbassadorAuto", new { area = "Admin", id = Model.Id }, new { @class = "bn_add" })
+                    @Html.ActionLink(OrdersTexts._Actions_AssignAmbassadorAuto, "AssignAmbassadorAuto", new { area = "Admin", id = Model.Id }, new { @class = "bn_add" })
                 }
             }
 
@@ -19,8 +21,8 @@
             {
                 if (!User.IsInRole(AppRoles.Administrator))
                 {
-                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending })" class="bn_blue">Aceptar pedido</a>
-                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Rejected })" class="bn_blue">Rechazar pedido</a>
+                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Pending })" class="bn_blue">@OrdersTexts._Actions_AcceptOrder</a>
+                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Rejected })" class="bn_blue">@OrdersTexts._Actions_AcceptReject</a>
                 }
             }
             else if (Model.Status == OrderStatus.Pending)
@@ -29,13 +31,13 @@
                 {
                     if (TempData["Generating"] == null)
                     {
-                        <a href="@Url.Action("ProductGenerate", new { area = "", id = Model.Id })" class="bn_add">Generar archivos</a>
+                        <a href="@Url.Action("ProductGenerate", new { area = "", id = Model.Id })" class="bn_add">@OrdersTexts._Actions_UrlActionProductGenerate</a>
                     }
                     else
                     {
                         <p class="bn_blue">
                             <img src="/Content/img/ajax-loader.gif" />
-                            Generando archivos
+                            @OrdersTexts._Actions_generating
                         </p>
                         <script type="text/javascript">
                         function updateAction() {
@@ -45,7 +47,7 @@
                                     201: function () {
                                         updatePartial("Actions");
                                         updatePartial("Header");
-                                        alert("Archivos generados!");
+                                        alert("@OrdersTexts._Action_generated");
                                     },
                                     304: function () {
                                         setTimeout(updateAction, 3000);
@@ -66,17 +68,17 @@
                 }
                 if (Model.PercentagePrinted == 100)
                 {
-                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready })" class="bn_blue">Terminé de imprimir</a>
+                    <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Ready })" class="bn_blue">@OrdersTexts._Actions_OrderFinished</a>
                 }
             }
             else if (Model.Status == OrderStatus.Ready)
             {
-                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered })" class="bn_blue">Ya entregué el pedido</a>
-                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery })" class="bn_blue">Solicitar envío</a>
+                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered })" class="bn_blue">@OrdersTexts._Actions_OrderDelivered</a>
+                <a href="@Url.Action("EditStatus", "Orders", new { area = "Admin", orderId = Model.Id, newStatus = OrderStatus.ArrangeDelivery })" class="bn_blue">@OrdersTexts._Actions_ArrangeDelivery</a>
             }
             else if (Model.Status == OrderStatus.ArrangeDelivery)
             {
-                <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">Ya entregué el pedido</a>
+                <a href="@Url.Action("EditStatus", "Orders", new {area = "Admin", orderId = Model.Id, newStatus = OrderStatus.Delivered})" class="bn_blue">@OrdersTexts._Actions_OrderDelivered</a>
             }
             <script type="text/javascript">
                 $("#accion_pedido a").not("a[data-method='get']").click(function (e) {
@@ -92,23 +94,23 @@
             {
                 if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
                 {
-                    <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">Medir mano</a>
+                    <a href="@Url.Action("ManoMedidas", "Orders", new {area = "", orderId = Model.Id})" class="bn_blue">@OrdersTexts._Actions_UrlActionManoMedidas</a>
                 }
             }
         }
 
         @if (Model.Status == OrderStatus.Pending || Model.Status == OrderStatus.Ready || Model.Status == OrderStatus.ArrangeDelivery || Model.Status == OrderStatus.Delivered)
         {
-            <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">Enviar mensaje</a>
+            <a href="@Url.Action("Create", "Messages", new {area = "", orderId = Model.Id})" class="bn_blue">@OrdersTexts._Actions_UrlActionMessages</a>
         }
 
         @if ((!User.IsInRole(AppRoles.Administrator) && Model.Status == OrderStatus.NotAssigned) || (User.IsInRole(AppRoles.Requester) && Model.Status == OrderStatus.Rejected))
         {
-            <a href="@Url.Action("Edit", "Orders", new { id = Model.Id })" class="bn_blue">Editar pedido</a>
+            <a href="@Url.Action("Edit", "Orders", new { id = Model.Id })" class="bn_blue">@OrdersTexts._Actions_UrlActionEditOrder</a>
         }
 
-        <a href="@Url.Action("Index", "Home")" class="bn_blue">Volver</a>
-    </div>
+    <a href="@Url.Action("Index", "Home")" class="bn_blue">@OrdersTexts._Actions_Home</a>
+</div>
 @if (ViewBag != null && !string.IsNullOrEmpty(ViewBag.msg))
 {
     <span class="auto-assign-error">@ViewBag.msg</span>
@@ -120,7 +122,7 @@
         <!-- Modal content -->
         <div class="limbs-modal-header">
             <span id="close_modal" class="close">&times;</span>
-            <h3>Informar datos incorrectos</h3>
+            <h3>@OrdersTexts._Actions_ReportWrongInfo</h3>
         </div>
         <div class="limbs-modal-content">
             @using (Html.BeginForm("WrongInfo", "Orders", new { area = "Admin" }, FormMethod.Post, new { @class = "form-modal", role = "form" }))
@@ -134,17 +136,17 @@
                     <label for="IsWrongImages">
                         <input id="IsWrongImages" name="IsWrongImages" type="checkbox" value="true">
                         <input name="IsWrongImages" type="hidden" value="false">
-                        Imagenes incorrectas.
+                        @OrdersTexts._Actions_WrongImages
                     </label>
                 </p>
                 <div class="form-group">
-                    <label class="col-md-2 control-label" for="Comments">Comentarios</label>
+                    <label class="col-md-2 control-label" for="Comments">@OrdersTexts._Actions_Comments</label>
                     <div class="col-md-10">
                         <textarea cols="20" data-val="true" data-val-required=" " id="Comments" name="Comments" rows="3"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <input id="btn-send" type="submit" class="btn btn-default bn_blue" value="Informar" />
+                    <input id="btn-send" type="submit" class="btn btn-default bn_blue" value="@OrdersTexts._Actions_SubmitButton" />
                 </div>
             }
         </div>
