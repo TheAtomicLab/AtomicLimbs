@@ -35,7 +35,7 @@ namespace Limbs.Worker
             _os = new OrderService(Db);
         }
 
-        public async Task FollowUpAmbassadors([TimerTrigger("0 0 10 * * *")]TimerInfo myTimer, TextWriter log)
+        public async Task FollowUpAmbassadors([TimerTrigger("0 0 10 * * *", RunOnStartup = true)]TimerInfo myTimer, TextWriter log)
         {
             var ordersNoChange = await Db.OrderModels.Where(p => p.Status != OrderStatus.Delivered && p.Status != OrderStatus.NotAssigned && p.Status != OrderStatus.Rejected &&
                                     DbFunctions.AddDays(p.StatusLastUpdated, 7) <= DateTime.UtcNow).ToListAsync();
@@ -51,7 +51,7 @@ namespace Limbs.Worker
                 foreach (var orderInList in ordersNoChange)
                 {
                     var order = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync( p => p.Id == orderInList.Id);
-                    if (order == null) continue;
+                    if (order == null || (order.OrderAmbassador != null && order.OrderAmbassador.SendFollowUp == false)) continue;
 
                     var modelFollowUp = new FollowUpModel
                     {
@@ -74,22 +74,22 @@ namespace Limbs.Worker
             }
         }
 
-        public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("0 5 12 * * *")]TimerInfo myTimer, TextWriter log)
-        {
-            var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => (p.Status == OrderStatus.Rejected || p.Status == OrderStatus.PreAssigned) &&
-                                    DbFunctions.AddDays(p.StatusLastUpdated, 3) <= DateTime.UtcNow).ToListAsync();
+        //public async Task AssignAutomaticAmbassadorAfterThreeDaysAsync([TimerTrigger("0 5 12 * * *")]TimerInfo myTimer, TextWriter log)
+        //{
+        //    var ordersNoUpdate = await Db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).Where(p => (p.Status == OrderStatus.Rejected || p.Status == OrderStatus.PreAssigned) &&
+        //                            DbFunctions.AddDays(p.StatusLastUpdated, 3) <= DateTime.UtcNow).ToListAsync();
 
-            if (ordersNoUpdate != null && ordersNoUpdate.Any())
-            {
-                foreach (var order in ordersNoUpdate)
-                {
-                    var ambassador = await _os.GetAmbassadorAutoAssignAsync(order);
-                    if (ambassador == null) continue;
+        //    if (ordersNoUpdate != null && ordersNoUpdate.Any())
+        //    {
+        //        foreach (var order in ordersNoUpdate)
+        //        {
+        //            var ambassador = await _os.GetAmbassadorAutoAssignAsync(order);
+        //            if (ambassador == null) continue;
 
-                    await _os.AssignmentAmbassadorAsync(ambassador.Id, order.Id, null, _ns);
-                }
-            }
-        }
+        //            await _os.AssignmentAmbassadorAsync(ambassador.Id, order.Id, null, _ns);
+        //        }
+        //    }
+        //}
 
         public static void ProcessAppExceptions([QueueTrigger(nameof(AppException))] string queueMessage, DateTimeOffset expirationTime, DateTimeOffset insertionTime, DateTimeOffset nextVisibleTime, string id, string popReceipt, int dequeueCount, string queueTrigger, CloudStorageAccount cloudStorageAccount, TextWriter logger)
         {

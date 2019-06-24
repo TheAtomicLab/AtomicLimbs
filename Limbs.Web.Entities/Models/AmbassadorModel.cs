@@ -91,6 +91,8 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
+        public bool SendFollowUp { get; set; }
+
         public ICollection<OrderRefusedModels> RefusedOrders { get; set; }
         public virtual ApplicationUser User { get; set; }
 
