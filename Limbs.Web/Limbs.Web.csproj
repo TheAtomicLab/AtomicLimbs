@@ -854,6 +854,9 @@
     <EmbeddedResource Include="Migrations\201904272238105_refusedOrders.resx">
       <DependentUpon>201904272238105_refusedOrders.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201905262320533_new-render.resx">
+      <DependentUpon>201905262320533_new-render.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906240015091_sendFollowUpAmbassadorField.resx">
       <DependentUpon>201906240015091_sendFollowUpAmbassadorField.cs</DependentUpon>
     </EmbeddedResource>
