@@ -177,7 +177,7 @@
 
                                 response.colors.forEach(function (color) {
                                     containerColors.append(`<div class="sel_color_mano" style="background-image: url(${color.PrimaryUrlImage});background-size: contain; background-repeat: no-repeat;">
-                                        <input class="selector_color_input" id="ColorFkId" name="ColorFkId" type="radio" data-val="true" data-val-mandatory="Debe seleccionar un color" value="${color.Id}">
+                                        <input class="selector_color_input" id="ColorFkId" name="ColorFkId" type="radio" data-val="true" data-val-mandatory="@OrdersTexts.Edit_GetColors_dataValMandatory" value="${color.Id}">
                                     </div>`);
                                 });
 
@@ -187,7 +187,7 @@
                                 $('#color-container').append(`<span id="val-color-msg" class="field-validation-valid text-danger" data-valmsg-for="ColorFkId" data-valmsg-replace="true"></span>`);
                                 $('#color-container').show();
                             } else {
-                                alert('Error al obtener los colores de las protesis');
+                                alert('@OrdersTexts.Edit_GetColors_Error');
                             }
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -248,7 +248,7 @@
                     autoProcessQueue: false,
                     autoQueue: true,
                     addRemoveLinks: true,
-                    dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+                    dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">@OrdersTexts.Edit_myDropzone_dictDefaultMessage<span>",
                     dictInvalidFileType: null,
                     dictRemoveFile: "Borrar imagen",
                     dictCancelUpload: null,

@@ -4,7 +4,7 @@
 
 @model OrderDetailsViewModel
 
-<h3>Datos del pedido</h3>
+<h3>@OrdersTexts._OrderInfo_h3</h3>
 <table class="tabla_datos">
     <tr>
         <td>@Html.DisplayNameFor(x => x.AmputationType.Name)</td>
@@ -35,8 +35,8 @@
     <tr>
         @if (Model.HasDesign == false || Model.Color == null)
         {
-            <td class="text-bold">Importante</td>
-            <td class="text-danger">No tenemos diseño para la amputación seleccionada</td>
+            <td class="text-bold">@OrdersTexts._OrderInfo_text_bold</td>
+            <td class="text-danger">@OrdersTexts._OrderInfo_text_danger</td>
         }
         else
         {

@@ -376,6 +376,24 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Importante.
+        /// </summary>
+        public static string _OrderInfo_text_bold {
+            get {
+                return ResourceManager.GetString("_OrderInfo_text_bold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tenemos diseño para la amputación seleccionada.
+        /// </summary>
+        public static string _OrderInfo_text_danger {
+            get {
+                return ResourceManager.GetString("_OrderInfo_text_danger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Piezas impresas.
         /// </summary>
         public static string _PrintedPieces_h3 {
@@ -592,6 +610,15 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Comentarios.
+        /// </summary>
+        public static string Details_Comments {
+            get {
+                return ResourceManager.GetString("Details_Comments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error al guardar la información.
         /// </summary>
         public static string Details_Error {
@@ -601,11 +628,38 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Informar datos incorrectos.
+        /// </summary>
+        public static string Details_h3 {
+            get {
+                return ResourceManager.GetString("Details_h3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Informar.
+        /// </summary>
+        public static string Details_submitbtn {
+            get {
+                return ResourceManager.GetString("Details_submitbtn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Detalles de pedido.
         /// </summary>
         public static string Details_ViewBag_title {
             get {
                 return ResourceManager.GetString("Details_ViewBag_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Imagenes incorrectas.
+        /// </summary>
+        public static string Details_WrongImages {
+            get {
+                return ResourceManager.GetString("Details_WrongImages", resourceCulture);
             }
         }
         
@@ -682,6 +736,24 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debe seleccionar un color.
+        /// </summary>
+        public static string Edit_GetColors_dataValMandatory {
+            get {
+                return ResourceManager.GetString("Edit_GetColors_dataValMandatory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error al obtener los colores de las protesis.
+        /// </summary>
+        public static string Edit_GetColors_Error {
+            get {
+                return ResourceManager.GetString("Edit_GetColors_Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Editar orden.
         /// </summary>
         public static string Edit_h2 {
@@ -723,6 +795,15 @@ namespace Limbs.Web.Resources {
         public static string Edit_Images {
             get {
                 return ResourceManager.GetString("Edit_Images", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Arrastre su imagen aquí o presione click para cargar una.
+        /// </summary>
+        public static string Edit_myDropzone_dictDefaultMessage {
+            get {
+                return ResourceManager.GetString("Edit_myDropzone_dictDefaultMessage", resourceCulture);
             }
         }
         

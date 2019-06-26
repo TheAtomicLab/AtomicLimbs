@@ -486,4 +486,31 @@
   <data name="_UserInfo_Phone" xml:space="preserve">
     <value>Teléfono</value>
   </data>
+  <data name="_OrderInfo_text_bold" xml:space="preserve">
+    <value>Importante</value>
+  </data>
+  <data name="_OrderInfo_text_danger" xml:space="preserve">
+    <value>No tenemos diseño para la amputación seleccionada</value>
+  </data>
+  <data name="Details_Comments" xml:space="preserve">
+    <value>Comentarios</value>
+  </data>
+  <data name="Details_h3" xml:space="preserve">
+    <value>Informar datos incorrectos</value>
+  </data>
+  <data name="Details_submitbtn" xml:space="preserve">
+    <value>Informar</value>
+  </data>
+  <data name="Details_WrongImages" xml:space="preserve">
+    <value>Imagenes incorrectas</value>
+  </data>
+  <data name="Edit_GetColors_dataValMandatory" xml:space="preserve">
+    <value>Debe seleccionar un color</value>
+  </data>
+  <data name="Edit_GetColors_Error" xml:space="preserve">
+    <value>Error al obtener los colores de las protesis</value>
+  </data>
+  <data name="Edit_myDropzone_dictDefaultMessage" xml:space="preserve">
+    <value>Arrastre su imagen aquí o presione click para cargar una</value>
+  </data>
 </root>
