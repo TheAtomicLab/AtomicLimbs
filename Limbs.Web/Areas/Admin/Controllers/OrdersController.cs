@@ -1,4 +1,5 @@
-﻿using Limbs.Web.Common.Extensions;
+﻿using AutoMapper;
+using Limbs.Web.Common.Extensions;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
@@ -48,7 +49,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             var model = new OrderListViewModel
             {
-                List = orderList,
+                List = Mapper.Map<IEnumerable<OrderAdminIndexViewModel>>(orderList),
                 Filters = f,
             };
 

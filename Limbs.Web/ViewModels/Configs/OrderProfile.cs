@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.Entities.WebModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,13 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.PieceName, opt => opt.MapFrom(src => src.RenderPiece.Render.Pieces.FirstOrDefault(p => p.Id == src.RenderPieceId).Name));
 
             CreateMap<OrderRenderPieceViewModel, OrderRenderPieceModel>();
+
+            CreateMap<OrderModel, OrderAdminIndexViewModel>()
+                .ForMember(p => p.PercentagePrinted, opt => opt.MapFrom(src => GetPercentagePrinted(src.RenderPieces)))
+                .ForMember(p => p.AmputationDescription, opt => opt.MapFrom(src => src.AmputationTypeFk == null ? string.Empty : src.AmputationTypeFk.Short_Description))
+                .ForMember(p => p.RequesterEmail, opt => opt.MapFrom(src => src.OrderRequestor == null ? string.Empty : src.OrderRequestor.Email))
+                .ForMember(p => p.HasDesign, opt => opt.MapFrom(src => src.RenderPieces != null && src.RenderPieces.Any()))
+                .ForMember(p => p.AmbassadorEmail, opt => opt.MapFrom(src => src.OrderAmbassador == null ? string.Empty : src.OrderAmbassador.Email));
 
             CreateMap<UserModel, OrderRequesterDetailsViewModel>()
                 .ForMember(p => p.FullName, opt => opt.MapFrom(src => src.FullName()))

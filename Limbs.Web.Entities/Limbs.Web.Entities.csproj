@@ -129,6 +129,7 @@
     <Compile Include="WebModels\Extensions\ApplicationUserExtensions.cs" />
     <Compile Include="WebModels\GoogleGeoModel.cs" />
     <Compile Include="WebModels\ManageViewModels.cs" />
+    <Compile Include="WebModels\OrderAdminIndexViewModel.cs" />
     <Compile Include="WebModels\OrderFilters.cs" />
     <Compile Include="WebModels\UbicacionAndreani.cs" />
   </ItemGroup>

@@ -10,6 +10,7 @@ namespace Limbs.Web.Entities.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string Short_Description { get; set; }
         public string PrimaryUrlImage { get; set; }
         public string SecondaryUrlImage { get; set; }
 

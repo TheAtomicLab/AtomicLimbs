@@ -354,6 +354,10 @@
     <Compile Include="Migrations\201906240015091_sendFollowUpAmbassadorField.Designer.cs">
       <DependentUpon>201906240015091_sendFollowUpAmbassadorField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906280301120_shotDescriptionAmputation.cs" />
+    <Compile Include="Migrations\201906280301120_shotDescriptionAmputation.Designer.cs">
+      <DependentUpon>201906280301120_shotDescriptionAmputation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -859,6 +863,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906240015091_sendFollowUpAmbassadorField.resx">
       <DependentUpon>201906240015091_sendFollowUpAmbassadorField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906280301120_shotDescriptionAmputation.resx">
+      <DependentUpon>201906280301120_shotDescriptionAmputation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

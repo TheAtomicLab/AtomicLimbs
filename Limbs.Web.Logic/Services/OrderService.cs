@@ -168,11 +168,12 @@ namespace Limbs.Web.Logic.Services
         public Task<List<OrderModel>> GetPaged(OrderFilters filters)
         {
             var orders = _db.OrderModels
+                .Include(p => p.AmputationTypeFk)
                 .Include(c => c.OrderRequestor)
                 .Include(c => c.OrderAmbassador)
+                .Include(p => p.RenderPieces)
                 .OrderByDescending(x => x.Date);
-
-
+            
             var ordersFiltered = orders
                 .Where(x => 
                     (!filters.ByStatus || x.Status == filters.Status)
