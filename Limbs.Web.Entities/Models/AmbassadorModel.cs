@@ -8,6 +8,7 @@ using System.Data.Entity.Spatial;
 using System.Globalization;
 using System.Security.Principal;
 using System.Text;
+using Limbs.Web.Entities.Resources;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -29,65 +30,65 @@ namespace Limbs.Web.Entities.Models
 
         public string Email { get; set; }
 
-        [Display(Name = "Email Alternativo", Description = "")]
+        [Display(Name = "Email Alternativo", Description = "", ResourceType = typeof(ModelTexts))]
         [EmailAddress(ErrorMessage = " ")]
         public string AlternativeEmail { get; set; }
 
         public DateTime? RegisteredAt { get; set; }
 
-        [Display(Name = "Nombre", Description = "")]
+        [Display(Name = "Nombre", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string AmbassadorName { get; set; }
 
-        [Display(Name = "Apellido", Description = "")]
+        [Display(Name = "Apellido", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string AmbassadorLastName { get; set; }
 
-        [DataType("datetime2", ErrorMessage = "Fecha inválida")]
-        [Display(Name = "Fecha de nacimiento", Description = "")]
+        [DataType("datetime2", ErrorMessage = "Fecha inválida", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Display(Name = "Fecha de nacimiento", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Género", Description = "")]
+        [Display(Name = "Género", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "Organización", Description = "")]
+        [Display(Name = "Organización", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public Organization Organization { get; set; }
 
-        [Display(Name = "Nombre de la organización", Description = "")]
+        [Display(Name = "Nombre de la organización", Description = "", ResourceType = typeof(ModelTexts))]
         public string OrganizationName { get; set; }
 
-        [Display(Name = "Rol en la organización", Description = "")]
+        [Display(Name = "Rol en la organización", Description = "", ResourceType = typeof(ModelTexts))]
         public string RoleInOrganization { get; set; }
 
-        [Display(Name = "País", Description = "")]
+        [Display(Name = "País", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
-        [Display(Name = "Provincia", Description = "")]
+        [Display(Name = "Provincia", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string State { get; set; }
 
-        [Display(Name = "Ciudad", Description = "")]
+        [Display(Name = "Ciudad", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
-        [Display(Name = "Dirección (solo calle y altura)", Description = "")]
+        [Display(Name = "Dirección (solo calle y altura)", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Address { get; set; }
 
-        [Display(Name = "Dirección (otros datos)", Description = "")]
+        [Display(Name = "Dirección (otros datos)", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Address2 { get; set; }
 
-        [Display(Name = "Teléfono", Description = "")]
+        [Display(Name = "Teléfono", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Phone { get; set; }
 
-        [Display(Name = "Documento de identidad o pasaporte", Description = "")]
+        [Display(Name = "Documento de identidad o pasaporte", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
