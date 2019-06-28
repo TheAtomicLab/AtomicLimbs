@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Limbs.Web.Resources;
 
 namespace Limbs.Web.ViewModels
 {
@@ -7,7 +8,7 @@ namespace Limbs.Web.ViewModels
         public int Id { get; set; }
         public int AmputationTypeId { get; set; }
 
-        [Display(Name = "Color", Description = "(si es posible)")]
+        [Display(Name = "ColorDetails_Name_Name", Description = "ColorDetails_Name_Description", ResourceType = typeof(ModelsTexts))]
 
         public string Name { get; set; }
 

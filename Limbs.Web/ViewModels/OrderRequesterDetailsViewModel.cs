@@ -1,25 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Limbs.Web.Resources;
 
 namespace Limbs.Web.ViewModels
 {
     public class OrderRequesterDetailsViewModel
     {
-        [Display(Name = "Nombre del usuario", Description = "")]
+        [Display(Name = "OrderRequesterDetails_UserName", Description = "", ResourceType = typeof(ModelsTexts))]
         [Required(ErrorMessage = " ")]
         public string UserName { get; set; }
 
-        [Display(Name = "Apellido del usuario", Description = "")]
+        [Display(Name = "OrderRequesterDetails_UserLastName", Description = "", ResourceType = typeof(ModelsTexts))]
         [Required(ErrorMessage = " ")]
         public string UserLastName { get; set; }
 
         [Required]
         public string Email { get; set; }
 
-        [Display(Name = "País", Description = "")]
+        [Display(Name = "OrderRequesterDetails_Country", Description = "", ResourceType = typeof(ModelsTexts))]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
-        [Display(Name = "Ciudad", Description = "")]
+        [Display(Name = "OrderRequesterDetails_City", Description = "", ResourceType = typeof(ModelsTexts))]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
@@ -28,7 +29,7 @@ namespace Limbs.Web.ViewModels
         public string FullAddress { get; set; }
         public string Birth { get; set; }
 
-        [Display(Name = "Teléfono", Description = "")]
+        [Display(Name = "OrderRequesterDetails_Phone", Description = "", ResourceType = typeof(ModelsTexts))]
         [Required(ErrorMessage = " ")]
         public string Phone { get; set; }
     }

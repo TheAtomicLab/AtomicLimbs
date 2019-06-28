@@ -1,4 +1,5 @@
 ﻿using Limbs.Web.Entities.Models;
+using Limbs.Web.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace Limbs.Web.ViewModels
@@ -7,19 +8,19 @@ namespace Limbs.Web.ViewModels
     {
         public int Id { get; set; }
 
-        [Display(Name = "¿Cuál?", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
+        [Display(Name = "OrderUpdate_ProductType", Description = "", ResourceType = typeof(ModelsTexts))]
+        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public ProductType ProductType { get; set; }
 
-        [Display(Name = "Comentarios", Description = "")]
+        [Display(Name = "OrderUpdate_Comments", Description = "", ResourceType = typeof(ModelsTexts))]
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
-        [Display(Name = "Color", Description = "(si es posible)")]
+        [Display(Name = "OrderUpdate_ColorFkId_Name", Description = "OrderUpdate_ColorFkId_Description", ResourceType = typeof(ModelsTexts))]
         public int? ColorFkId { get; set; }
 
-        [Display(Name = "Amputación", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
+        [Display(Name = "OrderUpdate_AmputationTypeFkId", Description = "", ResourceType = typeof(ModelsTexts))]
+        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public int AmputationTypeFkId { get; set; }
 
         public int PreviousAmputationTypeId { get; set; }
