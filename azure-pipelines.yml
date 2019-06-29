@@ -40,6 +40,19 @@ steps:
         <add key="UnobtrusiveJavaScriptEnabled" value="true" />
       </appSettings>'
 
+- task: file-creator@6
+  inputs:
+    fileoverwrite: true
+    filepath: './Limbs.Worker/PrivateSettings.config'
+    filecontent: '<?xml version="1.0"?>
+      <appSettings>
+        <add key="Storage.ConnectionString" value="UseDevelopmentStorage=true" />
+        <add key="Mail.Server" value="" />
+        <add key="Mail.Username" value="" />
+        <add key="Mail.Password" value="" />
+        <add key="AdminEmails" value="" />
+      </appSettings>'
+
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2

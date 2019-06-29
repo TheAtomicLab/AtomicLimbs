@@ -199,6 +199,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="PrivateSettings.config" />
     <None Include="Properties\PublishProfiles\limbs - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <None Include="Properties\webjob-publish-settings.json" />
