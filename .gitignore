@@ -252,3 +252,5 @@ Limbs.Web/Web.config
 Limbs.Web/Web.config
 /Limbs.Web/Resources/AmbassadorTexts.es.resx
 /Limbs.Web/Resources/AmbassadorTexts.es.Designer.cs
+
+/Limbs.Web/PrivateSettings.config

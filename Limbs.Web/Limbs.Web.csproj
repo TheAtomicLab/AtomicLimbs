@@ -599,6 +599,7 @@
     <Content Include="App_Code\Facebook.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AmputationType.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\OrderStatus.cshtml" />
+    <Content Include="PrivateSettings.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
