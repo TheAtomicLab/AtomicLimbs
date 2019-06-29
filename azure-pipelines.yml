@@ -18,7 +18,7 @@ steps:
 - task: file-creator@5
   inputs:
     fileoverwrite: true
-    filepath: '**/Limbs.Web/PrivateSettings.config'
+    filepath: './Limbs.Web/PrivateSettings.config'
     filecontent: '<?xml version="1.0"?>
       <appSettings>
         <add key="Storage.ConnectionString" value="UseDevelopmentStorage=true" />
