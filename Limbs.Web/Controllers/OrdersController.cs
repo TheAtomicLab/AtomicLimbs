@@ -75,6 +75,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpGet]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> GetColors(int? amputationId)
         {
             bool isSuccessfully = false;
@@ -169,6 +170,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpPost]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> DeleteImage(OrderDeleteImage model)
         {
             if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
