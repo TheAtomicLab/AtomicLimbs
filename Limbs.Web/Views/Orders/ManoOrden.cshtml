@@ -9,16 +9,6 @@
     ViewBag.Title = OrdersTexts.ManoOrden_ViewBag_Title;
 }
 
-@section scripts
-{
-    <style>
-        textarea {
-            width: 400px;
-            height: 100px;
-        }
-    </style>
-}
-
 <div class="card center-card-l">
     @using (Html.BeginForm("Create", "Orders"))
     {

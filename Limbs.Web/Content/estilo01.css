@@ -1614,6 +1614,10 @@ button[name="recoverPassword"] {
         padding-bottom: 0px;
     }
 
+textarea { 
+    height: 100px;
+}
+
 .input-validation-error, .f-campo.error {
     border-bottom-color: red;
 }
