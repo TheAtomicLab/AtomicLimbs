@@ -41,6 +41,7 @@ namespace Limbs.Web.Controllers
             _ns = notificationService;
         }
 
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -74,6 +75,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpGet]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> GetColors(int? amputationId)
         {
             bool isSuccessfully = false;
@@ -90,8 +92,8 @@ namespace Limbs.Web.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> Edit(OrderUpdateModel orderUpdateModel)
         {
             if (!ModelState.IsValid)
@@ -147,18 +149,28 @@ namespace Limbs.Web.Controllers
                 }
             }
 
-            orderModel.LogMessage(User, "Edited order by user", olderModelStr);
+            var logMessage = "Edited order by user";
+            var urlAction = Url.Action("Details", "Orders", new { id = orderModel.Id });
+
+            if (User.IsInRole(AppRoles.Administrator))
+            {
+                logMessage = $"Edited order by admin";
+                urlAction = Url.Action("Index", "Orders", new { Area = "Admin" } );
+            }
+
+            orderModel.LogMessage(User, logMessage, olderModelStr);
             Db.OrderModels.AddOrUpdate(orderModel);
 
             await Db.SaveChangesAsync();
 
             return Json(new
             {
-                Action = Url.Action("Details", "Orders", new { id = orderModel.Id })
+                Action = urlAction
             });
         }
 
         [HttpPost]
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public async Task<ActionResult> DeleteImage(OrderDeleteImage model)
         {
             if (!ModelState.IsValid) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

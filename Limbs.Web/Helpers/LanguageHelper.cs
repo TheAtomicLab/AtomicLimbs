@@ -11,6 +11,7 @@ namespace Limbs.Web.Helpers
         {
             //NumberFormatInfo numberInfo = CultureInfo.CreateSpecificCulture("nl-NL").NumberFormat;
             CultureInfo info = new CultureInfo(language);
+            info.NumberFormat.NumberDecimalSeparator = ".";
             //info.NumberFormat = numberInfo;
             //info.DateTimeFormat.DateSeparator = "/";
             //info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";

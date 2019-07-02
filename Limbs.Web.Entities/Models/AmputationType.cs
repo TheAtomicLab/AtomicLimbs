@@ -29,48 +29,4 @@ namespace Limbs.Web.Entities.Models
         [Description("Tengo el húmero pero muy poco desarrollado")]
         H = 7
     }
-
-    public static class AmputationTypeExtensions
-    {
-        public static string AmputationDescription(this AmputationType source)
-        {
-            if (EsBrazo(source))
-            { return "Brazo"; }
-            else if (EsMano(source))
-            { return "Mano"; }
-            else if (EsManoConPulgar(source))
-            {
-                return "Mano con pulgar";
-            }
-            else
-            {
-                return "Sin diseño";
-            }
-        }
-
-        public static bool EsBrazo(this AmputationType source)
-        {
-            return source == AmputationType.E ||
-                   source == AmputationType.F ||
-                   source == AmputationType.G ||
-                   source == AmputationType.H;
-        }
-
-        public static bool EsMano(this AmputationType source)
-        {
-            return source == AmputationType.A ||
-                   source == AmputationType.B ||
-                   source == AmputationType.D;
-        }
-
-        public static bool EsManoConPulgar(this AmputationType source)
-        {
-            return source == AmputationType.C;
-        }
-
-        public static bool HayDiseno(this AmputationType source)
-        {
-            return EsBrazo(source) || EsMano(source) || EsManoConPulgar(source);
-        }
-    }
 }

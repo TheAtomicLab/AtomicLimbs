@@ -12,6 +12,9 @@ namespace Limbs.Web.ViewModels
         [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public int AmputationTypeFkId { get; set; }
         public int? ColorFkId { get; set; }
+
+        [Display(Name = "Comentarios", Description = "")]
+        [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
         public ProductType ProductType { get; set; }
 

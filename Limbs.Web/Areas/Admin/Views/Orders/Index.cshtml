@@ -11,10 +11,10 @@
 {
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#@Html.IdFor(x => x.Filters.ByStatus)').change(function () {                
+            $('#@Html.IdFor(x => x.Filters.ByStatus)').change(function () {
                 $('#@Html.IdFor(x => x.Filters.Status)-container').toggle(this.checked);
             }).change();
-            $('#@Html.IdFor(x => x.Filters.ByAmputationType)').change(function () {                
+            $('#@Html.IdFor(x => x.Filters.ByAmputationType)').change(function () {
                 $('#@Html.IdFor(x => x.Filters.AmputationType)-container').toggle(this.checked);
             }).change();
         });
@@ -24,7 +24,7 @@
 <h2>Pedidos</h2>
 
 <form action="@Url.Action("Index")" method="get">
-    
+
     <table>
         <tr>
             <td style="width: 20%;">
@@ -61,7 +61,7 @@
                 @Html.ActionLink("Exportar listado a CSV", "CsvExport")
             </td>
             <td>
-                <input type="submit" value="Buscar!"/>
+                <input type="submit" value="Buscar!" />
             </td>
         </tr>
     </table>
@@ -92,63 +92,66 @@
     </tr>
     @foreach (var item in Model.List)
     {
-    <tr>
-        <td>
-            <a href="@Url.Action("Details", new {id = item.Id})">
-                @Html.DisplayFor(modelItem => item.Id)
-            </a>
-        </td>
-        <td class="@item.Status">
-            @if (string.IsNullOrWhiteSpace(item.FileUrl))
-        {
-            <text>[ARCHIVO NO GENERADO!]</text><br />
+        <tr>
+            <td>
+                <a href="@Url.Action("Details", new {id = item.Id})">
+                    @Html.DisplayFor(modelItem => item.Id)
+                </a>
+            </td>
+            <td class="@item.Status">
+                @if (string.IsNullOrWhiteSpace(item.FileUrl))
+                {
+                    <text>[ARCHIVO NO GENERADO!]</text><br />
+                }
+                @item.Status.ToDescription()
+                @if (item.Status == OrderStatus.Pending)
+                {
+                    <text>(</text>@(item.PercentagePrinted)<text>%)</text>
+                }
+                @if (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery)
+                {
+                    <span> - @item.Courier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
+                }
+                @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) &&
+                 (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery || item.Status == OrderStatus.Delivered))
+                {
+                    <span>(sin prueba de entrega)</span>
+                }
+            </td>
+            <td>
+                @item.Date.ToFriendlyDateString()
+            </td>
+            <td>
+                @item.AmputationDescription
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequesterEmail)
+            </td>
+            <td>
+                @if (!string.IsNullOrEmpty(item.AmbassadorEmail))
+                {
+                    @Html.DisplayFor(modelItem => item.AmbassadorEmail)
+                    if (item.HasDesign)
+                    {
+                        if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.ArrangeDelivery && item.Status != OrderStatus.Delivered)
+                        {
+                            <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
+                        }
+                    }
+                }
+                else
+                {
+                    if (item.HasDesign)
+                    {
+                        <span>No asignado (@Html.ActionLink("asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
+                    }
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Orders", new { Area = "", id = item.Id }, null) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id, area = "Admin" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id, area = "Admin" })
+            </td>
+        </tr>
     }
-            @item.Status.ToDescription()
-            @if (item.Status == OrderStatus.Pending)
-        {
-            <text>(</text>@(item.Pieces.GetPercentage())<text>%)</text>
-    }
-            @if (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery)
-        {
-            <span> - @item.DeliveryCourier.ToDescription() (@Html.ActionLink("cambiar", "SelectDelivery", new { idOrder = item.Id }))</span>
-    }
-            @if (string.IsNullOrWhiteSpace(item.ProofOfDelivery) &&
-             (item.Status == OrderStatus.Ready || item.Status == OrderStatus.ArrangeDelivery || item.Status == OrderStatus.Delivered))
-        {
-            <span>(sin prueba de entrega)</span>
-    }
-        </td>
-        <td>
-            @item.Date.ToFriendlyDateString()
-        </td>
-        <td>
-            @item.AmputationType.AmputationDescription()
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.OrderRequestor.Email)
-        </td>
-        <td>
-            @if (item.OrderAmbassador != null)
-        {
-            @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
-        if (item.Status != OrderStatus.Ready && item.Status != OrderStatus.ArrangeDelivery && item.Status != OrderStatus.Delivered)
-        {
-            <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
-    }
-}
-else
-{
-    <span>No asignado (@Html.ActionLink("asignar", "SelectAmbassador", new { idOrder = item.Id }))</span>
-}
-
-        </td>
-
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id, area = "Admin" }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Id, area = "Admin" }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Id, area = "Admin" })
-        </td>
-    </tr>
-    }
-
 </table>
