@@ -30,65 +30,65 @@ namespace Limbs.Web.Entities.Models
 
         public string Email { get; set; }
 
-        [Display(Name = "Email Alternativo", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_AlternativeEmail", Description = "", ResourceType = typeof(ModelTexts))]
         [EmailAddress(ErrorMessage = " ")]
         public string AlternativeEmail { get; set; }
 
         public DateTime? RegisteredAt { get; set; }
 
-        [Display(Name = "Nombre", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_AmbassadorName", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string AmbassadorName { get; set; }
 
-        [Display(Name = "Apellido", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_AmbassadorLastName", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string AmbassadorLastName { get; set; }
 
-        [DataType("datetime2", ErrorMessage = "Fecha inválida", ErrorMessageResourceType = typeof(ModelTexts))]
-        [Display(Name = "Fecha de nacimiento", Description = "", ResourceType = typeof(ModelTexts))]
+        [DataType("datetime2", ErrorMessage = "Ambassador_Birth_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Birth_Name", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Género", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Gender", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "Organización", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Organization", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public Organization Organization { get; set; }
 
-        [Display(Name = "Nombre de la organización", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_OrganizationName", Description = "", ResourceType = typeof(ModelTexts))]
         public string OrganizationName { get; set; }
 
-        [Display(Name = "Rol en la organización", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_RoleInOrganization", Description = "", ResourceType = typeof(ModelTexts))]
         public string RoleInOrganization { get; set; }
 
-        [Display(Name = "País", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Country", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
-        [Display(Name = "Provincia", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_State", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string State { get; set; }
 
-        [Display(Name = "Ciudad", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_City", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
-        [Display(Name = "Dirección (solo calle y altura)", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Address", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Address { get; set; }
 
-        [Display(Name = "Dirección (otros datos)", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Address2", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Address2 { get; set; }
 
-        [Display(Name = "Teléfono", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Phone", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Phone { get; set; }
 
-        [Display(Name = "Documento de identidad o pasaporte", Description = "", ResourceType = typeof(ModelTexts))]
+        [Display(Name = "Ambassador_Dni", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
@@ -238,9 +238,11 @@ namespace Limbs.Web.Entities.Models
 
     public enum Organization
     {
-        [Description("No, por cuenta propia")]
+        [Description("Ambassador_enum_Organization_1")]
+        //[DataType(typeof(ModelTexts))]
         CuentaPropia = 1,
-        [Description("Escuela")]
+        [Description("Ambassador_enum_Organization_2")]
+        [EnumDataType(typeof(ModelTexts))]
         Escuela = 2,
         [Description("Universidad")]
         Universidad = 3,
