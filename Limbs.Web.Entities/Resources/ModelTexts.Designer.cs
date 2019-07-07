@@ -331,6 +331,78 @@ namespace Limbs.Web.Entities.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Perdí UNA falange de cualquier dedo.
+        /// </summary>
+        public static string AmputationType_A {
+            get {
+                return ResourceManager.GetString("AmputationType_A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perdí DOS falanges de cualquier dedo.
+        /// </summary>
+        public static string AmputationType_B {
+            get {
+                return ResourceManager.GetString("AmputationType_B", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perdí mis cuatro dedos y tengo un pulgar.
+        /// </summary>
+        public static string AmputationType_C {
+            get {
+                return ResourceManager.GetString("AmputationType_C", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal).
+        /// </summary>
+        public static string AmputationType_D {
+            get {
+                return ResourceManager.GetString("AmputationType_D", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal).
+        /// </summary>
+        public static string AmputationType_E {
+            get {
+                return ResourceManager.GetString("AmputationType_E", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes).
+        /// </summary>
+        public static string AmputationType_F {
+            get {
+                return ResourceManager.GetString("AmputationType_F", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Perdí el codo y tengo el húmero.
+        /// </summary>
+        public static string AmputationType_G {
+            get {
+                return ResourceManager.GetString("AmputationType_G", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tengo el húmero pero muy poco desarrollado.
+        /// </summary>
+        public static string AmputationType_H {
+            get {
+                return ResourceManager.GetString("AmputationType_H", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Código.
         /// </summary>
         public static string Manage_Code {
@@ -678,6 +750,42 @@ namespace Limbs.Web.Entities.Resources {
         public static string User_Gender {
             get {
                 return ResourceManager.GetString("User_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Femenino.
+        /// </summary>
+        public static string User_Gender_0 {
+            get {
+                return ResourceManager.GetString("User_Gender_0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Masculino.
+        /// </summary>
+        public static string User_Gender_1 {
+            get {
+                return ResourceManager.GetString("User_Gender_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Otro.
+        /// </summary>
+        public static string User_Gender_2 {
+            get {
+                return ResourceManager.GetString("User_Gender_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Declara.
+        /// </summary>
+        public static string User_Gender_3 {
+            get {
+                return ResourceManager.GetString("User_Gender_3", resourceCulture);
             }
         }
         

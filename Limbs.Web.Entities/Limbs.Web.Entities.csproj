@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DbContext\IdentityModels.cs" />
+    <Compile Include="Filters\LocalizedDescriptionAttribute.cs" />
     <Compile Include="Models\AccesoryModel.cs" />
     <Compile Include="Models\AmbassadorModel.cs" />
     <Compile Include="Models\AmputationType.cs" />

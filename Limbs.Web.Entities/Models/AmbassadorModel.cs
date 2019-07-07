@@ -9,6 +9,7 @@ using System.Globalization;
 using System.Security.Principal;
 using System.Text;
 using Limbs.Web.Entities.Resources;
+using Limbs.Web.Entities.Filters;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -238,19 +239,17 @@ namespace Limbs.Web.Entities.Models
 
     public enum Organization
     {
-        [Description("No, por cuenta propia")]
-        //[DataType(typeof(ModelTexts))]
+        [LocalizedDescription("Ambassador_enum_Organization_1", typeof(ModelTexts))]
         CuentaPropia = 1,
-        [Description("Escuela")]
-        [EnumDataType(typeof(ModelTexts))]
+        [LocalizedDescription("Ambassador_enum_Organization_2", typeof(ModelTexts))]
         Escuela = 2,
-        [Description("Universidad")]
+        [LocalizedDescription("Ambassador_enum_Organization_3", typeof(ModelTexts))]
         Universidad = 3,
-        [Description("Organismo Gubernamental")]
+        [LocalizedDescription("Ambassador_enum_Organization_4", typeof(ModelTexts))]
         OrganismoGubernamental = 4,
-        [Description("Organización SIN fines de lucro")]
+        [LocalizedDescription("Ambassador_enum_Organization_5", typeof(ModelTexts))]
         OrganizacionSinFinesDeLucro = 5,
-        [Description("Organización CON fines de lucro")]
+        [LocalizedDescription("Ambassador_enum_Organization_6", typeof(ModelTexts))]
         OrganizacionConFinesDeLucro = 6
     }
 }

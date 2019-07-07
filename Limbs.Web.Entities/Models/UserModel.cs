@@ -9,6 +9,7 @@ using System.Security.Principal;
 using System.Text;
 using Microsoft.AspNet.Identity;
 using Limbs.Web.Entities.Resources;
+using Limbs.Web.Entities.Filters;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -279,13 +280,13 @@ namespace Limbs.Web.Entities.Models
 
     public enum Gender
     {
-        [Description("Femenino")]
+        [LocalizedDescription("User_Gender_0", typeof(ModelTexts))]
         Mujer = 0,
-        [Description("Masculino")]
+        [LocalizedDescription("User_Gender_1", typeof(ModelTexts))]
         Hombre = 1,
-        [Description("Otro")]
+        [LocalizedDescription("User_Gender_2", typeof(ModelTexts))]
         Otro = 2,
-        [Description("No Declara")]
+        [LocalizedDescription("User_Gender_3", typeof(ModelTexts))]
         NoDeclara = 3,
     }
 }

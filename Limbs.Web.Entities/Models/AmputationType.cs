@@ -1,32 +1,34 @@
 ﻿using System.ComponentModel;
+using Limbs.Web.Entities.Resources;
+using Limbs.Web.Entities.Filters;
 
 namespace Limbs.Web.Entities.Models
 {
     public enum AmputationType
     {
         //Mano, No hay diseño
-        [Description("Perdí UNA falange de cualquier dedo")]
+        [LocalizedDescription("AmputationType_A", typeof(ModelTexts))]
         A = 0,
         //Mano, No hay diseño
-        [Description("Perdí DOS falanges de cualquier dedo")]
+        [LocalizedDescription("AmputationType_B", typeof(ModelTexts))]
         B = 1,
         //Mano
-        [Description("Perdí mis cuatro dedos y tengo un pulgar")]
+        [LocalizedDescription("AmputationType_C", typeof(ModelTexts))]
         C = 2,
         //Mano
-        [Description("Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)")]
+        [LocalizedDescription("AmputationType_D", typeof(ModelTexts))]
         D = 3,
         //Brazo
-        [Description("Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)")]
+        [LocalizedDescription("AmputationType_E", typeof(ModelTexts))]
         E = 4,
         //Brazo
-        [Description("Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)")]
+        [LocalizedDescription("AmputationType_F", typeof(ModelTexts))]
         F = 5,
         //Brazo, No hay diseño
-        [Description("Perdí el codo y tengo el húmero")]
+        [LocalizedDescription("AmputationType_G", typeof(ModelTexts))]
         G = 6,
         //Brazo, No hay diseño
-        [Description("Tengo el húmero pero muy poco desarrollado")]
+        [LocalizedDescription("AmputationType_H", typeof(ModelTexts))]
         H = 7
     }
 }
