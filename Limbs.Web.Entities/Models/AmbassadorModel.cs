@@ -238,10 +238,10 @@ namespace Limbs.Web.Entities.Models
 
     public enum Organization
     {
-        [Description("Ambassador_enum_Organization_1")]
+        [Description("No, por cuenta propia")]
         //[DataType(typeof(ModelTexts))]
         CuentaPropia = 1,
-        [Description("Ambassador_enum_Organization_2")]
+        [Description("Escuela")]
         [EnumDataType(typeof(ModelTexts))]
         Escuela = 2,
         [Description("Universidad")]

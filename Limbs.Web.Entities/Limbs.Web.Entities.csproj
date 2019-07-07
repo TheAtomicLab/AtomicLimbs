@@ -122,6 +122,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelTexts.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ModelTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTexts.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="WebModels\AccountViewModels.cs" />
     <Compile Include="WebModels\Admin\Models\AppExceptionViewModel.cs" />
     <Compile Include="WebModels\Admin\Models\AssignOrderAmbassadorViewModel.cs" />
@@ -156,6 +161,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Resources\ModelTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModelTexts.es.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ModelTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ModelTexts.Designer.cs</LastGenOutput>

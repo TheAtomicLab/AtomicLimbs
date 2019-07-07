@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using Limbs.Web.Entities.Resources;
 
 namespace Limbs.Web.Entities.WebModels
 {
@@ -42,14 +43,14 @@ namespace Limbs.Web.Entities.WebModels
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Manage_NewPassword_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
-        [Display(Name = "Nueva contraseña")]
+        [Display(Name = "Manage_NewPassword", ResourceType = typeof(ModelTexts))]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmá la nueva contraseña")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "La contraseña no coincide.")]
+        [Display(Name = "Manage_ConfirmPassword", ResourceType = typeof(ModelTexts))]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Manage_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
     }
 
@@ -57,18 +58,18 @@ namespace Limbs.Web.Entities.WebModels
     {
         [Required]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña actual")]
+        [Display(Name = "Manage_OldPassword", ResourceType = typeof(ModelTexts))]
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Manage_NewPassword_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
-        [Display(Name = "Nueva contraseña")]
+        [Display(Name = "Manage_NewPassword", ResourceType = typeof(ModelTexts))]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmá la nueva contraseña")]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "La contraseña no coincide.")]
+        [Display(Name = "Manage_ConfirmPassword", ResourceType = typeof(ModelTexts))]
+        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Manage_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
     }
 
@@ -76,19 +77,19 @@ namespace Limbs.Web.Entities.WebModels
     {
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Manage_Number", ResourceType = typeof(ModelTexts))]
         public string Number { get; set; }
     }
 
     public class VerifyPhoneNumberViewModel
     {
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "Manage_Code", ResourceType = typeof(ModelTexts))]
         public string Code { get; set; }
 
         [Required]
         [Phone]
-        [Display(Name = "Phone Number")]
+        [Display(Name = "Manage_Number", ResourceType = typeof(ModelTexts))]
         public string PhoneNumber { get; set; }
     }
 

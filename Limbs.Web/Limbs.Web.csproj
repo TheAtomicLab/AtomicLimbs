@@ -425,6 +425,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelsTexts.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ModelsTexts.es.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelsTexts.es.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\OrdersTexts.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -920,6 +925,10 @@
     <EmbeddedResource Include="Resources\MessagesTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>MessagesTexts.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ModelsTexts.es.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ModelsTexts.es.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ModelsTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

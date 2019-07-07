@@ -8,6 +8,7 @@ using System.Globalization;
 using System.Security.Principal;
 using System.Text;
 using Microsoft.AspNet.Identity;
+using Limbs.Web.Entities.Resources;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -32,7 +33,7 @@ namespace Limbs.Web.Entities.Models
         [Required]
         public string Email { get; set; }
 
-        [Display(Name = "Email Alternativo", Description = "")]
+        [Display(Name = "User_AlternativeEmail", Description = "", ResourceType = typeof(ModelTexts))]
         [EmailAddress(ErrorMessage = " ")]
         public string AlternativeEmail { get; set; }
 
@@ -43,67 +44,67 @@ namespace Limbs.Web.Entities.Models
         /// </summary>
         public bool IsProductUser { get; set; }
 
-        [Display(Name = "Nombre del usuario", Description = "")]
+        [Display(Name = "User_UserName", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string UserName { get; set; }
 
-        [Display(Name = "Apellido del usuario", Description = "")]
+        [Display(Name = "User_UserLastName", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string UserLastName { get; set; }
 
-        [Display(Name = "Nombre del responsable", Description = "")]
+        [Display(Name = "User_ResponsableName", Description = "", ResourceType = typeof(ModelTexts))]
         public string ResponsableName
         {
             get => IsProductUser ? null : _responsableName;
             set => _responsableName = IsProductUser ? null : value;
         }
 
-        [Display(Name = "Apellido del responsable", Description = "")]
+        [Display(Name = "User_ResponsableLastName", Description = "", ResourceType = typeof(ModelTexts))]
         public string ResponsableLastName
         {
             get => IsProductUser ? null : _responsableLastName;
             set => _responsableLastName = IsProductUser ? null : value;
         }
 
-        [Display(Name = "Teléfono", Description = "")]
+        [Display(Name = "User_Phone", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Phone { get; set; }
 
-        [DataType("datetime2", ErrorMessage = "Fecha inválida")]
-        [Display(Name = "Fecha de nacimiento", Description = "")]
+        [DataType("datetime2", ErrorMessage = "User_Birth_ErrorMessage")]
+        [Display(Name = "User_Birth_Name", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Birth { get; set; }
 
-        [Display(Name = "Género", Description = "")]
+        [Display(Name = "User_Gender", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public Gender Gender { get; set; }
 
-        [Display(Name = "País", Description = "")]
+        [Display(Name = "User_Country", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
-        [Display(Name = "Provincia", Description = "")]
+        [Display(Name = "User_State", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string State { get; set; }
 
-        [Display(Name = "Ciudad", Description = "")]
+        [Display(Name = "User_City", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
-        [Display(Name = "Dirección (solo calle y altura)", Description = "")]
+        [Display(Name = "User_Address", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Address { get; set; }
 
-        [Display(Name = "Dirección (otros datos)", Description = "")]
+        [Display(Name = "User_Address2", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Address2 { get; set; }
 
-        [Display(Name = "DNI o Pasaporte del usuario", Description = "")]
+        [Display(Name = "User_Dni", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         public string Dni { get; set; }
 
-        [Display(Name = "Número de Documento de Identidad / Pasaporte", Description = "")]
+        [Display(Name = "User_ResponsableDni", Description = "", ResourceType = typeof(ModelTexts))]
         public string ResponsableDni
         {
             get => IsProductUser ? null : _responsableDNI;

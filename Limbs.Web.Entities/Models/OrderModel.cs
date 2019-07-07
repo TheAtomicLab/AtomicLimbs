@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Text;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
+using Limbs.Web.Entities.Resources;
 
 namespace Limbs.Web.Entities.Models
 {
@@ -20,10 +21,10 @@ namespace Limbs.Web.Entities.Models
         }
 
         [Key]
-        [Display(Name = "Pedido #", Description = "")]
+        [Display(Name = "Order_Id", Description = "", ResourceType = typeof(ModelTexts))]
         public int Id { get; set; }
 
-        [Display(Name = "Creado", Description = "")]
+        [Display(Name = "Order_Date", Description = "", ResourceType = typeof(ModelTexts))]
         public DateTime Date { get; set; }
 
         /// <summary>
@@ -36,11 +37,11 @@ namespace Limbs.Web.Entities.Models
         /// </summary>
         public virtual AmbassadorModel OrderAmbassador { get; set; }
 
-        [Display(Name = "Color", Description = "(si es posible)")]
+        [Display(Name = "Order_Color_Name", Description = "Order_Color_Description", ResourceType = typeof(ModelTexts))]
         public OrderColor Color { get; set; }
 
-        [Display(Name = "¿Cuál?", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
+        [Display(Name = "Order_ProductType", Description = "", ResourceType = typeof(ModelTexts))]
+        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<AccessoryModel> Extras { get; set; }
@@ -55,7 +56,7 @@ namespace Limbs.Web.Entities.Models
         public List<OrderRenderPieceModel> RenderPieces { get; set; }
 
         [NotMapped]
-        [Display(Name = "Tamaños", Description = "")]
+        [Display(Name = "Order_OrderSizesModel", Description = "", ResourceType = typeof(ModelTexts))]
         public virtual OrderSizesModel Sizes { get; set; }
 
         public string SizesData
@@ -66,37 +67,37 @@ namespace Limbs.Web.Entities.Models
                 : new OrderSizesModel();
         }
 
-        [Display(Name = "Amputación", Description = "")]
-        [Required(ErrorMessage = "Campo requerido")]
+        [Display(Name = "Order_AmputationType", Description = "", ResourceType = typeof(ModelTexts))]
+        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public AmputationType AmputationType { get; set; }
 
-        [Display(Name = "Comentarios", Description = "")]
+        [Display(Name = "Order_Comments", Description = "", ResourceType = typeof(ModelTexts))]
         [DataType(DataType.MultilineText)]
         public string Comments { get; set; }
 
-        [Display(Name = "Foto", Description = "")]
+        [Display(Name = "Order_IdImage", Description = "", ResourceType = typeof(ModelTexts))]
         public string IdImage { get; set; }
 
-        [Display(Name = "Estado", Description = "")]
+        [Display(Name = "Order_Status", Description = "", ResourceType = typeof(ModelTexts))]
         public OrderStatus Status { get; set; }
 
-        [Display(Name = "Última modificación", Description = "")]
+        [Display(Name = "Order_StatusLastUpdated", Description = "", ResourceType = typeof(ModelTexts))]
         public DateTime StatusLastUpdated { get; set; }
 
-        [Display(Name = "Prueba de entrega", Description = "")]
+        [Display(Name = "Order_ProofOfDelivery", Description = "", ResourceType = typeof(ModelTexts))]
         public string ProofOfDelivery { get; set; }
 
-        [Display(Name = "Courier", Description = "")]
+        [Display(Name = "Order_DeliveryCourier", Description = "", ResourceType = typeof(ModelTexts))]
         public Courier DeliveryCourier { get; set; }
 
-        [Display(Name = "Tracking", Description = "")]
+        [Display(Name = "Order_DeliveryTrackingCode", Description = "", ResourceType = typeof(ModelTexts))]
         public string DeliveryTrackingCode { get; set; }
 
-        [Display(Name = "Etiqueta postal", Description = "")]
+        [Display(Name = "Order_DeliveryPostalLabel", Description = "", ResourceType = typeof(ModelTexts))]
         public string DeliveryPostalLabel { get; set; }
 
         [NotMapped]
-        [Display(Name = "Historial de cambios", Description = "")]
+        [Display(Name = "Order_Log", Description = "", ResourceType = typeof(ModelTexts))]
         public List<OrderLogItem> Log { get; private set; }
 
         public ICollection<OrderRefusedModels> RefusedOrders { get; set; }

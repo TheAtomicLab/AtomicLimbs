@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
+using Limbs.Web.Entities.Resources;
 
 namespace Limbs.Web.Entities.WebModels
 {
@@ -12,7 +13,7 @@ namespace Limbs.Web.Entities.WebModels
         }
 
         [Required(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
 
@@ -38,11 +39,11 @@ namespace Limbs.Web.Entities.WebModels
         public string Provider { get; set; }
 
         [Required]
-        [Display(Name = "Code")]
+        [Display(Name = "Account_Code", ResourceType = typeof(ModelTexts))]
         public string Code { get; set; }
         public string ReturnUrl { get; set; }
 
-        [Display(Name = "Remember this browser?")]
+        [Display(Name = "Account_RememberBrowser", ResourceType = typeof(ModelTexts))]
         public bool RememberBrowser { get; set; }
 
         public bool RememberMe { get; set; }
@@ -51,7 +52,7 @@ namespace Limbs.Web.Entities.WebModels
     public class ForgotViewModel
     {
         [Required(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
     }
@@ -59,16 +60,16 @@ namespace Limbs.Web.Entities.WebModels
     public class LoginViewModel
     {
         [Required(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña")]
+        [Display(Name = "Account_Password", ResourceType = typeof(ModelTexts))]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Account_RememberMe", ResourceType = typeof(ModelTexts))]
         public bool RememberMe { get; set; }
     }
 
@@ -81,18 +82,18 @@ namespace Limbs.Web.Entities.WebModels
 
         [Required(ErrorMessage = " ")]
         [EmailAddress(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Account_Password_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña")]
+        [Display(Name = "Account_Password", ResourceType = typeof(ModelTexts))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirma contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña no coincide.")]
+        [Display(Name = "Account_ConfirmPassword", ResourceType = typeof(ModelTexts))]
+        [Compare("Password", ErrorMessage = "Account_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
 
         public string RecaptchaPublicKey { get; }
@@ -102,7 +103,7 @@ namespace Limbs.Web.Entities.WebModels
     {
         [Required]
         [EmailAddress(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         public string Email { get; set; }
     }
 
@@ -110,18 +111,18 @@ namespace Limbs.Web.Entities.WebModels
     {
         [Required(ErrorMessage = " ")]
         [EmailAddress(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
-        [StringLength(100, ErrorMessage = "La {0} debe tener por lo menos {2} caracteres.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Account_Password_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
-        [Display(Name = "Contraseña")]
+        [Display(Name = "Account_Password", ResourceType = typeof(ModelTexts))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirmá contraseña")]
-        [Compare("Password", ErrorMessage = "La contraseña no coincide.")]
+        [Display(Name = "Account_ConfirmPassword", ResourceType = typeof(ModelTexts))]
+        [Compare("Password", ErrorMessage = "Account_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }
@@ -131,7 +132,7 @@ namespace Limbs.Web.Entities.WebModels
     {
         [Required(ErrorMessage = " ")]
         [EmailAddress(ErrorMessage = " ")]
-        [Display(Name = "Email")]
+        [Display(Name = "Account_Email", ResourceType = typeof(ModelTexts))]
         public string Email { get; set; }
     }
 }
