@@ -345,4 +345,40 @@
   <data name="Manage_OldPassword" xml:space="preserve">
     <value>Contraseña actual</value>
   </data>
+  <data name="AmputationType_A" xml:space="preserve">
+    <value>Perdí UNA falange de cualquier dedo</value>
+  </data>
+  <data name="AmputationType_B" xml:space="preserve">
+    <value>Perdí DOS falanges de cualquier dedo</value>
+  </data>
+  <data name="AmputationType_C" xml:space="preserve">
+    <value>Perdí mis cuatro dedos y tengo un pulgar</value>
+  </data>
+  <data name="AmputationType_D" xml:space="preserve">
+    <value>Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)</value>
+  </data>
+  <data name="AmputationType_E" xml:space="preserve">
+    <value>Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)</value>
+  </data>
+  <data name="AmputationType_F" xml:space="preserve">
+    <value>Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)</value>
+  </data>
+  <data name="AmputationType_G" xml:space="preserve">
+    <value>Perdí el codo y tengo el húmero</value>
+  </data>
+  <data name="AmputationType_H" xml:space="preserve">
+    <value>Tengo el húmero pero muy poco desarrollado</value>
+  </data>
+  <data name="User_Gender_0" xml:space="preserve">
+    <value>Femenino</value>
+  </data>
+  <data name="User_Gender_1" xml:space="preserve">
+    <value>Masculino</value>
+  </data>
+  <data name="User_Gender_2" xml:space="preserve">
+    <value>Otro</value>
+  </data>
+  <data name="User_Gender_3" xml:space="preserve">
+    <value>No Declara</value>
+  </data>
 </root>
