@@ -5,8 +5,7 @@ namespace Limbs.Web.Filters
 {
     public class LocalizationAttribute : ActionFilterAttribute
     {
-        private string _DefaultLanguage = "es";
-        //private string[] allowedLanguages = { "nl", "en" };
+        private string _DefaultLanguage = Languages.es.ToString();
 
         public LocalizationAttribute(string defaultLanguage)
         {

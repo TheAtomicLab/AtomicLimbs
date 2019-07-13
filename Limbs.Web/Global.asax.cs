@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Limbs.Web.Common.Extensions;
+using Limbs.Web.Helpers;
 
 namespace Limbs.Web
 {
@@ -46,5 +47,16 @@ namespace Limbs.Web
                 throw;
             }
         }
+
+        protected void Application_AcquireRequestState(object sender, EventArgs e)
+        {
+            string culture = Languages.es.ToString();
+            if (Request.UserLanguages != null)
+            {
+                culture = Request.UserLanguages[0];
+            }
+            LanguageHelper.SetLanguage(culture);
+        }
+
     }
 }

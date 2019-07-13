@@ -1,6 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Threading;
 
 namespace Limbs.Web.Helpers
@@ -17,8 +17,15 @@ namespace Limbs.Web.Helpers
             //info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
             Thread.CurrentThread.CurrentUICulture = info;
             Thread.CurrentThread.CurrentCulture = info;
-        }
-
-
+        }        
     }
+
+    enum Languages
+    {
+        [Description("Español")]
+        es,
+        [Description("English")]
+        en,
+    };
+
 }

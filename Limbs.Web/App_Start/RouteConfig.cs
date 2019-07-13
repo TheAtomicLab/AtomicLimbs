@@ -33,12 +33,12 @@ namespace Limbs.Web
             routes.Redirect(r => r.MapRoute("", "animales")).To(animales);
             routes.Redirect(r => r.MapRoute("", "ListaDeEspera")).To(lista);
 
-            routes.MapRoute(
-             name: "Localized",
-             url: "{lang}/{controller}/{action}/{id}",
-             constraints: new { lang = @"(\w{2})|(\w{2}-\w{2})" },
-             defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            // name: "Localized",
+            // url: "{lang}/{controller}/{action}/{id}",
+            // constraints: new { lang = @"(\w{2})|(\w{2}-\w{2})" },
+            // defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
                 "Default",

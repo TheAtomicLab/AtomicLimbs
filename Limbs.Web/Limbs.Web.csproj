@@ -256,6 +256,7 @@
     <Compile Include="Controllers\AmbassadorController.cs" />
     <Compile Include="Controllers\StaticContentController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Filters\EnumExtensions.cs" />
     <Compile Include="Filters\LocalizationAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
