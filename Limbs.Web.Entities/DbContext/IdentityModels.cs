@@ -15,6 +15,10 @@ namespace Limbs.Web.Entities.DbContext
             return new ApplicationDbContext();
         }
 
+        public DbSet<EventModel> EventModels { get; set; }
+        public DbSet<EventTypeModel> EventTypeModels { get; set; }
+        public DbSet<EventUserModel> EventUserModels { get; set; }
+
         public DbSet<RenderModel> RenderModels { get; set; }
         public DbSet<AmputationTypeModel> AmputationTypeModels { get; set; }
         public DbSet<ColorModel> ColorModels { get; set; }
