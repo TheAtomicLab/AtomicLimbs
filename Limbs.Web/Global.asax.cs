@@ -48,14 +48,24 @@ namespace Limbs.Web
             }
         }
 
-        protected void Application_AcquireRequestState(object sender, EventArgs e)
+        protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            string culture = Languages.es.ToString();
-            if (Request.UserLanguages != null)
+            string lang = Languages.en.ToString();
+            if (!String.IsNullOrEmpty(HttpContext.Current.Request["lang"]))
             {
-                culture = Request.UserLanguages[0];
+                lang = HttpContext.Current.Request["lang"] as String;
+                HttpCookie langCookie = new HttpCookie("Language", lang);
+                HttpContext.Current.Response.Cookies.Add(langCookie);
             }
-            LanguageHelper.SetLanguage(culture);
+            else if (HttpContext.Current.Request.Cookies["Language"] != null)
+            {
+                lang = HttpContext.Current.Request.Cookies["Language"].Value as String;
+            }
+            else if (Request.UserLanguages != null)
+            {
+                lang = Request.UserLanguages[0];
+            }
+            LanguageHelper.SetLanguage(lang);
         }
 
     }

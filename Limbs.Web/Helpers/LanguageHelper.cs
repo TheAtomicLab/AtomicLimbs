@@ -20,7 +20,7 @@ namespace Limbs.Web.Helpers
         }        
     }
 
-    enum Languages
+    public enum Languages
     {
         [Description("Español")]
         es,

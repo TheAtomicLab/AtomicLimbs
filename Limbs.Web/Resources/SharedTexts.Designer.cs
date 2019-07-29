@@ -142,6 +142,15 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Footer_Language {
+            get {
+                return ResourceManager.GetString("Footer_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to acá.
         /// </summary>
         public static string Footer_ReportError_Link {

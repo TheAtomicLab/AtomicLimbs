@@ -186,4 +186,7 @@
   <data name="_LoginPartial_RegisterUrlAction" xml:space="preserve">
     <value>Registrarse</value>
   </data>
+  <data name="Footer_Language" xml:space="preserve">
+    <value>Idioma</value>
+  </data>
 </root>
