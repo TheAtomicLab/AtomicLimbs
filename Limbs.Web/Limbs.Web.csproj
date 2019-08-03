@@ -362,6 +362,10 @@
     <Compile Include="Migrations\201907172036222_addEventsModels.Designer.cs">
       <DependentUpon>201907172036222_addEventsModels.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908032059440_fixEventTypeFK.cs" />
+    <Compile Include="Migrations\201908032059440_fixEventTypeFK.Designer.cs">
+      <DependentUpon>201908032059440_fixEventTypeFK.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -874,6 +878,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907172036222_addEventsModels.resx">
       <DependentUpon>201907172036222_addEventsModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908032059440_fixEventTypeFK.resx">
+      <DependentUpon>201908032059440_fixEventTypeFK.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
