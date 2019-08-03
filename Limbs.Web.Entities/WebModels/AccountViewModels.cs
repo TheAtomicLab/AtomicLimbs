@@ -86,14 +86,14 @@ namespace Limbs.Web.Entities.WebModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
-        [StringLength(100, ErrorMessage = "Account_Password_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
+        [StringLength(100, ErrorMessageResourceName = "Account_Password_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
         [Display(Name = "Account_Password", ResourceType = typeof(ModelTexts))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Account_ConfirmPassword", ResourceType = typeof(ModelTexts))]
-        [Compare("Password", ErrorMessage = "Account_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Compare("Password", ErrorMessageResourceName = "Account_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
 
         public string RecaptchaPublicKey { get; }
@@ -115,14 +115,14 @@ namespace Limbs.Web.Entities.WebModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
-        [StringLength(100, ErrorMessage = "Account_Password_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
+        [StringLength(100, ErrorMessageResourceName = "Account_Password_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
         [Display(Name = "Account_Password", ResourceType = typeof(ModelTexts))]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Account_ConfirmPassword", ResourceType = typeof(ModelTexts))]
-        [Compare("Password", ErrorMessage = "Account_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Compare("Password", ErrorMessageResourceName = "Account_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

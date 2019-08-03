@@ -45,7 +45,7 @@ namespace Limbs.Web.Entities.Models
         [Required(ErrorMessage = " ")]
         public string AmbassadorLastName { get; set; }
 
-        [DataType("datetime2", ErrorMessage = "Ambassador_Birth_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [DataType("datetime2", ErrorMessageResourceName = "Ambassador_Birth_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         [Display(Name = "Ambassador_Birth_Name", Description = "", ResourceType = typeof(ModelTexts))]
         [Required(ErrorMessage = " ")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]

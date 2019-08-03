@@ -9,7 +9,7 @@ namespace Limbs.Web.ViewModels
         public int Id { get; set; }
 
         [Display(Name = "OrderUpdate_ProductType", Description = "", ResourceType = typeof(ModelsTexts))]
-        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
+        [Required(ErrorMessageResourceName = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public ProductType ProductType { get; set; }
 
         [Display(Name = "OrderUpdate_Comments", Description = "", ResourceType = typeof(ModelsTexts))]
@@ -20,7 +20,7 @@ namespace Limbs.Web.ViewModels
         public int? ColorFkId { get; set; }
 
         [Display(Name = "OrderUpdate_AmputationTypeFkId", Description = "", ResourceType = typeof(ModelsTexts))]
-        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
+        [Required(ErrorMessageResourceName = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public int AmputationTypeFkId { get; set; }
 
         public int PreviousAmputationTypeId { get; set; }

@@ -41,7 +41,7 @@ namespace Limbs.Web.Entities.Models
         public OrderColor Color { get; set; }
 
         [Display(Name = "Order_ProductType", Description = "", ResourceType = typeof(ModelTexts))]
-        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Required(ErrorMessageResourceName = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public ProductType ProductType { get; set; }
 
         public virtual ICollection<AccessoryModel> Extras { get; set; }
@@ -68,7 +68,7 @@ namespace Limbs.Web.Entities.Models
         }
 
         [Display(Name = "Order_AmputationType", Description = "", ResourceType = typeof(ModelTexts))]
-        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Required(ErrorMessageResourceName = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public AmputationType AmputationType { get; set; }
 
         [Display(Name = "Order_Comments", Description = "", ResourceType = typeof(ModelTexts))]

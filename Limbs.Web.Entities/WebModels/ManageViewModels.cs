@@ -43,14 +43,14 @@ namespace Limbs.Web.Entities.WebModels
     public class SetPasswordViewModel
     {
         [Required]
-        [StringLength(100, ErrorMessage = "Manage_NewPassword_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
+        [StringLength(100, ErrorMessageResourceName = "Manage_NewPassword_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
         [Display(Name = "Manage_NewPassword", ResourceType = typeof(ModelTexts))]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Manage_ConfirmPassword", ResourceType = typeof(ModelTexts))]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Manage_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Compare("NewPassword", ErrorMessageResourceName = "Manage_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
     }
 
@@ -62,14 +62,14 @@ namespace Limbs.Web.Entities.WebModels
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "Manage_NewPassword_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
+        [StringLength(100, ErrorMessageResourceName = "Manage_NewPassword_ErrorMessage", MinimumLength = 6, ErrorMessageResourceType = typeof(ModelTexts))]
         [DataType(DataType.Password)]
         [Display(Name = "Manage_NewPassword", ResourceType = typeof(ModelTexts))]
         public string NewPassword { get; set; }
 
         [DataType(DataType.Password)]
         [Display(Name = "Manage_ConfirmPassword", ResourceType = typeof(ModelTexts))]
-        [System.ComponentModel.DataAnnotations.Compare("NewPassword", ErrorMessage = "Manage_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
+        [Compare("NewPassword", ErrorMessageResourceName = "Manage_ConfirmPassword_ErrorMessage", ErrorMessageResourceType = typeof(ModelTexts))]
         public string ConfirmPassword { get; set; }
     }
 

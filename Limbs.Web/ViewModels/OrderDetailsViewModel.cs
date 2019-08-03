@@ -15,7 +15,7 @@ namespace Limbs.Web.ViewModels
         public ColorDetailsViewModel Color { get; set; }
 
         [Display(Name = "OrderDetails_ProductType", Description = "", ResourceType = typeof(ModelsTexts))]
-        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
+        [Required(ErrorMessageResourceName = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public ProductType ProductType { get; set; }
 
         [Display(Name = "OrderDetails_Sizes", Description = "", ResourceType = typeof(ModelsTexts))]

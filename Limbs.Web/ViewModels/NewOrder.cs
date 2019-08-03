@@ -9,7 +9,7 @@ namespace Limbs.Web.ViewModels
         public string IdImage { get; set; }
 
         [Display(Name = "NewOrder_AmputationTypeFkId", Description = "", ResourceType = typeof(ModelsTexts))]
-        [Required(ErrorMessage = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
+        [Required(ErrorMessageResourceName = "RequiredErrorMessage", ErrorMessageResourceType = typeof(ModelsTexts))]
         public int AmputationTypeFkId { get; set; }
         public int? ColorFkId { get; set; }
 
