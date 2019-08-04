@@ -519,6 +519,8 @@
     <Content Include="Content\img\ej_si002.jpg" />
     <Content Include="Content\img\ej_si002br.jpg" />
     <Content Include="Content\img\Error\404.svg" />
+    <Content Include="Content\img\Flags\en.png" />
+    <Content Include="Content\img\Flags\es.png" />
     <Content Include="Content\img\fondo_manoton.jpg" />
     <Content Include="Content\img\foto01.jpg" />
     <Content Include="Content\img\icon_embajador.svg" />

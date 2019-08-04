@@ -1,4 +1,6 @@
 ﻿@using Limbs.Web.Resources
+@using Limbs.Web.Helpers
+@using Limbs.Web.Filters
 <footer class="footer-distributed" style="background: #33383b;clear: both;">
     <div class="footer-left">
         <h3><span>Atomic Lab</span></h3>
@@ -9,8 +11,16 @@
         <p>
             <ul class="languagepicker roundborders large">
                 <li>@SharedTexts.Footer_Language</li>
-                <a href="/?lang=es"><li><img src="http://i68.tinypic.com/avo5ky.png" />Español</li></a>
-                <a href="/?lang=en"><li><img src="http://i64.tinypic.com/fd60km.png" />English</li></a>
+                @foreach(Languages lan in Enum.GetValues(typeof(Languages)))
+                {
+                    var imgPath = "/Content/img/Flags/" + lan + ".png";
+
+                    UriBuilder baseUri = new UriBuilder(Request.Url.AbsoluteUri);
+                    string queryToAppend = "lang=" + lan;                  
+                    baseUri.Query = queryToAppend;
+
+                    <a href="@baseUri"><li><img src="@imgPath" />@lan.GetDescription()</li></a>
+                }
             </ul>
         </p>
     </div>
