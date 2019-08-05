@@ -544,6 +544,9 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\jquery.bxslider.min.css" />
+    <Content Include="manual_scripts\events_manoton.sql" />
+    <Content Include="manual_scripts\new_render.sql" />
+    <Content Include="manual_scripts\orders_country.sql" />
     <Content Include="Scripts\jquery.bxslider.min.js" />
     <Content Include="Content\ManoMedidas.css" />
     <Content Include="Content\manualembajador.css" />
