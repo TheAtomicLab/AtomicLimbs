@@ -16,7 +16,7 @@ namespace Limbs.Web.Entities.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public List<EventUserModel> EventUsers { get; set; }
+        public List<EventOrderModel> EventOrders { get; set; }
         public EventTypeModel EventType { get; set; }
     }
 }

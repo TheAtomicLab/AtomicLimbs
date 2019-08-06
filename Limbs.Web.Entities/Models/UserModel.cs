@@ -110,8 +110,6 @@ namespace Limbs.Web.Entities.Models
             set => _responsableDNI = IsProductUser ? null : value;
         }
 
-        public List<EventUserModel> EventUsers { get; set; }
-
         public DbGeography Location { get; set; }
 
         public virtual ApplicationUser User { get; set; }

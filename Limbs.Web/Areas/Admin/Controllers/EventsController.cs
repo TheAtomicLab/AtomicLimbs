@@ -12,7 +12,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Events
         public async Task<ActionResult> Index()
         {
-            var events = await Db.EventModels.Include(p => p.EventUsers).Include(p => p.EventType).ToListAsync();
+            var events = await Db.EventModels.Include(p => p.EventOrders).Include(p => p.EventType).ToListAsync();
             var eventsViewModel = Mapper.Map<List<EventViewModel>>(events);
 
             return View(eventsViewModel);
