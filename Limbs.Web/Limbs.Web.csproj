@@ -240,6 +240,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EventsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
@@ -464,7 +465,9 @@
     <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
     <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
+    <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\OrderRenderPieceViewModel.cs" />
@@ -611,6 +614,7 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AmputationType.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\OrderStatus.cshtml" />
     <Content Include="PrivateSettings.config" />
+    <Content Include="Areas\Admin\Views\Events\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />

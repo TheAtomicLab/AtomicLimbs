@@ -1,0 +1,55 @@
+﻿@using Limbs.Web.Common.Extensions
+@using System.Linq
+@model List<Limbs.Web.ViewModels.EventViewModel>
+
+@{
+    ViewBag.Title = "Eventos";
+}
+
+<h2>Eventos</h2>
+
+<table>
+    <tr>
+        <th>
+            Tipo de Evento
+        </th>
+        <th>
+            Titulo
+        </th>
+        <th>
+            Fecha de Inicio
+        </th>
+        <th>
+            Fecha de Finalizacion
+        </th>
+        <th>
+           Cantidad de Participantes
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+    @foreach (var oneEvent in Model)
+    {
+        <tr>
+            <td>
+                @oneEvent.EventTypeName
+            </td>
+            <td>
+                @oneEvent.Title
+            </td>
+            <td>
+                @oneEvent.StartDate
+            </td>
+            <td>
+                @oneEvent.EndDate
+            </td>
+            <td>
+                @oneEvent.CountParticipants
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = oneEvent.Id, area = "Admin" })
+            </td>
+        </tr>
+    }
+</table>

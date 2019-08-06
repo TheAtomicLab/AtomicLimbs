@@ -22,11 +22,12 @@
 </style>
 
 <ul style="padding:50px 0;">
-    <li>@Html.ActionLink("Pedidos", "Index", new  { controller = "Orders", area = "Admin" } )</li>
+    <li>@Html.ActionLink("Pedidos", "Index", new { controller = "Orders", area = "Admin" })</li>
     <li>@Html.ActionLink("Requesters", "Index", new { controller = "Users", area = "Admin" })</li>
     <li>@Html.ActionLink("Embajadores", "Index", new { controller = "Ambassadors", area = "Admin" })</li>
+    <li>@Html.ActionLink("Eventos", "Index", new { controller = "Events", area = "Admin" })</li>
     <li>
-        @Html.ActionLink("Reportes", "Index", new {controller = "Report", area = "Admin"})
+        @Html.ActionLink("Reportes", "Index", new { controller = "Report", area = "Admin" })
         <ul>
             <li>
                 @Html.ActionLink("DelayedOrders", "DelayedOrders", new { controller = "Report", area = "Admin" })
