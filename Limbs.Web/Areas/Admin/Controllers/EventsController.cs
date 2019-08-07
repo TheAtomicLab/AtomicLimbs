@@ -24,6 +24,19 @@ namespace Limbs.Web.Areas.Admin.Controllers
             return View(eventsViewModel);
         }
 
+        public async Task<ActionResult> GetOrders(int id)
+        {
+            var eventOrders = await Db.EventOrderModels.Where(p => p.EventId == id)
+                                                        .Include(p => p.Order)
+                                                        .Include(p => p.Order.OrderAmbassador)
+                                                        .Include(p => p.Order.OrderRequestor)
+                                                        .Include(p => p.Order.AmputationTypeFk).ToListAsync();
+
+            var ordersViewModel = Mapper.Map<List<OrdersEventViewModel>>(eventOrders);
+
+            return View(ordersViewModel);
+        }
+
         public async Task<ActionResult> AssignEvent(int orderId)
         {
             var events = await Db.EventModels.Include(p => p.EventOrders).Include(p => p.EventType).ToListAsync();

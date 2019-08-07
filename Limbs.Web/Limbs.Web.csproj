@@ -477,6 +477,7 @@
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\OrderRenderPieceViewModel.cs" />
     <Compile Include="ViewModels\OrderRequesterDetailsViewModel.cs" />
+    <Compile Include="ViewModels\OrdersEventViewModel.cs" />
     <Compile Include="ViewModels\OrderUpdateModel.cs" />
     <Compile Include="ViewModels\RenderPieceGroupByViewModel.cs" />
     <Compile Include="ViewModels\RenderViewModel.cs" />
@@ -621,6 +622,7 @@
     <Content Include="PrivateSettings.config" />
     <Content Include="Areas\Admin\Views\Events\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Events\AssignEvent.cshtml" />
+    <Content Include="Areas\Admin\Views\Events\GetOrders.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />

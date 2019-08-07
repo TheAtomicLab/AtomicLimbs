@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Limbs.Web.ViewModels.OrdersEventViewModel>
+
+@{
+    ViewBag.Title = "Lista de Ordenes en el Evento";
+}
+
+<h2>Lista de Ordenes</h2>
+
+<table>
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Tipo de Protesis
+        </th>
+        <th>
+            E-mail Solicitante
+        </th>
+        <th>
+            Embajador
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+    @foreach (var oneOrder in Model)
+    {
+        <tr>
+            <td>
+                @oneOrder.OrderId
+            </td>
+            <td>
+                @oneOrder.OrderDate
+            </td>
+            <td>
+                @oneOrder.AmputationDescription
+            </td>
+            <td>
+                @oneOrder.RequesterEmail
+            </td>
+            <td>
+                @oneOrder.AmbassadorEmail
+            </td>
+            <td>
+                @Html.ActionLink("Detalle de Orden", "Details", "Orders", new { id = oneOrder.OrderId, area = "Admin" }, null)
+            </td>
+        </tr>
+    }
+</table>
