@@ -467,6 +467,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AmputationDesign.cs" />
     <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\AssignEventViewModel.cs" />
     <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
     <Compile Include="ViewModels\Configs\EventProfile.cs" />
@@ -619,6 +620,7 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\OrderStatus.cshtml" />
     <Content Include="PrivateSettings.config" />
     <Content Include="Areas\Admin\Views\Events\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Events\AssignEvent.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />

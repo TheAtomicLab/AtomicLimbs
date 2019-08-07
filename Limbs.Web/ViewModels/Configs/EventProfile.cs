@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Limbs.Web.Entities.Models;
+using System.Linq;
 
 namespace Limbs.Web.ViewModels.Configs
 {
@@ -12,6 +13,11 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy hh:mm tt")))
                 .ForMember(p => p.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy hh:mm tt")))
                 .ForMember(p => p.CountParticipants, opt => opt.MapFrom(src => src.EventOrders == null ? 0 : src.EventOrders.Count));
+
+            CreateMap<EventModel, AssignEventViewModel>()
+                .ForMember(p => p.EventTypeName, opt => opt.MapFrom(src => src.EventType == null ? string.Empty : src.EventType.Name))
+                .ForMember(p => p.StartDate, opt => opt.MapFrom(src => src.StartDate.ToString("dd/MM/yyyy hh:mm tt")))
+                .ForMember(p => p.EndDate, opt => opt.MapFrom(src => src.EndDate.ToString("dd/MM/yyyy hh:mm tt")));
         }
     }
 }
