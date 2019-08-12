@@ -33,7 +33,7 @@
     </tr>
 
     <tr>
-        @if (Model.HasDesign == false)
+        @if (Model.HasDesign == false || Model.Color == null)
         {
             <td class="text-bold">Importante</td>
             <td class="text-danger">No tenemos diseño para la amputación seleccionada</td>
@@ -47,14 +47,9 @@
                     @Html.DescriptionFor(x => x.Color.Name)
                 </p>
             </td>
-            if (Model.Color == null)
-            {
-                <td>Color no seleccionado</td>
-            }
-            else
-            {
-                <td><img src="@Model.Color.PrimaryUrlImage" alt="@Model.Color.Description" title="@Model.Color.Description" /></td>
-            }            
+            <td>
+                <img src="@Model.Color.PrimaryUrlImage" alt="@Model.Color.Description" title="@Model.Color.Description" />
+            </td>
         }
     </tr>
 
