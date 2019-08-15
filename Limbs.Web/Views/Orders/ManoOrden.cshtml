@@ -42,6 +42,7 @@
                         $obj.addClass('color_selected');
                         var radio = $obj.find('input')[0];
                         $(radio).prop('checked', true);
+                        $('#enviar').prop('disabled', false);
                     }
                     $('.sel_color_mano input[checked]').closest('.sel_color_mano').addClass('color_selected');
                 </script>
@@ -56,7 +57,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="@OrdersTexts.ManoOrden_SubmitButton" class="bn_blue atomForm-send" onclick="this.form.submit(); this.disabled=true;" />
+                    <input type="submit" id="enviar" disabled=@Model.HasDesign value="@OrdersTexts.ManoOrden_SubmitButton" class="bn_blue atomForm-send" onclick="this.form.submit(); this.disabled=true;" />
                 </div>
             </div>
         </div>
