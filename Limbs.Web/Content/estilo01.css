@@ -1727,6 +1727,14 @@ textarea {
     background-color: rgba(0,0,0,0.75);
 }
 
+@media (max-width: 880px) {
+
+    .modal .limbs-modal-container{      
+        max-width: 66em;
+        width: 85%;
+    }
+}
+
 .limbs-modal-container {
     display: block;
     height: auto;
