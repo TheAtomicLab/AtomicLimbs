@@ -89,7 +89,7 @@
                     @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "f-campo", placeholder = UsersTexts.Create_UserName } })
                     @Html.EditorFor(model => model.UserLastName, new { htmlAttributes = new { @class = "f-campo", placeholder = UsersTexts.Create_UserLastName } })
                 </div>
-                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = UsersTexts.Create_UserPhone } })
+                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = UsersTexts.Create_UserDni } })
                 @Html.EditorFor(model => model.Phone, new { htmlAttributes = new { @class = "f-campo", placeholder = UsersTexts.Create_UserPhone } })
                 <label class="f-label">@UsersTexts.Create_UserBirth</label>
                 @Html.EditorFor(model => model.Birth, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddYears(-18).ToString("yyyy-MM-dd") } })

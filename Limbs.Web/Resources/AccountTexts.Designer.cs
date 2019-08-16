@@ -61,7 +61,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Error.
         /// </summary>
         public static string _ExternalLoginsListPartial_Error {
             get {
@@ -70,7 +70,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ingresar con.
         /// </summary>
         public static string _ExternalLoginsListPartial_LoginButtonText {
             get {
@@ -79,7 +79,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ingresa con tu cuenta de.
         /// </summary>
         public static string _ExternalLoginsListPartial_LoginButtonTitle {
             get {
@@ -88,7 +88,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to maru.
+        ///   Looks up a localized string similar to Iniciá sesión.
         /// </summary>
         public static string ConfirmEmail_LoginActionLink {
             get {
@@ -97,7 +97,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Gracias por confirmar tu email.
         /// </summary>
         public static string ConfirmEmail_ViewBag_Title {
             get {
@@ -106,7 +106,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to maru1.
+        ///   Looks up a localized string similar to Verificá tu bandeja de entrada, te enviamos un link para confirmar tu cuenta.
         /// </summary>
         public static string DisplayEmail_TextInfo {
             get {
@@ -115,7 +115,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to maru2.
+        ///   Looks up a localized string similar to Confirmá tu email.
         /// </summary>
         public static string DisplayEmail_ViewBag_Title {
             get {
@@ -124,7 +124,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Iniciaste sesión con.
         /// </summary>
         public static string ExternalLoginConfirmation_inicio_form_r_h2 {
             get {
@@ -133,7 +133,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ahora, ingresa tu email y hace click en el boton registrarse para continuar.
         /// </summary>
         public static string ExternalLoginConfirmation_inicio_form_r_h4 {
             get {
@@ -142,7 +142,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Registrarse.
         /// </summary>
         public static string ExternalLoginConfirmation_SubmitInput {
             get {
@@ -151,7 +151,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Complete su registro.
         /// </summary>
         public static string ExternalLoginConfirmation_ViewBag_Title {
             get {
@@ -160,7 +160,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Inicio de sesión fallido.
         /// </summary>
         public static string ExternalLoginFailure_Text_danger {
             get {
@@ -169,7 +169,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Error al iniciar sesión.
         /// </summary>
         public static string ExternalLoginFailure_ViewBag_Title {
             get {
@@ -178,7 +178,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to ejemplo@atomiclab.org.
         /// </summary>
         public static string ForgotPassword_EmailTextBox {
             get {
@@ -187,7 +187,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Para recuperar su contraseña ingrese su mail.
         /// </summary>
         public static string ForgotPassword_inicio_form_r_h4 {
             get {
@@ -196,7 +196,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Recuperar contraseña.
         /// </summary>
         public static string ForgotPassword_SubmitButton {
             get {
@@ -205,7 +205,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Recuperar contraseña.
         /// </summary>
         public static string ForgotPassword_ViewBag_Title {
             get {
@@ -214,7 +214,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Por favor revise su correo electrónico.
         /// </summary>
         public static string ForgotPasswordConfirmation_inicio_form_r_h4 {
             get {
@@ -223,7 +223,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a.
+        ///   Looks up a localized string similar to ¿No tenés una cuenta?.
         /// </summary>
         public static string Login_cont_regis_post_form_ini {
             get {
@@ -232,7 +232,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a.
+        ///   Looks up a localized string similar to Registrate.
         /// </summary>
         public static string Login_cont_regis_post_form_ini_link {
             get {
@@ -241,7 +241,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to ¿Olvidó su contraseña?.
         /// </summary>
         public static string Login_ForgotPasswordUrlAction {
             get {
@@ -250,7 +250,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to Ingresar.
         /// </summary>
         public static string Login_form_group_SubmitButton {
             get {
@@ -259,7 +259,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to ¿No tenés una cuenta en Facebook?.
         /// </summary>
         public static string Login_p_post_form_ini {
             get {
@@ -268,7 +268,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to Ingresar.
         /// </summary>
         public static string Login_ViewBag_Title {
             get {
@@ -277,7 +277,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to ¿Ya tenés una cuenta?.
         /// </summary>
         public static string Register_cont_regis_post_form_ini {
             get {
@@ -286,7 +286,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to Iniciar sesión.
         /// </summary>
         public static string Register_cont_regis_post_form_ini_link {
             get {
@@ -295,7 +295,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to aa.
+        ///   Looks up a localized string similar to Creá una cuenta nueva en solo un minuto.
         /// </summary>
         public static string Register_inicio_form_r_h4 {
             get {
@@ -304,7 +304,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ppp.
+        ///   Looks up a localized string similar to ¿No tenés una cuenta en Facebook?, registrate acá:.
         /// </summary>
         public static string Register_post_form_ini {
             get {
@@ -313,7 +313,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Registrarse.
         /// </summary>
         public static string Register_ViewBag_Title {
             get {
@@ -322,7 +322,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ingrese su mail y la contraseña nueva.
         /// </summary>
         public static string ResetPassword_inicio_form_r_h4 {
             get {
@@ -331,7 +331,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Cambiar contraseña.
         /// </summary>
         public static string ResetPassword_SubmitButtonValue {
             get {
@@ -340,7 +340,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Su contraseña ha sido restablecida.
         /// </summary>
         public static string ResetPasswordConfirmation_inicio_form_r_h4 {
             get {
@@ -349,7 +349,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Haga click aquí para iniciar sesión.
         /// </summary>
         public static string ResetPasswordConfirmation_LoginActionLink {
             get {
@@ -358,7 +358,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Tengo impresora y quiero ayudar.
         /// </summary>
         public static string SelectUserOrAmbassador_AmbassadorLink {
             get {
@@ -367,7 +367,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Quiero pedir una prótesis.
         /// </summary>
         public static string SelectUserOrAmbassador_UserLink {
             get {
@@ -376,7 +376,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ingresar.
         /// </summary>
         public static string SelectUserOrAmbassador_ViewBag_Title {
             get {
@@ -385,7 +385,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Enviar código de verificación.
         /// </summary>
         public static string SendCode_h4 {
             get {
@@ -394,7 +394,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Enviar.
         /// </summary>
         public static string SendCode_ViewBag_Title {
             get {
@@ -403,7 +403,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ingresar código de verificación.
         /// </summary>
         public static string VerifyCode_h4 {
             get {
@@ -412,7 +412,7 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Verificar.
         /// </summary>
         public static string VerifyCode_ViewBag_Title {
             get {
