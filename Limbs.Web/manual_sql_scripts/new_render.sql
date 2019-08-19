@@ -1,14 +1,14 @@
 --AMPUTATION TYPE TABLE
 INSERT INTO AmputationTypeModels
 VALUES 
-	(1, 'A', 'Perdí UNA falange de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/a.png', null),
-	(2, 'B', 'Perdí DOS falanges de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/b.png', null),
-	(3, 'C', 'Perdí mis cuatro dedos y tengo un pulgar', 'https://limbstest.blob.core.windows.net/site/amputationType/c.png', null),
-	(4, 'D', 'Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/d.png', null),
-	(5, 'E', 'Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/e.png', null),
-	(6, 'F', 'Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)', 'https://limbstest.blob.core.windows.net/site/amputationType/f.png', null),
-	(7, 'G', 'Perdí el codo y tengo el húmero', 'https://limbstest.blob.core.windows.net/site/amputationType/g.png', null),
-	(8, 'H', 'Tengo el húmero pero muy poco desarrollado', 'https://limbstest.blob.core.windows.net/site/amputationType/h.png', null)
+	(1, 'A', 'Perdí UNA falange de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/a.png', null, 'Sin diseño'),
+	(2, 'B', 'Perdí DOS falanges de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/b.png', null, 'Sin diseño'),
+	(3, 'C', 'Perdí mis cuatro dedos y tengo un pulgar', 'https://limbstest.blob.core.windows.net/site/amputationType/c.png', null, 'Mano con pulgar'),
+	(4, 'D', 'Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/d.png', null, 'Mano'),
+	(5, 'E', 'Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/e.png', null, 'Brazo'),
+	(6, 'F', 'Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)', 'https://limbstest.blob.core.windows.net/site/amputationType/f.png', null, 'Brazo'),
+	(7, 'G', 'Perdí el codo y tengo el húmero', 'https://limbstest.blob.core.windows.net/site/amputationType/g.png', null, 'Sin diseño'),
+	(8, 'H', 'Tengo el húmero pero muy poco desarrollado', 'https://limbstest.blob.core.windows.net/site/amputationType/h.png', null, 'Sin diseño')
 
 INSERT INTO RenderModels
 VALUES
@@ -296,14 +296,5 @@ UPDATE OrderModels SET ColorFkId = (Color + 1), AmputationTypeFkId = (Amputation
 --BEGIN CATCH  
 --     ROLLBACK TRAN nombreTransaccion
 --END CATCH  
-
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 1
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 2
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 7
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 8
---UPDATE AmputationTypeModels SET Short_Description = 'Mano con pulgar' WHERE Id = 3
---UPDATE AmputationTypeModels SET Short_Description = 'Mano' WHERE Id = 4
---UPDATE AmputationTypeModels SET Short_Description = 'Brazo' WHERE Id = 5
---UPDATE AmputationTypeModels SET Short_Description = 'Brazo' WHERE Id = 6
 
 --UPDATE OrderModels SET OrderAmbassador_Id = NULL WHERE AmputationTypeFkId = 1 OR AmputationTypeFkId = 2 OR AmputationTypeFkId = 7 OR AmputationTypeFkId = 8
