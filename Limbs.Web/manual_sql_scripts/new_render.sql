@@ -1,14 +1,14 @@
 --AMPUTATION TYPE TABLE
 INSERT INTO AmputationTypeModels
 VALUES 
-	(1, 'A', 'Perdí UNA falange de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/a.png', null),
-	(2, 'B', 'Perdí DOS falanges de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/b.png', null),
-	(3, 'C', 'Perdí mis cuatro dedos y tengo un pulgar', 'https://limbstest.blob.core.windows.net/site/amputationType/c.png', null),
-	(4, 'D', 'Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/d.png', null),
-	(5, 'E', 'Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/e.png', null),
-	(6, 'F', 'Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)', 'https://limbstest.blob.core.windows.net/site/amputationType/f.png', null),
-	(7, 'G', 'Perdí el codo y tengo el húmero', 'https://limbstest.blob.core.windows.net/site/amputationType/g.png', null),
-	(8, 'H', 'Tengo el húmero pero muy poco desarrollado', 'https://limbstest.blob.core.windows.net/site/amputationType/h.png', null)
+	(1, 'A', 'Perdí UNA falange de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/a.png', null, 'Sin diseño'),
+	(2, 'B', 'Perdí DOS falanges de cualquier dedo', 'https://limbstest.blob.core.windows.net/site/amputationType/b.png', null, 'Sin diseño'),
+	(3, 'C', 'Perdí mis cuatro dedos y tengo un pulgar', 'https://limbstest.blob.core.windows.net/site/amputationType/c.png', null, 'Mano con pulgar'),
+	(4, 'D', 'Perdí el pulgar y no tengo los dedos. (Poseo hueso carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/d.png', null, 'Mano'),
+	(5, 'E', 'Perdí la mano, no tengo muñeca. (Poseo hueso cúbito y radio pero no carpal)', 'https://limbstest.blob.core.windows.net/site/amputationType/e.png', null, 'Brazo'),
+	(6, 'F', 'Tengo un muñón a partir del codo y tengo un antebrazo desarrollado. (Huesos cúbito y radio presentes)', 'https://limbstest.blob.core.windows.net/site/amputationType/f.png', null, 'Brazo'),
+	(7, 'G', 'Perdí el codo y tengo el húmero', 'https://limbstest.blob.core.windows.net/site/amputationType/g.png', null, 'Sin diseño'),
+	(8, 'H', 'Tengo el húmero pero muy poco desarrollado', 'https://limbstest.blob.core.windows.net/site/amputationType/h.png', null, 'Sin diseño')
 
 INSERT INTO RenderModels
 VALUES
@@ -151,6 +151,40 @@ VALUES
 --UPDATE ORDERS NEW FK
 UPDATE OrderModels SET ColorFkId = (Color + 1), AmputationTypeFkId = (AmputationType + 1)
 
+--UPDATE OrderModels SET ColorFkId = 
+--		case 
+--			when ColorFkId = 1 then 7
+--			when ColorFkId = 2 then 8
+--			when ColorFkId = 3 then 9
+--			when ColorFkId = 4 then 10
+--			when ColorFkId = 5 then 11
+--			when ColorFkId = 6 then 12
+--		end
+--WHERE AmputationTypeFkId = 4
+
+--UPDATE OrderModels SET ColorFkId = 
+--		case 
+--			when ColorFkId = 1 then 13
+--			when ColorFkId = 2 then 14
+--			when ColorFkId = 3 then 15
+--			when ColorFkId = 4 then 16
+--			when ColorFkId = 5 then 17
+--			when ColorFkId = 6 then 18
+--		end
+--WHERE AmputationTypeFkId = 5
+
+--UPDATE OrderModels SET ColorFkId = 
+--		case 
+--			when ColorFkId = 1 then 19
+--			when ColorFkId = 2 then 20
+--			when ColorFkId = 3 then 21
+--			when ColorFkId = 4 then 22
+--			when ColorFkId = 5 then 23
+--			when ColorFkId = 6 then 24
+--		end
+--WHERE AmputationTypeFkId = 6
+
+
 --BEGIN TRY
 --	BEGIN TRAN nombreTransaccion
 --	DECLARE @OrderId int, @AmputationTypeId INT
@@ -158,7 +192,7 @@ UPDATE OrderModels SET ColorFkId = (Color + 1), AmputationTypeFkId = (Amputation
 --	DECLARE order_cursor cursor for
 --		select o.Id, o.AmputationTypeFkId, o.Pieces_AtomicLabCover, o.Pieces_FingerMechanismHolder, o.Pieces_Fingers, o.Pieces_FingerStopper, o.Pieces_FingersX1, o.Pieces_FingersX2P, o.Pieces_Palm, o.Pieces_Thumb, o.Pieces_ThumbClip, o.Pieces_ThumbConnector, o.Pieces_ThumbScrew, o.Pieces_UpperArm, o.Pieces_UpperArm_FingerConnector, o.Pieces_UpperArm_FingerSlider, o.Pieces_UpperArm_PalmConnector, o.Pieces_UpperArm_ThumbShortConnector 
 --		from OrderModels o
---		where o.AmputationTypeFkId = 3 or o.AmputationTypeFkId = 5
+--		where o.AmputationTypeFkId = 3
 --		order by o.AmputationTypeFkId ASC
 --	OPEN order_cursor
 --	FETCH NEXT FROM order_cursor into @OrderId, @AmputationTypeId, @AtomicLabCover , @FingerMechanismHolder , @Fingers ,@FingerStopper ,@FingersX1 ,@FingersX2P ,@Palm ,@Thumb ,@ThumbClip ,@ThumbConnector ,@ThumbScrew ,@UpperArm ,@UpperArm_FingerConnector ,@UpperArm_FingerSlider ,@UpperArm_PalmConnector, @UpperArm_ThumbShortConnector
@@ -231,7 +265,7 @@ UPDATE OrderModels SET ColorFkId = (Color + 1), AmputationTypeFkId = (Amputation
 --	DECLARE order_cursor cursor for
 --		select o.Id, o.AmputationTypeFkId, o.Pieces_AtomicLabCover, o.Pieces_FingerMechanismHolder, o.Pieces_Fingers, o.Pieces_FingerStopper, o.Pieces_FingersX1, o.Pieces_FingersX2P, o.Pieces_Palm, o.Pieces_Thumb, o.Pieces_ThumbClip, o.Pieces_ThumbConnector, o.Pieces_ThumbScrew, o.Pieces_UpperArm, o.Pieces_UpperArm_FingerConnector, o.Pieces_UpperArm_FingerSlider, o.Pieces_UpperArm_PalmConnector, o.Pieces_UpperArm_ThumbShortConnector 
 --		from OrderModels o
---		where o.AmputationTypeFkId = 4 or o.AmputationTypeFkId = 6
+--		where o.AmputationTypeFkId = 4
 --		order by o.AmputationTypeFkId ASC
 --	OPEN order_cursor
 --	FETCH NEXT FROM order_cursor into @OrderId, @AmputationTypeId, @AtomicLabCover , @FingerMechanismHolder , @Fingers ,@FingerStopper ,@FingersX1 ,@FingersX2P ,@Palm ,@Thumb ,@ThumbClip ,@ThumbConnector ,@ThumbScrew ,@UpperArm ,@UpperArm_FingerConnector ,@UpperArm_FingerSlider ,@UpperArm_PalmConnector, @UpperArm_ThumbShortConnector
@@ -297,13 +331,207 @@ UPDATE OrderModels SET ColorFkId = (Color + 1), AmputationTypeFkId = (Amputation
 --     ROLLBACK TRAN nombreTransaccion
 --END CATCH  
 
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 1
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 2
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 7
---UPDATE AmputationTypeModels SET Short_Description = 'Sin diseño' WHERE Id = 8
---UPDATE AmputationTypeModels SET Short_Description = 'Mano con pulgar' WHERE Id = 3
---UPDATE AmputationTypeModels SET Short_Description = 'Mano' WHERE Id = 4
---UPDATE AmputationTypeModels SET Short_Description = 'Brazo' WHERE Id = 5
---UPDATE AmputationTypeModels SET Short_Description = 'Brazo' WHERE Id = 6
+
+--BEGIN TRY
+--	BEGIN TRAN nombreTransaccion
+--	DECLARE @OrderId int, @AmputationTypeId INT
+--	DECLARE @AtomicLabCover bit, @FingerMechanismHolder bit, @Fingers bit,@FingerStopper bit,@FingersX1 bit,@FingersX2P bit,@Palm bit,@Thumb bit,@ThumbClip bit,@ThumbConnector bit,@ThumbScrew bit,@UpperArm bit,@UpperArm_FingerConnector bit,@UpperArm_FingerSlider bit,@UpperArm_PalmConnector bit,@UpperArm_ThumbShortConnector bit
+--	DECLARE order_cursor cursor for
+--		select o.Id, o.AmputationTypeFkId, o.Pieces_AtomicLabCover, o.Pieces_FingerMechanismHolder, o.Pieces_Fingers, o.Pieces_FingerStopper, o.Pieces_FingersX1, o.Pieces_FingersX2P, o.Pieces_Palm, o.Pieces_Thumb, o.Pieces_ThumbClip, o.Pieces_ThumbConnector, o.Pieces_ThumbScrew, o.Pieces_UpperArm, o.Pieces_UpperArm_FingerConnector, o.Pieces_UpperArm_FingerSlider, o.Pieces_UpperArm_PalmConnector, o.Pieces_UpperArm_ThumbShortConnector 
+--		from OrderModels o
+--		where o.AmputationTypeFkId = 5
+--		order by o.AmputationTypeFkId ASC
+--	OPEN order_cursor
+--	FETCH NEXT FROM order_cursor into @OrderId, @AmputationTypeId, @AtomicLabCover , @FingerMechanismHolder , @Fingers ,@FingerStopper ,@FingersX1 ,@FingersX2P ,@Palm ,@Thumb ,@ThumbClip ,@ThumbConnector ,@ThumbScrew ,@UpperArm ,@UpperArm_FingerConnector ,@UpperArm_FingerSlider ,@UpperArm_PalmConnector, @UpperArm_ThumbShortConnector
+--	WHILE @@FETCH_STATUS = 0
+--	BEGIN
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 33, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 34, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 35, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 36, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 37, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 38, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 39, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 40, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 41, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 51, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 52, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 53, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 54, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 55, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 56, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 57, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 58, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 59, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 69, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 70, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 71, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 72, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 73, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 74, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 75, 0)
+
+--		FETCH NEXT FROM order_cursor into @OrderId, @AmputationTypeId, @AtomicLabCover , @FingerMechanismHolder , @Fingers ,@FingerStopper ,@FingersX1 ,@FingersX2P ,@Palm ,@Thumb ,@ThumbClip ,@ThumbConnector ,@ThumbScrew ,@UpperArm ,@UpperArm_FingerConnector ,@UpperArm_FingerSlider ,@UpperArm_PalmConnector, @UpperArm_ThumbShortConnector
+--	END
+
+--	CLOSE order_cursor
+--	DEALLOCATE order_cursor
+
+--	COMMIT TRAN nombreTransaccion
+--END TRY  
+--BEGIN CATCH  
+--     ROLLBACK TRAN nombreTransaccion
+--END CATCH
+
+--BEGIN TRY
+--	BEGIN TRAN nombreTransaccion
+--	DECLARE @OrderId int, @AmputationTypeId INT
+--	DECLARE @AtomicLabCover bit, @FingerMechanismHolder bit, @Fingers bit,@FingerStopper bit,@FingersX1 bit,@FingersX2P bit,@Palm bit,@Thumb bit,@ThumbClip bit,@ThumbConnector bit,@ThumbScrew bit,@UpperArm bit,@UpperArm_FingerConnector bit,@UpperArm_FingerSlider bit,@UpperArm_PalmConnector bit,@UpperArm_ThumbShortConnector bit
+--	DECLARE order_cursor cursor for
+--		select o.Id, o.AmputationTypeFkId, o.Pieces_AtomicLabCover, o.Pieces_FingerMechanismHolder, o.Pieces_Fingers, o.Pieces_FingerStopper, o.Pieces_FingersX1, o.Pieces_FingersX2P, o.Pieces_Palm, o.Pieces_Thumb, o.Pieces_ThumbClip, o.Pieces_ThumbConnector, o.Pieces_ThumbScrew, o.Pieces_UpperArm, o.Pieces_UpperArm_FingerConnector, o.Pieces_UpperArm_FingerSlider, o.Pieces_UpperArm_PalmConnector, o.Pieces_UpperArm_ThumbShortConnector 
+--		from OrderModels o
+--		where o.AmputationTypeFkId = 6
+--		order by o.AmputationTypeFkId ASC
+--	OPEN order_cursor
+--	FETCH NEXT FROM order_cursor into @OrderId, @AmputationTypeId, @AtomicLabCover , @FingerMechanismHolder , @Fingers ,@FingerStopper ,@FingersX1 ,@FingersX2P ,@Palm ,@Thumb ,@ThumbClip ,@ThumbConnector ,@ThumbScrew ,@UpperArm ,@UpperArm_FingerConnector ,@UpperArm_FingerSlider ,@UpperArm_PalmConnector, @UpperArm_ThumbShortConnector
+--	WHILE @@FETCH_STATUS = 0
+--	BEGIN
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 42, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 43, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 44, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 45, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 46, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 47, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 48, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 49, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 50, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 60, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 61, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 62, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 63, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 64, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 65, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 66, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 67, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 68, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 76, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 77, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 78, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 79, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 80, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 81, 0)
+
+--		INSERT INTO OrderRenderPieceModels 
+--		VALUES (@OrderId, 82, 0)
+
+--		FETCH NEXT FROM order_cursor into @OrderId, @AmputationTypeId, @AtomicLabCover , @FingerMechanismHolder , @Fingers ,@FingerStopper ,@FingersX1 ,@FingersX2P ,@Palm ,@Thumb ,@ThumbClip ,@ThumbConnector ,@ThumbScrew ,@UpperArm ,@UpperArm_FingerConnector ,@UpperArm_FingerSlider ,@UpperArm_PalmConnector, @UpperArm_ThumbShortConnector
+--	END
+
+--	CLOSE order_cursor
+--	DEALLOCATE order_cursor
+
+--	COMMIT TRAN nombreTransaccion
+--END TRY  
+--BEGIN CATCH  
+--     ROLLBACK TRAN nombreTransaccion
+--END CATCH
+
 
 --UPDATE OrderModels SET OrderAmbassador_Id = NULL WHERE AmputationTypeFkId = 1 OR AmputationTypeFkId = 2 OR AmputationTypeFkId = 7 OR AmputationTypeFkId = 8
