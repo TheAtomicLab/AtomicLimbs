@@ -138,7 +138,7 @@ namespace Limbs.Web.Logic.Services
 
         public async Task<bool> AssignmentAmbassadorAsync(int id, int idOrder, IPrincipal user, IOrderNotificationService _ns)
         {
-            OrderModel order = await _db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
+            OrderModel order = await _db.OrderModels.Include(x => x.OrderAmbassador).Include(x => x.RenderPieces).Include(x => x.OrderRequestor).FirstOrDefaultAsync(x => x.Id == idOrder);
 
             if (order == null)
                 return false;
@@ -154,6 +154,7 @@ namespace Limbs.Web.Logic.Services
             order.OrderAmbassador = newAmbassador;
             order.Status = OrderStatus.PreAssigned;
             order.StatusLastUpdated = DateTime.UtcNow;
+            order.RenderPieces.ForEach(p => p.Printed = false);
             if (user != null)
                 order.LogMessage(user, $"Change ambassador from {(oldAmbassador != null ? oldAmbassador.Email : "no-data")} to {newAmbassador.Email}");
 
