@@ -1,0 +1,280 @@
+﻿@using Limbs.Web.ViewModels.Admin;
+@using Limbs.Web.Resources
+
+@model EditAmputationViewModel
+
+@{
+    ViewBag.Title = "Editar Tipo de Amputación: " + Model.Name;
+}
+
+<link rel="stylesheet" href="~/Content/basic.css">
+<link rel="stylesheet" href="~/Content/dropzone.css">
+<link rel="stylesheet" href="~/Content/jquery.bxslider.min.css">
+
+<div class="card center-card-l">
+    <h2>Editar Tipo de Amputación: @Model.Name</h2>
+
+    @using (Html.BeginForm("Edit", "Amputations", FormMethod.Post, new { id = "frmEdit", area = "Admin", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.UrlImage)
+
+            <div class="form-group">
+                <p class="form_title">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label" })
+                </p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "f-campo" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">
+                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label" })
+                </p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "f-campo" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">
+                    @Html.LabelFor(model => model.Short_Description, htmlAttributes: new { @class = "control-label" })
+                </p>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Short_Description, new { htmlAttributes = new { @class = "f-campo" } })
+                    @Html.ValidationMessageFor(model => model.Short_Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">@OrdersTexts.Edit_Images</p>
+                <div class="slider">
+                    <div class="slider-image-container">
+                        <img src="@Model.UrlImage" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="form_title">Cambiar Imagén</p>
+                <div class="col-md-10">
+                    <div id="edit-upload-images" class="dropzone" style="display: none;">
+                        <span id="msgManoImagen" style="color:blue;"></span>
+                        <ul id="msgErrorManoImagen" style="color:red;"></ul>
+                    </div>
+
+                    <h3 id="title-no-more-images" style="display: none;">Puede subir una sola imagén</h3>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="button" id="enviar" value="@OrdersTexts.Edit_EnviarButton" class="bn_blue" />
+                </div>
+            </div>
+        </div>
+    }
+
+    @section Scripts {
+        <script src="~/Scripts/dropzone.js"></script>
+        <script src="~/Scripts/jquery.bxslider.min.js"></script>
+
+        <script>
+            function fnValidateDynamicContent() {
+                var currForm = $('#frmEdit');
+                currForm.removeData("validator");
+                currForm.removeData("unobtrusiveValidation");
+                $.validator.unobtrusive.parse(currForm);
+                currForm.validate();
+            }
+
+    $(document).ready(function () {
+                var typeFileAccepted = "image/*";
+                var maxFileSizeImage = 5;
+                var uploadMultipleVar = false;
+                var maxUploadFiles = 1;
+                var fileTooBigMsg = "@OrdersTexts.Edit_Image_fileTooBigMsg: " + maxFileSizeImage + " MB.";
+                var invalidFileTypeMsg = "@OrdersTexts.Edit_Image_invalidFileTypeMsg";
+                var msgWhileUploadFile = "@OrdersTexts.Edit_Image_msgWhileUploadFile";
+
+                let frm = $('#frmEdit');
+                let titleNoUploadImages = $('#title-no-more-images');
+                let dropzoneContainerClass = $('#edit-upload-images');
+
+        frm.on('submit', function (e) {
+            e.preventDefault();
+
+            if ($(this).valid()) {
+                $.post(frm.attr('action'), frm.serialize(), function (json) {
+                    window.location = json.Action;
+                }, 'json');
+            }
+
+                    return false;
+                });
+
+                var myDropzone = $("#edit-upload-images").dropzone({
+                    url: '/Admin/Amputations/Edit/',
+                    previewTemplate: "<div class=\"dz-preview dz-file-preview\">\n  <div class=\"dz-imageMano\"><img data-dz-thumbnail /></div>\n  <div class=\"dz-details\">\n    <div class=\"dz-size\"><span data-dz-size></span></div>\n    <div class=\"dz-filename\"><span data-dz-name></span></div>\n  </div>\n </div>",
+                    maxFilesize: maxFileSizeImage,
+                    maxFiles: maxUploadFiles,
+                    uploadMultiple: uploadMultipleVar,
+                    maxThumbnailFilesize: 5,
+                    acceptedFiles: typeFileAccepted,
+                    autoProcessQueue: false,
+                    autoQueue: true,
+                    addRemoveLinks: true,
+                    dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+                    dictInvalidFileType: null,
+                    dictRemoveFile: "Borrar imagen",
+                    dictCancelUpload: null,
+                    dictRemoveFileConfirmation: null,
+                    createImageThumbnails: true,
+                    init: function () {
+                        dz = this;
+                        dz.on('sending', sending);
+                        dz.on("processing", processing);
+                        dz.on("addedfile", addedFile);
+                        dz.on("removedfile", removedFile);
+                        dz.on("error", errorDropzone);
+                        dz.on("success", successDropzone);
+                    }
+                });
+
+                $('#enviar').click(function () {
+                    console.log(dz);
+                    if (dz.files.length > 0) {
+                        dz.processQueue();
+                    } else {
+                        frm.submit();
+                    }
+                });
+
+                function successDropzone(file, response) {
+                    window.location = response.Action;
+                }
+
+                function errorDropzone(file, errormessage, xhr) {
+                    if (xhr == undefined)
+                        return false;
+
+                    var t = xhr.response.responseText;
+
+                    $('#msgManoImagen').empty();
+                    $('#msgErrorManoImagen').empty();
+                    showError("@OrdersTexts.Edit_errorDropzone");
+                    console.log($(errormessage)[1].textContent);
+
+                    disabledRegister();
+                }
+
+                 function removedFile(file) {
+                    $('#msgErrorManoImagen').empty();
+                    updateRegisterFiles();
+                    dz.files.length == 0 ? disabledRegister() : "";
+                 }
+
+                function processing(file) {
+                    $('#msgManoImagen').empty();
+                    $('#msgManoImagen').html(msgWhileUploadFile);
+                }
+
+                function addedFile(file) {
+                    if (dz.files.length > maxUploadFiles) {
+                        dz.removeFile(dz.files[0]);
+                    }
+
+                    console.log(file);
+
+                    $('#msgErrorManoImagen').empty();
+
+                    updateRegisterFiles();
+                }
+
+                function sending(file, xhr, data) {
+                    var array = frm.serializeArray();
+                    for (var i = 0; i < array.length; i++) {
+                        data.append(array[i].name, array[i].value)
+                    }
+                }
+
+                function updateRegisterFiles() {
+                    for (var i = 0; i < dz.files.length; i++) {
+
+                        var file = dz.files[i];
+
+                        if (!isConditionsValid(file)) {
+                            disabledRegister();
+                            showErrors(file);
+                            break;
+                        } else {
+                            enableRegister();
+                        }
+                    }
+                }
+
+                function isValidSizeImage(file, nro) {
+                    //var sizeFile = file.size / 1024 / 1024;
+                    sizeFile = file.size / 1000000 // -> Dropzone calculate size
+                    return sizeFile <= nro;
+                }
+
+                function showError(msg) {
+                    var ErrorMsg = "<li>" + msg + "</li>";
+
+                    $('#msgErrorManoImagen').append(ErrorMsg);
+                }
+
+                function disabledRegister() {
+                    $("[name=enviar]").prop('disabled', true);
+                };
+
+                function enableRegister() {
+                    $("[name=enviar]").prop('disabled', false);
+                };
+
+                function isConditionsValid(file) {
+                    var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+                    var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+                    return ConditionTypeImage && ConditionSizeImage;
+                }
+
+                function showErrors(file) {
+                    var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+                    Dropzone.sizeFile
+                    var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+                    if (!ConditionSizeImage) {
+                        showError(fileTooBigMsg);
+                    }
+
+                    if (!ConditionTypeImage) {
+                        showError(invalidFileTypeMsg);
+                    }
+                }
+
+                let imagesCount = 1;
+                if (imagesCount >= 8) {
+                    titleNoUploadImages.show();
+                } else {
+                    dropzoneContainerClass.show();
+                }
+
+                var slider = $('.slider').bxSlider({
+                    pager: true,
+                    adaptiveHeight: true,
+                    touchEnabled: false
+                });
+            });
+        </script>
+    }
+</div>

@@ -10,6 +10,11 @@ namespace Limbs.Web.ViewModels.Configs
         {
             CreateMap<AmputationTypeModel, AmputationViewModel>()
                 .ForMember(p => p.UrlImage, src => src.MapFrom(p => p.PrimaryUrlImage));
+
+            CreateMap<AmputationTypeModel, EditAmputationViewModel>()
+                .ForMember(p => p.UrlImage, src => src.MapFrom(p => p.PrimaryUrlImage));
+
+            CreateMap<EditAmputationViewModel, AmputationTypeModel>();
         }
     }
 }

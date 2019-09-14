@@ -627,6 +627,7 @@
     <Content Include="Areas\Admin\Views\Events\AssignEvent.cshtml" />
     <Content Include="Areas\Admin\Views\Events\GetOrders.cshtml" />
     <Content Include="Areas\Admin\Views\Amputations\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Amputations\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
