@@ -1,0 +1,47 @@
+﻿@model List<Limbs.Web.ViewModels.Admin.AmputationViewModel>
+
+@{
+    ViewBag.Title = "Tipo de Amputaciones";
+}
+
+<h2>Tipo de Amputaciones</h2>
+
+<table>
+    <tr>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Descripción
+        </th>
+        <th>
+            Descripción corta
+        </th>
+        <th>
+            Imagén
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+    @foreach (var oneAmputation in Model)
+    {
+        <tr>
+            <td>
+                @oneAmputation.Name
+            </td>
+            <td>
+                @oneAmputation.Description
+            </td>
+            <td>
+                @oneAmputation.Short_Description
+            </td>
+            <td>
+                <img src="@oneAmputation.UrlImage" width="200" />
+            </td>
+            <td>
+                @Html.ActionLink("Ver Ordenes", "GetOrders", new { id = oneAmputation.Id, area = "Admin" })
+            </td>
+        </tr>
+    }
+</table>

@@ -239,6 +239,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AmputationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\EventsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
@@ -465,11 +466,13 @@
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Admin\AmputationViewModel.cs" />
     <Compile Include="ViewModels\AmputationDesign.cs" />
     <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
     <Compile Include="ViewModels\AssignEventViewModel.cs" />
     <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
+    <Compile Include="ViewModels\Configs\AmputationProfile.cs" />
     <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
@@ -623,6 +626,7 @@
     <Content Include="Areas\Admin\Views\Events\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Events\AssignEvent.cshtml" />
     <Content Include="Areas\Admin\Views\Events\GetOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Amputations\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />

@@ -10,8 +10,7 @@ tr:nth-child(even) { background-color: #ebebeb; }
 td, th {
     border-left: solid 1px #c0c0c0;
     box-sizing: border-box;
-    padding: 11px 0px;
-    padding-left: 30px;
+    padding: 1em;
 }
 
 tr th:first-of-type, tr td:first-of-type { border-left: solid 0px; }
