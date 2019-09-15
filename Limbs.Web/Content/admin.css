@@ -13,6 +13,10 @@ td, th {
     padding: 1em;
 }
 
+td {
+    text-align: center;
+}
+
 tr th:first-of-type, tr td:first-of-type { border-left: solid 0px; }
 
 .NotAssigned { background-color: orange; }

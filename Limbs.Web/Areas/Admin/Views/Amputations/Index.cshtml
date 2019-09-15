@@ -41,6 +41,7 @@
             </td>
             <td>
                 @Html.ActionLink("Editar", "Edit", new { id = oneAmputation.Id, area = "Admin" })
+                @Html.ActionLink("Renders", "Index", "Renders", new { id = oneAmputation.Id, area = "Admin" }, null)
             </td>
         </tr>
     }
