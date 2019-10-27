@@ -438,7 +438,7 @@ namespace Limbs.Web.Controllers
                 var userDb = await UserManager.FindByNameAsync(model.Email);
                 if (userDb != null)
                 {
-                    ModelState.AddModelError(nameof(model), @"Su cuenta de correo no esta asociada a una cuenta de facebook.");
+                    ModelState.AddModelError(nameof(model), @"Su cuenta de correo ya esta registrada pero no esta asociada a una cuenta de facebook.");
                     return View("Login");
                 }
 
