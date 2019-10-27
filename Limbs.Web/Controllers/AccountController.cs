@@ -194,6 +194,13 @@ namespace Limbs.Web.Controllers
             }
             if (!ModelState.IsValid) return View(model);
 
+            var userDb = await UserManager.FindByNameAsync(model.Email);
+            if (userDb != null && string.IsNullOrEmpty(userDb.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(model), @"La cuenta de correo ya esta registrada como cuenta de Facebook.");
+                return View(model);
+            }
+
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await UserManager.CreateAsync(user, model.Password);
 
