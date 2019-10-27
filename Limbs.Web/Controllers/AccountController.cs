@@ -427,6 +427,14 @@ namespace Limbs.Web.Controllers
 
                     return View("Login");
                 }
+
+                var userDb = await UserManager.FindByNameAsync(model.Email);
+                if (userDb != null)
+                {
+                    ModelState.AddModelError(nameof(model), @"Su cuenta de correo no esta asociada a una cuenta de facebook.");
+                    return View("Login");
+                }
+
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
