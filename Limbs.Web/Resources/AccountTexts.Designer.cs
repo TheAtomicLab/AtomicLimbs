@@ -88,6 +88,24 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Su cuenta de correo ya esta registrada pero no esta asociada a una cuenta de facebook..
+        /// </summary>
+        public static string AccoutNotAssociatedWithFace {
+            get {
+                return ResourceManager.GetString("AccoutNotAssociatedWithFace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No pudimos leer la información de Facebook, intenta nuevamente..
+        /// </summary>
+        public static string CantReadFaceInfo {
+            get {
+                return ResourceManager.GetString("CantReadFaceInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Iniciá sesión.
         /// </summary>
         public static string ConfirmEmail_LoginActionLink {
@@ -120,6 +138,24 @@ namespace Limbs.Web.Resources {
         public static string DisplayEmail_ViewBag_Title {
             get {
                 return ResourceManager.GetString("DisplayEmail_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ¡Ups! Al parecer ya tenías una cuenta. Te acabamos de mandar un correo a {0} para que puedas crear una nueva contraseña..
+        /// </summary>
+        public static string DuplicateEmail {
+            get {
+                return ResourceManager.GetString("DuplicateEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email requerido.
+        /// </summary>
+        public static string EmailRequired {
+            get {
+                return ResourceManager.GetString("EmailRequired", resourceCulture);
             }
         }
         
@@ -174,6 +210,15 @@ namespace Limbs.Web.Resources {
         public static string ExternalLoginFailure_ViewBag_Title {
             get {
                 return ResourceManager.GetString("ExternalLoginFailure_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La cuenta de correo esta asociada a una cuenta de Facebook.
+        /// </summary>
+        public static string FacebookAccount {
+            get {
+                return ResourceManager.GetString("FacebookAccount", resourceCulture);
             }
         }
         
@@ -403,6 +448,15 @@ namespace Limbs.Web.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Disculpe, su usuario no existe..
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ingresar código de verificación.
         /// </summary>
         public static string VerifyCode_h4 {
@@ -417,6 +471,15 @@ namespace Limbs.Web.Resources {
         public static string VerifyCode_ViewBag_Title {
             get {
                 return ResourceManager.GetString("VerifyCode_ViewBag_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Usuario o contraseña incorrectos.
+        /// </summary>
+        public static string WrongUserOrPassword {
+            get {
+                return ResourceManager.GetString("WrongUserOrPassword", resourceCulture);
             }
         }
     }

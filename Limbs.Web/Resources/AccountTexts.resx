@@ -237,4 +237,25 @@
   <data name="_ExternalLoginsListPartial_LoginButtonTitle" xml:space="preserve">
     <value>Ingresa con tu cuenta de</value>
   </data>
+  <data name="AccoutNotAssociatedWithFace" xml:space="preserve">
+    <value>Su cuenta de correo ya esta registrada pero no esta asociada a una cuenta de facebook.</value>
+  </data>
+  <data name="CantReadFaceInfo" xml:space="preserve">
+    <value>No pudimos leer la información de Facebook, intenta nuevamente.</value>
+  </data>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>¡Ups! Al parecer ya tenías una cuenta. Te acabamos de mandar un correo a {0} para que puedas crear una nueva contraseña.</value>
+  </data>
+  <data name="EmailRequired" xml:space="preserve">
+    <value>Email requerido</value>
+  </data>
+  <data name="FacebookAccount" xml:space="preserve">
+    <value>La cuenta de correo esta asociada a una cuenta de Facebook</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Disculpe, su usuario no existe.</value>
+  </data>
+  <data name="WrongUserOrPassword" xml:space="preserve">
+    <value>Usuario o contraseña incorrectos</value>
+  </data>
 </root>

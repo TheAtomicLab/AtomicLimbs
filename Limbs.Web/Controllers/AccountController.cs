@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
-using Limbs.Web.Common.Resources;
+using Limbs.Web.Resources;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -96,7 +96,7 @@ namespace Limbs.Web.Controllers
                 {
                     await SendEmailConfirmation(user);
 
-                    ViewBag.ErrorMessage = "Verificá tu bandeja de entrada, te enviamos un link para confirmar tu cuenta.";
+                    ViewBag.ErrorMessage = AccountTexts.DisplayEmail_TextInfo;
                     return View("Error");
                 }
             }
@@ -112,9 +112,9 @@ namespace Limbs.Web.Controllers
                 //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 //case SignInStatus.Failure:
                 default:
-                    var msgError = @"Usuario o contraseña incorrectos";
+                    var msgError = @AccountTexts.WrongUserOrPassword;
                     if (string.IsNullOrEmpty(user.PasswordHash))
-                        msgError = "La cuenta de correo esta asociada a una cuenta de Facebook";
+                        msgError = AccountTexts.FacebookAccount;
 
                     ModelState.AddModelError("loginfail", msgError);
                     return View(model);
@@ -197,7 +197,7 @@ namespace Limbs.Web.Controllers
             var userDb = await UserManager.FindByNameAsync(model.Email);
             if (userDb != null && string.IsNullOrEmpty(userDb.PasswordHash))
             {
-                ModelState.AddModelError(nameof(model), @"La cuenta de correo ya esta registrada como cuenta de Facebook.");
+                ModelState.AddModelError(nameof(model), @AccountTexts.FacebookAccount);
                 return View(model);
             }
 
@@ -227,7 +227,7 @@ namespace Limbs.Web.Controllers
 
         private bool IsUserExistError(ApplicationUser user, IdentityResult result)
         {
-            var os = string.Format(LimbsResources.DuplicateEmail, user.UserName);
+            var os = string.Format(AccountTexts.DuplicateEmail, user.UserName);
 
             return result.Errors.Any(error => os.Equals(error));
         }
@@ -240,7 +240,7 @@ namespace Limbs.Web.Controllers
                 var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
                 var body = CompiledTemplateEngine.Render("Mails.EmailConfirmation", callbackUrl);
 
-                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Confirma tu cuenta", body);
+                await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] " + AccountTexts.DisplayEmail_ViewBag_Title, body);
             }
         }
 
@@ -282,12 +282,12 @@ namespace Limbs.Web.Controllers
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
             {
-                ModelState.AddModelError("", @"Disculpe, su usuario no existe.");
+                ModelState.AddModelError("", @AccountTexts.UserNotFound);
                 return View(model);
             }
             if (!(await UserManager.IsEmailConfirmedAsync(user.Id)))
             {
-                ModelState.AddModelError("", @"Por favor, primero confirme su mail.");
+                ModelState.AddModelError("", @AccountTexts.DisplayEmail_ViewBag_Title);
 
                 await SendEmailConfirmation(user);
 
@@ -421,7 +421,7 @@ namespace Limbs.Web.Controllers
 
             if (string.IsNullOrWhiteSpace(model.Email))
             {
-                ModelState.AddModelError(nameof(model.Email), @"Email requerido");
+                ModelState.AddModelError(nameof(model.Email), AccountTexts.EmailRequired);
             }
 
             if (ModelState.IsValid)
@@ -430,7 +430,7 @@ namespace Limbs.Web.Controllers
                 var info = await AuthenticationManager.GetExternalLoginInfoAsync();
                 if (info == null)
                 {
-                    ModelState.AddModelError(nameof(model), @"No pudimos leer la información de Facebook, intenta nuevamente.");
+                    ModelState.AddModelError(nameof(model), AccountTexts.CantReadFaceInfo);
 
                     return View("Login");
                 }
@@ -438,7 +438,7 @@ namespace Limbs.Web.Controllers
                 var userDb = await UserManager.FindByNameAsync(model.Email);
                 if (userDb != null)
                 {
-                    ModelState.AddModelError(nameof(model), @"Su cuenta de correo ya esta registrada pero no esta asociada a una cuenta de facebook.");
+                    ModelState.AddModelError(nameof(model), AccountTexts.AccoutNotAssociatedWithFace);
                     return View("Login");
                 }
 
@@ -511,7 +511,7 @@ namespace Limbs.Web.Controllers
             var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
             var body = CompiledTemplateEngine.Render("Mails.EmailPasswordChange", callbackUrl);
 
-            await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Restablecer contraseña", body);
+            await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] " + AccountTexts.ForgotPassword_SubmitButton, body);
         }
 
 
