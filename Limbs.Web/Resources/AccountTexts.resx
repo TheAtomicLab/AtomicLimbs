@@ -118,123 +118,123 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfirmEmail_LoginActionLink" xml:space="preserve">
-    <value>maru</value>
+    <value>Iniciá sesión</value>
   </data>
   <data name="ConfirmEmail_ViewBag_Title" xml:space="preserve">
-    <value />
+    <value>Gracias por confirmar tu email</value>
   </data>
   <data name="DisplayEmail_TextInfo" xml:space="preserve">
-    <value>maru1</value>
+    <value>Verificá tu bandeja de entrada, te enviamos un link para confirmar tu cuenta</value>
   </data>
   <data name="DisplayEmail_ViewBag_Title" xml:space="preserve">
-    <value>maru2</value>
+    <value>Confirmá tu email</value>
   </data>
   <data name="ExternalLoginConfirmation_inicio_form_r_h2" xml:space="preserve">
-    <value />
+    <value>Iniciaste sesión con</value>
   </data>
   <data name="ExternalLoginConfirmation_inicio_form_r_h4" xml:space="preserve">
-    <value />
+    <value>Ahora, ingresa tu email y hace click en el boton registrarse para continuar</value>
   </data>
   <data name="ExternalLoginConfirmation_SubmitInput" xml:space="preserve">
-    <value />
+    <value>Registrarse</value>
   </data>
   <data name="ExternalLoginConfirmation_ViewBag_Title" xml:space="preserve">
-    <value />
+    <value>Complete su registro</value>
   </data>
   <data name="ExternalLoginFailure_Text_danger" xml:space="preserve">
-    <value />
+    <value>Inicio de sesión fallido</value>
   </data>
   <data name="ExternalLoginFailure_ViewBag_Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ForgotPassword_EmailTextBox" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ForgotPassword_inicio_form_r_h4" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ForgotPassword_SubmitButton" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ForgotPassword_ViewBag_Title" xml:space="preserve">
-    <value />
+    <value>Error al iniciar sesión</value>
   </data>
   <data name="ForgotPasswordConfirmation_inicio_form_r_h4" xml:space="preserve">
-    <value />
+    <value>Por favor revise su correo electrónico</value>
+  </data>
+  <data name="ForgotPassword_EmailTextBox" xml:space="preserve">
+    <value>ejemplo@atomiclab.org</value>
+  </data>
+  <data name="ForgotPassword_inicio_form_r_h4" xml:space="preserve">
+    <value>Para recuperar su contraseña ingrese su mail</value>
+  </data>
+  <data name="ForgotPassword_SubmitButton" xml:space="preserve">
+    <value>Recuperar contraseña</value>
+  </data>
+  <data name="ForgotPassword_ViewBag_Title" xml:space="preserve">
+    <value>Recuperar contraseña</value>
   </data>
   <data name="Login_cont_regis_post_form_ini" xml:space="preserve">
-    <value>a</value>
+    <value>¿No tenés una cuenta?</value>
   </data>
   <data name="Login_cont_regis_post_form_ini_link" xml:space="preserve">
-    <value>a</value>
+    <value>Registrate</value>
   </data>
   <data name="Login_ForgotPasswordUrlAction" xml:space="preserve">
-    <value>aa</value>
+    <value>¿Olvidó su contraseña?</value>
   </data>
   <data name="Login_form_group_SubmitButton" xml:space="preserve">
-    <value>aa</value>
+    <value>Ingresar</value>
   </data>
   <data name="Login_p_post_form_ini" xml:space="preserve">
-    <value>aa</value>
+    <value>¿No tenés una cuenta en Facebook?</value>
   </data>
   <data name="Login_ViewBag_Title" xml:space="preserve">
-    <value>aa</value>
+    <value>Ingresar</value>
   </data>
   <data name="Register_cont_regis_post_form_ini" xml:space="preserve">
-    <value>aa</value>
+    <value>¿Ya tenés una cuenta?</value>
   </data>
   <data name="Register_cont_regis_post_form_ini_link" xml:space="preserve">
-    <value>aa</value>
+    <value>Iniciar sesión</value>
   </data>
   <data name="Register_inicio_form_r_h4" xml:space="preserve">
-    <value>aa</value>
+    <value>Creá una cuenta nueva en solo un minuto</value>
   </data>
   <data name="Register_post_form_ini" xml:space="preserve">
-    <value>ppp</value>
+    <value>¿No tenés una cuenta en Facebook?, registrate acá:</value>
   </data>
   <data name="Register_ViewBag_Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ResetPassword_inicio_form_r_h4" xml:space="preserve">
-    <value />
-  </data>
-  <data name="ResetPassword_SubmitButtonValue" xml:space="preserve">
-    <value />
+    <value>Registrarse</value>
   </data>
   <data name="ResetPasswordConfirmation_inicio_form_r_h4" xml:space="preserve">
-    <value />
+    <value>Su contraseña ha sido restablecida</value>
   </data>
   <data name="ResetPasswordConfirmation_LoginActionLink" xml:space="preserve">
-    <value />
+    <value>Haga click aquí para iniciar sesión</value>
+  </data>
+  <data name="ResetPassword_inicio_form_r_h4" xml:space="preserve">
+    <value>Ingrese su mail y la contraseña nueva</value>
+  </data>
+  <data name="ResetPassword_SubmitButtonValue" xml:space="preserve">
+    <value>Cambiar contraseña</value>
   </data>
   <data name="SelectUserOrAmbassador_AmbassadorLink" xml:space="preserve">
-    <value />
+    <value>Tengo impresora y quiero ayudar</value>
   </data>
   <data name="SelectUserOrAmbassador_UserLink" xml:space="preserve">
-    <value />
+    <value>Quiero pedir una prótesis</value>
   </data>
   <data name="SelectUserOrAmbassador_ViewBag_Title" xml:space="preserve">
-    <value />
+    <value>Ingresar</value>
   </data>
   <data name="SendCode_h4" xml:space="preserve">
-    <value />
+    <value>Enviar código de verificación</value>
   </data>
   <data name="SendCode_ViewBag_Title" xml:space="preserve">
-    <value />
+    <value>Enviar</value>
   </data>
   <data name="VerifyCode_h4" xml:space="preserve">
-    <value />
+    <value>Ingresar código de verificación</value>
   </data>
   <data name="VerifyCode_ViewBag_Title" xml:space="preserve">
-    <value />
-  </data>
-  <data name="_ExternalLoginsListPartial_LoginButtonText" xml:space="preserve">
-    <value />
-  </data>
-  <data name="_ExternalLoginsListPartial_LoginButtonTitle" xml:space="preserve">
-    <value />
+    <value>Verificar</value>
   </data>
   <data name="_ExternalLoginsListPartial_Error" xml:space="preserve">
-    <value />
+    <value>Error</value>
+  </data>
+  <data name="_ExternalLoginsListPartial_LoginButtonText" xml:space="preserve">
+    <value>Ingresar con</value>
+  </data>
+  <data name="_ExternalLoginsListPartial_LoginButtonTitle" xml:space="preserve">
+    <value>Ingresa con tu cuenta de</value>
   </data>
 </root>

@@ -20,12 +20,12 @@ namespace Limbs.Web.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        
+
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -65,7 +65,7 @@ namespace Limbs.Web.Controllers
             {
                 return RedirectUser();
             }
-            
+
 
             ViewBag.ReturnUrl = returnUrl;
             return View();
@@ -112,7 +112,11 @@ namespace Limbs.Web.Controllers
                 //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
                 //case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("loginfail", @"Usuario o contraseña incorrectos");
+                    var msgError = @"Usuario o contraseña incorrectos";
+                    if (string.IsNullOrEmpty(user.PasswordHash))
+                        msgError = "La cuenta de correo esta asociada a una cuenta de Facebook";
+
+                    ModelState.AddModelError("loginfail", msgError);
                     return View(model);
             }
         }
@@ -190,6 +194,13 @@ namespace Limbs.Web.Controllers
             }
             if (!ModelState.IsValid) return View(model);
 
+            var userDb = await UserManager.FindByNameAsync(model.Email);
+            if (userDb != null && string.IsNullOrEmpty(userDb.PasswordHash))
+            {
+                ModelState.AddModelError(nameof(model), @"La cuenta de correo ya esta registrada como cuenta de Facebook.");
+                return View(model);
+            }
+
             var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
             var result = await UserManager.CreateAsync(user, model.Password);
 
@@ -226,7 +237,7 @@ namespace Limbs.Web.Controllers
             var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
             if (Request.Url != null)
             {
-                var callbackUrl = Url.Action("ConfirmEmail", "Account", new {userId = user.Id, code}, Request.Url.Scheme);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code }, Request.Url.Scheme);
                 var body = CompiledTemplateEngine.Render("Mails.EmailConfirmation", callbackUrl);
 
                 await UserManager.SendEmailAsync(user.Id, "[Atomic Limbs] Confirma tu cuenta", body);
@@ -237,7 +248,7 @@ namespace Limbs.Web.Controllers
         {
             return !User.IsInRole(AppRoles.Unassigned) ? RedirectUser() : View();
         }
-        
+
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
@@ -274,7 +285,7 @@ namespace Limbs.Web.Controllers
                 ModelState.AddModelError("", @"Disculpe, su usuario no existe.");
                 return View(model);
             }
-            if(!(await UserManager.IsEmailConfirmedAsync(user.Id)))
+            if (!(await UserManager.IsEmailConfirmedAsync(user.Id)))
             {
                 ModelState.AddModelError("", @"Por favor, primero confirme su mail.");
 
@@ -423,6 +434,14 @@ namespace Limbs.Web.Controllers
 
                     return View("Login");
                 }
+
+                var userDb = await UserManager.FindByNameAsync(model.Email);
+                if (userDb != null)
+                {
+                    ModelState.AddModelError(nameof(model), @"Su cuenta de correo ya esta registrada pero no esta asociada a una cuenta de facebook.");
+                    return View("Login");
+                }
+
                 var user = new ApplicationUser
                 {
                     UserName = model.Email,
@@ -433,7 +452,7 @@ namespace Limbs.Web.Controllers
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    
+
                     if (result.Succeeded)
                     {
                         await UserManager.AddToRoleAsync(user.Id, AppRoles.Unassigned);
@@ -443,7 +462,7 @@ namespace Limbs.Web.Controllers
                             await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                             return RedirectToLocal(returnUrl);
                         }
-                        
+
                         await SendEmailConfirmation(user);
 
                         return View("DisplayEmail");

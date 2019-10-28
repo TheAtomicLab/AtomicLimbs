@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -239,7 +239,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AdminBaseController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RendersController.cs" />
+    <Compile Include="Areas\Admin\Controllers\AmputationsController.cs" />
     <Compile Include="Areas\Admin\Controllers\AmbassadorsController.cs" />
+    <Compile Include="Areas\Admin\Controllers\EventsController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessagesController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
@@ -359,6 +362,18 @@
     <Compile Include="Migrations\201906280301120_shotDescriptionAmputation.Designer.cs">
       <DependentUpon>201906280301120_shotDescriptionAmputation.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907172036222_addEventsModels.cs" />
+    <Compile Include="Migrations\201907172036222_addEventsModels.Designer.cs">
+      <DependentUpon>201907172036222_addEventsModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908032059440_fixEventTypeFK.cs" />
+    <Compile Include="Migrations\201908032059440_fixEventTypeFK.Designer.cs">
+      <DependentUpon>201908032059440_fixEventTypeFK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908062158082_changeUserEvent.cs" />
+    <Compile Include="Migrations\201908062158082_changeUserEvent.Designer.cs">
+      <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -463,15 +478,23 @@
     </Compile>
     <Compile Include="SqlServerTypes\Loader.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\Admin\AmputationViewModel.cs" />
+    <Compile Include="ViewModels\Admin\RenderViewModel.cs" />
     <Compile Include="ViewModels\AmputationDesign.cs" />
     <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
+    <Compile Include="ViewModels\AssignEventViewModel.cs" />
     <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Configs\RenderProfile.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
+    <Compile Include="ViewModels\Configs\AmputationProfile.cs" />
+    <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
     <Compile Include="ViewModels\OrderRenderPieceViewModel.cs" />
     <Compile Include="ViewModels\OrderRequesterDetailsViewModel.cs" />
+    <Compile Include="ViewModels\OrdersEventViewModel.cs" />
     <Compile Include="ViewModels\OrderUpdateModel.cs" />
     <Compile Include="ViewModels\RenderPieceGroupByViewModel.cs" />
     <Compile Include="ViewModels\RenderViewModel.cs" />
@@ -549,6 +572,9 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\jquery.bxslider.min.css" />
+    <Content Include="manual_sql_scripts\events_manoton.sql" />
+    <Content Include="manual_sql_scripts\new_render.sql" />
+    <Content Include="manual_sql_scripts\orders_country.sql" />
     <Content Include="Scripts\jquery.bxslider.min.js" />
     <Content Include="Content\ManoMedidas.css" />
     <Content Include="Content\manualembajador.css" />
@@ -613,6 +639,12 @@
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\AmputationType.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\EditorTemplates\OrderStatus.cshtml" />
     <Content Include="PrivateSettings.config" />
+    <Content Include="Areas\Admin\Views\Events\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Events\AssignEvent.cshtml" />
+    <Content Include="Areas\Admin\Views\Events\GetOrders.cshtml" />
+    <Content Include="Areas\Admin\Views\Amputations\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Amputations\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Renders\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
@@ -881,6 +913,15 @@
     <EmbeddedResource Include="Migrations\201906280301120_shotDescriptionAmputation.resx">
       <DependentUpon>201906280301120_shotDescriptionAmputation.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907172036222_addEventsModels.resx">
+      <DependentUpon>201907172036222_addEventsModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908032059440_fixEventTypeFK.resx">
+      <DependentUpon>201908032059440_fixEventTypeFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908062158082_changeUserEvent.resx">
+      <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AccountTexts.es.Designer.cs</LastGenOutput>
@@ -1021,9 +1062,9 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.3.1.1\build\Microsoft.Net.Compilers.props'))" />
   </Target>
   <Import Project="..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.1\build\netstandard2.0\NETStandard.Library.targets')" />
   <Import Project="..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets" Condition="Exists('..\packages\Microsoft.Web.WebJobs.Publish.2.0.0\build\Microsoft.Web.WebJobs.Publish.targets')" />

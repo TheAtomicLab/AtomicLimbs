@@ -100,6 +100,8 @@ namespace Limbs.Web.Entities.Models
         [Display(Name = "Order_Log", Description = "", ResourceType = typeof(ModelTexts))]
         public List<OrderLogItem> Log { get; private set; }
 
+        public List<EventOrderModel> EventOrders { get; set; }
+
         public ICollection<OrderRefusedModels> RefusedOrders { get; set; }
         public virtual ICollection<MessageModel> Messages { get; set; }
 

@@ -314,7 +314,7 @@ namespace Limbs.Web.Controllers
         // POST: Orders/UploadImageUser
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //public ActionResult UploadImageUser(OrderModel orderModel, HttpPostedFileBase file)
+        [OverrideAuthorize(Roles = AppRoles.User + ", " + AppRoles.Administrator)]
         public ActionResult UploadImageUser(NewOrder orderModel, List<HttpPostedFileBase> file)
         {
             int v_maxFiles = 6;

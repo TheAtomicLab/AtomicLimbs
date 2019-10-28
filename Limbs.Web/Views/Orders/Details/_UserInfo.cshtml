@@ -36,15 +36,12 @@
         <td>@OrdersTexts._UserInfo_City:</td>
         <td>@Model.OrderRequester.City</td>
     </tr>
-    @if (!User.IsInRole(AppRoles.Ambassador))
-    {
-        <tr>
-            <td>@OrdersTexts._UserInfo_Address:</td>
-            <td>@Model.OrderRequester.FullAddress</td>
-        </tr>
-        <tr>
-            <td>@OrdersTexts._UserInfo_Phone:</td>
-            <td>@Model.OrderRequester.Phone</td>
-        </tr>
-    }
+    <tr>
+        <td>@OrdersTexts._UserInfo_Address:</td>
+        <td>@Model.OrderRequester.FullAddress</td>
+    </tr>
+    <tr>
+        <td>@OrdersTexts._UserInfo_Phone:</td>
+        <td>@Model.OrderRequester.Phone</td>
+    </tr>
 </table>

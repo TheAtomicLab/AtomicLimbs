@@ -5,5 +5,6 @@
         public static readonly string UserFiles = "userfiles";
         public static readonly string BackupsBD = "backupsbd";
         public static readonly string ProductGenerated = "orderproductgenerated";
+        public static readonly string Site = "site";
     }
 }

@@ -1,0 +1,47 @@
+﻿@model List<Limbs.Web.ViewModels.Admin.RenderIndexViewModel>
+
+@{
+    ViewBag.Title = "Renders de Amputación";
+}
+
+<h2>Renders de Amputación</h2>
+
+<table>
+    <tr>
+        <th>
+            Amputación
+        </th>
+        <th>
+            Nombre
+        </th>
+        <th>
+            Render
+        </th>
+        <th>
+            Total de Piezas
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+    @foreach (var oneRender in Model)
+    {
+        <tr>
+            <td>
+                <img src="@oneRender.AmputationImage" width="200" />
+            </td>
+            <td>
+                @oneRender.Name
+            </td>
+            <td>
+                <img src="@oneRender.RenderImage" width="200" />
+            </td>
+            <td>
+                @oneRender.TotalPieces
+            </td>
+            <td>
+                @Html.ActionLink("Editar", "Edit", new { id = oneRender.Id, area = "Admin" })
+            </td>
+        </tr>
+    }
+</table>

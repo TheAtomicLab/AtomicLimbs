@@ -9,6 +9,9 @@ namespace Limbs.Web.ViewModels.Configs
             Mapper.Initialize(cfg =>
             {
                 cfg.AddProfile<OrderProfile>();
+                cfg.AddProfile<EventProfile>();
+                cfg.AddProfile<AmputationProfile>();
+                cfg.AddProfile<RenderProfile>();
             });
         }
     }

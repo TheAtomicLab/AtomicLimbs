@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Limbs.Web.ViewModels.AssignEventViewModel>
+
+@{
+    ViewBag.Title = "Asignar pedido a Evento";
+}
+
+<h2>Asignar pedido a Evento</h2>
+
+<table>
+    <tr>
+        <th>
+            Tipo de Evento
+        </th>
+        <th>
+            Titulo
+        </th>
+        <th>
+            Fecha de Inicio
+        </th>
+        <th>
+            Fecha de Finalizacion
+        </th>
+        <th>
+            Acciones
+        </th>
+    </tr>
+    @foreach (var oneEvent in Model)
+    {
+        <tr>
+            <td>
+                @oneEvent.EventTypeName
+            </td>
+            <td>
+                @oneEvent.Title
+            </td>
+            <td>
+                @oneEvent.StartDate
+            </td>
+            <td>    
+                @oneEvent.EndDate
+            </td>
+            @if (oneEvent.IsAssigned)
+            {
+                <td>
+                    @Html.ActionLink("Eliminar Asignacion", "RemoveFromEvent", "Events", new { eventOrderId = oneEvent.EventOrderId, orderId = oneEvent.OrderId, area = "Admin" }, null)
+                </td>
+            }
+            else
+            {
+                <td>
+                    @Html.ActionLink("Asignar a Evento", "AddToEvent", "Events", new { eventId = oneEvent.Id, orderId = oneEvent.OrderId, area = "Admin" }, null)
+                </td>
+            }
+        </tr>
+    }
+</table>
