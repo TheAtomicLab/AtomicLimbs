@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Entities.WebModels.Admin.Models;
@@ -14,7 +15,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Report
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Panel", new {area = "Admin"});
+            return RedirectToAction("Index", "Panel", new { area = "Admin" });
         }
 
         /// <summary>
@@ -22,12 +23,15 @@ namespace Limbs.Web.Areas.Admin.Controllers
         /// </summary>
         /// <returns></returns>
         // GET: Admin/Report/DelayedOrders
-        public ActionResult DelayedOrders(int daysBefore = 15)
+        public async Task<ActionResult> DelayedOrders(int daysBefore = 15)
         {
             var dateFrom = DateTime.UtcNow.AddDays(-daysBefore);
-            var result = Db.OrderModels.Where(x =>
+            var result = await Db.OrderModels.Where(x =>
                 x.Status == OrderStatus.Pending &&
-                x.StatusLastUpdated <= dateFrom).Include(x => x.OrderRequestor).ToList();
+                x.StatusLastUpdated <= dateFrom)
+                    .Include(x => x.OrderRequestor)
+                    .Include(p => p.OrderAmbassador)
+                .ToListAsync();
 
             return View(new DelayedOrdersViewModel
             {
@@ -46,7 +50,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
             var dateFrom = date ?? DateTime.UtcNow;
 
             var result = new AppExceptionQuery(AzureStorageAccount.DefaultAccount).GetExceptions(dateFrom);
-            
+
             return View(new AppExceptionViewModel
             {
                 Date = dateFrom,

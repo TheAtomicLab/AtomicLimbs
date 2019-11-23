@@ -63,9 +63,17 @@
                 (@Html.DisplayFor(modelItem => item.OrderRequestor.Email))
             </td>
             <td>
-                @item.OrderAmbassador.FullName()
-                (@Html.DisplayFor(modelItem => item.OrderAmbassador.Email))
-                <span>(@Html.ActionLink("re-asignar", "SelectAmbassador", new { area = "Admin", controller = "Orders", idOrder = item.Id }))</span>
+                @if (item.OrderAmbassador != null)
+                {
+                    @item.OrderAmbassador.FullName()
+                    <text> || </text>
+                    @Html.DisplayFor(modelItem => item.OrderAmbassador.Email)
+                }
+                else
+                {
+                    <span class="text-danger">No existe embajador asignado</span>
+                }
+                <span>@Html.ActionLink("re-asignar", "SelectAmbassador", new { area = "Admin", controller = "Orders", idOrder = item.Id })</span>
             </td>
         </tr>
     }
