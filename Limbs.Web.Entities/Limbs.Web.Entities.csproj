@@ -118,6 +118,7 @@
     <Compile Include="Models\OrderSizesModel.cs" />
     <Compile Include="Models\RenderModel.cs" />
     <Compile Include="Models\RenderPieceModel.cs" />
+    <Compile Include="Models\SponsorModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebModels\AccountViewModels.cs" />

@@ -373,6 +373,10 @@
     <Compile Include="Migrations\201908062158082_changeUserEvent.Designer.cs">
       <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002032247325_createSponsorModels.cs" />
+    <Compile Include="Migrations\202002032247325_createSponsorModels.Designer.cs">
+      <DependentUpon>202002032247325_createSponsorModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -908,6 +912,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908062158082_changeUserEvent.resx">
       <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002032247325_createSponsorModels.resx">
+      <DependentUpon>202002032247325_createSponsorModels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
