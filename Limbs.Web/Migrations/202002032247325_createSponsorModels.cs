@@ -15,7 +15,7 @@ namespace Limbs.Web.Migrations
                         WebImage = c.String(),
                         MobileImage = c.String(),
                         CreatedDate = c.DateTime(nullable: false),
-                        CreatedBy = c.Int(nullable: false),
+                        CreatedBy = c.String(nullable: false),
                         Event_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)

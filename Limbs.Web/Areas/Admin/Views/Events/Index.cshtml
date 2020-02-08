@@ -48,7 +48,8 @@
                 @oneEvent.CountParticipants
             </td>
             <td>
-                @Html.ActionLink("Ver Ordenes", "GetOrders", new { id = oneEvent.Id, area = "Admin" })
+                <p>@Html.ActionLink("Ver Ordenes", "GetOrders", new { id = oneEvent.Id, area = "Admin" })</p>
+                <p>@Html.ActionLink("Ver Sponsors", "GetSponsorsByEventId", "Sponsors", new { id = oneEvent.Id }, null)</p>
             </td>
         </tr>
     }

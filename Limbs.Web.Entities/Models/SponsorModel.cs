@@ -12,6 +12,6 @@ namespace Limbs.Web.Entities.Models
         public string WebImage { get; set; }
         public string MobileImage { get; set; }
         public DateTime CreatedDate { get; set; }
-        public int CreatedBy { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

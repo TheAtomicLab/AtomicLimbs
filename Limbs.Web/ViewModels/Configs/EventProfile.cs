@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Limbs.Web.Common.Extensions;
 using Limbs.Web.Entities.Models;
+using Limbs.Web.ViewModels.Admin;
+using System;
 
 namespace Limbs.Web.ViewModels.Configs
 {
@@ -25,6 +27,16 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.AmputationDescription, opt => opt.MapFrom(src => src.Order.AmputationTypeFk == null ? string.Empty : src.Order.AmputationTypeFk.Short_Description))
                 .ForMember(p => p.RequesterEmail, opt => opt.MapFrom(src => src.Order.OrderRequestor == null ? string.Empty : src.Order.OrderRequestor.Email))
                 .ForMember(p => p.AmbassadorEmail, opt => opt.MapFrom(src => src.Order.OrderAmbassador == null ? string.Empty : src.Order.OrderAmbassador.Email));
+
+            CreateMap<SponsorModel, SponsorViewModel>()
+                .ForMember(p => p.EventDescription, opt => opt.MapFrom(src => src.Event.Description))
+                .ForMember(p => p.EventId, opt => opt.MapFrom(src => src.Event.Id));
+
+
+            CreateMap<SponsorViewModel, SponsorModel>()
+                .ForMember(p => p.CreatedDate, opt => opt.MapFrom(src => DateTime.Now))
+                .ForMember(p => p.CreatedBy, opt => opt.Ignore())
+                .ForMember(p => p.Event, opt => opt.Ignore());
         }
     }
 }

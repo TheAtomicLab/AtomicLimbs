@@ -247,6 +247,7 @@
     <Compile Include="Areas\Admin\Controllers\OrdersController.cs" />
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SponsorsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
@@ -473,6 +474,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Admin\AmputationViewModel.cs" />
     <Compile Include="ViewModels\Admin\RenderViewModel.cs" />
+    <Compile Include="ViewModels\Admin\SponsorViewModel.cs" />
     <Compile Include="ViewModels\AmputationDesign.cs" />
     <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
     <Compile Include="ViewModels\AssignEventViewModel.cs" />
@@ -636,6 +638,7 @@
     <Content Include="Areas\Admin\Views\Amputations\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Amputations\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Renders\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Sponsors\Index.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
