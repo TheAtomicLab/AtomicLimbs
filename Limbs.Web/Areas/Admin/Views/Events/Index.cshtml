@@ -49,7 +49,7 @@
             </td>
             <td>
                 <p>@Html.ActionLink("Ver Ordenes", "GetOrders", new { id = oneEvent.Id, area = "Admin" })</p>
-                <p>@Html.ActionLink("Ver Sponsors", "GetSponsorsByEventId", "Sponsors", new { id = oneEvent.Id }, null)</p>
+                <p>@Html.ActionLink("Ver Sponsors", "Index", "Sponsors", new { id = oneEvent.Id }, null)</p>
             </td>
         </tr>
     }

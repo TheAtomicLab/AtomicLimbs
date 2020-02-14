@@ -1,7 +1,40 @@
-﻿
+﻿@using Limbs.Web.Common.Extensions
+@using System.Linq
+@model List<Limbs.Web.ViewModels.Admin.SponsorViewModel>
+
 @{
     ViewBag.Title = "Sponsors";
+    string EventTitle = ViewBag.EventTitle;
+    string EventDescription = ViewBag.EventDescription;
 }
 
 <h2>Sponsors</h2>
-
+<h3>@EventTitle - @EventDescription</h3>
+<table>
+    <tr>
+        <th>
+            Imagen Web
+        </th>
+        <th>
+            Imagen Mobile
+        </th>
+    </tr>
+    @foreach (var oneSponsor in Model)
+    {
+        <tr>
+            <td>
+                <img class="sponsor-img-table" src="@oneSponsor.WebImage" />
+            </td>
+            <td>
+                <img class="sponsor-img-table" src="@oneSponsor.MobileImage" />
+            </td>
+            <td>
+                <p>@Html.ActionLink("Editar", "Edit", new { id = oneSponsor.Id })</p>
+            </td>
+            <td>
+                <p>@Html.ActionLink("Eliminar", "DeleteSponsor", new { sponsorId = oneSponsor.Id, eventId = oneSponsor.EventId })</p>
+            </td>
+        </tr>
+    }
+</table>
+<span>@Html.ActionLink("Nuevo Sponsor", "Edit", new { })</span>

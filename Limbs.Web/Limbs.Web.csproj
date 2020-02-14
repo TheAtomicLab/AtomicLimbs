@@ -970,6 +970,7 @@
     <EmbeddedResource Include="Resources\OrdersTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>OrdersTexts.es.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\OrdersTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
