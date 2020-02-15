@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Web;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Data.Entity;
@@ -6,6 +8,8 @@ using System.Collections.Generic;
 using System.Net;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.ViewModels.Admin;
+using Limbs.Web.Logic.Repositories.Interfaces;
+using Limbs.Web.Common.Extensions;
 using AutoMapper;
 
 namespace Limbs.Web.Areas.Admin.Controllers
@@ -13,6 +17,13 @@ namespace Limbs.Web.Areas.Admin.Controllers
     [Authorize(Roles = AppRoles.Administrator)]
     public class SponsorsController : AdminBaseController
     {
+        private readonly IUserFiles _userFiles;
+
+        public SponsorsController(IUserFiles userFiles)
+        {
+            _userFiles = userFiles;
+        }
+
         public async Task<ActionResult> Index(int? id)
         {
             if (id == null)
@@ -39,26 +50,21 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
         public async Task<ActionResult> Edit(int EventId, int? SponsorId)
         {
-            var sponsorViewModel = new SponsorViewModel();
+            SponsorViewModel sponsorViewModel;
 
-            if(SponsorId != null)
-            {
-                var sponsor = await Db.SponsorModels.Where(p => p.Id == SponsorId)
-                                                        .Include(p => p.Event)
-                                                        .FirstOrDefaultAsync();
-
-                if (sponsor != null)
-                {
-                    sponsorViewModel = Mapper.Map<SponsorViewModel>(sponsor);
-                }
-                    
-            }
+            var sponsor = await Db.SponsorModels.Where(p => p.Id == SponsorId)
+                                                       .Include(p => p.Event)
+                                                       .FirstOrDefaultAsync();
+            if (sponsor == null)
+                sponsorViewModel = new SponsorViewModel { EventId = EventId };
+            else
+                sponsorViewModel = Mapper.Map<SponsorViewModel>(sponsor);
 
             return View(sponsorViewModel);
         }
 
         [HttpPost]
-        public async Task<ActionResult> AddUpdateSponsor(SponsorViewModel sponsorViewModel)
+        public async Task<ActionResult> Edit(SponsorViewModel sponsorViewModel)
         {
             var sponsor = Db.SponsorModels.Where(p => p.Id == sponsorViewModel.Id)
                                           .Include(p => p.Event)
@@ -70,6 +76,22 @@ namespace Limbs.Web.Areas.Admin.Controllers
             sponsor = Mapper.Map(sponsorViewModel, sponsor);
 
             sponsor.Event = eventModel;
+
+            if (Request.Files != null && Request.Files.Count > 0)
+            {
+                foreach (string fileStr in Request.Files)
+                {
+                    HttpPostedFileBase file = Request.Files[fileStr];
+
+                    if (file.ContentLength == 0 || file.ContentLength > 1000000 * 5 || !file.IsImage())
+                        return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Ocurrio un error en la imagen");
+
+                    var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+                    var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+
+                    sponsor.MobileImage = fileUrl.ToString();
+                }
+            }
 
             if (sponsor.Id == 0)
                 Db.SponsorModels.Add(sponsor);
@@ -89,6 +111,12 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
             if (sponsor == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var webImgNameBlob = sponsor.WebImage.Split('/').LastOrDefault();
+            var mobileImgNameBlob = sponsor.MobileImage.Split('/').LastOrDefault();
+
+            await _userFiles.RemoveImageAsync(webImgNameBlob);
+            await _userFiles.RemoveImageAsync(mobileImgNameBlob);
 
             Db.SponsorModels.Remove(sponsor);
 
