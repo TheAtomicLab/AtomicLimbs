@@ -1,0 +1,37 @@
+﻿@model Limbs.Web.ViewModels.Admin.SponsorViewModel
+
+
+@{
+    ViewBag.Title = "Agregar / Editar Sponsor";
+}
+
+<link rel="stylesheet" href="~/Content/basic.css">
+<link rel="stylesheet" href="~/Content/dropzone.css">
+<link rel="stylesheet" href="~/Content/jquery.bxslider.min.css">
+
+
+@using (Html.BeginForm("AddUpdateSponsor", "Sponsors", FormMethod.Post, new { id = "frmEdit", enctype = "multipart/form-data" }))
+{
+    <div class="form-horizontal">
+        <div class="form-group">
+            <p class="form_title">Imagen Web</p>
+            <div class="col-md-10">
+                <div id="edit-upload-images" class="dropzone" style="display: none;">
+                    <span id="imagenWeb" style="color:blue;"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+           
+        </div>
+    </div>
+
+}
+
+@section Scripts{
+
+    <script src="~/Scripts/dropzone.js"></script>
+    <script src="~/Scripts/jquery.bxslider.min.js"></script>
+
+
+}

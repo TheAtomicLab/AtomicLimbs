@@ -639,6 +639,7 @@
     <Content Include="Areas\Admin\Views\Amputations\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Renders\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Sponsors\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Sponsors\Edit.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />

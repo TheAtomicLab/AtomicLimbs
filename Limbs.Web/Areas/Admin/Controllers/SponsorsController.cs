@@ -10,7 +10,7 @@ using AutoMapper;
 
 namespace Limbs.Web.Areas.Admin.Controllers
 {
-    [OverrideAuthorize(Roles = AppRoles.Administrator)]
+    [Authorize(Roles = AppRoles.Administrator)]
     public class SponsorsController : AdminBaseController
     {
         public async Task<ActionResult> Index(int? id)
@@ -22,36 +22,42 @@ namespace Limbs.Web.Areas.Admin.Controllers
                                                     .Include(p => p.Event)
                                                     .ToListAsync();
 
-
-            var sponsorsViewModel = Mapper.Map<List<SponsorViewModel>>(sponsors);
-
-            if (sponsorsViewModel == null || sponsorsViewModel.Count == 0)
+            if (sponsors == null)
                 return RedirectToAction("Index", "Events");
 
-            ViewBag.EventTitle = sponsors[0].Event.Title;
-            ViewBag.EventDescription = sponsors[0].Event.Description;
+            var eventModel = await Db.EventModels.Where(p => p.Id == id)
+                                                    .FirstOrDefaultAsync();
+
+            var sponsorsViewModel = Mapper.Map<List<SponsorViewModel>>(sponsors);            
+
+            ViewBag.EventTitle = eventModel.Title;
+            ViewBag.EventDescription = eventModel.Description;
+            ViewData["EventId"] = id;
 
             return View(sponsorsViewModel);
         }
 
-        public async Task<ActionResult> Edit(int? id)
+        public async Task<ActionResult> Edit(int EventId, int? SponsorId)
         {
-            if (id == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var sponsorViewModel = new SponsorViewModel();
 
-            var sponsor = await Db.SponsorModels.Where(p => p.Id == id)
-                                                    .Include(p => p.Event)
-                                                    .FirstOrDefaultAsync();
+            if(SponsorId != null)
+            {
+                var sponsor = await Db.SponsorModels.Where(p => p.Id == SponsorId)
+                                                        .Include(p => p.Event)
+                                                        .FirstOrDefaultAsync();
 
-            if(sponsor == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest); 
-
-            var sponsorViewModel = Mapper.Map<SponsorViewModel>(sponsor);
+                if (sponsor != null)
+                {
+                    sponsorViewModel = Mapper.Map<SponsorViewModel>(sponsor);
+                }
+                    
+            }
 
             return View(sponsorViewModel);
         }
 
-        //[HttpPost]
+        [HttpPost]
         public async Task<ActionResult> AddUpdateSponsor(SponsorViewModel sponsorViewModel)
         {
             var sponsor = Db.SponsorModels.Where(p => p.Id == sponsorViewModel.Id)
@@ -59,29 +65,21 @@ namespace Limbs.Web.Areas.Admin.Controllers
                                           .FirstOrDefault();
 
             var eventModel = Db.EventModels.Where(p => p.Id == sponsorViewModel.EventId)
-                                           .FirstOrDefault();
+                                           .FirstOrDefault();            
 
-            if (sponsor != null)
-            {
-                sponsor.MobileImage = sponsorViewModel.MobileImage;
-                sponsor.WebImage = sponsorViewModel.WebImage;
+            sponsor = Mapper.Map(sponsorViewModel, sponsor);
 
-                sponsor.Event = eventModel;
-            }
-            else
-            {
-                sponsor = Mapper.Map<SponsorModel>(sponsorViewModel);
+            sponsor.Event = eventModel;
 
-                sponsor.Event = eventModel;
+            if (sponsor.Id == 0)
                 Db.SponsorModels.Add(sponsor);
-            }                   
-
+           
             await Db.SaveChangesAsync();
 
-            return View();
+            return RedirectToAction("Index", new { id = sponsorViewModel.EventId });
         }
 
-        public async Task<ActionResult> DeleteSponsor(int? EventId, int? SponsorId)
+        public async Task<ActionResult> DeleteSponsor(int EventId, int? SponsorId)
         {
             if (SponsorId == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

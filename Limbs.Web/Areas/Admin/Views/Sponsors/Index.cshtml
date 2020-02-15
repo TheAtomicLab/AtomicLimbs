@@ -6,6 +6,7 @@
     ViewBag.Title = "Sponsors";
     string EventTitle = ViewBag.EventTitle;
     string EventDescription = ViewBag.EventDescription;
+    int EventId = (int)ViewData["EventId"];
 }
 
 <h2>Sponsors</h2>
@@ -29,7 +30,7 @@
                 <img class="sponsor-img-table" src="@oneSponsor.MobileImage" />
             </td>
             <td>
-                <p>@Html.ActionLink("Editar", "Edit", new { id = oneSponsor.Id })</p>
+                <p>@Html.ActionLink("Editar", "Edit", new { SponsorId = oneSponsor.Id, EventId = EventId })</p>
             </td>
             <td>
                 <p>@Html.ActionLink("Eliminar", "DeleteSponsor", new { sponsorId = oneSponsor.Id, eventId = oneSponsor.EventId })</p>
@@ -37,4 +38,5 @@
         </tr>
     }
 </table>
-<span>@Html.ActionLink("Nuevo Sponsor", "Edit", new { })</span>
+<br/>
+<button class="bn_blue">@Html.ActionLink("Nuevo Sponsor", "Edit", new { EventId = EventId })</button>
