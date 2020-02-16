@@ -24,8 +24,9 @@
             <div id="dZUpload" class="sponsor-img-edit-container dropzone">
                 <div class="dz-default dz-message">
                     <img id="webImage" class="sponsor-img-edit" src="@Model.WebImage" />
-                    <span class="fontUploadFile">Arrastre su imagen aquí o presione click para cargar una.</span>           
+                    <span class="fontUploadFile">Arrastre su imagen aquí o presione click para cargar una.</span>
                 </div>
+                <ul id="msgErrorImagenWeb" style="color:red;"></ul>
             </div>
         </div>
     </div>
@@ -36,7 +37,7 @@
     </div>
 
     <div class="form-group">
-        <button id="save" type="submit">Guardar</button>
+        <button id="save" type="button">Guardar</button>
         <button type="button">@Html.ActionLink("Cancelar", "Index", new { id = Model.EventId }, null)</button>
     </div>
 
@@ -55,6 +56,8 @@
 
             var typeFileAccepted = "image/*";
             var maxFileSizeImage = 5;
+            var fileTooBigMsg = "Tamaño máximo permitido: " + maxFileSizeImage + " MB.";
+            var invalidFileTypeMsg = "Tipo de archivo inválido";
 
             frm.on('submit', function (e) {
                 e.preventDefault();
@@ -84,7 +87,8 @@
                 dictCancelUpload: null,
                 dictRemoveFileConfirmation: null,
                 renameFilename: function (name) {
-                    let newName = 'webImg';
+                    var ext = name.substr(name.lastIndexOf('.') + 1);
+                    let newName = 'webImg.' + ext;
                     return newName;
                 },
                 //dictDefaultMessage: "<span>Arrastre su imagen aquí o presione click para cargar una.<span>",
@@ -110,6 +114,13 @@
             });
 
             function errorDropzone(file, errormessage, xhr) {
+                if (xhr == undefined)
+                    return false;
+
+                $('#msgErrorImagenWeb').empty();
+                showError("Error");
+
+                //disabledRegister();
             }
 
             function successDropzone(file, response) {
@@ -120,6 +131,7 @@
                 if (dz.files.length > 1) {
                     dz.removeFile(dz.files[0]);
                 }
+                $('#msgErrorImagenWeb').empty();
                 updateRegisterFiles();
             }
 
@@ -138,10 +150,19 @@
                 }
             }
 
-            function removedFile() {                
+            function removedFile() {  
+                $('#msgErrorImagenWeb').empty();
                 updateRegisterFiles();
                 //dz.files.length == 0 ? disabledRegister() : "";
             }
+
+            function disabledRegister() {
+                $("[name=enviar]").prop('disabled', true);
+            };
+
+            function enableRegister() {
+                $("[name=enviar]").prop('disabled', false);
+            };
 
             function sendingMultiple(file, xhr, data) {
                 var array = frm.serializeArray();
@@ -178,6 +199,9 @@
             }
 
             function showError(msg) {
+                var ErrorMsg = "<li>" + msg + "</li>";
+
+                $('#msgErrorImagenWeb').append(ErrorMsg);
             }
 
 

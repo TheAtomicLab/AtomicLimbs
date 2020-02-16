@@ -1,5 +1,5 @@
-﻿using System.Web;
-using System;
+﻿using System;
+using System.Web;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -88,20 +88,25 @@ namespace Limbs.Web.Areas.Admin.Controllers
 
                     //var fileName = Guid.NewGuid().ToString("N") + ".jpg";
                     //var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
-
-                    //if (file.FileName == "webImg")
+                    
+                    //if (file.FileName.Contains("webImg"))
                     //    sponsor.WebImage = fileUrl.ToString();
-                    //else if (file.FileName == "MobileImg")
+                    //else if (file.FileName.Contains("mobileImg"))
                     //    sponsor.MobileImage = fileUrl.ToString();
                 }
             }
 
             if (sponsor.Id == 0)
                 Db.SponsorModels.Add(sponsor);
-           
-           // await Db.SaveChangesAsync();
 
-            return RedirectToAction("Index", new { id = sponsorViewModel.EventId });
+            // await Db.SaveChangesAsync();
+
+            //return RedirectToAction("Index", new { id = sponsorViewModel.EventId });
+            var urlAction = Url.Action("Index", new {Area = "Admin", id = sponsorViewModel.EventId });
+            return Json(new
+            {
+                Action = urlAction
+            });
         }
 
         public async Task<ActionResult> DeleteSponsor(int EventId, int? SponsorId)
