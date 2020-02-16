@@ -13,20 +13,33 @@
 @using (Html.BeginForm("Edit", "Sponsors", FormMethod.Post, new { id = "frmEdit", enctype = "multipart/form-data" }))
 {
 <div class="form-horizontal">
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.EventId)
+    @Html.HiddenFor(model => model.WebImage)
+
     <div class="form-group">
+
         <p class="form_title">Imagen Web</p>
         <div class="col-md-10">
-            <div id="edit-upload-images" class="dropzone" style="display: none;">
-                <span id="imagenWeb" style="color:blue;"></span>
+            <div id="dZUpload" class="sponsor-img-edit-container dropzone">
+                <div class="dz-default dz-message">
+                    <img id="webImage" class="sponsor-img-edit" src="@Model.WebImage" />
+                    <span class="fontUploadFile">Arrastre su imagen aquí o presione click para cargar una.</span>           
+                </div>
             </div>
         </div>
     </div>
+
     <div class="form-group">
         <p class="form_title">Imagen Mobile</p>
+        
     </div>
+
     <div class="form-group">
-        <button type="submit">Guardar</button>
+        <button id="save" type="submit">Guardar</button>
+        <button type="button">@Html.ActionLink("Cancelar", "Index", new { id = Model.EventId }, null)</button>
     </div>
+
 </div>
 
 }
@@ -36,5 +49,140 @@
     <script src="~/Scripts/dropzone.js"></script>
     <script src="~/Scripts/jquery.bxslider.min.js"></script>
 
+    <script>
+        $(document).ready(function () {
+            let frm = $('#frmEdit');
+
+            var typeFileAccepted = "image/*";
+            var maxFileSizeImage = 5;
+
+            frm.on('submit', function (e) {
+                e.preventDefault();
+
+                if ($(this).valid()) {
+                    $.post(frm.attr('action'), frm.serialize(), function (json) {
+                        window.location = json.Action;
+                    }, 'json');
+                }
+
+                return false;
+            });
+
+            Dropzone.autoDiscover = false;
+            $("#dZUpload").dropzone({
+                url: "/Sponsors/Edit",
+                previewTemplate: "<div class=\"sponsor-img-edit-container\"><img class=\"sponsor-img-edit\" data-dz-thumbnail /></div>",
+                addRemoveLinks: false,
+                maxFilesize: maxFileSizeImage,
+                acceptedFiles: typeFileAccepted,
+                autoProcessQueue: false,
+                autoQueue: true,
+                uploadMultiple: false,
+                dictInvalidFileType: null,
+                dictRemoveFile: "Borrar imagen",
+                createImageThumbnails: true,
+                dictCancelUpload: null,
+                dictRemoveFileConfirmation: null,
+                renameFilename: function (name) {
+                    let newName = 'webImg';
+                    return newName;
+                },
+                //dictDefaultMessage: "<span>Arrastre su imagen aquí o presione click para cargar una.<span>",
+                ///dictDefaultMessage: "<i class=\"fa fa-upload fontFileUpload\" aria-hidden=\"true\" style=\"font-size: 5em;color: #2a2a56;\"></i><br><span class=\"fontUploadFile\">Arrastre su imagen aquí o presione click para cargar una.<span>",
+                init: function () {
+                    dz = this;
+                    dz.on('sendingmultiple', sendingMultiple);
+                    //dz.on("processingmultiple", processing);
+                    dz.on("addedfile", addedFile);
+                    dz.on("removedfile", removedFile);
+                    dz.on("success", successDropzone);
+                    dz.on("error", errorDropzone);
+                }
+            });
+
+            $('#save').click(function () {
+                console.log(dz);
+                if (dz.files.length > 0) {
+                    dz.processQueue();
+                } else {
+                    frm.submit();
+                }
+            });
+
+            function errorDropzone(file, errormessage, xhr) {
+            }
+
+            function successDropzone(file, response) {
+                window.location = response.Action;
+            }
+
+            function addedFile() {
+                if (dz.files.length > 1) {
+                    dz.removeFile(dz.files[0]);
+                }
+                updateRegisterFiles();
+            }
+
+            function updateRegisterFiles() {
+                for (var i = 0; i < dz.files.length; i++) {
+
+                    var file = dz.files[i];
+
+                    if (!isConditionsValid(file)) {
+                        //disabledRegister();
+                        showErrors(file);
+                        break;
+                    } else {
+                        //enableRegister();
+                    }
+                }
+            }
+
+            function removedFile() {                
+                updateRegisterFiles();
+                //dz.files.length == 0 ? disabledRegister() : "";
+            }
+
+            function sendingMultiple(file, xhr, data) {
+                var array = frm.serializeArray();
+                for (var i = 0; i < array.length; i++) {
+                    data.append(array[i].name, array[i].value)
+                }
+            }
+
+            function isConditionsValid(file) {
+                var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+                var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+                return ConditionTypeImage && ConditionSizeImage;
+            }
+
+
+            function showErrors(file) {
+                var ConditionTypeImage = Dropzone.isValidFile(file, typeFileAccepted);
+                Dropzone.sizeFile
+                var ConditionSizeImage = isValidSizeImage(file, maxFileSizeImage);
+
+                if (!ConditionSizeImage) {
+                    showError(fileTooBigMsg);
+                }
+
+                if (!ConditionTypeImage) {
+                    showError(invalidFileTypeMsg);
+                }
+            }
+
+            function isValidSizeImage(file, nro) {
+                sizeFile = file.size / 1000000
+                return sizeFile <= nro;
+            }
+
+            function showError(msg) {
+            }
+
+
+        });
+
+    </script>
 
 }

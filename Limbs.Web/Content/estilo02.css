@@ -571,6 +571,16 @@
     width: 120px;
 }
 
+.sponsor-img-edit {
+    height: 300px;
+    width: 400px;
+}
+
+.sponsor-img-edit-container {
+    height: 400px;
+    width: 500px;
+}
+
 @media only screen and (max-width: 760px) {
     .slider-image-container .slider-image-action {
         display: block;

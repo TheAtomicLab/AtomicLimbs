@@ -86,17 +86,20 @@ namespace Limbs.Web.Areas.Admin.Controllers
                     if (file.ContentLength == 0 || file.ContentLength > 1000000 * 5 || !file.IsImage())
                         return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Ocurrio un error en la imagen");
 
-                    var fileName = Guid.NewGuid().ToString("N") + ".jpg";
-                    var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
+                    //var fileName = Guid.NewGuid().ToString("N") + ".jpg";
+                    //var fileUrl = _userFiles.UploadOrderFile(file.InputStream, fileName);
 
-                    sponsor.MobileImage = fileUrl.ToString();
+                    //if (file.FileName == "webImg")
+                    //    sponsor.WebImage = fileUrl.ToString();
+                    //else if (file.FileName == "MobileImg")
+                    //    sponsor.MobileImage = fileUrl.ToString();
                 }
             }
 
             if (sponsor.Id == 0)
                 Db.SponsorModels.Add(sponsor);
            
-            await Db.SaveChangesAsync();
+           // await Db.SaveChangesAsync();
 
             return RedirectToAction("Index", new { id = sponsorViewModel.EventId });
         }
