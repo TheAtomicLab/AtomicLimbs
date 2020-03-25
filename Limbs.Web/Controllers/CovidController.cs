@@ -16,6 +16,7 @@ namespace Limbs.Web.Controllers
         [HttpPost, Route, ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateCovidOrganizationViewModel model)
         {
+
             return RedirectToAction("Index", "Manage");
         }
     }

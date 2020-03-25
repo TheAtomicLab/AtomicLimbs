@@ -1,7 +1,7 @@
 ﻿@model Limbs.Web.ViewModels.CreateCovidOrganizationViewModel
 @{
     ViewBag.Title = "Solicitar";
-}   
+}
 @section scripts{
     <script type="text/javascript">
         $("#@Html.IdFor(model => model.DeliveryDate)").datepicker(
@@ -43,20 +43,23 @@
             {
                 @Html.ValidationSummary("Hay errores en el formulario, revisá los campos marcados en rojo", new { @class = "" })
             }
-            <div class="f-seccion">
-                @Html.EditorFor(m => m.CovidOrganizationEnum, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
-                <div class="organization-box hide">
-                    @Html.EditorFor(model => model.CovidOrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = " " } })
-                </div>
-                <div class="f-campo-mitad">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su nombre" } })
-                    @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su apellido" } })
-                </div>
-                @Html.Partial("_Address", Model)
+    <div class="f-seccion">
+        @Html.EditorFor(m => m.CovidOrganizationEnum, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+        <div class="organization-box hide">
+            @Html.EditorFor(model => model.CovidOrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = " " } })
+        </div>
+        <div class="f-campo-mitad">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su nombre" } })
+            @Html.EditorFor(model => model.Lastname, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su apellido" } })
+        </div>
+        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "f-campo", placeholder = "Correo Electrónico" } })
+        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "f-campo", placeholder = "Cantidad de mascarillas" } })
 
-                <label class="f-label">Fecha de Entrega</label>
-                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddDays(5).ToString("yyyy-MM-dd") } })
-            </div>
+        <label class="f-label">Fecha de Entrega</label>
+        @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = DateTime.UtcNow.AddDays(5).ToString("yyyy-MM-dd") } })
+
+        @Html.Partial("_Address", Model)
+    </div>
             <div>
                 <p>
                     <button id="btn-register" type="submit" class="bn_blue" name="register">Aceptar</button>

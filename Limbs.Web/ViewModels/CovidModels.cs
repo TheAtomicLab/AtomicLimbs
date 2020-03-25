@@ -17,6 +17,9 @@ namespace Limbs.Web.ViewModels
         [Display(Name = "Nombre de la organización", Description = "")]
         public string CovidOrganizationName { get; set; }
 
+        [Required(ErrorMessage = " ")]
+        public string Email { get; set; }
+
         [Display(Name = "Nombre", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Name { get; set; }

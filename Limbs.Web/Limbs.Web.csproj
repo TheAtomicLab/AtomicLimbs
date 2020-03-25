@@ -377,6 +377,10 @@
     <Compile Include="Migrations\202003251227171_covidOrganization.Designer.cs">
       <DependentUpon>202003251227171_covidOrganization.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003251238080_covidOrganizationAddEmailField.cs" />
+    <Compile Include="Migrations\202003251238080_covidOrganizationAddEmailField.Designer.cs">
+      <DependentUpon>202003251238080_covidOrganizationAddEmailField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -920,6 +924,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003251227171_covidOrganization.resx">
       <DependentUpon>202003251227171_covidOrganization.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251238080_covidOrganizationAddEmailField.resx">
+      <DependentUpon>202003251238080_covidOrganizationAddEmailField.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
