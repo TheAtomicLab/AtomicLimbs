@@ -79,8 +79,6 @@ namespace Limbs.Web.Controllers
 
             return Json(new
             {
-                NoGenerateToken = false,
-                EmailSended = true,
                 Error = false
             });
         }
