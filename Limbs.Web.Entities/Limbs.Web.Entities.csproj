@@ -107,6 +107,7 @@
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\AppRoles.cs" />
     <Compile Include="Models\ColorModel.cs" />
+    <Compile Include="Models\CovidOrganizationModel.cs" />
     <Compile Include="Models\EventModel.cs" />
     <Compile Include="Models\EventTypeModel.cs" />
     <Compile Include="Models\EventOrderModel.cs" />

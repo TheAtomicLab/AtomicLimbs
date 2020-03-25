@@ -7,7 +7,6 @@ using Limbs.Web;
 using Limbs.Web.Common.Captcha;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Resources;
-using Limbs.Web.Helpers;
 using Limbs.Web.Logic.Helpers;
 using Limbs.Web.Logic.Repositories;
 using Limbs.Web.Logic.Repositories.Interfaces;
