@@ -1,0 +1,77 @@
+﻿@model Limbs.Web.ViewModels.EditCovidOrganizationViewModel
+@{
+    ViewBag.Title = "Editar pedido";
+}
+
+@section scripts{
+    <script type="text/javascript">
+        $("#@Html.IdFor(model => model.DeliveryDate)").datepicker('setDate', @Model.DeliveryDate);
+    </script>
+    <script src="~/Scripts/pages/covid.js"></script>
+}
+
+@section styles
+{
+    <style>
+        .cont-wr {
+            max-width: initial;
+            padding: 0px;
+        }
+
+        .min-full {
+            background-color: white;
+        }
+    </style>
+}
+
+<div id="loadingModal" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+<div id="cont" class="min_full">
+    <div id="registro">
+        @using (Html.BeginForm("Edit", "Covid", FormMethod.Post, new { @class = "form" }))
+        {
+            @Html.HiddenFor(x => x.Id)
+            @Html.AntiForgeryToken()
+            <h2 class="f-titulo">Editar datos y/o pedido</h2>
+            <div class="msg-success" style="display: none;">
+                <span>Pedido realizado correctamente, verifique su correo electronico!</span>
+            </div>
+            if (!ViewData.ModelState.IsValid)
+            {
+                @Html.ValidationSummary("Hay errores en el formulario, revisá los campos marcados en rojo", new { @class = "" })
+            }
+            <div class="f-seccion">
+                @Html.EditorFor(m => m.CovidOrganizationEnum, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
+                @{
+                    var showOrHideClass = "hide";
+                }
+
+                @if (!string.IsNullOrEmpty(Model.CovidOrganizationName))
+                {
+                    showOrHideClass = string.Empty;
+                }
+                <div class="organization-box @showOrHideClass">
+                    @Html.EditorFor(model => model.CovidOrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = " " } })
+                </div>
+                <div class="f-campo-mitad">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su nombre" } })
+                    @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su apellido" } })
+                </div>
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "f-campo", placeholder = "Correo Electrónico" } })
+                @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "f-campo", placeholder = "Cantidad de mascarillas" } })
+
+                <label class="f-label">Fecha de Entrega</label>
+                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "Seleccione una fecha" } })
+
+                @Html.Partial("_Address", Model)
+            </div>
+            <div>
+                <p>
+                    <button id="btn-register" type="submit" class="bn_blue" name="register">Aceptar</button>
+                </p>
+            </div>
+        }
+    </div>
+</div>

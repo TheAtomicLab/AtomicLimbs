@@ -48,9 +48,7 @@ $(document).ready(function () {
                             $(validationTemplate).insertAfter('h2.f-titulo');
                         }
                     } else {
-                        $('.msg-success').show();
-                        frm[0].reset();
-                        $(window).scrollTop(0);
+                        window.location = r.UrlRedirect;
                     }
                 },
                 error: function (r) {

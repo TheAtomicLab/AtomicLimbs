@@ -15,19 +15,97 @@ using System.Web.Mvc;
 
 namespace Limbs.Web.Controllers
 {
-    [AllowAnonymous, RoutePrefix("~/covid")]
+    [AllowAnonymous]
     public class CovidController : BaseController
     {
         private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
 
-        [HttpGet, Route]
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPost, Route, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateCovidOrganizationViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    Error = true
+                });
+            }
+
+            var existingEmail = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Email == model.Email);
+            if (existingEmail != null)
+            {
+                return Json(new
+                {
+                    Error = true,
+                    Msg = "El correo electronico ya se encuentra registrado"
+                });
+            }
+
+            var newCovidOrganization = Mapper.Map<CovidOrganizationModel>(model);
+            Db.CovidOrganizationModels.Add(newCovidOrganization);
+            await Db.SaveChangesAsync();
+
+            var id = newCovidOrganization.Id;
+
+            var currentTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmssffff");
+            byte[] key = Encoding.UTF8.GetBytes($"{Guid.NewGuid():N}-{id}-{currentTimeStamp}");
+
+            newCovidOrganization.Token = Convert.ToBase64String(key);
+            Db.CovidOrganizationModels.AddOrUpdate(newCovidOrganization);
+
+            await Db.SaveChangesAsync();
+
+            var urlRedirect = Url.Action("Edit", "Covid", new { token = newCovidOrganization.Token }, Request.Url.Scheme);
+            var covidEmailInfo = new CovidInfoEmail
+            {
+                FullName = $"{newCovidOrganization.Name} {newCovidOrganization.Surname}",
+                Url = urlRedirect
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = _fromEmail,
+                To = newCovidOrganization.Email,
+                Subject = "[Atomic Limbs] Tu pedido de mascarillas fue realizado con éxito",
+                Body = CompiledTemplateEngine.Render("Mails.NewOrderCovid", covidEmailInfo),
+            };
+
+            await AzureQueue.EnqueueAsync(mailMessage);
+
+            return Json(new
+            {
+                UrlRedirect = urlRedirect,
+                Error = false
+            });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return HttpNotFound();
+            }
+
+            var covidOrganizationModel = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Token == token);
+
+            if (covidOrganizationModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            var covidOrganizationVm = Mapper.Map<EditCovidOrganizationViewModel>(covidOrganizationModel);
+            return View(covidOrganizationVm);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(CreateCovidOrganizationViewModel model)
         {
             if (!ModelState.IsValid)
             {
