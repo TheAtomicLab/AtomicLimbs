@@ -18,7 +18,6 @@ namespace Limbs.Web.Controllers
         {
             return RedirectToAction("Index", "Manage");
         }
-
     }
 }
 

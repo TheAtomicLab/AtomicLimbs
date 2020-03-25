@@ -129,7 +129,7 @@
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.1016.290\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -372,6 +372,10 @@
     <Compile Include="Migrations\201908062158082_changeUserEvent.cs" />
     <Compile Include="Migrations\201908062158082_changeUserEvent.Designer.cs">
       <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003251227171_covidOrganization.cs" />
+    <Compile Include="Migrations\202003251227171_covidOrganization.Designer.cs">
+      <DependentUpon>202003251227171_covidOrganization.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -913,6 +917,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908062158082_changeUserEvent.resx">
       <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251227171_covidOrganization.resx">
+      <DependentUpon>202003251227171_covidOrganization.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
