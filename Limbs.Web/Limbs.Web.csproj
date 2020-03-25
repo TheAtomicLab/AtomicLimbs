@@ -481,6 +481,7 @@
     <Compile Include="ViewModels\AmputationTypeDetailsViewModel.cs" />
     <Compile Include="ViewModels\AssignEventViewModel.cs" />
     <Compile Include="ViewModels\ColorDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Configs\CovidProfile.cs" />
     <Compile Include="ViewModels\Configs\RenderProfile.cs" />
     <Compile Include="ViewModels\Configs\AutoMapperLimbsConfig.cs" />
     <Compile Include="ViewModels\Configs\AmputationProfile.cs" />

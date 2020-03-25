@@ -8,7 +8,7 @@ namespace Limbs.Web.ViewModels
 {
     public class CreateCovidOrganizationViewModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = "Seleccione una representación", Description = "")]
         [Required(ErrorMessage = " ")]
@@ -26,7 +26,7 @@ namespace Limbs.Web.ViewModels
 
         [Display(Name = "Apellido", Description = "")]
         [Required(ErrorMessage = " ")]
-        public string Lastname { get; set; }
+        public string Surname { get; set; }
 
         [Display(Name = "País", Description = "")]
         [Required(ErrorMessage = " ")]

@@ -12,6 +12,7 @@ namespace Limbs.Web.ViewModels.Configs
                 cfg.AddProfile<EventProfile>();
                 cfg.AddProfile<AmputationProfile>();
                 cfg.AddProfile<RenderProfile>();
+                cfg.AddProfile<CovidProfile>();
             });
         }
     }
