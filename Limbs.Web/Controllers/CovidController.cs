@@ -15,18 +15,18 @@ using System.Web.Mvc;
 
 namespace Limbs.Web.Controllers
 {
-    [AllowAnonymous, RoutePrefix("~/covid")]
+    [AllowAnonymous]
     public class CovidController : BaseController
     {
         private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
 
-        [HttpGet, Route]
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
 
-        [HttpPost, Route, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(CreateCovidOrganizationViewModel model)
         {
             if (!ModelState.IsValid)
@@ -61,10 +61,11 @@ namespace Limbs.Web.Controllers
 
             await Db.SaveChangesAsync();
 
+            var urlRedirect = Url.Action("Edit", "Covid", new { token = newCovidOrganization.Token }, Request.Url.Scheme);
             var covidEmailInfo = new CovidInfoEmail
             {
                 FullName = $"{newCovidOrganization.Name} {newCovidOrganization.Surname}",
-                Url = Url.Action("Edit", "Covid", new { token = newCovidOrganization.Token }, Request.Url.Scheme)
+                Url = urlRedirect
             };
 
             var mailMessage = new MailMessage
@@ -76,6 +77,71 @@ namespace Limbs.Web.Controllers
             };
 
             await AzureQueue.EnqueueAsync(mailMessage);
+
+            return Json(new
+            {
+                UrlRedirect = urlRedirect,
+                Error = false
+            });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+            {
+                return HttpNotFound();
+            }
+
+            var covidOrganizationModel = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Token == token);
+
+            if (covidOrganizationModel == null)
+            {
+                return HttpNotFound();
+            }
+
+            var covidOrganizationVm = Mapper.Map<EditCovidOrganizationViewModel>(covidOrganizationModel);
+            return View(covidOrganizationVm);
+        }
+
+        [HttpPost, ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(EditCovidOrganizationViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    Error = true
+                });
+            }
+
+            var covidOrganization = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Token == model.Token);
+            if (covidOrganization == null)
+            {
+                return Json(new
+                {
+                    Error = true,
+                    Msg = "El pedido no existe, recargue la página."
+                });
+            }
+
+            if (model.Email != covidOrganization.Email)
+            {
+                var existingEmail = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Email == model.Email && p.Id != model.Id);
+                if (existingEmail != null)
+                {
+                    return Json(new
+                    {
+                        Error = true,
+                        Msg = "El correo electronico ya se encuentra registrado"
+                    });
+                }
+            }
+
+            covidOrganization = Mapper.Map<EditCovidOrganizationViewModel, CovidOrganizationModel>(model);
+            Db.CovidOrganizationModels.AddOrUpdate(covidOrganization);
+
+            await Db.SaveChangesAsync();
 
             return Json(new
             {

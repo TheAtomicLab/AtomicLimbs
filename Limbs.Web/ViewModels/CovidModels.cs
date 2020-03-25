@@ -6,7 +6,7 @@ using System.Globalization;
 
 namespace Limbs.Web.ViewModels
 {
-    public class CreateCovidOrganizationViewModel
+    public class BaseCovidOrganizationViewModel
     {
         public int? Id { get; set; }
 
@@ -75,5 +75,15 @@ namespace Limbs.Web.ViewModels
         {
             return DbGeography.PointFromText("POINT(" + lng.ToString("G17", CultureInfo.InvariantCulture) + " " + lat.ToString("G17", CultureInfo.InvariantCulture) + ")", 4326);
         }
+    }
+
+    public class CreateCovidOrganizationViewModel : BaseCovidOrganizationViewModel
+    {
+
+    }
+
+    public class EditCovidOrganizationViewModel : BaseCovidOrganizationViewModel
+    {
+
     }
 }

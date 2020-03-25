@@ -828,6 +828,7 @@
     <Content Include="Views\Covid\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CovidOrganizationEnum.cshtml" />
     <Content Include="Views\Covid\_Address.cshtml" />
+    <Content Include="Views\Covid\Edit.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -48,9 +48,12 @@ $(document).ready(function () {
                             $(validationTemplate).insertAfter('h2.f-titulo');
                         }
                     } else {
-                        $('.msg-success').show();
-                        frm[0].reset();
-                        $(window).scrollTop(0);
+                        if ($('#isEdit').length) {
+                            $('.msg-success').show();
+                            $(window).scrollTop(0);
+                        } else {
+                            window.location = r.UrlRedirect;
+                        }
                     }
                 },
                 error: function (r) {
