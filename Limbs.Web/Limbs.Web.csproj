@@ -248,6 +248,7 @@
     <Compile Include="Areas\Admin\Controllers\PanelController.cs" />
     <Compile Include="Areas\Admin\Controllers\ReportController.cs" />
     <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Controllers\CovidController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\DataMigrationController.cs" />
     <Compile Include="Controllers\HelpController.cs" />
@@ -478,6 +479,7 @@
     <Compile Include="ViewModels\Configs\AmputationProfile.cs" />
     <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\CovidModels.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
     <Compile Include="ViewModels\OrderDetailsViewModel.cs" />
@@ -652,6 +654,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\pages\covid.js" />
     <Content Include="Scripts\pages\munonizer.js" />
     <Content Include="Scripts\pages\orders_actions.js" />
     <Content Include="Scripts\pages\uploadImage.js" />
@@ -814,6 +817,9 @@
     <Content Include="Views\Help\Pedir.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Organization.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Covid\Create.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\CovidOrganizationEnum.cshtml" />
+    <Content Include="Views\Covid\_Address.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -920,6 +926,7 @@
     <EmbeddedResource Include="Resources\AmbassadorTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AmbassadorTexts.es.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AmbassadorTexts.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
