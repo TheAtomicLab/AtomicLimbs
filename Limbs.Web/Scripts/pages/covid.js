@@ -48,7 +48,12 @@ $(document).ready(function () {
                             $(validationTemplate).insertAfter('h2.f-titulo');
                         }
                     } else {
-                        window.location = r.UrlRedirect;
+                        if ($('#isEdit').length) {
+                            $('.msg-success').show();
+                            $(window).scrollTop(0);
+                        } else {
+                            window.location = r.UrlRedirect;
+                        }
                     }
                 },
                 error: function (r) {

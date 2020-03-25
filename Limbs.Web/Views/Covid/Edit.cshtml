@@ -5,7 +5,14 @@
 
 @section scripts{
     <script type="text/javascript">
-        $("#@Html.IdFor(model => model.DeliveryDate)").datepicker('setDate', @Model.DeliveryDate);
+        $("#@Html.IdFor(model => model.DeliveryDate)").datepicker({
+            minDate: 0,
+            maxDate: "+1Y",
+            dateFormat: "yy-mm-dd",
+            changeYear: true,
+            changeMonth: true,
+            setDate: new Date(@Model.DeliveryDate.ToString("yyyy-MM-dd"))
+        });
     </script>
     <script src="~/Scripts/pages/covid.js"></script>
 }
@@ -30,13 +37,17 @@
 
 <div id="cont" class="min_full">
     <div id="registro">
+        <input id="isEdit" type="hidden" value="isEdit" />
+
         @using (Html.BeginForm("Edit", "Covid", FormMethod.Post, new { @class = "form" }))
         {
             @Html.HiddenFor(x => x.Id)
+            @Html.HiddenFor(x => x.Token)
+
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Editar datos y/o pedido</h2>
             <div class="msg-success" style="display: none;">
-                <span>Pedido realizado correctamente, verifique su correo electronico!</span>
+                <span>Pedido actualizado correctamente!</span>
             </div>
             if (!ViewData.ModelState.IsValid)
             {

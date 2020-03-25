@@ -105,7 +105,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpPost, ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit(CreateCovidOrganizationViewModel model)
+        public async Task<ActionResult> Edit(EditCovidOrganizationViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -115,45 +115,33 @@ namespace Limbs.Web.Controllers
                 });
             }
 
-            var existingEmail = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Email == model.Email);
-            if (existingEmail != null)
+            var covidOrganization = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Token == model.Token);
+            if (covidOrganization == null)
             {
                 return Json(new
                 {
                     Error = true,
-                    Msg = "El correo electronico ya se encuentra registrado"
+                    Msg = "El pedido no existe, recargue la página."
                 });
             }
 
-            var newCovidOrganization = Mapper.Map<CovidOrganizationModel>(model);
-            Db.CovidOrganizationModels.Add(newCovidOrganization);
-            await Db.SaveChangesAsync();
-
-            var id = newCovidOrganization.Id;
-
-            var currentTimeStamp = DateTime.Now.ToString("yyyyMMddHHmmssffff");
-            byte[] key = Encoding.UTF8.GetBytes($"{Guid.NewGuid():N}-{id}-{currentTimeStamp}");
-
-            newCovidOrganization.Token = Convert.ToBase64String(key);
-            Db.CovidOrganizationModels.AddOrUpdate(newCovidOrganization);
-
-            await Db.SaveChangesAsync();
-
-            var covidEmailInfo = new CovidInfoEmail
+            if (model.Email != covidOrganization.Email)
             {
-                FullName = $"{newCovidOrganization.Name} {newCovidOrganization.Surname}",
-                Url = Url.Action("Edit", "Covid", new { token = newCovidOrganization.Token }, Request.Url.Scheme)
-            };
+                var existingEmail = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Email == model.Email && p.Id != model.Id);
+                if (existingEmail != null)
+                {
+                    return Json(new
+                    {
+                        Error = true,
+                        Msg = "El correo electronico ya se encuentra registrado"
+                    });
+                }
+            }
 
-            var mailMessage = new MailMessage
-            {
-                From = _fromEmail,
-                To = newCovidOrganization.Email,
-                Subject = "[Atomic Limbs] Tu pedido de mascarillas fue realizado con éxito",
-                Body = CompiledTemplateEngine.Render("Mails.NewOrderCovid", covidEmailInfo),
-            };
+            covidOrganization = Mapper.Map<EditCovidOrganizationViewModel, CovidOrganizationModel>(model);
+            Db.CovidOrganizationModels.AddOrUpdate(covidOrganization);
 
-            await AzureQueue.EnqueueAsync(mailMessage);
+            await Db.SaveChangesAsync();
 
             return Json(new
             {

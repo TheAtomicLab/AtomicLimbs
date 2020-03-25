@@ -37,7 +37,8 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.Quantity, src => src.MapFrom(p => p.Quantity))
                 .ForMember(p => p.DeliveryDate, src => src.MapFrom(p => p.DeliveryDate))
                 .ForMember(p => p.Token, src => src.MapFrom(p => p.Token))
-                .ForMember(p => p.Location, src => src.MapFrom(p => p.Location));
+                .ForMember(p => p.Location, src => src.MapFrom(p => p.Location))
+                .ReverseMap();
         }
     }
 }
