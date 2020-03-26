@@ -35,5 +35,7 @@ namespace Limbs.Web.Entities.DbContext
         public DbSet<OrderModel> OrderModels { get; set; }
 
         public DbSet<MessageModel> Messages { get; set; }
+
+        public DbSet<COVIDEmbajadorEntregable> COVIDEmbajadorEntregable { get; set; }
     }
 }

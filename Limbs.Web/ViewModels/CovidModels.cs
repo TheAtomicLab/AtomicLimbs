@@ -18,6 +18,7 @@ namespace Limbs.Web.ViewModels
         public string CovidOrganizationName { get; set; }
 
         [Required(ErrorMessage = " ")]
+        [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
 
         [Display(Name = "Nombre", Description = "")]

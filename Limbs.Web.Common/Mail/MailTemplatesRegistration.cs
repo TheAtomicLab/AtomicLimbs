@@ -33,6 +33,7 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<WrongInfoEmail>("Mails.IncorrectPhotoAmbassadorExtraComment", GetStringTemplate("Limbs.Web.Common.Mail.Templates.IncorrectPhotoAmbassadorExtraComment.cshtml"));
 
             CompiledTemplateEngine.Add<CovidInfoEmail>("Mails.NewOrderCovid", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NewOrderCovid.cshtml"));
+            CompiledTemplateEngine.Add<CovidUpdateEmail>("Mails.UpdateEmailOrderCovid", GetStringTemplate("Limbs.Web.Common.Mail.Templates.UpdateEmailOrderCovid.cshtml"));
 
             CompiledTemplateEngine.Add<FollowUpModel>("Mails.FollowUpAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.FollowUpAmbassador.cshtml"));
         }

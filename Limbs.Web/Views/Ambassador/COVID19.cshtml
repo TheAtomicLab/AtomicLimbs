@@ -1,0 +1,42 @@
+﻿@using Limbs.Web.Entities.Models
+@model COVIDEmbajadorEntregable
+@{
+    ViewBag.Title = "COVID-19";
+}
+
+<h2>COVID-19</h2>
+
+
+@using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, Model))
+{
+
+    @Html.HiddenFor(model => model.Ambassador.Id)
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.TipoEntregable)
+
+    <button class="bn_blue" type="button" onclick="restar()"><i class="fa fa fa-minus"></i></button>
+    @Html.Label("Tengo para entregar:", new { htmlAttributes = new { @class = "" } })
+    @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "" } })
+    <button class="bn_blue" type="button" onclick="sumar()"><i class="fa fa fa-plus"></i></button>
+    <br />
+    <input class="bn_blue" type="submit" value="Actualizar" />
+
+}
+
+
+<script>
+
+    function sumar() {
+        var cant = parseInt(document.getElementById("CantEntregable").value);
+        cant = cant + 1;
+        document.getElementById("CantEntregable").value = cant;
+    }
+
+    function restar() {
+        var cant = parseInt(document.getElementById("CantEntregable").value);
+        cant = cant - 1;
+        document.getElementById("CantEntregable").value = cant;
+    }
+
+</script>
+
