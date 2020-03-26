@@ -15,8 +15,8 @@
     @Html.HiddenFor(model => model.TipoEntregable)
 
     <button class="bn_blue" type="button" onclick="restar()"><i class="fa fa fa-minus"></i></button>
-    @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "" } })
     @Html.Label("Tengo para entregar:", new { htmlAttributes = new { @class = "" } })
+    @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "" } })
     <button class="bn_blue" type="button" onclick="sumar()"><i class="fa fa fa-plus"></i></button>
     <br />
     <input class="bn_blue" type="submit" value="Actualizar" />
