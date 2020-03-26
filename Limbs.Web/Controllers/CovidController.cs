@@ -65,7 +65,8 @@ namespace Limbs.Web.Controllers
             var covidEmailInfo = new CovidInfoEmail
             {
                 FullName = $"{newCovidOrganization.Name} {newCovidOrganization.Surname}",
-                Url = urlRedirect
+                Url = urlRedirect,
+                Quantity = newCovidOrganization.Quantity
             };
 
             var mailMessage = new MailMessage
@@ -125,6 +126,9 @@ namespace Limbs.Web.Controllers
                 });
             }
 
+            bool sendEmail = false;
+            string previousEmail = string.Empty;
+
             if (model.Email != covidOrganization.Email)
             {
                 var existingEmail = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Email == model.Email && p.Id != model.Id);
@@ -135,6 +139,10 @@ namespace Limbs.Web.Controllers
                         Error = true,
                         Msg = "El correo electronico ya se encuentra registrado"
                     });
+                } else
+                {
+                    previousEmail = model.Email;
+                    sendEmail = true;
                 }
             }
 
@@ -142,6 +150,28 @@ namespace Limbs.Web.Controllers
             Db.CovidOrganizationModels.AddOrUpdate(covidOrganization);
 
             await Db.SaveChangesAsync();
+
+            if (sendEmail)
+            {
+                var urlRedirect = Url.Action("Edit", "Covid", new { token = covidOrganization.Token }, Request.Url.Scheme);
+                var covidEmailInfo = new CovidUpdateEmail
+                {
+                    FullName = $"{covidOrganization.Name} {covidOrganization.Surname}",
+                    Url = urlRedirect,
+                    PreviousEmail = previousEmail,
+                    NewEmail = covidOrganization.Email
+                };
+
+                var mailMessage = new MailMessage
+                {
+                    From = _fromEmail,
+                    To = covidOrganization.Email,
+                    Subject = "[Atomic Limbs] Cambio de correo electrónico",
+                    Body = CompiledTemplateEngine.Render("Mails.CovidUpdateEmail", covidEmailInfo),
+                };
+
+                await AzureQueue.EnqueueAsync(mailMessage);
+            }
 
             return Json(new
             {

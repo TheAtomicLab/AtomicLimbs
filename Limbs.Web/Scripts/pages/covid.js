@@ -4,13 +4,13 @@ $(document).ready(function () {
                             </div>`;
 
     let organization = $('#CovidOrganizationEnum');
-    let organizationName = $('#OrganizationName');
+    let organizationName = $('#CovidOrganizationName');
     let organizationBox = $('.organization-box');
     let frm = $('.form');
 
     organization.change(function () {
+        organizationName.val('');
         if ($(this).val() !== 'Otro') {
-            organizationName.val('');
             organizationBox.addClass('hide');
         } else {
             organizationBox.removeClass('hide');

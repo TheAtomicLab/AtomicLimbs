@@ -62,7 +62,7 @@
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "f-campo", placeholder = "Cantidad de mascarillas" } })
 
                 <label class="f-label">Fecha de Entrega</label>
-                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "Seleccione una fecha" } })
+                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "Seleccione una fecha", @readonly=true } })
 
                 @Html.Partial("_Address", Model)
             </div>
