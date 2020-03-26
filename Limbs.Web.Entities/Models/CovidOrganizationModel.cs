@@ -15,6 +15,12 @@ namespace Limbs.Web.Entities.Models
         public string CovidOrganizationName { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public string Dni { get; set; }
+
+        public string PersonalPhone { get; set; }
+
+        public string OrganizationPhone { get; set; }
+        public string OrganizationPhoneIntern { get; set; }
 
         public string Email { get; set; }
 

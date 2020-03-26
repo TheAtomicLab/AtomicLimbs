@@ -8,14 +8,6 @@ $(document).ready(function () {
     let organizationBox = $('.organization-box');
     let frm = $('.form');
 
-    organization.change(function () {
-        organizationName.val('');
-        if ($(this).val() !== 'Otro') {
-            organizationBox.addClass('hide');
-        } else {
-            organizationBox.removeClass('hide');
-        }
-    });
 
     frm.submit(function (e) {
         $('.msg-success').hide();

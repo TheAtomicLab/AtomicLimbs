@@ -21,6 +21,21 @@ namespace Limbs.Web.ViewModels
         [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = " ")]
+        [Display(Name = "DNI/Pasaporte del solicitante", Description = "")]
+        public string Dni { get; set; }
+
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = " ")]
+        [Display(Name = "Teléfono personal", Description = "")]
+        public string PersonalPhone { get; set; }
+
+        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$",ErrorMessage = " ")]
+        [Display(Name = "Teléfono de la organización", Description = "")]
+        public string OrganizationPhone { get; set; }
+
+        [Display(Name = "Número de interno", Description = "")]
+        public string OrganizationPhoneIntern { get; set; }
+
         [Display(Name = "Nombre", Description = "")]
         [Required(ErrorMessage = " ")]
         public string Name { get; set; }
