@@ -145,6 +145,49 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
+        public ActionResult COVID19()
+        {
+            var currentUserId = User.Identity.GetUserId();
+            var model = Db.COVIDEmbajadorEntregable.Where(p => p.Ambassador.UserId == currentUserId)
+                                                    .Include(p => p.Ambassador)
+                                                    .FirstOrDefault();
+
+            if (model == null)
+            {
+                model = new COVIDEmbajadorEntregable();
+                model.CantEntregable = 0;
+                model.Ambassador = Db.AmbassadorModels.Where(p => p.UserId == currentUserId).First();
+                model.TipoEntregable = 1;
+                model.Id = 0;
+            }
+            
+            return View(model);
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> GuardarCantidad(COVIDEmbajadorEntregable model)
+        {
+            model.Ambassador = Db.AmbassadorModels.Where(p => p.Id == model.Ambassador.Id).First();
+
+            if (model.Id == 0)
+            {                
+                Db.COVIDEmbajadorEntregable.Add(model);
+            }
+            else
+            {
+                var newModel = Db.COVIDEmbajadorEntregable.Where(p => p.Id == model.Id)
+                                                    .Include(p => p.Ambassador)
+                                                    .FirstOrDefault();
+
+                newModel.CantEntregable = model.CantEntregable;
+            }
+
+            await Db.SaveChangesAsync();
+
+            return RedirectToAction("COVID19");
+        }
+
         private async Task ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {
             ModelState[nameof(ambassadorModel.Id)]?.Errors.Clear();

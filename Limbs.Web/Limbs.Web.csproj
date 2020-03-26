@@ -373,6 +373,10 @@
     <Compile Include="Migrations\201908062158082_changeUserEvent.Designer.cs">
       <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.cs" />
+    <Compile Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.Designer.cs">
+      <DependentUpon>202003251126543_crete-table-COVIDEmbajadorEntregable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -814,6 +818,7 @@
     <Content Include="Views\Help\Pedir.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Organization.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
+    <Content Include="Views\Ambassador\COVID19.cshtml" />
     <None Include="Web.limbstest - Web Deploy.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -908,6 +913,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201908062158082_changeUserEvent.resx">
       <DependentUpon>201908062158082_changeUserEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.resx">
+      <DependentUpon>202003251126543_crete-table-COVIDEmbajadorEntregable.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
