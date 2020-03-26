@@ -33,6 +33,9 @@ namespace Limbs.Web
             routes.Redirect(r => r.MapRoute("", "animales")).To(animales);
             routes.Redirect(r => r.MapRoute("", "ListaDeEspera")).To(lista);
 
+            routes.MapRoute("", "covid", new { controller = "Covid", action = "Create" });
+            routes.MapRoute("", "covid/pedido", new { controller = "Covid", action = "Edit" });
+
             routes.MapRoute(
              name: "Localized",
              url: "{lang}/{controller}/{action}/{id}",

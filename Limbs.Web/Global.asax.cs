@@ -11,8 +11,6 @@ namespace Limbs.Web
     {
         protected void Application_Start()
         {
-            
-            
             SqlServerTypes.Utilities.LoadNativeAssemblies(Server.MapPath("~/bin"));
 
             AreaRegistration.RegisterAllAreas();

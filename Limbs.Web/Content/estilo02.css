@@ -572,3 +572,11 @@
         background: rgba(0,0,0,.6);
     }
 }
+
+.msg-success {
+    margin: .25em 0;
+}
+
+    .msg-success > span {
+        color: #27ae60;
+    }
