@@ -39,6 +39,17 @@ namespace Limbs.Web.ViewModels.Configs
                 .ForMember(p => p.Token, src => src.MapFrom(p => p.Token))
                 .ForMember(p => p.Location, src => src.MapFrom(p => p.Location))
                 .ReverseMap();
+
+            CreateMap<CovidEmbajadorEntregableViewModel, COVIDEmbajadorEntregable>()
+                .ForPath(p => p.Ambassador.Id, src => src.MapFrom(p => p.AmbassadorId))
+                .ForMember(p => p.CantEntregable, src => src.MapFrom(p => p.CantEntregable))
+                .ForMember(p => p.TipoEntregable, src => src.MapFrom(p => p.TipoEntregable))
+                .ForMember(p => p.Id, src => src.MapFrom(p => p.Id));
+
+            CreateMap<COVIDEmbajadorEntregable, CovidEmbajadorEntregableViewModel>()
+                .ForMember(p => p.CantEntregable, src => src.MapFrom(p => p.CantEntregable))
+                .ForMember(p => p.TipoEntregable, src => src.MapFrom(p => p.TipoEntregable))
+                .ForMember(p => p.Id, src => src.MapFrom(p => p.Id));
         }
     }
 }

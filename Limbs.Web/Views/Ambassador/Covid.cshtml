@@ -1,35 +1,232 @@
-﻿@using Limbs.Web.Entities.Models
-@model COVIDEmbajadorEntregable
+﻿@model  Limbs.Web.ViewModels.CovidEmbajadorEntregableViewModel
 @{
     ViewBag.Title = "COVID-19";
 }
 
-<h2>COVID-19</h2>
+<style>
+    .card.card-l > h2 {
+        margin-bottom: .75em;
+    }
 
-@using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, Model))
+    .form-cantidad {
+        padding: .25em;
+    }
+
+    .f-campo.f-campo-cantidad {
+        width: auto;
+        text-align: center;
+    }
+
+    #panel_embajadores h1.covid-header {
+        padding: 0;
+    }
+
+    .full-width {
+        width: 100% !important;
+    }
+
+    .covid-container {
+        display: grid;
+        width: 100%;
+        grid-template-rows: repeat(6, 100%);
+        grid-template-columns: repeat(2, 50%);
+    }
+
+    .covid-hospital {
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .covid-other {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+
+<div id="loadingModal" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+<article id="panel_embajadores">
+    <div id="Header" class="head_info">
+        <h1 class="covid-header">Covid-19</h1>
+    </div>
+    <div id="paneles_embajador">
+        <article class="card card-l">
+            <h2>Modificar Cantidades</h2>
+            @using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, new { @class = "form form-quantity" }))
+            {
+                @Html.HiddenFor(model => model.AmbassadorId)
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.TipoEntregable)
+
+                <div class="f-seccion">
+                    <label class="f-label">Cantidad Actual</label>
+                    <div>
+                        <button class="bn_blue removeCovidQuantity" type="button"><i class="fa fa fa-minus"></i></button>
+                        @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "f-campo f-campo-cantidad", @readonly = true } })
+                        <button class="bn_blue addCovidQuantity" type="button"><i class="fa fa fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <br />
+                <button class="bn_blue sendQuantity">Actualizar</button>
+                <div><span class="quantityResponseMsg"></span></div>
+            }
+        </article>
+        <article class="card card-l">
+            <p>
+                Hola Embajadores! Esperamos que esten bien.
+                A causa de la pandemia que está afectando a nuestro país, decidimos colaborar activamente para ayudar desde Atomic Lab. Adjuntamos el siguiente diseño de mascarillas que se pueden crear con impresoras 3D para que ustedes impriman cuantas puedan y luego sean enviadas a los servicios de salud y seguridad de las distintas provincias mediante un servicio de envío tercerizado.
+            </p>
+        </article>
+
+    </div>
+</article>
+
+<article id="info_pedido">
+    <div class="grid_pedidos">
+        <div class="card card-l">
+            <h2>Pedido más cercano</h2>
+            <form>
+                <table class="tabla_datos">
+                    <tr>
+                        <td>Hospital (a 1km)</td>
+                        <td>
+                            Aclarar
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Cantidad necesaria</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Embajadores que donaron: </td>
+                        <td>
+                            <p>M. Petrini</p>
+                            <p>M. Petrini</p>
+                            <p>M. Petrini</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="text-bold text-center" colspan="2">Fecha limite: 25/04</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">Sumarme</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td colspan="2">-</td>
+                                    <td colspan="2">input</td>
+                                    <td colspan="2">+</td>
+                                    <td colspan="2">Guardar</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="card card-l">
+            <h2>Pedido más cercano</h2>
+            <table class="tabla_datos">
+                <tr>
+                    <td>Hospital (a 1km)</td>
+                    <td>
+                        Aclarar
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cantidad necesaria</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>Embajadores que donaron: </td>
+                    <td>
+                        <p>M. Petrini</p>
+                        <p>M. Petrini</p>
+                        <p>M. Petrini</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-bold text-center" colspan="2">Fecha limite: 25/04</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">Sumarme</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2">-</td>
+                                <td colspan="2">input</td>
+                                <td colspan="2">+</td>
+                                <td colspan="2">Guardar</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="card card-l">
+            <h2>Pedido más cercano</h2>
+            <table class="tabla_datos">
+                <tr>
+                    <td>Hospital (a 1km)</td>
+                    <td>
+                        Aclarar
+                    </td>
+                </tr>
+                <tr>
+                    <td>Cantidad necesaria</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td>Embajadores que donaron: </td>
+                    <td>
+                        <p>M. Petrini</p>
+                        <p>M. Petrini</p>
+                        <p>M. Petrini</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="text-bold text-center" colspan="2">Fecha limite: 25/04</td>
+                </tr>
+
+                <tr>
+                    <td colspan="2">Sumarme</td>
+                </tr>
+                <tr>
+                    <td>
+                        <table>
+                            <tr>
+                                <td colspan="2">-</td>
+                                <td colspan="2">input</td>
+                                <td colspan="2">+</td>
+                                <td colspan="2">Guardar</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</article>
+
+@section scripts
 {
-    @Html.HiddenFor(model => model.Ambassador.Id)
-    @Html.HiddenFor(model => model.Id)
-    @Html.HiddenFor(model => model.TipoEntregable)
-
-    <button class="bn_blue" type="button" onclick="restar()"><i class="fa fa fa-minus"></i></button>
-    @Html.Label("Tengo para entregar:", new { htmlAttributes = new { @class = "" } })
-    @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "" } })
-    <button class="bn_blue" type="button" onclick="sumar()"><i class="fa fa fa-plus"></i></button>
-    <br />
-    <input class="bn_blue" type="submit" value="Actualizar" />
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Scripts/pages/ambassador_covid.js"></script>
 }
-
-<script>
-    function sumar() {
-        var cant = parseInt(document.getElementById("CantEntregable").value);
-        cant = cant + 1;
-        document.getElementById("CantEntregable").value = cant;
-    }
-
-    function restar() {
-        var cant = parseInt(document.getElementById("CantEntregable").value);
-        cant = cant - 1;
-        document.getElementById("CantEntregable").value = cant;
-    }
-</script>

@@ -2,16 +2,19 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
+using Limbs.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -42,7 +45,7 @@ namespace Limbs.Web.Controllers
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
             var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.ArrangeDelivery || o.Status == OrderStatus.Ready).ToList();
             var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
-            
+
             var viewModel = new ViewModels.AmbassadorPanelViewModel
             {
                 PendingToAssignOrders = pendingAssignationOrders,
@@ -146,7 +149,7 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpGet, OverrideAuthorize(Roles = AppRoles.Ambassador)]
-        public ActionResult Covid()
+        public async Task<ActionResult> Covid()
         {
             var currentUserId = User.Identity.GetUserId();
             var model = Db.COVIDEmbajadorEntregable.Where(p => p.Ambassador.UserId == currentUserId)
@@ -155,38 +158,52 @@ namespace Limbs.Web.Controllers
 
             if (model == null)
             {
-                model = new COVIDEmbajadorEntregable();
-                model.CantEntregable = 0;
-                model.Ambassador = Db.AmbassadorModels.Where(p => p.UserId == currentUserId).First();
-                model.TipoEntregable = 1;
-                model.Id = 0;
+                model = new COVIDEmbajadorEntregable
+                {
+                    CantEntregable = 0,
+                    Ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(p => p.UserId == currentUserId),
+                    TipoEntregable = 1
+                };
+
+                Db.COVIDEmbajadorEntregable.Add(model);
+                await Db.SaveChangesAsync();
             }
-            
-            return View(model);
+
+            return View(Mapper.Map<CovidEmbajadorEntregableViewModel>(model));
         }
 
-
         [HttpPost]
-        public async Task<ActionResult> GuardarCantidad(COVIDEmbajadorEntregable model)
+        public async Task<ActionResult> GuardarCantidad(CovidEmbajadorEntregableViewModel model)
         {
-            model.Ambassador = Db.AmbassadorModels.Where(p => p.Id == model.Ambassador.Id).First();
-
-            if (model.Id == 0)
-            {                
-                Db.COVIDEmbajadorEntregable.Add(model);
-            }
-            else
+            if (!ModelState.IsValid)
             {
-                var newModel = Db.COVIDEmbajadorEntregable.Where(p => p.Id == model.Id)
-                                                    .Include(p => p.Ambassador)
-                                                    .FirstOrDefault();
-
-                newModel.CantEntregable = model.CantEntregable;
+                return Json(new
+                {
+                    Error = true
+                });
             }
+
+            var covidAmbassador = await Db.COVIDEmbajadorEntregable.FirstOrDefaultAsync(p => p.Id == model.Id);
+            if (covidAmbassador == null)
+            {
+                return Json(new
+                {
+                    Error = true,
+                    Msg = "El embajador no existe, recargue la página."
+                });
+            }
+
+            covidAmbassador = Mapper.Map<CovidEmbajadorEntregableViewModel, COVIDEmbajadorEntregable>(model);
+            covidAmbassador.Ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(p => p.Id == model.AmbassadorId);
+
+            Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
 
             await Db.SaveChangesAsync();
 
-            return RedirectToAction("COVID19");
+            return Json(new
+            {
+                Error = false
+            });
         }
 
         private async Task ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)

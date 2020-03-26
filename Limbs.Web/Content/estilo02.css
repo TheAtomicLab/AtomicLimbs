@@ -577,6 +577,6 @@
     margin: .25em 0;
 }
 
-    .msg-success > span {
+    .msg-success > span, .success {
         color: #27ae60;
     }

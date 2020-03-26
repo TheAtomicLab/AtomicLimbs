@@ -491,6 +491,7 @@
     <Compile Include="ViewModels\Configs\AmputationProfile.cs" />
     <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\CovidEmbajadorEntregableViewModel.cs" />
     <Compile Include="ViewModels\CovidModels.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
@@ -666,6 +667,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\pages\ambassador_covid.js" />
     <Content Include="Scripts\pages\covid.js" />
     <Content Include="Scripts\pages\munonizer.js" />
     <Content Include="Scripts\pages\orders_actions.js" />
@@ -829,7 +831,7 @@
     <Content Include="Views\Help\Pedir.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Organization.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Ambassador\COVID19.cshtml" />
+    <Content Include="Views\Ambassador\Covid.cshtml" />
     <Content Include="Views\Covid\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CovidOrganizationEnum.cshtml" />
     <Content Include="Views\Covid\_Address.cshtml" />
