@@ -145,7 +145,8 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        public ActionResult COVID19()
+        [HttpGet, OverrideAuthorize(Roles = AppRoles.Ambassador)]
+        public ActionResult Covid()
         {
             var currentUserId = User.Identity.GetUserId();
             var model = Db.COVIDEmbajadorEntregable.Where(p => p.Ambassador.UserId == currentUserId)
