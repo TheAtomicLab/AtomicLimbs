@@ -3,19 +3,7 @@ $(document).ready(function () {
                                 <span>Hay errores en el formulario, revis&#225; los campos marcados en rojo</span>
                             </div>`;
 
-    let organization = $('#CovidOrganizationEnum');
-    let organizationName = $('#CovidOrganizationName');
-    let organizationBox = $('.organization-box');
     let frm = $('.form');
-
-    organization.change(function () {
-        organizationName.val('');
-        if ($(this).val() !== 'Otro') {
-            organizationBox.addClass('hide');
-        } else {
-            organizationBox.removeClass('hide');
-        }
-    });
 
     frm.submit(function (e) {
         $('.msg-success').hide();

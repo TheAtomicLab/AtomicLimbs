@@ -55,22 +55,21 @@
             }
             <div class="f-seccion">
                 @Html.EditorFor(m => m.CovidOrganizationEnum, new { htmlAttributes = new { @class = "f-campo f-post-l" } })
-                @{
-                    var showOrHideClass = "hide";
-                }
+                @Html.EditorFor(model => model.CovidOrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = " " } })
 
-                @if (!string.IsNullOrEmpty(Model.CovidOrganizationName))
-                {
-                    showOrHideClass = string.Empty;
-                }
-                <div class="organization-box @showOrHideClass">
-                    @Html.EditorFor(model => model.CovidOrganizationName, new { htmlAttributes = new { @class = "f-campo", placeholder = "Nombre de la organización", data_val = "true", data_val_required = " " } })
+                <div class="f-campo-mitad">
+                    @Html.EditorFor(model => model.OrganizationPhone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Tel. de la organización", data_val = "true" } })
+                    @Html.EditorFor(model => model.OrganizationPhoneIntern, new { htmlAttributes = new { @class = "f-campo", placeholder = "Número de interno" } })
                 </div>
+
+                @Html.EditorFor(model => model.Dni, new { htmlAttributes = new { @class = "f-campo", placeholder = "DNI o Pasaporte", data_val = "true" } })
+
                 <div class="f-campo-mitad">
                     @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su nombre" } })
                     @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "f-campo", placeholder = "Ingrese su apellido" } })
                 </div>
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "f-campo", placeholder = "Correo Electrónico" } })
+                @Html.EditorFor(model => model.PersonalPhone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono personal", data_val = "true" } })
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "f-campo", placeholder = "Cantidad de mascarillas" } })
 
                 <label class="f-label">Fecha de Entrega</label>

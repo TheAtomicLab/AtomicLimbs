@@ -14,12 +14,27 @@ namespace Limbs.Web.ViewModels
         [Required(ErrorMessage = " ")]
         public CovidOrganizationEnum CovidOrganizationEnum { get; set; }
 
-        [Display(Name = "Nombre de la organización", Description = "")]
+        [Display(Name = "Nombre de la organización", Description = ""), Required(ErrorMessage = " ")]
         public string CovidOrganizationName { get; set; }
 
         [Required(ErrorMessage = " ")]
         [EmailAddress(ErrorMessage = " ")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = " ")]
+        [Display(Name = "DNI/Pasaporte del solicitante", Description = "")]
+        public string Dni { get; set; }
+
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = " "), Required(ErrorMessage = " ")]
+        [Display(Name = "Teléfono personal", Description = "")]
+        public string PersonalPhone { get; set; }
+
+        [RegularExpression(@"^[0-9]*$", ErrorMessage = " "), Required(ErrorMessage = " ")]
+        [Display(Name = "Teléfono de la organización", Description = "")]
+        public string OrganizationPhone { get; set; }
+
+        [Display(Name = "Número de interno", Description = "")]
+        public string OrganizationPhoneIntern { get; set; }
 
         [Display(Name = "Nombre", Description = "")]
         [Required(ErrorMessage = " ")]
