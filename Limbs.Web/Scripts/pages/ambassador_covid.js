@@ -12,7 +12,8 @@ $(document).ready(function () {
         $(grid_pedidos).masonry();
     });
 
-    let inputCant = $('#CantEntregable')
+    let inputCant = $('#CantEntregable');
+    let savedTmpCant = parseInt(inputCant.val());
 
     $('.addCovidQuantity').click(function () {
         quantityResponseMsg.html('');
@@ -26,6 +27,7 @@ $(document).ready(function () {
         if (cant === 0) {
             return;
         }
+
         inputCant.val(cant - 1);
     });
 
@@ -33,7 +35,7 @@ $(document).ready(function () {
         let inputCantToUpdate = $(this).parent().prev().children();
         let inputCantToUpdateVal = parseInt(inputCantToUpdate.val());
 
-        if (inputCantToUpdateVal === parseInt(inputCant.val())) {
+        if (inputCantToUpdateVal === savedTmpCant) {
             return;
         }
 
@@ -79,7 +81,7 @@ $(document).ready(function () {
                 } else {
                     inputTmpSaved.val('0');
                     inputCant.val(parseInt(inputCant.val()) - cantSaved);
-                    alert('Cantidad guardada ok');
+                    alert('Se asigno la cantidad');
                 }
             },
             error: function (r) {
@@ -114,6 +116,7 @@ $(document).ready(function () {
                         quantityResponseMsg.removeClass('success').addClass('error').html('Ha ocurrido un error, vuelva a intentarlo.');
                     }
                 } else {
+                    savedTmpCant = parseInt(inputCant.val());
                     quantityResponseMsg.removeClass('error').addClass('success').html('Cantidad actualizada correctamente.');
                 }
             },

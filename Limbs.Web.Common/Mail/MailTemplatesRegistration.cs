@@ -35,9 +35,10 @@ namespace Limbs.Web.Common.Mail
             CompiledTemplateEngine.Add<CovidInfoEmail>("Mails.NewOrderCovid", GetStringTemplate("Limbs.Web.Common.Mail.Templates.NewOrderCovid.cshtml"));
             CompiledTemplateEngine.Add<CovidUpdateEmail>("Mails.UpdateEmailOrderCovid", GetStringTemplate("Limbs.Web.Common.Mail.Templates.UpdateEmailOrderCovid.cshtml"));
 
+            CompiledTemplateEngine.Add<CovidSaveQuantityOrderEmail>("Mails.SaveQuantityOrderCovid", GetStringTemplate("Limbs.Web.Common.Mail.Templates.SaveQuantityOrderCovid.cshtml"));
+
             CompiledTemplateEngine.Add<FollowUpModel>("Mails.FollowUpAmbassador", GetStringTemplate("Limbs.Web.Common.Mail.Templates.FollowUpAmbassador.cshtml"));
         }
-
 
         private static string GetStringTemplate(string templateFilePath)
         {

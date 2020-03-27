@@ -92,18 +92,17 @@
 
 @if (Model.Orders.Count > 0)
 {
+    <h2 class="text-bold" style="margin: 0.75em .45em; ">Pedidos ordenados por cercanía</h2>
     <article id="info_pedido">
         <div class="grid_pedidos">
             @foreach (var order in Model.Orders)
             {
                 if (order.OrdersInfo.Count > 0)
                 {
-                    int i = 1;
                     foreach (var orderInfo in order.OrdersInfo)
                     {
-                        i = i + 1;
                         <div class="card card-l">
-                            <h2>Pedido #@i</h2>
+                            <h2>Pedido #@order.OrgId</h2>
                             @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
                             {
                                 <table class="tabla_datos">
