@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -169,7 +170,41 @@ namespace Limbs.Web.Controllers
                 await Db.SaveChangesAsync();
             }
 
-            return View(Mapper.Map<CovidEmbajadorEntregableViewModel>(model));
+            var vm = Mapper.Map<CovidEmbajadorEntregableViewModel>(model);
+
+            DbGeography location = model.Ambassador.Location;
+            vm.Orders =
+                await (from covidOrg in Db.CovidOrganizationModels
+                       join covidOrgAmb in Db.CovidOrgAmbassadorModels on covidOrg.Id equals covidOrgAmb.CovidOrgId into c
+                       from c1 in c.DefaultIfEmpty()
+                       join covidAmb in Db.COVIDEmbajadorEntregable on c1.CovidAmbassadorId equals covidAmb.Id into c2
+                       from c3 in c2.DefaultIfEmpty()
+                       join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
+                       from c5 in c4.DefaultIfEmpty()
+                       orderby c5.Location.Distance(location)
+                       group covidOrg by covidOrg.Id into g
+                       select new OrderCovidAmbassadorViewModel
+                       {
+                           OrgId = g.Key,
+                           OrdersInfo = g.Select(p => new OrderCovidInfoViewModel
+                           {
+                               CovidOrganization = p.CovidOrganization,
+                               CovidOrganizationName = p.CovidOrganizationName,
+                               Distance = p.Location.Distance(location) ?? 0d,
+                               Quantity = p.Quantity,
+                               AlreadySavedQuantity = p.CovidOrgAmbassadors.Any(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id),
+                               QuantitySaved = p.CovidOrgAmbassadors.FirstOrDefault(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id).Quantity,
+                               Ambassadors = p.CovidOrgAmbassadors.Select(x => new CovidAmbassador
+                               {
+                                   Name = x.CovidAmbassador.Ambassador.AmbassadorName,
+                                   Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
+                                   Quantity = x.Quantity
+                               }).ToList(),
+                               DeliveryDate = p.DeliveryDate
+                           }).ToList()
+                       }).ToListAsync();
+
+            return View(vm);
         }
 
         [HttpPost]
@@ -205,6 +240,42 @@ namespace Limbs.Web.Controllers
                 Error = false
             });
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveQuantityToOrder(CovidUpdateQuantity model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    Error = true
+                });
+            }
+
+            var covidOrgAmbassador = await Db.CovidOrgAmbassadorModels.FirstOrDefaultAsync(p => p.CovidAmbassadorId == model.CovidAmbassadorId && p.CovidOrgId == model.OrgId);
+            if (covidOrgAmbassador == null)
+            {
+                covidOrgAmbassador = new CovidOrgAmbassador
+                {
+                    CovidAmbassadorId = model.CovidAmbassadorId,
+                    CovidOrgId = model.OrgId,
+                    Quantity = model.SavedQuantity
+                };
+            }
+
+            var covidAmbassador = await Db.COVIDEmbajadorEntregable.FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
+            covidAmbassador.CantEntregable = covidAmbassador.CantEntregable - covidOrgAmbassador.Quantity;
+            
+            Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
+            Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
+            await Db.SaveChangesAsync();
+
+            return Json(new
+            {
+                Error = false
+            });
+        }
+
 
         private async Task ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {

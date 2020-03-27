@@ -385,6 +385,10 @@
     <Compile Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.Designer.cs">
       <DependentUpon>202003251126543_crete-table-COVIDEmbajadorEntregable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.cs" />
+    <Compile Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.Designer.cs">
+      <DependentUpon>202003262312043_addRelationBetweenOrgsAndAmbassadors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -939,6 +943,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.resx">
       <DependentUpon>202003251126543_crete-table-COVIDEmbajadorEntregable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.resx">
+      <DependentUpon>202003262312043_addRelationBetweenOrgsAndAmbassadors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

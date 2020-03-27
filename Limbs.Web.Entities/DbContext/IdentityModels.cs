@@ -20,6 +20,7 @@ namespace Limbs.Web.Entities.DbContext
         public DbSet<EventOrderModel> EventOrderModels { get; set; }
 
         public DbSet<CovidOrganizationModel> CovidOrganizationModels { get; set; }
+        public DbSet<CovidOrgAmbassador> CovidOrgAmbassadorModels { get; set; }
 
         public DbSet<RenderModel> RenderModels { get; set; }
         public DbSet<AmputationTypeModel> AmputationTypeModels { get; set; }

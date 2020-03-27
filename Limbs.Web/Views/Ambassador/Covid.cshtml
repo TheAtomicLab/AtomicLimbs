@@ -1,4 +1,6 @@
-﻿@model  Limbs.Web.ViewModels.CovidEmbajadorEntregableViewModel
+﻿@using Limbs.Web.Common.Extensions
+@model  Limbs.Web.ViewModels.CovidEmbajadorEntregableViewModel
+
 @{
     ViewBag.Title = "COVID-19";
 }
@@ -88,141 +90,98 @@
     </div>
 </article>
 
-<article id="info_pedido">
-    <div class="grid_pedidos">
-        <div class="card card-l">
-            <h2>Pedido más cercano</h2>
-            <form>
-                <table class="tabla_datos">
-                    <tr>
-                        <td>Hospital (a 1km)</td>
-                        <td>
-                            Aclarar
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Cantidad necesaria</td>
-                        <td>10</td>
-                    </tr>
-                    <tr>
-                        <td>Embajadores que donaron: </td>
-                        <td>
-                            <p>M. Petrini</p>
-                            <p>M. Petrini</p>
-                            <p>M. Petrini</p>
-                        </td>
-                    </tr>
+@if (Model.Orders.Count > 0)
+{
+    <article id="info_pedido">
+        <div class="grid_pedidos">
+            @foreach (var order in Model.Orders)
+            {
+                if (order.OrdersInfo.Count > 0)
+                {
+                    int i = 1;
+                    foreach (var orderInfo in order.OrdersInfo)
+                    {
+                        i = i + 1;
+                        <div class="card card-l">
+                            <h2>Pedido #@i</h2>
+                            @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
+                            {
+                                <table class="tabla_datos">
+                                    <tr>
+                                        <td>@orderInfo.CovidOrganization.ToDescription() (a @orderInfo.Distance.ToFriendlyDistanceString())</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(orderInfo.CovidOrganizationName))
+                                            {
+                                                @orderInfo.CovidOrganizationName
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cantidad necesaria</td>
+                                        <td>@orderInfo.Quantity</td>
+                                    </tr>
+                                    @if (orderInfo.Ambassadors.Count > 0)
+                                    {
+                                        <tr>
+                                            <td>Embajadores que donaron: </td>
+                                            <td>
+                                                @foreach (var ambassador in orderInfo.Ambassadors)
+                                                {
+                                                    string fullTextName = $"{ambassador.Name} {ambassador.Lastname} x({ambassador.Quantity})";
+                                                    <p>@fullTextName</p>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td class="text-bold text-center" colspan="2">Fecha limite: @orderInfo.DeliveryDate.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-bold">Sumarme</td>
+                                    </tr>
+                                    <tr>
+                                        @if (orderInfo.AlreadySavedQuantity)
+                                        {
+                                            <td class="text-bold success">Te comprometiste con @orderInfo.QuantitySaved unidades</td>
+                                        }
+                                        else
+                                        {
+                                            <td colspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <button class="bn_blue removeCovidOrderQuantity" type="button"><i class="fa fa fa-minus"></i></button>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="0" aria-describedby="CantEntregable-error" aria-invalid="false">
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <button class="bn_blue addCovidOrderQuantity" type="button"><i class="fa fa fa-plus"></i></button>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <button class="bn_blue saveQuantityOrder">Guardar</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
 
-                    <tr>
-                        <td class="text-bold text-center" colspan="2">Fecha limite: 25/04</td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="2">Sumarme</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <table>
-                                <tr>
-                                    <td colspan="2">-</td>
-                                    <td colspan="2">input</td>
-                                    <td colspan="2">+</td>
-                                    <td colspan="2">Guardar</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </form>
+                                <input type="hidden" name="OrgId" value="@order.OrgId" />
+                                <input type="hidden" name="CovidAmbassadorId" value="@Model.Id" />
+                            }
+                        </div>
+                    }
+                }
+            }
         </div>
-        <div class="card card-l">
-            <h2>Pedido más cercano</h2>
-            <table class="tabla_datos">
-                <tr>
-                    <td>Hospital (a 1km)</td>
-                    <td>
-                        Aclarar
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cantidad necesaria</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Embajadores que donaron: </td>
-                    <td>
-                        <p>M. Petrini</p>
-                        <p>M. Petrini</p>
-                        <p>M. Petrini</p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-bold text-center" colspan="2">Fecha limite: 25/04</td>
-                </tr>
-
-                <tr>
-                    <td colspan="2">Sumarme</td>
-                </tr>
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td colspan="2">-</td>
-                                <td colspan="2">input</td>
-                                <td colspan="2">+</td>
-                                <td colspan="2">Guardar</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="card card-l">
-            <h2>Pedido más cercano</h2>
-            <table class="tabla_datos">
-                <tr>
-                    <td>Hospital (a 1km)</td>
-                    <td>
-                        Aclarar
-                    </td>
-                </tr>
-                <tr>
-                    <td>Cantidad necesaria</td>
-                    <td>10</td>
-                </tr>
-                <tr>
-                    <td>Embajadores que donaron: </td>
-                    <td>
-                        <p>M. Petrini</p>
-                        <p>M. Petrini</p>
-                        <p>M. Petrini</p>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td class="text-bold text-center" colspan="2">Fecha limite: 25/04</td>
-                </tr>
-
-                <tr>
-                    <td colspan="2">Sumarme</td>
-                </tr>
-                <tr>
-                    <td>
-                        <table>
-                            <tr>
-                                <td colspan="2">-</td>
-                                <td colspan="2">input</td>
-                                <td colspan="2">+</td>
-                                <td colspan="2">Guardar</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</article>
+    </article>
+}
+else
+{
+    <h2 class="text-bold">Aún no hay pedidos</h2>
+}
 
 @section scripts
 {

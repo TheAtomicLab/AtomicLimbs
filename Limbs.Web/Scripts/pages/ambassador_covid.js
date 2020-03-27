@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function () {
     let frmQuantity = $('.form-quantity');
     let quantityResponseMsg = $('.quantityResponseMsg');
 
@@ -28,9 +29,73 @@
         inputCant.val(cant - 1);
     });
 
+    $('.addCovidOrderQuantity').click(function () {
+        let inputCantToUpdate = $(this).parent().prev().children();
+        let inputCantToUpdateVal = parseInt(inputCantToUpdate.val());
+
+        if (inputCantToUpdateVal === parseInt(inputCant.val())) {
+            return;
+        }
+
+        inputCantToUpdate.val(inputCantToUpdateVal + 1);
+    });
+
+    $('.removeCovidOrderQuantity').click(function () {
+        let inputCantToUpdate = $(this).parent().next().children();
+        let inputCantToUpdateVal = parseInt(inputCantToUpdate.val());
+
+        if (inputCantToUpdateVal === 0) {
+            return;
+        }
+
+        inputCantToUpdate.val(inputCantToUpdateVal - 1);
+    });
+
+    $('.saveQuantityOrder').click(function (e) {
+        e.preventDefault();
+
+        let frmQuantityOrder = $(this).parents().eq(8);
+        let saveBtn = $(this);
+
+        let inputTmpSaved = saveBtn.parent().prev().prev().children();
+        let cantSaved = parseInt(inputTmpSaved.val());
+
+        if (cantSaved === 0) {
+            return;
+        }
+
+        $.ajax({
+            url: frmQuantityOrder.get(0).action,
+            type: frmQuantityOrder.get(0).method,
+            data: frmQuantityOrder.serializeArray(),
+            beforeSend: function () {
+                $('#loadingModal').fadeIn();
+                saveBtn.prop('disabled', true);
+                quantityResponseMsg.html('');
+            },
+            success: function (r) {
+                if (r.Error) {
+
+                } else {
+                    inputTmpSaved.val('0');
+                    inputCant.val(parseInt(inputCant.val()) - cantSaved);
+                    alert('Cantidad guardada ok');
+                }
+            },
+            error: function (r) {
+                console.log(r);
+            },
+            complete: function () {
+                $("#loadingModal").fadeOut();
+                saveBtn.prop('disabled', false);
+            }
+        });
+    });
 
     $('.sendQuantity').click(function (e) {
         e.preventDefault();
+        let saveFirstBtn = $(this);
+
         $.ajax({
             url: frmQuantity.get(0).action,
             type: frmQuantity.get(0).method,
@@ -38,7 +103,7 @@
             beforeSend: function () {
                 $('#loadingModal').fadeIn();
                 $('.validation-summary-errors').remove();
-                $(this).prop('disabled', true);
+                saveFirstBtn.prop('disabled', true);
                 quantityResponseMsg.html('');
             },
             success: function (r) {
@@ -57,7 +122,7 @@
             },
             complete: function () {
                 $("#loadingModal").fadeOut();
-                $(this).prop('disabled', false);
+                saveFirstBtn.prop('disabled', false);
             }
         });
     });
