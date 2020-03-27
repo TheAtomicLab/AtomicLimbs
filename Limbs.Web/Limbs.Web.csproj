@@ -389,6 +389,10 @@
     <Compile Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.Designer.cs">
       <DependentUpon>202003262312043_addRelationBetweenOrgsAndAmbassadors.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003271706376_newFieldsToCovidOrg.cs" />
+    <Compile Include="Migrations\202003271706376_newFieldsToCovidOrg.Designer.cs">
+      <DependentUpon>202003271706376_newFieldsToCovidOrg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -946,6 +950,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.resx">
       <DependentUpon>202003262312043_addRelationBetweenOrgsAndAmbassadors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003271706376_newFieldsToCovidOrg.resx">
+      <DependentUpon>202003271706376_newFieldsToCovidOrg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
