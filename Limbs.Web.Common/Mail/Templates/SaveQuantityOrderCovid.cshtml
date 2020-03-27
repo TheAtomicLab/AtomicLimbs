@@ -1,0 +1,71 @@
+@using System.Configuration
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AtomicLab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+    <div style="background-color: #fafafa;">
+        <div style="box-sizing: border-box; display: block; font-family: 'Roboto', helvetica, sans-serif; margin: 0px auto; max-width: 800px; padding-bottom: 50px; padding-left: 2px; padding-right: 2px; position: relative; width: 100%;">
+            <div style="background-color: #4772b2; padding: 30px 0px 20px 0px; position: relative; text-align: center;">
+                <img src="http://limbs.earth/content/img/logoatomicmail.png" style="max-width: 200px; min-width: 100px; position: relative; text-align: center; width: 50%;">
+            </div>
+            <div style="margin: 0px auto; max-width: 475px; position: relative; width: 94%;">
+                <!-- Caja 1 -->
+                <div style="background: white; border: 1px solid #dddddd; box-sizing: border-box; font-size: 16px; font-weight: normal; line-height: 26px; margin: 30px 0px; padding: 10px 20px; position: relative; width: 100%;">
+                    <p>¡Hola @(Model.Name) @(Model.Lastname)!</p>
+                    <p>
+                        Tenemos una buena noticia, el embajador @(Model.AmbassadorName) @(Model.AmbassadorLastname) se suma a imprimir <strong>@(Model.Quantity) mascaras</strong>, puede ser que ya las tenga listas o aun no, por eso te pedimos que te contactes con él. Ademas, te pedimos que revises el apartado de Desinfección y empaquetado del material para que cuando recibas el paquete este todo en orden.
+                    </p>
+                    <p>
+                        Si notas algo extraño en el paquete o no, igualmente desinfecta las mascaras manipulándolas con guantes.
+                    </p>
+                    <p>
+                        Te dejamos los datos de contacto del embajador, por favor, ponete en contacto con él a la brevedad para coordinar el envio:
+                    </p>
+                    <p>
+                        <ul>
+                            <li>Nombre y Apellido: @(Model.AmbassadorName) @(Model.AmbassadorLastname)</li>
+                            <li>Telefono: @(Model.AmbassadorPhoneNumber)</li>
+                            <li>Dirección: @(Model.AmbassadorAddress)</li>
+                            <li>Mail: @(Model.AmbassadorEmail)</li>
+                        </ul>
+                    </p>
+                    <p>
+                        Información importante:
+                    </p>
+                    <p>
+                        <ol>
+                            <li>
+                                Al coordinar con él, si sos un actor publico y estas eximido de la cuarentena, te recomendamos que vayas a buscar las mascaras, no es necesario que hayan mas personas yendo a lugares concurridos donde puede transitar el virus.
+                            </li>
+                            <li>
+                                Si las mascaras no tienen la parte protectora transparente, revisa este link: <a href="https://docs.google.com/document/d/1heHV7ln9IMKOava4vjm16t5udWLC7l42xcAc8hy6YdY" target="_blank">Google Docs</a> donde están todas las recomendaciones para realizar los visores de manera sencilla.
+                            </li>
+                            <li>
+                                Si te sirvieron, por favor, sácate una foto y compartila en las redes así mas personas pueden tener su mascarilla con el link www.limbs.earth.
+                            </li>
+                        </ol>
+                    </p>
+
+                    <p>
+                        Entre todos nos cuidamos, gracias por tu aporte a la sociedad.
+                    </p>
+                    <p>
+                        Equipo de Atomic Lab.
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: #232323; color: #bbbbbb; padding: 40px; text-align: center;">
+                <p>Atomic Lab es una iniciativa que busca inventar las mejores soluciones para ayudar a las personas.</p>
+                <p>
+                    <a href="http://atomiclab.org/" target="_blank" style="color: #bbbbbb;">Limbs, Atomic Lab © @DateTime.UtcNow.Year - AtomicLab.org</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

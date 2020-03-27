@@ -12,6 +12,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Common.Mail;
+using Limbs.Web.Common.Mail.Entities;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
@@ -26,6 +27,8 @@ namespace Limbs.Web.Controllers
     public class AmbassadorController : BaseController
     {
         private ApplicationUserManager _userManager;
+        private readonly string _fromEmail = ConfigurationManager.AppSettings["Mail.From"];
+
         public ApplicationUserManager UserManager
         {
             get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
@@ -181,7 +184,7 @@ namespace Limbs.Web.Controllers
                        from c3 in c2.DefaultIfEmpty()
                        join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
                        from c5 in c4.DefaultIfEmpty()
-                       orderby c5.Location.Distance(location)
+                       orderby covidOrg.Location.Distance(location)
                        group covidOrg by covidOrg.Id into g
                        select new OrderCovidAmbassadorViewModel
                        {
@@ -263,19 +266,42 @@ namespace Limbs.Web.Controllers
                 };
             }
 
-            var covidAmbassador = await Db.COVIDEmbajadorEntregable.FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
-            covidAmbassador.CantEntregable = covidAmbassador.CantEntregable - covidOrgAmbassador.Quantity;
-            
+            var covidAmbassador = await Db.COVIDEmbajadorEntregable.Include(p => p.Ambassador).FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
+            covidAmbassador.CantEntregable -= covidOrgAmbassador.Quantity;
+
             Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
             Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
             await Db.SaveChangesAsync();
+
+            var covidOrg = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == covidOrgAmbassador.CovidOrgId);
+
+            var covidEmailInfo = new CovidSaveQuantityOrderEmail
+            {
+                Name = covidOrg.Name,
+                Lastname = covidOrg.Surname,
+                AmbassadorName = covidAmbassador.Ambassador.AmbassadorName,
+                AmbassadorLastname = covidAmbassador.Ambassador.AmbassadorLastName,
+                AmbassadorEmail = covidAmbassador.Ambassador.Email,
+                AmbassadorAddress = $"{covidAmbassador.Ambassador.Address} ({covidAmbassador.Ambassador.Address2}), {covidAmbassador.Ambassador.City}, {covidAmbassador.Ambassador.State}, {covidAmbassador.Ambassador.Country}",
+                AmbassadorPhoneNumber = covidAmbassador.Ambassador.Phone,
+                Quantity = covidOrgAmbassador.Quantity
+            };
+
+            var mailMessage = new MailMessage
+            {
+                From = _fromEmail,
+                To = covidOrg.Email,
+                Subject = $"[Atomic Limbs] {covidEmailInfo.Quantity} Mascarillas en camino!",
+                Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovid", covidEmailInfo),
+            };
+
+            await AzureQueue.EnqueueAsync(mailMessage);
 
             return Json(new
             {
                 Error = false
             });
         }
-
 
         private async Task ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {
