@@ -1,0 +1,191 @@
+﻿@using Limbs.Web.Common.Extensions
+@model  Limbs.Web.ViewModels.CovidEmbajadorEntregableViewModel
+
+@{
+    ViewBag.Title = "COVID-19";
+}
+
+<style>
+    .card.card-l > h2 {
+        margin-bottom: .75em;
+    }
+
+    .form-cantidad {
+        padding: .25em;
+    }
+
+    .f-campo.f-campo-cantidad {
+        width: auto;
+        text-align: center;
+    }
+
+    #panel_embajadores h1.covid-header {
+        padding: 0;
+    }
+
+    .full-width {
+        width: 100% !important;
+    }
+
+    .covid-container {
+        display: grid;
+        width: 100%;
+        grid-template-rows: repeat(6, 100%);
+        grid-template-columns: repeat(2, 50%);
+    }
+
+    .covid-hospital {
+        grid-row: 1;
+        grid-column: 1;
+    }
+
+    .covid-other {
+        grid-row: 1;
+        grid-column: 2;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+</style>
+
+<div id="loadingModal" style="display: none;">
+    <div class="loader"></div>
+</div>
+
+<article id="panel_embajadores">
+    <div id="Header" class="head_info">
+        <h1 class="covid-header">Covid-19</h1>
+    </div>
+    <div id="paneles_embajador">
+        <article class="card card-l">
+            <h2>Modificar Cantidades</h2>
+            @using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, new { @class = "form form-quantity" }))
+            {
+                @Html.HiddenFor(model => model.AmbassadorId)
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.TipoEntregable)
+
+                <div class="f-seccion">
+                    <label class="f-label">Cantidad Actual</label>
+                    <div>
+                        <button class="bn_blue removeCovidQuantity" type="button"><i class="fa fa fa-minus"></i></button>
+                        @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "f-campo f-campo-cantidad", @readonly = true } })
+                        <button class="bn_blue addCovidQuantity" type="button"><i class="fa fa fa-plus"></i></button>
+                    </div>
+                </div>
+
+                <br />
+                <button class="bn_blue sendQuantity">Actualizar</button>
+                <div><span class="quantityResponseMsg"></span></div>
+            }
+        </article>
+        <article class="card card-l">
+            <p>
+                Hola Embajadores! Esperamos que esten bien.
+                A causa de la pandemia que está afectando a nuestro país, decidimos colaborar activamente para ayudar desde Atomic Lab. Adjuntamos el siguiente diseño de mascarillas que se pueden crear con impresoras 3D para que ustedes impriman cuantas puedan y luego sean enviadas a los servicios de salud y seguridad de las distintas provincias mediante un servicio de envío tercerizado.
+            </p>
+        </article>
+
+    </div>
+</article>
+
+@if (Model.Orders.Count > 0)
+{
+    <article id="info_pedido">
+        <div class="grid_pedidos">
+            @foreach (var order in Model.Orders)
+            {
+                if (order.OrdersInfo.Count > 0)
+                {
+                    int i = 1;
+                    foreach (var orderInfo in order.OrdersInfo)
+                    {
+                        i = i + 1;
+                        <div class="card card-l">
+                            <h2>Pedido #@i</h2>
+                            @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
+                            {
+                                <table class="tabla_datos">
+                                    <tr>
+                                        <td>@orderInfo.CovidOrganization.ToDescription() (a @orderInfo.Distance.ToFriendlyDistanceString())</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(orderInfo.CovidOrganizationName))
+                                            {
+                                                @orderInfo.CovidOrganizationName
+                                            }
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cantidad necesaria</td>
+                                        <td>@orderInfo.Quantity</td>
+                                    </tr>
+                                    @if (orderInfo.Ambassadors.Count > 0)
+                                    {
+                                        <tr>
+                                            <td>Embajadores que donaron: </td>
+                                            <td>
+                                                @foreach (var ambassador in orderInfo.Ambassadors)
+                                                {
+                                                    string fullTextName = $"{ambassador.Name} {ambassador.Lastname} x({ambassador.Quantity})";
+                                                    <p>@fullTextName</p>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <td class="text-bold text-center" colspan="2">Fecha limite: @orderInfo.DeliveryDate.ToString("dd/MM/yyyy")</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" class="text-bold">Sumarme</td>
+                                    </tr>
+                                    <tr>
+                                        @if (orderInfo.AlreadySavedQuantity)
+                                        {
+                                            <td class="text-bold success">Te comprometiste con @orderInfo.QuantitySaved unidades</td>
+                                        }
+                                        else
+                                        {
+                                            <td colspan="2">
+                                                <table>
+                                                    <tr>
+                                                        <td colspan="2">
+                                                            <button class="bn_blue removeCovidOrderQuantity" type="button"><i class="fa fa fa-minus"></i></button>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="0" aria-describedby="CantEntregable-error" aria-invalid="false">
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <button class="bn_blue addCovidOrderQuantity" type="button"><i class="fa fa fa-plus"></i></button>
+                                                        </td>
+                                                        <td colspan="2">
+                                                            <button class="bn_blue saveQuantityOrder">Guardar</button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        }
+                                    </tr>
+                                </table>
+
+                                <input type="hidden" name="OrgId" value="@order.OrgId" />
+                                <input type="hidden" name="CovidAmbassadorId" value="@Model.Id" />
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </article>
+}
+else
+{
+    <h2 class="text-bold">Aún no hay pedidos</h2>
+}
+
+@section scripts
+{
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+    <script src="~/Scripts/pages/ambassador_covid.js"></script>
+}

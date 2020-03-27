@@ -11,6 +11,8 @@ namespace Limbs.Web.Entities.Models
         public AmbassadorModel Ambassador { get; set; }
         public int TipoEntregable { get; set; }
         public int CantEntregable { get; set; }
+
+        public List<CovidOrgAmbassador> CovidOrgAmbassadors { get; set; }
     }
 
     public enum TipoEntregable

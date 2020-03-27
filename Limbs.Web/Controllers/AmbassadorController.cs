@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using AutoMapper;
 using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Entities.Models;
 using Limbs.Web.Storage.Azure.QueueStorage;
 using Limbs.Web.Storage.Azure.QueueStorage.Messages;
+using Limbs.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -42,7 +46,7 @@ namespace Limbs.Web.Controllers
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
             var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.ArrangeDelivery || o.Status == OrderStatus.Ready).ToList();
             var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
-            
+
             var viewModel = new ViewModels.AmbassadorPanelViewModel
             {
                 PendingToAssignOrders = pendingAssignationOrders,
@@ -145,7 +149,8 @@ namespace Limbs.Web.Controllers
             return RedirectToAction("Index", "Manage");
         }
 
-        public ActionResult COVID19()
+        [HttpGet, OverrideAuthorize(Roles = AppRoles.Ambassador)]
+        public async Task<ActionResult> Covid()
         {
             var currentUserId = User.Identity.GetUserId();
             var model = Db.COVIDEmbajadorEntregable.Where(p => p.Ambassador.UserId == currentUserId)
@@ -154,39 +159,123 @@ namespace Limbs.Web.Controllers
 
             if (model == null)
             {
-                model = new COVIDEmbajadorEntregable();
-                model.CantEntregable = 0;
-                model.Ambassador = Db.AmbassadorModels.Where(p => p.UserId == currentUserId).First();
-                model.TipoEntregable = 1;
-                model.Id = 0;
+                model = new COVIDEmbajadorEntregable
+                {
+                    CantEntregable = 0,
+                    Ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(p => p.UserId == currentUserId),
+                    TipoEntregable = 1
+                };
+
+                Db.COVIDEmbajadorEntregable.Add(model);
+                await Db.SaveChangesAsync();
             }
-            
-            return View(model);
+
+            var vm = Mapper.Map<CovidEmbajadorEntregableViewModel>(model);
+
+            DbGeography location = model.Ambassador.Location;
+            vm.Orders =
+                await (from covidOrg in Db.CovidOrganizationModels
+                       join covidOrgAmb in Db.CovidOrgAmbassadorModels on covidOrg.Id equals covidOrgAmb.CovidOrgId into c
+                       from c1 in c.DefaultIfEmpty()
+                       join covidAmb in Db.COVIDEmbajadorEntregable on c1.CovidAmbassadorId equals covidAmb.Id into c2
+                       from c3 in c2.DefaultIfEmpty()
+                       join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
+                       from c5 in c4.DefaultIfEmpty()
+                       orderby c5.Location.Distance(location)
+                       group covidOrg by covidOrg.Id into g
+                       select new OrderCovidAmbassadorViewModel
+                       {
+                           OrgId = g.Key,
+                           OrdersInfo = g.Select(p => new OrderCovidInfoViewModel
+                           {
+                               CovidOrganization = p.CovidOrganization,
+                               CovidOrganizationName = p.CovidOrganizationName,
+                               Distance = p.Location.Distance(location) ?? 0d,
+                               Quantity = p.Quantity,
+                               AlreadySavedQuantity = p.CovidOrgAmbassadors.Any(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id),
+                               QuantitySaved = p.CovidOrgAmbassadors.FirstOrDefault(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id).Quantity,
+                               Ambassadors = p.CovidOrgAmbassadors.Select(x => new CovidAmbassador
+                               {
+                                   Name = x.CovidAmbassador.Ambassador.AmbassadorName,
+                                   Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
+                                   Quantity = x.Quantity
+                               }).ToList(),
+                               DeliveryDate = p.DeliveryDate
+                           }).ToList()
+                       }).ToListAsync();
+
+            return View(vm);
         }
 
-
         [HttpPost]
-        public async Task<ActionResult> GuardarCantidad(COVIDEmbajadorEntregable model)
+        public async Task<ActionResult> GuardarCantidad(CovidEmbajadorEntregableViewModel model)
         {
-            model.Ambassador = Db.AmbassadorModels.Where(p => p.Id == model.Ambassador.Id).First();
-
-            if (model.Id == 0)
-            {                
-                Db.COVIDEmbajadorEntregable.Add(model);
-            }
-            else
+            if (!ModelState.IsValid)
             {
-                var newModel = Db.COVIDEmbajadorEntregable.Where(p => p.Id == model.Id)
-                                                    .Include(p => p.Ambassador)
-                                                    .FirstOrDefault();
-
-                newModel.CantEntregable = model.CantEntregable;
+                return Json(new
+                {
+                    Error = true
+                });
             }
+
+            var covidAmbassador = await Db.COVIDEmbajadorEntregable.FirstOrDefaultAsync(p => p.Id == model.Id);
+            if (covidAmbassador == null)
+            {
+                return Json(new
+                {
+                    Error = true,
+                    Msg = "El embajador no existe, recargue la página."
+                });
+            }
+
+            covidAmbassador = Mapper.Map<CovidEmbajadorEntregableViewModel, COVIDEmbajadorEntregable>(model);
+            covidAmbassador.Ambassador = await Db.AmbassadorModels.FirstOrDefaultAsync(p => p.Id == model.AmbassadorId);
+
+            Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
 
             await Db.SaveChangesAsync();
 
-            return RedirectToAction("COVID19");
+            return Json(new
+            {
+                Error = false
+            });
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveQuantityToOrder(CovidUpdateQuantity model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    Error = true
+                });
+            }
+
+            var covidOrgAmbassador = await Db.CovidOrgAmbassadorModels.FirstOrDefaultAsync(p => p.CovidAmbassadorId == model.CovidAmbassadorId && p.CovidOrgId == model.OrgId);
+            if (covidOrgAmbassador == null)
+            {
+                covidOrgAmbassador = new CovidOrgAmbassador
+                {
+                    CovidAmbassadorId = model.CovidAmbassadorId,
+                    CovidOrgId = model.OrgId,
+                    Quantity = model.SavedQuantity
+                };
+            }
+
+            var covidAmbassador = await Db.COVIDEmbajadorEntregable.FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
+            covidAmbassador.CantEntregable = covidAmbassador.CantEntregable - covidOrgAmbassador.Quantity;
+            
+            Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
+            Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
+            await Db.SaveChangesAsync();
+
+            return Json(new
+            {
+                Error = false
+            });
+        }
+
 
         private async Task ValidateData(AmbassadorModel ambassadorModel, bool? termsAndConditions)
         {

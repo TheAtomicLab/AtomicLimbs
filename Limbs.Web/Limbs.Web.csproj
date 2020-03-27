@@ -385,6 +385,10 @@
     <Compile Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.Designer.cs">
       <DependentUpon>202003251126543_crete-table-COVIDEmbajadorEntregable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.cs" />
+    <Compile Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.Designer.cs">
+      <DependentUpon>202003262312043_addRelationBetweenOrgsAndAmbassadors.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -491,6 +495,7 @@
     <Compile Include="ViewModels\Configs\AmputationProfile.cs" />
     <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
+    <Compile Include="ViewModels\CovidEmbajadorEntregableViewModel.cs" />
     <Compile Include="ViewModels\CovidModels.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
@@ -666,6 +671,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\pages\ambassador_covid.js" />
     <Content Include="Scripts\pages\covid.js" />
     <Content Include="Scripts\pages\munonizer.js" />
     <Content Include="Scripts\pages\orders_actions.js" />
@@ -829,7 +835,7 @@
     <Content Include="Views\Help\Pedir.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Organization.cshtml" />
     <Content Include="Views\Orders\Edit.cshtml" />
-    <Content Include="Views\Ambassador\COVID19.cshtml" />
+    <Content Include="Views\Ambassador\Covid.cshtml" />
     <Content Include="Views\Covid\Create.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\CovidOrganizationEnum.cshtml" />
     <Content Include="Views\Covid\_Address.cshtml" />
@@ -937,6 +943,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003251126543_crete-table-COVIDEmbajadorEntregable.resx">
       <DependentUpon>202003251126543_crete-table-COVIDEmbajadorEntregable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003262312043_addRelationBetweenOrgsAndAmbassadors.resx">
+      <DependentUpon>202003262312043_addRelationBetweenOrgsAndAmbassadors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

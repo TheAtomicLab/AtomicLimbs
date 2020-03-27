@@ -49,9 +49,18 @@
                 <li>
                     <a onclick="cerrarmenu()" href="@Url.Action("Donar","StaticContent")" target="_blank">@SharedTexts.Header_Donar</a>
                 </li>
-                <li>
-                    <a style="background-color: #f44336;" onclick="cerrarmenu()" href="@Url.Action("Create","Covid")">COVID-19</a>
-                </li>
+                @if (Request.IsAuthenticated && User.IsInRole(AppRoles.Ambassador))
+                {
+                    <li>
+                        <a style="background-color: #f44336;" onclick="cerrarmenu()" href="@Url.Action("Covid","Ambassador")">COVID-19</a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a style="background-color: #f44336;" onclick="cerrarmenu()" href="@Url.Action("Create","Covid")">COVID-19</a>
+                    </li>
+                }
                 @Html.Partial("AdminMenu")
             </ul>
         </nav>

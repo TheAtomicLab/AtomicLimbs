@@ -25,9 +25,6 @@
         </div>
     </div>
     <div id="paneles_embajador">
-
-
-
         <article class="card card-l">
             <h2>@AmbassadorTexts.Index_PendingToAssignOrders</h2>
             @if (Model.PendingToAssignOrders.Count > 0)
@@ -70,8 +67,6 @@
                 }
             </div>
         </article>
-
-
         <article id="terminadas" class="card card-l">
             <h2>@AmbassadorTexts.Index_FinishedOrders</h2>
             @if (Model.DeliveredOrders.Count > 0)
@@ -93,7 +88,5 @@
                 <div>@AmbassadorTexts.Index_NotFinishedOrders</div>
             }
         </article>
-
-
     </div>
 </article>

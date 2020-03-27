@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,6 +35,9 @@ namespace Limbs.Web.Entities.Models
         public string Token { get; set; }
 
         public DbGeography Location { get; set; }
+
+        public List<CovidOrgAmbassador> CovidOrgAmbassadors { get; set; }
+
     }
 
     public enum CovidOrganizationEnum
