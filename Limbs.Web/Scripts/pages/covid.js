@@ -7,6 +7,7 @@ $(document).ready(function () {
 
     frm.submit(function (e) {
         $('.msg-success').hide();
+        $('.validation-summary-errors').remove();
 
         if (!$(this).valid()) {
             if (!$('.validation-summary-errors').length) {
@@ -16,6 +17,16 @@ $(document).ready(function () {
             e.preventDefault();
         } else {
             e.preventDefault();
+
+            if (!$('#isEdit').length && !$('#termsAndConditions').is(':checked')) {
+                $(`<div class="validation-summary-errors" data-valmsg-summary="true">
+                                <span>Debe aceptar los t&eacute;rminos y condiciones</span>
+                            </div>`).insertAfter('h2.f-titulo');
+
+                $(window).scrollTop(0);
+
+                return;
+            }
 
             $.ajax({
                 url: frm.get(0).action,
@@ -35,12 +46,18 @@ $(document).ready(function () {
                         } else {
                             $(validationTemplate).insertAfter('h2.f-titulo');
                         }
+                        $(window).scrollTop(0);
                     } else {
                         if ($('#isEdit').length) {
                             $('.msg-success').show();
                             $(window).scrollTop(0);
                         } else {
-                            window.location = r.UrlRedirect;
+                            $('.msg-success').show();
+                            $(window).scrollTop(0);
+
+                            window.setTimeout(function () {
+                                window.location = r.UrlRedirect;
+                            }, 8000);
                         }
                     }
                 },

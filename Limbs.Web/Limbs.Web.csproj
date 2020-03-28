@@ -569,6 +569,7 @@
     <Content Include="Content\img\Mano\mano_d.png" />
     <Content Include="Content\img\Mano\mano_e.png" />
     <Content Include="Content\img\Mano\mano_f.png" />
+    <Content Include="Content\img\covidgif.gif" />
     <Content Include="Content\img\mockup.jpg" />
     <Content Include="Content\img\piezas.jpg" />
     <Content Include="Content\img\PrintedPieces\PrintedPieces1.png" />

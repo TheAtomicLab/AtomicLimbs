@@ -95,7 +95,6 @@ namespace Limbs.Web.ViewModels
 
     public class CreateCovidOrganizationViewModel : BaseCovidOrganizationViewModel
     {
-
     }
 
     public class EditCovidOrganizationViewModel : BaseCovidOrganizationViewModel
