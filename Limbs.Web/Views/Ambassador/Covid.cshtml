@@ -59,7 +59,7 @@
     </div>
     <div id="paneles_embajador">
         <article class="card card-l">
-            <h2>Modificar Cantidades</h2>
+            <h2>Cantidad de mascarillas a donar</h2>
             @using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, new { @class = "form form-quantity" }))
             {
                 @Html.HiddenFor(model => model.AmbassadorId)

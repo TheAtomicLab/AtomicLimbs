@@ -538,20 +538,20 @@
 
 
 
-.slider-image-container .slider-image-action {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: none;
-    color: #fff;
-}
+    .slider-image-container .slider-image-action {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        color: #fff;
+    }
 
-.slider-image-container:hover .slider-image-action {
-    display: block;
-    background: rgba(0,0,0,.6);
-}
+    .slider-image-container:hover .slider-image-action {
+        display: block;
+        background: rgba(0,0,0,.6);
+    }
 
 .slider-image-action .action {
     position: relative;
@@ -579,4 +579,12 @@
 
     .msg-success > span, .success {
         color: #27ae60;
+    }
+
+.msg-error {
+    margin: .25em 0;
+}
+
+    .msg-error > span, .error {
+        color: red;
     }

@@ -14,54 +14,54 @@ namespace Limbs.Web.ViewModels
         [Required(ErrorMessage = " ")]
         public CovidOrganizationEnum CovidOrganizationEnum { get; set; }
 
-        [Display(Name = "Nombre de la organización", Description = ""), Required(ErrorMessage = " ")]
+        [Display(Name = "Nombre de la organización", Description = ""), Required(ErrorMessage = " "), MaxLength(50, ErrorMessage = " ")]
         public string CovidOrganizationName { get; set; }
 
         [Required(ErrorMessage = " ")]
-        [EmailAddress(ErrorMessage = " ")]
+        [EmailAddress(ErrorMessage = " "), MaxLength(50, ErrorMessage = " ")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = " ")]
-        [Display(Name = "DNI/Pasaporte del solicitante", Description = "")]
+        [Display(Name = "DNI/Pasaporte del solicitante", Description = ""), MaxLength(25, ErrorMessage = " ")]
         public string Dni { get; set; }
 
         [RegularExpression(@"^[0-9]*$", ErrorMessage = " "), Required(ErrorMessage = " ")]
-        [Display(Name = "Teléfono personal", Description = "")]
+        [Display(Name = "Teléfono personal", Description = ""), MaxLength(25, ErrorMessage = " ")]
         public string PersonalPhone { get; set; }
 
         [RegularExpression(@"^[0-9]*$", ErrorMessage = " "), Required(ErrorMessage = " ")]
-        [Display(Name = "Teléfono de la organización", Description = "")]
+        [Display(Name = "Teléfono de la organización", Description = ""), MaxLength(25, ErrorMessage = " ")]
         public string OrganizationPhone { get; set; }
 
-        [Display(Name = "Número de interno", Description = "")]
+        [Display(Name = "Número de interno", Description = ""), MaxLength(10, ErrorMessage = " ")]
         public string OrganizationPhoneIntern { get; set; }
 
-        [Display(Name = "Nombre", Description = "")]
+        [Display(Name = "Nombre", Description = ""), MaxLength(25, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string Name { get; set; }
 
-        [Display(Name = "Apellido", Description = "")]
+        [Display(Name = "Apellido", Description = ""), MaxLength(25, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string Surname { get; set; }
 
-        [Display(Name = "País", Description = "")]
+        [Display(Name = "País", Description = ""), MaxLength(25, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
-        [Display(Name = "Provincia", Description = "")]
+        [Display(Name = "Provincia", Description = ""), MaxLength(25, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string State { get; set; }
 
-        [Display(Name = "Ciudad", Description = "")]
+        [Display(Name = "Ciudad", Description = ""), MaxLength(25, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
         [Display(Name = "Dirección (solo calle y altura)", Description = "")]
-        [Required(ErrorMessage = " ")]
+        [Required(ErrorMessage = " "), MaxLength(25, ErrorMessage = " ")]
         public string Address { get; set; }
 
         [Display(Name = "Dirección (otros datos)", Description = "")]
-        [Required(ErrorMessage = " ")]
+        [Required(ErrorMessage = " "), MaxLength(25, ErrorMessage = " ")]
         public string Address2 { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = " ")]
