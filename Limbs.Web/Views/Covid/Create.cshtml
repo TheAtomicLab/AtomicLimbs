@@ -12,10 +12,14 @@
                 maxDate: "+1Y",
                 dateFormat: "yy-mm-dd",
                 changeYear: true,
-                changeMonth: true,
-                setDate: new Date(@DateTime.Now.ToString("yyyy-MM-dd"))
+                changeMonth: true
             }
         );
+
+        $(document).ready(function () {
+            $('#DeliveryDate').val('');
+            $('#Quantity').val('');
+        });
     </script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
