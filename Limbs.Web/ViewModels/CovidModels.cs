@@ -37,32 +37,32 @@ namespace Limbs.Web.ViewModels
         [Display(Name = "Número de interno", Description = ""), MaxLength(10, ErrorMessage = " ")]
         public string OrganizationPhoneIntern { get; set; }
 
-        [Display(Name = "Nombre", Description = ""), MaxLength(25, ErrorMessage = " ")]
+        [Display(Name = "Nombre", Description = ""), MaxLength(50, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string Name { get; set; }
 
-        [Display(Name = "Apellido", Description = ""), MaxLength(25, ErrorMessage = " ")]
+        [Display(Name = "Apellido", Description = ""), MaxLength(50, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string Surname { get; set; }
 
-        [Display(Name = "País", Description = ""), MaxLength(25, ErrorMessage = " ")]
+        [Display(Name = "País", Description = ""), MaxLength(100, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string Country { get; set; }
 
-        [Display(Name = "Provincia", Description = ""), MaxLength(25, ErrorMessage = " ")]
+        [Display(Name = "Provincia", Description = ""), MaxLength(100, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string State { get; set; }
 
-        [Display(Name = "Ciudad", Description = ""), MaxLength(25, ErrorMessage = " ")]
+        [Display(Name = "Ciudad", Description = ""), MaxLength(100, ErrorMessage = " ")]
         [Required(ErrorMessage = " ")]
         public string City { get; set; }
 
         [Display(Name = "Dirección (solo calle y altura)", Description = "")]
-        [Required(ErrorMessage = " "), MaxLength(25, ErrorMessage = " ")]
+        [Required(ErrorMessage = " "), MaxLength(100, ErrorMessage = " ")]
         public string Address { get; set; }
 
         [Display(Name = "Dirección (otros datos)", Description = "")]
-        [Required(ErrorMessage = " "), MaxLength(25, ErrorMessage = " ")]
+        [Required(ErrorMessage = " "), MaxLength(100, ErrorMessage = " ")]
         public string Address2 { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = " ")]
