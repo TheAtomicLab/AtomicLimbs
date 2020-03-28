@@ -103,6 +103,7 @@
     <Compile Include="Geocoder\IGeocoder.cs" />
     <Compile Include="Geocoder\Location.cs" />
     <Compile Include="Mail\CompiledTemplateEngine.cs" />
+    <Compile Include="Mail\Entities\CovidSaveQuantityOrderEmailAmbassador.cs" />
     <Compile Include="Mail\Entities\CovidSaveQuantityOrderEmail.cs" />
     <Compile Include="Mail\Entities\CovidUpdateEmail.cs" />
     <Compile Include="Mail\Entities\CovidInfoEmail.cs" />
@@ -167,6 +168,7 @@
     <EmbeddedResource Include="Mail\Templates\NewOrderCovid.cshtml" />
     <EmbeddedResource Include="Mail\Templates\UpdateEmailOrderCovid.cshtml" />
     <EmbeddedResource Include="Mail\Templates\SaveQuantityOrderCovid.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\SaveQuantityOrderCovidAmbassador.cshtml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

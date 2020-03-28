@@ -24,7 +24,7 @@ namespace Limbs.Web.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return View(new CreateCovidOrganizationViewModel());
         }
 
         [HttpPost, ValidateAntiForgeryToken]

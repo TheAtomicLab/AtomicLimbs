@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using Limbs.Web.Common.Extensions;
 using Limbs.Web.Common.Geocoder;
 using Limbs.Web.Common.Mail;
 using Limbs.Web.Common.Mail.Entities;
@@ -189,7 +190,7 @@ namespace Limbs.Web.Controllers
                        select new OrderCovidAmbassadorViewModel
                        {
                            OrgId = g.Key.Id,
-                           OrdersInfo = g.Select(p => new OrderCovidInfoViewModel
+                           OrderInfo = g.Select(p => new OrderCovidInfoViewModel
                            {
                                CovidOrganization = p.CovidOrganization,
                                CovidOrganizationName = p.CovidOrganizationName,
@@ -204,7 +205,7 @@ namespace Limbs.Web.Controllers
                                    Quantity = x.Quantity
                                }).ToList(),
                                DeliveryDate = p.DeliveryDate
-                           }).ToList()
+                           }).FirstOrDefault()
                        }).ToListAsync();
 
             return View(vm);
@@ -294,6 +295,7 @@ namespace Limbs.Web.Controllers
             Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
             await Db.SaveChangesAsync();
 
+            #region SendEmails
             var covidOrg = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == covidOrgAmbassador.CovidOrgId);
 
             var covidEmailInfo = new CovidSaveQuantityOrderEmail
@@ -317,6 +319,35 @@ namespace Limbs.Web.Controllers
             };
 
             await AzureQueue.EnqueueAsync(mailMessage);
+
+
+            var covidAmbassadorEmailInfo = new CovidSaveQuantityOrderEmailAmbassador
+            {
+                Name = covidAmbassador.Ambassador.AmbassadorName,
+                Lastname = covidAmbassador.Ambassador.AmbassadorLastName,
+                OrgName = covidOrg.Name,
+                OrgLastname = covidOrg.Surname,
+                OrganizationTypeAndName = $"{covidOrg.CovidOrganization.ToDescription()} - {covidOrg.CovidOrganizationName}",
+                OrgPhoneNumber = $"Personal: {covidOrg.PersonalPhone} - Organización: {covidOrg.OrganizationPhone} ({covidOrg.OrganizationPhoneIntern})",
+                OrgAddress = $"{covidOrg.Address} ({covidOrg.Address2}), {covidOrg.City}, {covidOrg.State}, {covidOrg.Country}",
+                OrgEmail = covidOrg.Email,
+                Quantity = covidOrgAmbassador.Quantity
+            };
+
+            var mailMessageAmbassador = new MailMessage
+            {
+                From = _fromEmail,
+                To = covidAmbassador.Ambassador.Email,
+                Subject = $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!",
+                Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador", covidAmbassadorEmailInfo),
+            };
+
+            await AzureQueue.EnqueueAsync(mailMessageAmbassador);
+            #endregion
+
+
+
+
 
             return Json(new
             {

@@ -1,6 +1,7 @@
 ﻿using Limbs.Web.Entities.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Data.Entity.Spatial;
 using System.Globalization;
 
@@ -95,6 +96,12 @@ namespace Limbs.Web.ViewModels
 
     public class CreateCovidOrganizationViewModel : BaseCovidOrganizationViewModel
     {
+        public CreateCovidOrganizationViewModel()
+        {
+            RecaptchaPublicKey = ConfigurationManager.AppSettings["Google.Recaptcha.PublicKey"];
+        }
+
+        public string RecaptchaPublicKey { get; }
     }
 
     public class EditCovidOrganizationViewModel : BaseCovidOrganizationViewModel
