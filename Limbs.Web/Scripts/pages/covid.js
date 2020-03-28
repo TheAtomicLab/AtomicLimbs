@@ -28,6 +28,8 @@ $(document).ready(function () {
                                 <span>Debe aceptar los t&eacute;rminos y condiciones</span>
                             </div>`).insertAfter('h2.f-titulo');
 
+                grecaptcha.reset();
+
                 $(window).scrollTop(0);
 
                 return;
@@ -84,6 +86,9 @@ $(document).ready(function () {
                     }
                 },
                 error: function (r) {
+                    if (!$('#isEdit').length) {
+                        grecaptcha.reset();
+                    }
                     console.log(r);
                 },
                 complete: function () {
