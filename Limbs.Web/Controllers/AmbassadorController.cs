@@ -266,7 +266,28 @@ namespace Limbs.Web.Controllers
                 };
             }
 
+            var covidOrgDb = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == model.OrgId);
             var covidAmbassador = await Db.COVIDEmbajadorEntregable.Include(p => p.Ambassador).FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
+
+            var sum = (await Db.CovidOrgAmbassadorModels
+                           .GroupBy(o => o.CovidOrgId).Select(x => new
+                           {
+                               Id = x.Key,
+                               Sum = x.Sum(z => z.Quantity)
+                           }).FirstOrDefaultAsync(f => f.Id == model.OrgId))?.Sum;
+
+            var sumDonatedDiff = covidOrgDb.Quantity - (sum ?? 0);
+
+            var quantityResult = sumDonatedDiff - covidOrgAmbassador.Quantity;
+            if (quantityResult < 0)
+            {
+                return Json(new
+                {
+                    Msg = $"Puede donar {sumDonatedDiff} unidad/es como máximo",
+                    Error = true
+                });
+            }
+
             covidAmbassador.CantEntregable -= covidOrgAmbassador.Quantity;
 
             Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);

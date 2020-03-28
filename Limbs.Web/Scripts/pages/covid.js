@@ -49,15 +49,27 @@ $(document).ready(function () {
                         $(window).scrollTop(0);
                     } else {
                         if ($('#isEdit').length) {
-                            $('.msg-success').show();
+                            if (!r.Msg) {
+                                $('.msg-success').show();
+                            } else {
+                                $(window).scrollTop(0);
+                                $('.msg-success').children().html('Pedido actualizado correctamente! ' + r.Msg + ' Aguarde que será redireccionado..');
+                                $('.msg-success').show();
+                            }
+
                             $(window).scrollTop(0);
+                            $('#btn-register').prop('disabled', true);
+                            window.setTimeout(function () {
+                                window.location = window.location;
+                            }, 3000);
                         } else {
                             $('.msg-success').show();
                             $(window).scrollTop(0);
+                            $('#btn-register').prop('disabled', true);
 
                             window.setTimeout(function () {
                                 window.location = r.UrlRedirect;
-                            }, 8000);
+                            }, 5000);
                         }
                     }
                 },

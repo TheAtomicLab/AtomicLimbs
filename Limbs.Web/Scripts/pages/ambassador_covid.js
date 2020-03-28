@@ -56,6 +56,7 @@ $(document).ready(function () {
     $('.saveQuantityOrder').click(function (e) {
         e.preventDefault();
 
+        $('.error').parent().parent().remove();
         let frmQuantityOrder = $(this).parents().eq(8);
         let saveBtn = $(this);
 
@@ -77,11 +78,15 @@ $(document).ready(function () {
             },
             success: function (r) {
                 if (r.Error) {
-
+                    if (r.Msg) {
+                        $('<tr><td colspan="2"><span class="error">' + r.Msg + '</span></td></tr>').insertAfter(saveBtn.parents().eq(5));
+                    }
                 } else {
                     inputTmpSaved.val('0');
                     inputCant.val(parseInt(inputCant.val()) - cantSaved);
-                    alert('Se asigno la cantidad');
+                    savedTmpCant = parseInt(inputCant.val());
+                    //alert('Se asigno la cantidad');
+                    window.location = window.location;
                 }
             },
             error: function (r) {

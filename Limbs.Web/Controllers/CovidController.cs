@@ -9,6 +9,7 @@ using System;
 using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -139,14 +140,37 @@ namespace Limbs.Web.Controllers
                         Error = true,
                         Msg = "El correo electronico ya se encuentra registrado"
                     });
-                } else
+                }
+                else
                 {
                     previousEmail = model.Email;
                     sendEmail = true;
                 }
             }
+            int quantityTmp = covidOrganization.Quantity;
+            covidOrganization = Mapper.Map<CovidOrganizationModel>(model);
+            covidOrganization.Quantity = quantityTmp;
 
-            covidOrganization = Mapper.Map<EditCovidOrganizationViewModel, CovidOrganizationModel>(model);
+            var sum = (await Db.CovidOrgAmbassadorModels
+                           .GroupBy(o => o.CovidOrgId).Select(x => new
+                           {
+                               Id = x.Key,
+                               Sum = x.Sum(z => z.Quantity)
+                           }).FirstOrDefaultAsync(f => f.Id == covidOrganization.Id))?.Sum;
+
+            var availableDiff = covidOrganization.Quantity - (sum ?? 0);
+            bool hasDiff = false;
+
+            if (model.Quantity < covidOrganization.Quantity && availableDiff < covidOrganization.Quantity)
+            {
+                hasDiff = availableDiff != 0;
+                covidOrganization.Quantity -= availableDiff;
+            }
+            else
+            {
+                covidOrganization.Quantity = model.Quantity;
+            }
+
             Db.CovidOrganizationModels.AddOrUpdate(covidOrganization);
 
             await Db.SaveChangesAsync();
@@ -167,7 +191,7 @@ namespace Limbs.Web.Controllers
                     From = _fromEmail,
                     To = covidOrganization.Email,
                     Subject = "[Atomic Limbs] Cambio de correo electrónico",
-                    Body = CompiledTemplateEngine.Render("Mails.CovidUpdateEmail", covidEmailInfo),
+                    Body = CompiledTemplateEngine.Render("Mails.UpdateEmailOrderCovid", covidEmailInfo),
                 };
 
                 await AzureQueue.EnqueueAsync(mailMessage);
@@ -175,7 +199,8 @@ namespace Limbs.Web.Controllers
 
             return Json(new
             {
-                Error = false
+                Error = false,
+                Msg = !hasDiff ? null : $"La cantidad fue reducida a {covidOrganization.Quantity} ya que tiene máscarillas comprometidas por los embajadores"
             });
         }
     }
