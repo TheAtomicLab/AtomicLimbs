@@ -2,22 +2,27 @@ $(document).ready(function () {
     let validationTemplate = `<div class="validation-summary-errors" data-valmsg-summary="true">
                                 <span>Hay errores en el formulario, revis&#225; los campos marcados en rojo</span>
                             </div>`;
-
     let frm = $('.form');
 
-    frm.submit(function (e) {
+    $('#editBtn').click(function () {
+        saveCovidInformation();
+    });
+
+    function saveCovidInformation() {
         $('.msg-success').hide();
         $('.validation-summary-errors').remove();
 
-        if (!$(this).valid()) {
+        if (!frm.valid()) {
             if (!$('.validation-summary-errors').length) {
                 $(validationTemplate).insertAfter('h2.f-titulo');
+
+                if (!$('#isEdit').length) {
+                    grecaptcha.reset();
+                }
+                
+                $(window).scrollTop(0);
             }
-
-            e.preventDefault();
         } else {
-            e.preventDefault();
-
             if (!$('#isEdit').length && !$('#termsAndConditions').is(':checked')) {
                 $(`<div class="validation-summary-errors" data-valmsg-summary="true">
                                 <span>Debe aceptar los t&eacute;rminos y condiciones</span>
@@ -35,7 +40,7 @@ $(document).ready(function () {
                 beforeSend: function () {
                     $('#loadingModal').fadeIn();
                     $('.validation-summary-errors').remove();
-                    $('#btn-register').prop('disabled', true);
+                    $('.bn_blue').prop('disabled', true);
                 },
                 success: function (r) {
                     if (r.Error) {
@@ -46,6 +51,11 @@ $(document).ready(function () {
                         } else {
                             $(validationTemplate).insertAfter('h2.f-titulo');
                         }
+
+                        if (!$('#isEdit').length) {
+                            grecaptcha.reset();
+                        }
+
                         $(window).scrollTop(0);
                     } else {
                         if ($('#isEdit').length) {
@@ -58,14 +68,14 @@ $(document).ready(function () {
                             }
 
                             $(window).scrollTop(0);
-                            $('#btn-register').prop('disabled', true);
+                            $('.bn_blue').prop('disabled', true);
                             window.setTimeout(function () {
                                 window.location = window.location;
                             }, 3000);
                         } else {
                             $('.msg-success').show();
                             $(window).scrollTop(0);
-                            $('#btn-register').prop('disabled', true);
+                            $('.bn_blue').prop('disabled', true);
 
                             window.setTimeout(function () {
                                 window.location = r.UrlRedirect;
@@ -78,9 +88,11 @@ $(document).ready(function () {
                 },
                 complete: function () {
                     $("#loadingModal").fadeOut();
-                    $('#btn-register').prop('disabled', false);
+                    $('.bn_blue').prop('disabled', false);
                 }
             });
         }
-    });
+    }
+
+    window.saveCovidInformation = saveCovidInformation;
 });

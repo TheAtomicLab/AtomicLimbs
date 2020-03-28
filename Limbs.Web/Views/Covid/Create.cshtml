@@ -13,8 +13,16 @@
                 dateFormat: "yy-mm-dd",
                 changeYear: true,
                 changeMonth: true,
+                setDate: new Date(@DateTime.Now.ToString("yyyy-MM-dd"))
             }
         );
+    </script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+    <script>
+        function OnSubmit(token) {
+            saveCovidInformation();
+        }
     </script>
     <script src="~/Scripts/pages/covid.js"></script>
 }
@@ -39,7 +47,7 @@
 
 <div id="cont" class="min_full">
     <div id="registro">
-        @using (Html.BeginForm("Create", "Covid", FormMethod.Post, new { @class = "form" }))
+        @using (Html.BeginForm("Create", "Covid", FormMethod.Post, new { @id = "frm", @class = "form" }))
         {
             @Html.HiddenFor(x => x.Id)
             @Html.AntiForgeryToken()
@@ -80,7 +88,10 @@
                     </label>
                 </p>
                 <p>
-                    <button id="btn-register" type="submit" class="bn_blue" name="register">Aceptar</button>
+                    <button id="btn-covidCreate" type="button" class="bn_blue g-recaptcha" name="register" data-sitekey="@Model.RecaptchaPublicKey"
+                            data-callback="OnSubmit" data-size="invisible">
+                        Aceptar
+                    </button>
                 </p>
             </div>
         }

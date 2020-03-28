@@ -102,81 +102,79 @@
         <div class="grid_pedidos">
             @foreach (var order in Model.Orders)
             {
-                if (order.OrdersInfo.Count > 0)
+                if (order.OrderInfo != null)
                 {
-                    foreach (var orderInfo in order.OrdersInfo)
-                    {
-                        <div class="card card-l">
-                            <h2>Pedido #@order.OrgId</h2>
-                            @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
-                            {
-                                <table class="tabla_datos">
+                    <div class="card card-l">
+                        <h2>Pedido #@order.OrgId</h2>
+                        @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
+                        {
+                            <table class="tabla_datos">
+                                <tr>
+                                    <td>@order.OrderInfo.CovidOrganization.ToDescription() (a @order.OrderInfo.Distance.ToFriendlyDistanceString())</td>
+                                    <td>
+                                        @if (!string.IsNullOrEmpty(order.OrderInfo.CovidOrganizationName))
+                                        {
+                                            @order.OrderInfo.CovidOrganizationName
+                                        }
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Cantidad necesaria</td>
+                                    <td>@order.OrderInfo.Quantity</td>
+                                </tr>
+                                @if (order.OrderInfo.Ambassadors.Count > 0)
+                                {
                                     <tr>
-                                        <td>@orderInfo.CovidOrganization.ToDescription() (a @orderInfo.Distance.ToFriendlyDistanceString())</td>
+                                        <td>Embajadores que donaron: </td>
                                         <td>
-                                            @if (!string.IsNullOrEmpty(orderInfo.CovidOrganizationName))
+                                            @foreach (var ambassador in order.OrderInfo.Ambassadors)
                                             {
-                                                @orderInfo.CovidOrganizationName
+                                                string fullTextName = $"{ambassador.Name} {ambassador.Lastname} x({ambassador.Quantity})";
+                                                <p>@fullTextName</p>
                                             }
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Cantidad necesaria</td>
-                                        <td>@orderInfo.Quantity</td>
-                                    </tr>
-                                    @if (orderInfo.Ambassadors.Count > 0)
+                                }
+                                <tr>
+                                    <td class="text-bold text-center" colspan="2">Fecha limite: @order.OrderInfo.DeliveryDate.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" class="text-bold">Sumarme</td>
+                                </tr>
+                                <tr>
+                                    @if (order.OrderInfo.AlreadySavedQuantity)
                                     {
-                                        <tr>
-                                            <td>Embajadores que donaron: </td>
-                                            <td>
-                                                @foreach (var ambassador in orderInfo.Ambassadors)
-                                                {
-                                                    string fullTextName = $"{ambassador.Name} {ambassador.Lastname} x({ambassador.Quantity})";
-                                                    <p>@fullTextName</p>
-                                                }
-                                            </td>
-                                        </tr>
+                                        <td class="text-bold success">Te comprometiste con @order.OrderInfo.QuantitySaved unidades</td>
                                     }
-                                    <tr>
-                                        <td class="text-bold text-center" colspan="2">Fecha limite: @orderInfo.DeliveryDate.ToString("dd/MM/yyyy")</td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2" class="text-bold">Sumarme</td>
-                                    </tr>
-                                    <tr>
-                                        @if (orderInfo.AlreadySavedQuantity)
-                                        {
-                                            <td class="text-bold success">Te comprometiste con @orderInfo.QuantitySaved unidades</td>
-                                        }
-                                        else
-                                        {
-                                            <td colspan="2">
-                                                <table>
-                                                    <tr>
-                                                        <td colspan="2">
-                                                            <button class="bn_blue removeCovidOrderQuantity" type="button"><i class="fa fa fa-minus"></i></button>
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="0" aria-describedby="CantEntregable-error" aria-invalid="false">
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <button class="bn_blue addCovidOrderQuantity" type="button"><i class="fa fa fa-plus"></i></button>
-                                                        </td>
-                                                        <td colspan="2">
-                                                            <button class="bn_blue saveQuantityOrder">Guardar</button>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        }
-                                    </tr>
-                                </table>
+                                    else
+                                    {
+                                        <td colspan="2">
+                                            <table>
+                                                <tr>
+                                                    <td colspan="2">
+                                                        <button class="bn_blue removeCovidOrderQuantity" type="button"><i class="fa fa fa-minus"></i></button>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="0" aria-describedby="CantEntregable-error" aria-invalid="false">
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <button class="bn_blue addCovidOrderQuantity" type="button"><i class="fa fa fa-plus"></i></button>
+                                                    </td>
+                                                    <td colspan="2">
+                                                        <button class="bn_blue saveQuantityOrder">Guardar</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    }
+                                </tr>
+                            </table>
 
-                                <input type="hidden" name="OrgId" value="@order.OrgId" />
-                                <input type="hidden" name="CovidAmbassadorId" value="@Model.Id" />
-                            }
-                        </div>
-                    }
+                            <input type="hidden" name="OrgId" value="@order.OrgId" />
+                            <input type="hidden" name="CovidAmbassadorId" value="@Model.Id" />
+                        }
+                    </div>
+
                 }
             }
         </div>

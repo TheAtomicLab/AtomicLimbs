@@ -67,6 +67,11 @@ $(document).ready(function () {
             return;
         }
 
+        let execute = confirm('¿Está seguro?');
+        if (!execute) {
+            return;
+        }
+
         $.ajax({
             url: frmQuantityOrder.get(0).action,
             type: frmQuantityOrder.get(0).method,
