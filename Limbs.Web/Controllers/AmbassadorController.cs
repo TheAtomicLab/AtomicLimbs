@@ -184,11 +184,11 @@ namespace Limbs.Web.Controllers
                        from c3 in c2.DefaultIfEmpty()
                        join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
                        from c5 in c4.DefaultIfEmpty()
-                       orderby covidOrg.Location.Distance(location)
-                       group covidOrg by covidOrg.Id into g
+                       group covidOrg by new { covidOrg.Id, Location = covidOrg.Location.Distance(location) ?? 0d } into g
+                       orderby g.Key.Location
                        select new OrderCovidAmbassadorViewModel
                        {
-                           OrgId = g.Key,
+                           OrgId = g.Key.Id,
                            OrdersInfo = g.Select(p => new OrderCovidInfoViewModel
                            {
                                CovidOrganization = p.CovidOrganization,

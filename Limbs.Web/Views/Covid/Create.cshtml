@@ -1,6 +1,8 @@
 ﻿@model Limbs.Web.ViewModels.CreateCovidOrganizationViewModel
 @{
     ViewBag.Title = "Solicitar";
+
+    var termsAndConditions = false;
 }
 @section scripts{
     <script type="text/javascript">
@@ -43,7 +45,7 @@
             @Html.AntiForgeryToken()
             <h2 class="f-titulo">Solicitar mascarillas</h2>
             <div class="msg-success" style="display: none;">
-                <span>Pedido realizado correctamente, verifique su correo electronico!</span>
+                <span>Pedido realizado correctamente, verifique su correo electronico! Aguarde un momento, serás redireccionado hacia el pedido..</span>
             </div>
             if (!ViewData.ModelState.IsValid)
             {
@@ -71,6 +73,12 @@
                 @Html.Partial("_Address", Model)
             </div>
             <div>
+                <p style="margin: 20px;">
+                    <label for="termsAndConditions">
+                        @Html.CheckBox("termsAndConditions", termsAndConditions, new { id = "termsAndConditions" })
+                        acepto los <a href="https://docs.google.com/document/d/1ZllKYSwUg6BCSKOX6XgGKSNIS9BKWF5eQ81bhP9hPwk/" target="_blank">términos y condiciones</a>.
+                    </label>
+                </p>
                 <p>
                     <button id="btn-register" type="submit" class="bn_blue" name="register">Aceptar</button>
                 </p>
