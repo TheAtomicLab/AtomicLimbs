@@ -206,7 +206,7 @@ namespace Limbs.Web.Controllers
                                }).ToList(),
                                DeliveryDate = p.DeliveryDate
                            }).FirstOrDefault()
-                       }).ToListAsync();
+                       }).Take(25).ToListAsync();
 
             return View(vm);
         }
