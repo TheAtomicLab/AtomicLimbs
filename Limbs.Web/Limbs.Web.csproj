@@ -500,6 +500,7 @@
     <Compile Include="ViewModels\Configs\EventProfile.cs" />
     <Compile Include="ViewModels\Configs\OrderProfile.cs" />
     <Compile Include="ViewModels\CovidEmbajadorEntregableViewModel.cs" />
+    <Compile Include="ViewModels\COVIDInfoAdminViewModel.cs" />
     <Compile Include="ViewModels\CovidModels.cs" />
     <Compile Include="ViewModels\EventViewModel.cs" />
     <Compile Include="ViewModels\NewOrder.cs" />
@@ -656,6 +657,7 @@
     <Content Include="Areas\Admin\Views\Amputations\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Amputations\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Renders\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Report\InfoCOVID.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\limbs-staging - Web Deploy.pubxml" />
     <Content Include="Scripts\esm\popper.min.js.map" />
