@@ -35,7 +35,6 @@ namespace Limbs.Web.Entities.Models
         public string Address2 { get; set; }
 
         public int Quantity { get; set; }
-        public DateTime DeliveryDate { get; set; }
 
         public string Token { get; set; }
 

@@ -204,7 +204,6 @@ namespace Limbs.Web.Controllers
                                    Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
                                    Quantity = x.Quantity
                                }).ToList(),
-                               DeliveryDate = p.DeliveryDate
                            }).FirstOrDefault()
                        }).Take(25).ToListAsync();
 

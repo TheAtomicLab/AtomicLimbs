@@ -68,11 +68,6 @@ namespace Limbs.Web.ViewModels
         [Range(1, int.MaxValue, ErrorMessage = " ")]
         public int Quantity { get; set; }
 
-        [Display(Name = "Fecha de entrega", Description = " ")]
-        [Required(ErrorMessage = " ")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime DeliveryDate { get; set; }
-
         public string Token { get; set; }
 
         public DbGeography Location { get; set; }

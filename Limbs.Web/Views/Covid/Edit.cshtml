@@ -4,16 +4,6 @@
 }
 
 @section scripts{
-    <script type="text/javascript">
-        $("#@Html.IdFor(model => model.DeliveryDate)").datepicker({
-            minDate: 0,
-            maxDate: "+1Y",
-            dateFormat: "yy-mm-dd",
-            changeYear: true,
-            changeMonth: true,
-            setDate: new Date(@Model.DeliveryDate.ToString("yyyy-MM-dd"))
-        });
-    </script>
     <script src="~/Scripts/pages/covid.js"></script>
 }
 
@@ -70,10 +60,6 @@
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "f-campo", placeholder = "Correo Electrónico" } })
                 @Html.EditorFor(model => model.PersonalPhone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono personal", data_val = "true" } })
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "f-campo", placeholder = "Cantidad de mascarillas" } })
-
-                <label class="f-label">Fecha de Entrega</label>
-                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "Seleccione una fecha", @readonly = true } })
-
                 @Html.Partial("_Address", Model)
             </div>
             <div>
