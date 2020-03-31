@@ -38,6 +38,15 @@ namespace Limbs.Web.Controllers
                 });
             }
 
+            if (model.Quantity > 500)
+            {
+                return Json(new
+                {
+                    Error = true,
+                    Msg = "La cantidad del pedido no debe superar las 500 unidades, por mas unidades, contactarse con Atomic Lab"
+                });
+            }
+            
             var existingEmail = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Email == model.Email);
             if (existingEmail != null)
             {
