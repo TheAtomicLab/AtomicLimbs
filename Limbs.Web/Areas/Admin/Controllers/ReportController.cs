@@ -16,7 +16,7 @@ namespace Limbs.Web.Areas.Admin.Controllers
         // GET: Admin/Report
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Panel", new { area = "Admin" });
+            return RedirectToAction("Index", "Panel", new {area = "Admin"});
         }
 
         /// <summary>
@@ -28,10 +28,10 @@ namespace Limbs.Web.Areas.Admin.Controllers
         {
             var dateFrom = DateTime.UtcNow.AddDays(-daysBefore);
             var result = await Db.OrderModels.Where(x =>
-                x.Status == OrderStatus.Pending &&
-                x.StatusLastUpdated <= dateFrom)
-                    .Include(x => x.OrderRequestor)
-                    .Include(p => p.OrderAmbassador)
+                    x.Status == OrderStatus.Pending &&
+                    x.StatusLastUpdated <= dateFrom)
+                .Include(x => x.OrderRequestor)
+                .Include(p => p.OrderAmbassador)
                 .ToListAsync();
 
             return View(new DelayedOrdersViewModel
@@ -67,23 +67,23 @@ namespace Limbs.Web.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult InfoCOVID()
+        public async Task<ActionResult> InfoCOVID()
         {
             var viewModel = new COVIDInfoAdminViewModel();
 
-            var orderList = Db.CovidOrganizationModels
-                            .OrderByDescending(t=>t.Quantity)
-                            .ToList();
+            var orderList = await Db.CovidOrganizationModels
+                .OrderByDescending(t => t.Quantity)
+                .ToListAsync();
 
-            viewModel.TotalOrders = orderList.Count();
+            viewModel.TotalOrders = orderList.Count;
             viewModel.TotalQuantity = orderList.Sum(t => t.Quantity);
             viewModel.RankingOrders = orderList.Take(10).ToList();
 
-            var assignmentList = Db.CovidOrgAmbassadorModels
-                                .Include(t => t.CovidAmbassador)
-                                .Include(t => t.CovidAmbassador.Ambassador)
-                                .Include(t => t.CovidOrg)
-                                .ToList();
+            var assignmentList = await Db.CovidOrgAmbassadorModels
+                .Include(t => t.CovidAmbassador)
+                .Include(t => t.CovidAmbassador.Ambassador)
+                .Include(t => t.CovidOrg)
+                .ToListAsync();
 
             viewModel.AssignmentList = assignmentList;
             viewModel.TotalAssignedAmbassadors = assignmentList.Select(t => t.CovidAmbassador).Distinct().Count();
