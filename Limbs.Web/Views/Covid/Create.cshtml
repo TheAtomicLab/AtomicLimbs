@@ -5,21 +5,8 @@
     var termsAndConditions = false;
 }
 @section scripts{
-    <script type="text/javascript">
-        $("#@Html.IdFor(model => model.DeliveryDate)").datepicker(
-            {
-                minDate: 0,
-                maxDate: "+1Y",
-                dateFormat: "yy-mm-dd",
-                changeYear: true,
-                changeMonth: true
-            }
-        );
-
-        $(document).ready(function () {
-            $('#DeliveryDate').val('');
-            $('#Quantity').val('');
-        });
+    <script>
+        $('#Quantity').val('');
     </script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
@@ -78,10 +65,6 @@
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "f-campo", placeholder = "Correo Electrónico" } })
                 @Html.EditorFor(model => model.PersonalPhone, new { htmlAttributes = new { @class = "f-campo", placeholder = "Teléfono personal" } })
                 @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "f-campo", placeholder = "Cantidad de mascarillas" } })
-
-                <label class="f-label">Fecha de Entrega</label>
-                @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "f-campo", type = "text", placeholder = "Seleccione una fecha", @readonly = true } })
-
                 @Html.Partial("_Address", Model)
             </div>
             <div>

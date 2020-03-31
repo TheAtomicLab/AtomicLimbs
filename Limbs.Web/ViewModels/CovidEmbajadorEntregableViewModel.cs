@@ -36,9 +36,7 @@ namespace Limbs.Web.ViewModels
         public CovidOrganizationEnum CovidOrganization { get; set; }
         public string CovidOrganizationName { get; set; }
         public int Quantity { get; set; }
-        public DateTime DeliveryDate { get; set; }
         public double Distance { get; set; }
-
 
         public List<CovidAmbassador> Ambassadors { get; set; }
         public bool AlreadySavedQuantity { get; set; }
