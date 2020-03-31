@@ -1,0 +1,61 @@
+﻿@using Limbs.Web.Entities.Models
+@model Limbs.Web.ViewModels.COVIDInfoAdminViewModel
+
+@{
+    ViewBag.Title = "INFO COVID";
+}
+
+<h2>COVID-19 Info de pedidos y entregas</h2>
+<br />
+<br />
+<h3 class="success">Hay @Model.TotalOrders pedidos con un total de @Model.TotalQuantity mascarillas</h3>
+<br />
+<br />
+<h3>Top 10 de pedidos</h3>
+<br />
+<table>
+    <tr>
+        <th>Tipo</th>
+        <th>Nombre</th>
+        <th>Cantidad</th>
+        <th>Mail</th>
+        <th>Dirección</th>
+    </tr>
+    @foreach (CovidOrganizationModel row in Model.RankingOrders)
+    {
+        <tr>
+            <td>@row.CovidOrganization</td>
+            <td>@row.CovidOrganizationName</td>
+            <td>@row.Quantity</td>
+            <td>@row.Email</td>
+            <td>@row.Address @row.Address2, @row.City, @row.State</td>
+        </tr>
+    }
+</table>
+
+<br />
+<br />
+
+<h3 class="success">Hay @Model.TotalAssignedAmbassadors embajadores con pedidos asignados con un total de @Model.TotalAssignedQuantity mascarillas</h3>
+
+<br />
+<br />
+
+<table>
+    <tr>
+        <th>Organización</th>
+        <th>Embajador</th>
+        <th>Cantidad</th>
+    </tr>
+    @foreach (CovidOrgAmbassador row in Model.AssignmentList)
+    {
+        <tr>
+            <td>@row.CovidOrg.CovidOrganizationName</td>
+            <td>@row.CovidAmbassador.Ambassador.FullName()</td>
+            <td>@row.Quantity</td>
+        </tr>
+    }
+</table>
+
+
+
