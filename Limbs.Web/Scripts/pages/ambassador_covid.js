@@ -1,5 +1,4 @@
-﻿
-$(document).ready(function () {
+﻿$(document).ready(function () {
     let frmQuantity = $('.form-quantity');
     let quantityResponseMsg = $('.quantityResponseMsg');
 
@@ -7,7 +6,9 @@ $(document).ready(function () {
         itemSelector: '.card'
     });
 
-    $(".grid_pedidos .card").bind("DOMSubtreeModified", function () { $(grid_pedidos).masonry(); });
+    $(".grid_pedidos .card").bind("DOMSubtreeModified", function () {
+        $(grid_pedidos).masonry();
+    });
     grid_pedidos.imagesLoaded().progress(function () {
         $(grid_pedidos).masonry();
     });
@@ -35,7 +36,9 @@ $(document).ready(function () {
         let inputCantToUpdate = $(this).parent().prev().children();
         let inputCantToUpdateVal = parseInt(inputCantToUpdate.val());
 
-        if (inputCantToUpdateVal === savedTmpCant) {
+        let maxCant = parseInt($(this).attr('data-max'));
+
+        if (inputCantToUpdateVal === maxCant) {
             return;
         }
 
@@ -90,7 +93,6 @@ $(document).ready(function () {
                     inputTmpSaved.val('0');
                     inputCant.val(parseInt(inputCant.val()) - cantSaved);
                     savedTmpCant = parseInt(inputCant.val());
-                    //alert('Se asigno la cantidad');
                     window.location = window.location;
                 }
             },
@@ -128,6 +130,7 @@ $(document).ready(function () {
                 } else {
                     savedTmpCant = parseInt(inputCant.val());
                     quantityResponseMsg.removeClass('error').addClass('success').html('Cantidad actualizada correctamente.');
+                    window.location = window.location;
                 }
             },
             error: function (r) {
