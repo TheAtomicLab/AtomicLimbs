@@ -256,6 +256,7 @@ namespace Limbs.Web.Controllers
             }
 
             var covidOrgAmbassador = await Db.CovidOrgAmbassadorModels.FirstOrDefaultAsync(p => p.CovidAmbassadorId == model.CovidAmbassadorId && p.CovidOrgId == model.OrgId);
+            int previousCantity = 0;           
             if (covidOrgAmbassador == null)
             {
                 covidOrgAmbassador = new CovidOrgAmbassador
@@ -265,30 +266,46 @@ namespace Limbs.Web.Controllers
                     Quantity = model.SavedQuantity
                 };
             }
+            else
+            {
+                previousCantity = covidOrgAmbassador.Quantity;
+                covidOrgAmbassador.Quantity = model.SavedQuantity;
+            }
 
             var covidOrgDb = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == model.OrgId);
             var covidAmbassador = await Db.COVIDEmbajadorEntregable.Include(p => p.Ambassador).FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
 
-            var sum = (await Db.CovidOrgAmbassadorModels
-                           .GroupBy(o => o.CovidOrgId).Select(x => new
-                           {
-                               Id = x.Key,
-                               Sum = x.Sum(z => z.Quantity)
-                           }).FirstOrDefaultAsync(f => f.Id == model.OrgId))?.Sum;
-
-            var sumDonatedDiff = covidOrgDb.Quantity - (sum ?? 0);
-
-            var quantityResult = sumDonatedDiff - covidOrgAmbassador.Quantity;
-            if (quantityResult < 0)
+            if (covidOrgAmbassador.Quantity >= previousCantity)
             {
-                return Json(new
+                var sum = (await Db.CovidOrgAmbassadorModels
+                    .GroupBy(o => o.CovidOrgId).Select(x => new
+                    {
+                        Id = x.Key,
+                        Sum = x.Sum(z => z.Quantity)
+                    }).FirstOrDefaultAsync(f => f.Id == model.OrgId))?.Sum;
+
+                var sumDonatedDiff = covidOrgDb.Quantity - (sum ?? 0);
+
+                var quantityResult = sumDonatedDiff - covidOrgAmbassador.Quantity + previousCantity;
+                if (quantityResult < 0)
                 {
-                    Msg = $"Puede donar {sumDonatedDiff} unidad/es como máximo",
-                    Error = true
-                });
+                    string quantityMsg = sumDonatedDiff == 0 ? $"No puede donar más de lo solicitado, por favor, apoya a otro centro." : $"Puede donar {sumDonatedDiff} unidad/es como máximo";
+                    return Json(new
+                    {
+                        Msg = quantityMsg,
+                        Error = true
+                    });
+                }
             }
 
-            covidAmbassador.CantEntregable -= covidOrgAmbassador.Quantity;
+            if (covidOrgAmbassador.Quantity < previousCantity)
+            {
+                covidAmbassador.CantEntregable += (previousCantity - covidOrgAmbassador.Quantity);
+            }
+            else
+            {
+                covidAmbassador.CantEntregable -= covidOrgAmbassador.Quantity - previousCantity;
+            }
 
             Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
             Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
@@ -343,10 +360,6 @@ namespace Limbs.Web.Controllers
 
             await AzureQueue.EnqueueAsync(mailMessageAmbassador);
             #endregion
-
-
-
-
 
             return Json(new
             {

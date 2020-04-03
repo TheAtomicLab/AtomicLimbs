@@ -60,7 +60,7 @@
     <div id="paneles_embajador">
         <article class="card card-l">
             <h2>Cantidad de mascarillas a donar</h2>
-            @using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, new { @class = "form form-quantity" }))
+            @using (Html.BeginForm("GuardarCantidad", "Ambassador", FormMethod.Post, new {@class = "form form-quantity"}))
             {
                 @Html.HiddenFor(model => model.AmbassadorId)
                 @Html.HiddenFor(model => model.Id)
@@ -69,26 +69,32 @@
                 <div class="f-seccion">
                     <label class="f-label">Cantidad Actual</label>
                     <div>
-                        <button class="bn_blue removeCovidQuantity" type="button"><i class="fa fa fa-minus"></i></button>
-                        @Html.EditorFor(model => model.CantEntregable, new { htmlAttributes = new { @class = "f-campo f-campo-cantidad", @readonly = true } })
-                        <button class="bn_blue addCovidQuantity" type="button"><i class="fa fa fa-plus"></i></button>
+                        <button class="bn_blue removeCovidQuantity" type="button">
+                            <i class="fa fa fa-minus"></i>
+                        </button>
+                        @Html.EditorFor(model => model.CantEntregable, new {htmlAttributes = new {@class = "f-campo f-campo-cantidad", @readonly = true}})
+                        <button class="bn_blue addCovidQuantity" type="button">
+                            <i class="fa fa fa-plus"></i>
+                        </button>
                     </div>
                 </div>
 
-                <br />
+                <br/>
                 <button class="bn_blue sendQuantity">Actualizar</button>
-                <div><span class="quantityResponseMsg"></span></div>
+                <div>
+                    <span class="quantityResponseMsg"></span>
+                </div>
             }
         </article>
         <article class="card card-l">
             <p class="text-center">
                 <img src=@Url.Content("~/Content/img/covidgif.gif") width="208">
             </p>
-            <br />
+            <br/>
             <p>
                 Hola Embajadores, por la situación actual que estamos pasando con el COVID-19, decidimos poner a disposición la plataforma Limbs para imprimir mascaras. Por favor, entra a este link: <a href="https://docs.google.com/document/d/1heHV7ln9IMKOava4vjm16t5udWLC7l42xcAc8hy6YdY" target="_blank"> MANUAL DE MASCARAS</a> para entender el funcionamiento de la plataforma.
             </p>
-            <br />
+            <br/>
             <p>Cualquier duda escribinos en <a href="https://facebook.com/theatomiclab" target="_blank"> facebook.com/theatomiclab.</a> </p>
         </article>
 
@@ -138,40 +144,46 @@
                                 <tr>
                                     <td colspan="2" class="text-bold">Sumarme</td>
                                 </tr>
+                                @if (order.OrderInfo.AlreadySavedQuantity)
+                                {
+                                    <tr>
+                                        <td class="text-bold success" colspan="2">Te comprometiste con @order.OrderInfo.QuantitySaved unidades</td>
+                                    </tr>
+                                }
                                 <tr>
-                                    @if (order.OrderInfo.AlreadySavedQuantity)
-                                    {
-                                        <td class="text-bold success">Te comprometiste con @order.OrderInfo.QuantitySaved unidades</td>
-                                    }
-                                    else
-                                    {
-                                        <td colspan="2">
-                                            <table>
-                                                <tr>
-                                                    <td colspan="2">
-                                                        <button class="bn_blue removeCovidOrderQuantity" type="button"><i class="fa fa fa-minus"></i></button>
-                                                    </td>
-                                                    <td colspan="2">
-                                                        <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="0" aria-describedby="CantEntregable-error" aria-invalid="false">
-                                                    </td>
-                                                    <td colspan="2">
-                                                        <button class="bn_blue addCovidOrderQuantity" type="button"><i class="fa fa fa-plus"></i></button>
-                                                    </td>
-                                                    <td colspan="2">
-                                                        <button class="bn_blue saveQuantityOrder">Guardar</button>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </td>
-                                    }
+                                    <td colspan="2">
+                                        <table>
+                                            <tr>
+                                                <td colspan="2">
+                                                    <button class="bn_blue removeCovidOrderQuantity" type="button">
+                                                        <i class="fa fa fa-minus"></i>
+                                                    </button>
+                                                </td>
+                                                <td colspan="2">
+                                                    @{
+                                                        var saveQt = order.OrderInfo.QuantitySaved ?? 0;
+                                                        var maxValue = Model.CantEntregable + saveQt;
+                                                    }
+                                                    <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="@saveQt" aria-describedby="CantEntregable-error" aria-invalid="false">
+                                                </td>
+                                                <td colspan="2">
+                                                    <button class="bn_blue addCovidOrderQuantity" data-max="@maxValue" type="button">
+                                                        <i class="fa fa fa-plus"></i>
+                                                    </button>
+                                                </td>
+                                                <td colspan="2">
+                                                    <button class="bn_blue saveQuantityOrder">Guardar</button>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
                                 </tr>
                             </table>
 
-                            <input type="hidden" name="OrgId" value="@order.OrgId" />
-                            <input type="hidden" name="CovidAmbassadorId" value="@Model.Id" />
+                            <input type="hidden" name="OrgId" value="@order.OrgId"/>
+                            <input type="hidden" name="CovidAmbassadorId" value="@Model.Id"/>
                         }
                     </div>
-
                 }
             }
         </div>
