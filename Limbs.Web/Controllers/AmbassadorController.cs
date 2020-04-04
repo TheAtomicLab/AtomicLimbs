@@ -39,16 +39,20 @@ namespace Limbs.Web.Controllers
         // GET: /Ambassador/
         public ActionResult Index()
         {
-
             var currentUserId = User.Identity.GetUserId();
 
-            IEnumerable<OrderModel> orderList = Db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId).Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
+            IEnumerable<OrderModel> orderList = Db.OrderModels.Where(c => c.OrderAmbassador.UserId == currentUserId)
+                .Include(c => c.OrderRequestor).OrderByDescending(c => c.StatusLastUpdated).ToList();
 
             var deliveredOrdersCount = orderList.Count(c => c.Status == OrderStatus.Delivered);
-            var pendingOrdersCount = orderList.Count(c => c.Status == OrderStatus.Pending || c.Status == OrderStatus.ArrangeDelivery || c.Status == OrderStatus.Ready);
+            var pendingOrdersCount = orderList.Count(c =>
+                c.Status == OrderStatus.Pending || c.Status == OrderStatus.ArrangeDelivery ||
+                c.Status == OrderStatus.Ready);
 
             var pendingAssignationOrders = orderList.Where(o => o.Status == OrderStatus.PreAssigned).ToList();
-            var pendingOrders = orderList.Where(o => o.Status == OrderStatus.Pending || o.Status == OrderStatus.ArrangeDelivery || o.Status == OrderStatus.Ready).ToList();
+            var pendingOrders = orderList.Where(o =>
+                o.Status == OrderStatus.Pending || o.Status == OrderStatus.ArrangeDelivery ||
+                o.Status == OrderStatus.Ready).ToList();
             var deliveredOrders = orderList.Where(o => o.Status == OrderStatus.Delivered).ToList();
 
             var viewModel = new ViewModels.AmbassadorPanelViewModel
@@ -97,10 +101,12 @@ namespace Limbs.Web.Controllers
                 if (!id.HasValue) return HttpNotFound();
                 ambassadorModel = await Db.AmbassadorModels.FindAsync(id);
             }
+
             if (ambassadorModel == null || !ambassadorModel.CanViewOrEdit(User))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Conflict);
             }
+
             ViewBag.ReturnUrl = Request.UrlReferrer?.AbsoluteUri;
             return View("Create", ambassadorModel);
         }
@@ -121,7 +127,8 @@ namespace Limbs.Web.Controllers
             ViewBag.TermsAndConditions = termsAndConditions;
             if (!ModelState.IsValid) return View("Create", ambassadorModel);
 
-            var ambassador = await Db.AmbassadorModels.AsNoTracking().FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
+            var ambassador = await Db.AmbassadorModels.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == ambassadorModel.Id);
             if (ambassador == null)
             {
                 //CREATE
@@ -158,8 +165,8 @@ namespace Limbs.Web.Controllers
         {
             var currentUserId = User.Identity.GetUserId();
             var model = Db.COVIDEmbajadorEntregable.Where(p => p.Ambassador.UserId == currentUserId)
-                                                    .Include(p => p.Ambassador)
-                                                    .FirstOrDefault();
+                .Include(p => p.Ambassador)
+                .FirstOrDefault();
 
             if (model == null)
             {
@@ -179,33 +186,36 @@ namespace Limbs.Web.Controllers
             DbGeography location = model.Ambassador.Location;
             vm.Orders =
                 await (from covidOrg in Db.CovidOrganizationModels
-                       join covidOrgAmb in Db.CovidOrgAmbassadorModels on covidOrg.Id equals covidOrgAmb.CovidOrgId into c
-                       from c1 in c.DefaultIfEmpty()
-                       join covidAmb in Db.COVIDEmbajadorEntregable on c1.CovidAmbassadorId equals covidAmb.Id into c2
-                       from c3 in c2.DefaultIfEmpty()
-                       join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
-                       from c5 in c4.DefaultIfEmpty()
-                       group covidOrg by new { covidOrg.Id, Location = covidOrg.Location.Distance(location) ?? 0d } into g
-                       orderby g.Key.Location
-                       select new OrderCovidAmbassadorViewModel
-                       {
-                           OrgId = g.Key.Id,
-                           OrderInfo = g.Select(p => new OrderCovidInfoViewModel
-                           {
-                               CovidOrganization = p.CovidOrganization,
-                               CovidOrganizationName = p.CovidOrganizationName,
-                               Distance = p.Location.Distance(location) ?? 0d,
-                               Quantity = p.Quantity,
-                               AlreadySavedQuantity = p.CovidOrgAmbassadors.Any(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id),
-                               QuantitySaved = p.CovidOrgAmbassadors.FirstOrDefault(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id).Quantity,
-                               Ambassadors = p.CovidOrgAmbassadors.Select(x => new CovidAmbassador
-                               {
-                                   Name = x.CovidAmbassador.Ambassador.AmbassadorName,
-                                   Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
-                                   Quantity = x.Quantity
-                               }).ToList(),
-                           }).FirstOrDefault()
-                       }).Take(25).ToListAsync();
+                    join covidOrgAmb in Db.CovidOrgAmbassadorModels on covidOrg.Id equals covidOrgAmb.CovidOrgId into c
+                    from c1 in c.DefaultIfEmpty()
+                    join covidAmb in Db.COVIDEmbajadorEntregable on c1.CovidAmbassadorId equals covidAmb.Id into c2
+                    from c3 in c2.DefaultIfEmpty()
+                    join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
+                    from c5 in c4.DefaultIfEmpty()
+                    group covidOrg by new {covidOrg.Id, Location = covidOrg.Location.Distance(location) ?? 0d}
+                    into g
+                    orderby g.Key.Location
+                    select new OrderCovidAmbassadorViewModel
+                    {
+                        OrgId = g.Key.Id,
+                        OrderInfo = g.Select(p => new OrderCovidInfoViewModel
+                        {
+                            CovidOrganization = p.CovidOrganization,
+                            CovidOrganizationName = p.CovidOrganizationName,
+                            Distance = p.Location.Distance(location) ?? 0d,
+                            Quantity = p.Quantity,
+                            AlreadySavedQuantity = p.CovidOrgAmbassadors.Any(x =>
+                                x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id),
+                            QuantitySaved = p.CovidOrgAmbassadors
+                                .FirstOrDefault(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id).Quantity,
+                            Ambassadors = p.CovidOrgAmbassadors.Select(x => new CovidAmbassador
+                            {
+                                Name = x.CovidAmbassador.Ambassador.AmbassadorName,
+                                Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
+                                Quantity = x.Quantity
+                            }).ToList(),
+                        }).FirstOrDefault()
+                    }).Take(25).ToListAsync();
 
             return View(vm);
         }
@@ -255,8 +265,11 @@ namespace Limbs.Web.Controllers
                 });
             }
 
-            var covidOrgAmbassador = await Db.CovidOrgAmbassadorModels.FirstOrDefaultAsync(p => p.CovidAmbassadorId == model.CovidAmbassadorId && p.CovidOrgId == model.OrgId);
-            int previousCantity = 0;           
+            var covidOrgAmbassador = await Db.CovidOrgAmbassadorModels.FirstOrDefaultAsync(p =>
+                p.CovidAmbassadorId == model.CovidAmbassadorId && p.CovidOrgId == model.OrgId);
+            var isEdit = covidOrgAmbassador != null;
+            int previousCantity = 0;
+
             if (covidOrgAmbassador == null)
             {
                 covidOrgAmbassador = new CovidOrgAmbassador
@@ -268,12 +281,22 @@ namespace Limbs.Web.Controllers
             }
             else
             {
+                if (covidOrgAmbassador.Quantity == model.SavedQuantity)
+                {
+                    return Json(new
+                    {
+                        Msg = "La nueva cantidad debe ser distinta a la actual",
+                        Error = true
+                    }); 
+                }
+                
                 previousCantity = covidOrgAmbassador.Quantity;
                 covidOrgAmbassador.Quantity = model.SavedQuantity;
             }
 
             var covidOrgDb = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == model.OrgId);
-            var covidAmbassador = await Db.COVIDEmbajadorEntregable.Include(p => p.Ambassador).FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
+            var covidAmbassador = await Db.COVIDEmbajadorEntregable.Include(p => p.Ambassador)
+                .FirstOrDefaultAsync(p => p.Id == model.CovidAmbassadorId);
 
             if (covidOrgAmbassador.Quantity >= previousCantity)
             {
@@ -289,7 +312,9 @@ namespace Limbs.Web.Controllers
                 var quantityResult = sumDonatedDiff - covidOrgAmbassador.Quantity + previousCantity;
                 if (quantityResult < 0)
                 {
-                    string quantityMsg = sumDonatedDiff == 0 ? $"No puede donar más de lo solicitado, por favor, apoya a otro centro." : $"Puede donar {sumDonatedDiff} unidad/es como máximo";
+                    string quantityMsg = sumDonatedDiff == 0
+                        ? $"No puede donar más de lo solicitado, por favor, apoya a otro centro."
+                        : $"Puede donar {sumDonatedDiff} unidad/es como máximo";
                     return Json(new
                     {
                         Msg = quantityMsg,
@@ -308,11 +333,22 @@ namespace Limbs.Web.Controllers
             }
 
             Db.COVIDEmbajadorEntregable.AddOrUpdate(covidAmbassador);
-            Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
+
+            if (covidOrgAmbassador.Quantity == 0)
+            {
+                Db.CovidOrgAmbassadorModels.Remove(covidOrgAmbassador);
+            }
+            else
+            {
+                Db.CovidOrgAmbassadorModels.AddOrUpdate(covidOrgAmbassador);
+            }
+
             await Db.SaveChangesAsync();
 
             #region SendEmails
-            var covidOrg = await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == covidOrgAmbassador.CovidOrgId);
+
+            var covidOrg =
+                await Db.CovidOrganizationModels.FirstOrDefaultAsync(p => p.Id == covidOrgAmbassador.CovidOrgId);
 
             var covidEmailInfo = new CovidSaveQuantityOrderEmail
             {
@@ -321,21 +357,31 @@ namespace Limbs.Web.Controllers
                 AmbassadorName = covidAmbassador.Ambassador.AmbassadorName,
                 AmbassadorLastname = covidAmbassador.Ambassador.AmbassadorLastName,
                 AmbassadorEmail = covidAmbassador.Ambassador.Email,
-                AmbassadorAddress = $"{covidAmbassador.Ambassador.Address} ({covidAmbassador.Ambassador.Address2}), {covidAmbassador.Ambassador.City}, {covidAmbassador.Ambassador.State}, {covidAmbassador.Ambassador.Country}",
+                AmbassadorAddress =
+                    $"{covidAmbassador.Ambassador.Address} ({covidAmbassador.Ambassador.Address2}), {covidAmbassador.Ambassador.City}, {covidAmbassador.Ambassador.State}, {covidAmbassador.Ambassador.Country}",
                 AmbassadorPhoneNumber = covidAmbassador.Ambassador.Phone,
+                PreviousQuantity = previousCantity,
                 Quantity = covidOrgAmbassador.Quantity
             };
 
-            var mailMessage = new MailMessage
+            MailMessage mailMessage = new MailMessage
             {
                 From = _fromEmail,
-                To = covidOrg.Email,
-                Subject = $"[Atomic Limbs] {covidEmailInfo.Quantity} Mascarillas en camino!",
-                Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovid", covidEmailInfo),
+                To = covidOrg.Email
             };
+            
+            if (!isEdit)
+            {
+                mailMessage.Subject = $"[Atomic Limbs] {covidEmailInfo.Quantity} Mascarillas en camino!";
+                mailMessage.Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovid", covidEmailInfo);
+            }
+            else
+            {
+                mailMessage.Subject = $"[Atomic Limbs] Ha habido un cambio en tu pedido!";
+                mailMessage.Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidOnUpdate", covidEmailInfo);
+            }
 
             await AzureQueue.EnqueueAsync(mailMessage);
-
 
             var covidAmbassadorEmailInfo = new CovidSaveQuantityOrderEmailAmbassador
             {
@@ -343,22 +389,37 @@ namespace Limbs.Web.Controllers
                 Lastname = covidAmbassador.Ambassador.AmbassadorLastName,
                 OrgName = covidOrg.Name,
                 OrgLastname = covidOrg.Surname,
-                OrganizationTypeAndName = $"{covidOrg.CovidOrganization.ToDescription()} - {covidOrg.CovidOrganizationName}",
-                OrgPhoneNumber = $"Personal: {covidOrg.PersonalPhone} - Organización: {covidOrg.OrganizationPhone} ({covidOrg.OrganizationPhoneIntern})",
-                OrgAddress = $"{covidOrg.Address} ({covidOrg.Address2}), {covidOrg.City}, {covidOrg.State}, {covidOrg.Country}",
+                OrganizationTypeAndName =
+                    $"{covidOrg.CovidOrganization.ToDescription()} - {covidOrg.CovidOrganizationName}",
+                OrgPhoneNumber =
+                    $"Personal: {covidOrg.PersonalPhone} - Organización: {covidOrg.OrganizationPhone} ({covidOrg.OrganizationPhoneIntern})",
+                OrgAddress =
+                    $"{covidOrg.Address} ({covidOrg.Address2}), {covidOrg.City}, {covidOrg.State}, {covidOrg.Country}",
                 OrgEmail = covidOrg.Email,
                 Quantity = covidOrgAmbassador.Quantity
             };
 
+            
+            
             var mailMessageAmbassador = new MailMessage
             {
                 From = _fromEmail,
-                To = covidAmbassador.Ambassador.Email,
-                Subject = $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!",
-                Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador", covidAmbassadorEmailInfo),
+                To = covidAmbassador.Ambassador.Email
             };
 
+            if (!isEdit)
+            {
+                mailMessage.Subject = $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!";
+                mailMessage.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador", covidAmbassadorEmailInfo);
+            }
+            else
+            {
+                mailMessage.Subject = $"[Atomic Limbs] Has cambiado la cantidad de mascarillas!";
+                mailMessage.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassadorOnUpdate", covidAmbassadorEmailInfo);
+            }
+
             await AzureQueue.EnqueueAsync(mailMessageAmbassador);
+
             #endregion
 
             return Json(new
@@ -389,7 +450,8 @@ namespace Limbs.Web.Controllers
             */
 
             if (ambassadorModel.Birth > DateTime.UtcNow.AddYears(-AmbassadorModel.MinYear))
-                ModelState.AddModelError(nameof(ambassadorModel.Birth), $@"Debes ser mayor de {AmbassadorModel.MinYear} años.");
+                ModelState.AddModelError(nameof(ambassadorModel.Birth),
+                    $@"Debes ser mayor de {AmbassadorModel.MinYear} años.");
 
             if (termsAndConditions.HasValue && !termsAndConditions.Value)
                 ModelState.AddModelError(nameof(termsAndConditions), @"Debe aceptar terminos y condiciones.");
@@ -402,7 +464,8 @@ namespace Limbs.Web.Controllers
                 From = ConfigurationManager.AppSettings["Mail.From"],
                 To = ambassadorModel.Email,
                 Body = CompiledTemplateEngine.Render("Mails.NewAmbassador", ambassadorModel),
-                Subject = "¡Hola " + ambassadorModel.AmbassadorName + "! Ya sos un #EmbajadorAtómico del proyecto Limbs, leé esto para conocer los próximos pasos."
+                Subject = "¡Hola " + ambassadorModel.AmbassadorName +
+                          "! Ya sos un #EmbajadorAtómico del proyecto Limbs, leé esto para conocer los próximos pasos."
             };
             if (ambassadorModel.HasAlternativeEmail()) mailMessage.Cc = ambassadorModel.AlternativeEmail;
 
@@ -410,4 +473,3 @@ namespace Limbs.Web.Controllers
         }
     }
 }
-

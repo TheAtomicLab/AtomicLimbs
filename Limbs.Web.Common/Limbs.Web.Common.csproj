@@ -134,6 +134,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Mail\Templates\SaveQuantityOrderCovidAmbassadorOnUpdate.cshtml" />
+    <EmbeddedResource Include="Mail\Templates\SaveQuantityOrderCovidOnUpdate.cshtml" />
     <EmbeddedResource Include="Resources\LimbsResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LimbsResources.Designer.cs</LastGenOutput>
