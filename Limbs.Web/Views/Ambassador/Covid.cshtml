@@ -162,6 +162,7 @@
                                                 <td colspan="2">
                                                     @{
                                                         var saveQt = order.OrderInfo.QuantitySaved ?? 0;
+                                                        bool isEdit = order.OrderInfo.QuantitySaved != null;
                                                         var maxValue = Model.CantEntregable + saveQt;
                                                     }
                                                     <input class="f-campo f-campo-cantidad text-box single-line valid" data-val="true" data-val-number="The field CantEntregable must be a number." data-val-range=" " data-val-range-max="2147483647" data-val-range-min="0" data-val-required=" " name="SavedQuantity" readonly="True" type="number" value="@saveQt" aria-describedby="CantEntregable-error" aria-invalid="false">
@@ -172,7 +173,7 @@
                                                     </button>
                                                 </td>
                                                 <td colspan="2">
-                                                    <button class="bn_blue saveQuantityOrder">Guardar</button>
+                                                    <button class="bn_blue saveQuantityOrder" data-isEdit="@isEdit">Guardar</button>
                                                 </td>
                                             </tr>
                                         </table>

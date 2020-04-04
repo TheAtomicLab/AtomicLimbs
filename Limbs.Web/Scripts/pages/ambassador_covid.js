@@ -66,7 +66,7 @@
         let inputTmpSaved = saveBtn.parent().prev().prev().children();
         let cantSaved = parseInt(inputTmpSaved.val());
 
-        if (cantSaved === 0) {
+        if (cantSaved === 0 && saveBtn.attr('data-isEdit') === 'False') {
             return;
         }
 

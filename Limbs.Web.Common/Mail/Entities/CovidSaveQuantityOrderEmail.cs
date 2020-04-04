@@ -15,6 +15,7 @@ namespace Limbs.Web.Common.Mail.Entities
         public string AmbassadorPhoneNumber { get; set; }
         public string AmbassadorEmail { get; set; }
         public string AmbassadorAddress { get; set; }
+        public int PreviousQuantity { get; set; }
         public int Quantity { get; set; }
     }
 }
