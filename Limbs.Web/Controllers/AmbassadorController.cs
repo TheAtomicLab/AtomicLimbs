@@ -399,8 +399,6 @@ namespace Limbs.Web.Controllers
                 Quantity = covidOrgAmbassador.Quantity
             };
 
-            
-            
             var mailMessageAmbassador = new MailMessage
             {
                 From = _fromEmail,
@@ -409,13 +407,13 @@ namespace Limbs.Web.Controllers
 
             if (!isEdit)
             {
-                mailMessage.Subject = $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!";
-                mailMessage.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador", covidAmbassadorEmailInfo);
+                mailMessageAmbassador.Subject = $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!";
+                mailMessageAmbassador.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador", covidAmbassadorEmailInfo);
             }
             else
             {
-                mailMessage.Subject = $"[Atomic Limbs] Has cambiado la cantidad de mascarillas!";
-                mailMessage.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassadorOnUpdate", covidAmbassadorEmailInfo);
+                mailMessageAmbassador.Subject = $"[Atomic Limbs] Has cambiado la cantidad de mascarillas!";
+                mailMessageAmbassador.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassadorOnUpdate", covidAmbassadorEmailInfo);
             }
 
             await AzureQueue.EnqueueAsync(mailMessageAmbassador);
