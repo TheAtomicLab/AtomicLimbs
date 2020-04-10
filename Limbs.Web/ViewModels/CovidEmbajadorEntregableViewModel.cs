@@ -28,7 +28,6 @@ namespace Limbs.Web.ViewModels
     public class OrderCovidAmbassadorViewModel
     {
         public int OrgId { get; set; }
-        public bool ShowFeatured { get; set; }
         public OrderCovidInfoViewModel OrderInfo { get; set; }
     }
 

@@ -243,13 +243,12 @@ namespace Limbs.Web.Controllers
             }
             else
             {
-                tmpQuery = tmpQuery.OrderBy(p => p.Key.Location);
+                tmpQuery = tmpQuery.Where(p => p.Key.Featured == false).OrderBy(p => p.Key.Location);
             }
 
             vm.Orders = await tmpQuery.Select(g => new OrderCovidAmbassadorViewModel
             {
                 OrgId = g.Key.Id,
-                ShowFeatured = contains,
                 OrderInfo = g.Select(p => new OrderCovidInfoViewModel
                 {
                     CovidOrganization = p.CovidOrganizationModel.CovidOrganization,
