@@ -4,6 +4,8 @@ using System.Configuration;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Data.Entity.Spatial;
+using System.Data.Entity.SqlServer;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -21,6 +23,7 @@ using Limbs.Web.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.SqlServer.Types;
 
 namespace Limbs.Web.Controllers
 {
@@ -184,40 +187,100 @@ namespace Limbs.Web.Controllers
             var vm = Mapper.Map<CovidEmbajadorEntregableViewModel>(model);
 
             DbGeography location = model.Ambassador.Location;
-            vm.Orders =
-                await (from covidOrg in Db.CovidOrganizationModels
-                    join covidOrgAmb in Db.CovidOrgAmbassadorModels on covidOrg.Id equals covidOrgAmb.CovidOrgId into c
-                    from c1 in c.DefaultIfEmpty()
-                    join covidAmb in Db.COVIDEmbajadorEntregable on c1.CovidAmbassadorId equals covidAmb.Id into c2
-                    from c3 in c2.DefaultIfEmpty()
-                    join amb in Db.AmbassadorModels on c3.Id equals amb.Id into c4
-                    from c5 in c4.DefaultIfEmpty()
-                    group covidOrg by new {covidOrg.Id, Location = covidOrg.Location.Distance(location) ?? 0d}
-                    into g
-                    orderby g.Key.Location
-                    select new OrderCovidAmbassadorViewModel
+
+            string coordinatesPolygon = ConfigurationManager.AppSettings["CoordinatesPolygon"];
+            DbGeometry polygon = DbGeometry.PolygonFromText($"POLYGON({coordinatesPolygon})", 0);
+            DbGeometry pointFromAmbassador =
+                DbGeometry.PointFromText($"POINT({location.Latitude ?? 0d} {location.Longitude ?? 0d})", 0);
+
+            if (!polygon.IsValid)
+            {
+                polygon = MakeValid(polygon);
+            }
+
+            if (!pointFromAmbassador.IsValid)
+            {
+                pointFromAmbassador = MakeValid(pointFromAmbassador);
+            }
+
+            bool contains = polygon.Contains(pointFromAmbassador);
+
+            var tmpQuery = Db.CovidOrganizationModels.GroupJoin(
+                    Db.CovidOrgAmbassadorModels,
+                    organizationModel => organizationModel.Id,
+                    ambassador => ambassador.CovidOrgId,
+                    (x, y) => new {CovidOrganizationModel = x, CovidOrgAmbassadorModels = y})
+                .SelectMany(
+                    x => x.CovidOrgAmbassadorModels.DefaultIfEmpty(),
+                    (x, y) => new {x.CovidOrganizationModel, CovidOrgAmbassadorModels = y})
+                .GroupJoin(
+                    Db.COVIDEmbajadorEntregable,
+                    arg => arg.CovidOrgAmbassadorModels.CovidAmbassadorId,
+                    entregable => entregable.Id,
+                    (x, y) => new {x.CovidOrganizationModel, COVIDEmbajadorEntregable = y})
+                .SelectMany(
+                    arg => arg.COVIDEmbajadorEntregable.DefaultIfEmpty(),
+                    (x, y) => new {x.CovidOrganizationModel, COVIDEmbajadorEntregable = y})
+                .GroupJoin(
+                    Db.AmbassadorModels,
+                    arg => arg.COVIDEmbajadorEntregable.Id,
+                    ambassadorModel => ambassadorModel.Id,
+                    (x, y) => new {x.CovidOrganizationModel, AmbassadorModels = y})
+                .SelectMany(
+                    arg => arg.AmbassadorModels.DefaultIfEmpty(),
+                    (x, y) => new {x.CovidOrganizationModel, AmbassadorModels = y})
+                .GroupBy(x => new
+                {
+                    x.CovidOrganizationModel.Id,
+                    Location = x.CovidOrganizationModel.Location.Distance(location) ?? 0d,
+                    x.CovidOrganizationModel.Featured
+                });
+
+            if (contains)
+            {
+                tmpQuery = tmpQuery.OrderByDescending(x => x.Key.Featured)
+                    .ThenBy(x => x.Key.Location);
+            }
+            else
+            {
+                tmpQuery = tmpQuery.Where(p => p.Key.Featured == false).OrderBy(p => p.Key.Location);
+            }
+
+            vm.Orders = await tmpQuery.Select(g => new OrderCovidAmbassadorViewModel
+            {
+                OrgId = g.Key.Id,
+                OrderInfo = g.Select(p => new OrderCovidInfoViewModel
+                {
+                    CovidOrganization = p.CovidOrganizationModel.CovidOrganization,
+                    CovidOrganizationName = p.CovidOrganizationModel.CovidOrganizationName,
+                    Distance = p.CovidOrganizationModel.Location.Distance(location) ?? 0d,
+                    Quantity = p.CovidOrganizationModel.Quantity,
+                    Featured = p.CovidOrganizationModel.Featured,
+                    AlreadySavedQuantity = p.CovidOrganizationModel.CovidOrgAmbassadors.Any(x =>
+                        x.CovidOrgId == p.CovidOrganizationModel.Id && x.CovidAmbassadorId == model.Id),
+                    QuantitySaved = p.CovidOrganizationModel.CovidOrgAmbassadors
+                        .FirstOrDefault(x =>
+                            x.CovidOrgId == p.CovidOrganizationModel.Id && x.CovidAmbassadorId == model.Id).Quantity,
+                    Ambassadors = p.CovidOrganizationModel.CovidOrgAmbassadors.Select(x => new CovidAmbassador
                     {
-                        OrgId = g.Key.Id,
-                        OrderInfo = g.Select(p => new OrderCovidInfoViewModel
-                        {
-                            CovidOrganization = p.CovidOrganization,
-                            CovidOrganizationName = p.CovidOrganizationName,
-                            Distance = p.Location.Distance(location) ?? 0d,
-                            Quantity = p.Quantity,
-                            AlreadySavedQuantity = p.CovidOrgAmbassadors.Any(x =>
-                                x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id),
-                            QuantitySaved = p.CovidOrgAmbassadors
-                                .FirstOrDefault(x => x.CovidOrgId == p.Id && x.CovidAmbassadorId == model.Id).Quantity,
-                            Ambassadors = p.CovidOrgAmbassadors.Select(x => new CovidAmbassador
-                            {
-                                Name = x.CovidAmbassador.Ambassador.AmbassadorName,
-                                Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
-                                Quantity = x.Quantity
-                            }).ToList(),
-                        }).FirstOrDefault()
-                    }).Take(25).ToListAsync();
+                        Name = x.CovidAmbassador.Ambassador.AmbassadorName,
+                        Lastname = x.CovidAmbassador.Ambassador.AmbassadorLastName,
+                        Quantity = x.Quantity
+                    }).ToList(),
+                }).FirstOrDefault()
+            }).Take(25).ToListAsync();
 
             return View(vm);
+        }
+
+        private static DbGeometry MakeValid(DbGeometry geom)
+        {
+            if (geom.IsValid)
+                return geom;
+
+            var wkt = SqlGeometry.STGeomFromText(new SqlChars(geom.AsText()), 0).MakeValid().STAsText().ToSqlString()
+                .ToString();
+            return DbGeometry.FromText(wkt, 0);
         }
 
         [HttpPost]
@@ -287,9 +350,9 @@ namespace Limbs.Web.Controllers
                     {
                         Msg = "La nueva cantidad debe ser distinta a la actual",
                         Error = true
-                    }); 
+                    });
                 }
-                
+
                 previousCantity = covidOrgAmbassador.Quantity;
                 covidOrgAmbassador.Quantity = model.SavedQuantity;
             }
@@ -369,7 +432,7 @@ namespace Limbs.Web.Controllers
                 From = _fromEmail,
                 To = covidOrg.Email
             };
-            
+
             if (!isEdit)
             {
                 mailMessage.Subject = $"[Atomic Limbs] {covidEmailInfo.Quantity} Mascarillas en camino!";
@@ -378,7 +441,8 @@ namespace Limbs.Web.Controllers
             else
             {
                 mailMessage.Subject = $"[Atomic Limbs] Ha habido un cambio en tu pedido!";
-                mailMessage.Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidOnUpdate", covidEmailInfo);
+                mailMessage.Body =
+                    CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidOnUpdate", covidEmailInfo);
             }
 
             await AzureQueue.EnqueueAsync(mailMessage);
@@ -407,13 +471,17 @@ namespace Limbs.Web.Controllers
 
             if (!isEdit)
             {
-                mailMessageAmbassador.Subject = $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!";
-                mailMessageAmbassador.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador", covidAmbassadorEmailInfo);
+                mailMessageAmbassador.Subject =
+                    $"[Atomic Limbs] Gracias por tus {covidAmbassadorEmailInfo.Quantity} mascarillas!";
+                mailMessageAmbassador.Body = CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassador",
+                    covidAmbassadorEmailInfo);
             }
             else
             {
                 mailMessageAmbassador.Subject = $"[Atomic Limbs] Has cambiado la cantidad de mascarillas!";
-                mailMessageAmbassador.Body =  CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassadorOnUpdate", covidAmbassadorEmailInfo);
+                mailMessageAmbassador.Body =
+                    CompiledTemplateEngine.Render("Mails.SaveQuantityOrderCovidAmbassadorOnUpdate",
+                        covidAmbassadorEmailInfo);
             }
 
             await AzureQueue.EnqueueAsync(mailMessageAmbassador);

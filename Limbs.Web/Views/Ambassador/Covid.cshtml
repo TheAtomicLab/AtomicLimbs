@@ -22,6 +22,10 @@
     #panel_embajadores h1.covid-header {
         padding: 0;
     }
+    
+    .featured {
+        border: 2px solid red;
+    }
 
     .full-width {
         width: 100% !important;
@@ -110,8 +114,10 @@
             {
                 if (order.OrderInfo != null)
                 {
-                    <div class="card card-l">
-                        <h2>Pedido #@order.OrgId</h2>
+                    string featuredStr = order.OrderInfo.Featured ? "<a href='https://docs.google.com/document/d/1heHV7ln9IMKOava4vjm16t5udWLC7l42xcAc8hy6YdY' target='_blank'>DESTACADO</a>" : string.Empty;
+                    string featuredClass = order.OrderInfo.Featured ? "featured" : string.Empty;
+                    <div class="card card-l @featuredClass">
+                        <h2>Pedido #@order.OrgId @Html.Raw(@featuredStr)</h2>
                         @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
                         {
                             <table class="tabla_datos">

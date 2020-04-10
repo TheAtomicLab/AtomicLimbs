@@ -37,6 +37,7 @@ namespace Limbs.Web.ViewModels
         public string CovidOrganizationName { get; set; }
         public int Quantity { get; set; }
         public double Distance { get; set; }
+        public bool Featured { get; set; }
 
         public List<CovidAmbassador> Ambassadors { get; set; }
         public bool AlreadySavedQuantity { get; set; }

@@ -12,6 +12,7 @@ namespace Limbs.Web.Entities.Models
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
+
         public CovidOrganizationEnum CovidOrganization { get; set; }
         public string CovidOrganizationName { get; set; }
         public string Name { get; set; }
@@ -38,27 +39,23 @@ namespace Limbs.Web.Entities.Models
 
         public string Token { get; set; }
 
+        public bool Featured { get; set; }
+
         public DbGeography Location { get; set; }
 
         public List<CovidOrgAmbassador> CovidOrgAmbassadors { get; set; }
-
     }
 
     public enum CovidOrganizationEnum
     {
-        [Description("Hospital")]
-        Hospital = 1,
-        [Description("Policía")]
-        Policia = 2,
-        [Description("Bomberos")]
-        Bomberos = 3,
+        [Description("Hospital")] Hospital = 1,
+        [Description("Policía")] Policia = 2,
+        [Description("Bomberos")] Bomberos = 3,
+
         [Description("Ente público/gubernamental")]
         EntePublicoGubernamental = 4,
-        [Description("Repartidor")]
-        Repartidor = 5,
-        [Description("Particular")]
-        Particular = 6,
-        [Description("Otro (aclarar)")]
-        Otro = 7,
+        [Description("Repartidor")] Repartidor = 5,
+        [Description("Particular")] Particular = 6,
+        [Description("Otro (aclarar)")] Otro = 7,
     }
 }
