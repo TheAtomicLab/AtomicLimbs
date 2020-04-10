@@ -397,6 +397,10 @@
     <Compile Include="Migrations\202003311725325_removeDeliveryDateField.Designer.cs">
       <DependentUpon>202003311725325_removeDeliveryDateField.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202004100121565_addFeaturedFieldToCovidOrg.cs" />
+    <Compile Include="Migrations\202004100121565_addFeaturedFieldToCovidOrg.Designer.cs">
+      <DependentUpon>202004100121565_addFeaturedFieldToCovidOrg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\AccountTexts.Designer.cs">
@@ -963,6 +967,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003311725325_removeDeliveryDateField.resx">
       <DependentUpon>202003311725325_removeDeliveryDateField.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202004100121565_addFeaturedFieldToCovidOrg.resx">
+      <DependentUpon>202004100121565_addFeaturedFieldToCovidOrg.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\AccountTexts.es.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
