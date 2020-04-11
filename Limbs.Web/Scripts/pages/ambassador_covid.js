@@ -93,6 +93,10 @@
                     inputTmpSaved.val('0');
                     inputCant.val(parseInt(inputCant.val()) - cantSaved);
                     savedTmpCant = parseInt(inputCant.val());
+                    
+                    if (saveBtn.attr('data-isFeatured') === 'True') {
+                        alert('Se van a estar contactando desde delivery entre hoy y dos días, por favor espera el llamado de ellos a tu teléfono.');
+                    }
                     window.location = window.location;
                 }
             },
