@@ -114,10 +114,10 @@
             {
                 if (order.OrderInfo != null)
                 {
-                    string featuredStr = order.OrderInfo.Featured ? "<a href='https://docs.google.com/document/d/1heHV7ln9IMKOava4vjm16t5udWLC7l42xcAc8hy6YdY' target='_blank'>DESTACADO</a>" : string.Empty;
+                    string featuredStr = order.OrderInfo.Featured ? "<strong>¡RETIRO SIN CARGO Y ENTREGA DE FILAMENTO PLA GRATIS!</strong> <a href='https://docs.google.com/document/d/14Yl0-Vf11PRqmna8KSdc-fSF7cbHaazyscUY0hw_9uw/' target='_blank'>Más info acá</a>" : string.Empty;
                     string featuredClass = order.OrderInfo.Featured ? "featured" : string.Empty;
                     <div class="card card-l @featuredClass">
-                        <h2>Pedido #@order.OrgId @Html.Raw(@featuredStr)</h2>
+                        <h2>Pedido #@order.OrgId</h2>
                         @using (Html.BeginForm("SaveQuantityToOrder", "Ambassador", FormMethod.Post))
                         {
                             <table class="tabla_datos">
@@ -179,12 +179,18 @@
                                                     </button>
                                                 </td>
                                                 <td colspan="2">
-                                                    <button class="bn_blue saveQuantityOrder" data-isEdit="@isEdit">Guardar</button>
+                                                    <button class="bn_blue saveQuantityOrder" data-isFeatured="@order.OrderInfo.Featured" data-isEdit="@isEdit">Guardar</button>
                                                 </td>
                                             </tr>
                                         </table>
                                     </td>
                                 </tr>
+                                @if (!string.IsNullOrEmpty(featuredStr))
+                                {
+                                    <tr>
+                                        <td colspan="2">@Html.Raw(featuredStr)</td>
+                                    </tr>
+                                }
                             </table>
 
                             <input type="hidden" name="OrgId" value="@order.OrgId"/>
