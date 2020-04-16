@@ -70,6 +70,8 @@ namespace Limbs.Web.ViewModels
 
         public string Token { get; set; }
 
+        public bool Featured { get; set; }
+
         public DbGeography Location { get; set; }
 
         public string LatLng
