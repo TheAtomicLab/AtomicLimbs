@@ -164,8 +164,15 @@ namespace Limbs.Web.Controllers
         }
 
         [HttpGet, OverrideAuthorize(Roles = AppRoles.Ambassador)]
-        public async Task<ActionResult> Covid()
+        public async Task<ActionResult> Covid(int pag = 0)
         {
+            if (pag == 1)
+            {
+                pag = 0;
+            }
+            
+            var cantPerPage = Convert.ToInt32(ConfigurationManager.AppSettings["CovidCantPag"]);
+
             var currentUserId = User.Identity.GetUserId();
             var model = Db.COVIDEmbajadorEntregable.Where(p => p.Ambassador.UserId == currentUserId)
                 .Include(p => p.Ambassador)
@@ -246,6 +253,12 @@ namespace Limbs.Web.Controllers
                 tmpQuery = tmpQuery.Where(p => p.Key.Featured == false).OrderBy(p => p.Key.Location);
             }
 
+            var totalOrders = await tmpQuery.CountAsync();
+            var totalPages = totalOrders == 0 ? 1 :
+                totalOrders % cantPerPage != 0 ? totalOrders / cantPerPage + 1 : totalOrders / cantPerPage;
+            
+            var skipElements = (pag == 0 ? 0 : pag - 1) * cantPerPage;
+            
             vm.Orders = await tmpQuery.Select(g => new OrderCovidAmbassadorViewModel
             {
                 OrgId = g.Key.Id,
@@ -268,7 +281,9 @@ namespace Limbs.Web.Controllers
                         Quantity = x.Quantity
                     }).ToList(),
                 }).FirstOrDefault()
-            }).Take(25).ToListAsync();
+            }).Skip(() => skipElements).Take(cantPerPage).ToListAsync();
+
+            HttpContext.Response.AppendHeader("X-TOTAL-PAGES", totalPages.ToString());
 
             return View(vm);
         }

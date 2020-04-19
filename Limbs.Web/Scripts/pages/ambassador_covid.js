@@ -93,7 +93,7 @@
                     inputTmpSaved.val('0');
                     inputCant.val(parseInt(inputCant.val()) - cantSaved);
                     savedTmpCant = parseInt(inputCant.val());
-                    
+
                     if (saveBtn.attr('data-isFeatured') === 'True') {
                         alert('Se van a estar contactando desde delivery entre hoy y dos días, por favor espera el llamado de ellos a tu teléfono.');
                     }
@@ -145,5 +145,24 @@
                 saveFirstBtn.prop('disabled', false);
             }
         });
+    });
+
+    let pag = $('#pagination-demo');
+    let totalPages = parseInt(pag.attr('data-totalPages'));
+    let actualPage = parseInt(pag.attr('data-actualPage'));
+
+    pag.twbsPagination({
+        totalPages: totalPages,
+        visiblePages: 10,
+        startPage: actualPage,
+        first: '<<',
+        prev: 'Anterior',
+        last: '>>',
+        next: 'Siguiente',
+        onPageClick: function (event, page) {
+            if (page !== actualPage) {
+                window.location = window.location.protocol + "//" + window.location.host + window.location.pathname + '?pag=' + page
+            }
+        }
     });
 });
